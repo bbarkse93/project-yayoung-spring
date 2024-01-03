@@ -1,0 +1,1 @@
+insert into user_tb(username, password, email, user_created_at) values('ssar', '1234', 'ssar@nate.com', NOW());
