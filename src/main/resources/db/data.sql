@@ -1,6 +1,7 @@
 insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
 values ('ssar', '1234', 'ssar', true, false, NOW());
--- 캠프
+
+-- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('(주)아웃오브파크', '강원도 춘천시 남면 가옹개길 52-9', '1522-1861', 'http://outofpark.com/main/', '당일 취소 불가, 2일 전 100% 환불', true,
@@ -63,7 +64,7 @@ insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CA
 values ('개네집 캠핑장', '경상북도 영덕군 병곡면 병곡리 58-5', '031-557-7757', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true,
         '없음', '14:00', '13:00', 'camp_map/camp15.png');
 
--- camp 구역
+-- 캠프 구역 -------------------------------------------------------------------------------------------------------
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('캠핑사이트-1', '50000', 1),
        ('캠핑사이트-2', '50000', 1),
@@ -79,6 +80,7 @@ VALUES ('캠핑사이트-1', '50000', 1),
        ('캠핑카 20-4', '60000', 1),
        ('캠핑카 26-1', '60000', 1),
        ('캠핑카 26-2', '60000', 1);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('노랑-1', '40000', 2),
        ('노랑-2', '40000', 2),
@@ -111,6 +113,7 @@ VALUES ('노랑-1', '40000', 2),
        ('파랑-15', '40000', 2),
        ('파랑-16', '40000', 2),
        ('파랑-17', '40000', 2);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('1', '40000', 3),
        ('2', '40000', 3),
@@ -158,6 +161,7 @@ VALUES ('1', '40000', 3),
        ('44', '40000', 3),
        ('45', '40000', 3),
        ('46', '40000', 3);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('글램핑1', '80000', 4),
        ('글램핑2', '80000', 4),
@@ -190,6 +194,7 @@ VALUES ('글램핑1', '80000', 4),
        ('대형사이트1', '50000', 4),
        ('대형사이트2', '50000', 4),
        ('대형사이트3', '50000', 4);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('1', '50000', 5),
        ('2', '50000', 5),
@@ -210,6 +215,7 @@ VALUES ('1', '50000', 5),
        ('17', '50000', 5),
        ('18', '50000', 5),
        ('19', '50000', 5);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('옥화-1', '40000', 6),
        ('옥화-2', '40000', 6),
@@ -258,6 +264,7 @@ VALUES ('옥화-1', '40000', 6),
        ('차박-2', '70000', 6),
        ('차박-3', '70000', 6),
        ('차박-4', '70000', 6);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A-1', '60000', 7),
        ('A-2', '60000', 7),
@@ -319,6 +326,7 @@ VALUES ('A-1', '60000', 7),
        ('잔디사이트-9', '70000', 7),
        ('잔디사이트-10', '70000', 7),
        ('잔디사이트-11', '70000', 7);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A-1', '60000', 8),
        ('A-2', '60000', 8),
@@ -338,6 +346,7 @@ VALUES ('A-1', '60000', 8),
        ('C-4', '100000', 8),
        ('C-5', '100000', 8),
        ('C-6', '100000', 8);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A1', '60000', 9),
        ('A2', '60000', 9),
@@ -376,6 +385,7 @@ VALUES ('A1', '60000', 9),
        ('C7', '60000', 9),
        ('C8', '60000', 9),
        ('C9', '60000', 9);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A1', '50000', 10),
        ('A2', '50000', 10),
@@ -412,6 +422,7 @@ VALUES ('A1', '50000', 10),
        ('E3', '50000', 10),
        ('E4', '50000', 10),
        ('E5', '50000', 10);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A1', '50000', 11),
        ('A2', '50000', 11),
@@ -447,6 +458,7 @@ VALUES ('A1', '50000', 11),
        ('방갈로-3', '80000', 11),
        ('방갈로-4', '80000', 11),
        ('방갈로-5', '80000', 11);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('A1', '50000', 12),
        ('A2', '50000', 12),
@@ -460,6 +472,7 @@ VALUES ('A1', '50000', 12),
        ('데크1', '50000', 12),
        ('데크2', '50000', 12),
        ('데크3', '50000', 12);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('물가1', '50000', 13),
        ('물가2', '50000', 13),
@@ -538,6 +551,7 @@ VALUES ('물가1', '50000', 13),
        ('놀이타프23', '60000', 13),
        ('놀이타프24', '60000', 13),
        ('놀이타프25', '60000', 13);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('D1', '100000', 14),
        ('D2', '100000', 14),
@@ -555,6 +569,7 @@ VALUES ('D1', '100000', 14),
        ('C4', '50000', 14),
        ('C5', '50000', 14),
        ('C6', '50000', 14);
+
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
 VALUES ('1', '50000', 15),
        ('2', '50000', 15),
@@ -569,7 +584,7 @@ VALUES ('1', '50000', 15),
        ('11', '90000', 15),
        ('12', '90000', 15);
 
--- camp 사진
+-- 캠프 사진 LIST -------------------------------------------------------------------------------------------------------
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp1-1.jpg', 1),
        ('camp_image/camp1-2.jpg', 1),
@@ -579,46 +594,54 @@ values ('camp_image/camp1-1.jpg', 1),
        ('camp_image/camp1-6.jpg', 1),
        ('camp_image/camp1-7.jpg', 1),
        ('camp_image/camp1-8.jpg', 1);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp2-1.jpg', 2),
        ('camp_image/camp2-2.jpg', 2),
        ('camp_image/camp2-3.jpg', 2),
        ('camp_image/camp2-4.jpg', 2),
        ('camp_image/camp2-5.jpg', 2);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp3-1.jpg', 3),
        ('camp_image/camp3-2.jpg', 3),
        ('camp_image/camp3-3.jpg', 3),
        ('camp_image/camp3-4.jpg', 3),
        ('camp_image/camp3-5.jpg', 3);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp4-1.jpg', 4),
        ('camp_image/camp4-2.jpg', 4),
        ('camp_image/camp4-3.jpg', 4),
        ('camp_image/camp4-4.jpg', 4),
        ('camp_image/camp4-5.jpg', 4);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp5-1.jpg', 5),
        ('camp_image/camp5-2.jpg', 5),
        ('camp_image/camp5-3.jpg', 5),
        ('camp_image/camp5-4.jpg', 5),
        ('camp_image/camp5-5.jpg', 5);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp6-1.jpg', 6),
        ('camp_image/camp6-2.jpg', 6),
        ('camp_image/camp6-3.jpg', 6),
        ('camp_image/camp6-4.jpg', 6),
        ('camp_image/camp6-5.jpg', 6);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp7-1.jpg', 7),
        ('camp_image/camp7-2.jpg', 7),
        ('camp_image/camp7-3.jpg', 7);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp8-1.jpg', 8),
        ('camp_image/camp8-2.jpg', 8),
        ('camp_image/camp8-3.jpg', 8),
        ('camp_image/camp8-4.jpg', 8),
        ('camp_image/camp8-5.jpg', 8);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp9-1.jpg', 9),
        ('camp_image/camp9-2.jpg', 9),
@@ -627,35 +650,41 @@ values ('camp_image/camp9-1.jpg', 9),
        ('camp_image/camp9-5.jpg', 9),
        ('camp_image/camp9-6.jpg', 9),
        ('camp_image/camp9-7.jpg', 9);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp10-1.jpg', 10),
        ('camp_image/camp10-2.jpg', 10),
        ('camp_image/camp10-3.jpg', 10),
        ('camp_image/camp10-4.jpg', 10),
        ('camp_image/camp10-5.jpg', 10);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp11-1.jpg', 11),
        ('camp_image/camp11-2.jpg', 11),
        ('camp_image/camp11-3.jpg', 11),
        ('camp_image/camp11-4.jpg', 11),
        ('camp_image/camp11-5.jpg', 11);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp12-1.jpg', 12),
        ('camp_image/camp12-2.jpg', 12),
        ('camp_image/camp12-3.jpg', 12),
        ('camp_image/camp12-4.jpg', 12);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp13-1.jpg', 13),
        ('camp_image/camp13-2.jpg', 13),
        ('camp_image/camp13-3.jpg', 13),
        ('camp_image/camp13-4.jpg', 13),
        ('camp_image/camp13-5.jpg', 13);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp14-1.jpg', 14),
        ('camp_image/camp14-2.jpg', 14),
        ('camp_image/camp14-3.jpg', 14),
        ('camp_image/camp14-4.jpg', 14),
        ('camp_image/camp14-5.jpg', 14);
+
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
 values ('camp_image/camp15-1.jpg', 15),
        ('camp_image/camp15-2.jpg', 15),
@@ -663,8 +692,7 @@ values ('camp_image/camp15-1.jpg', 15),
        ('camp_image/camp15-4.jpg', 15),
        ('camp_image/camp15-5.jpg', 15);
 
-
--- 옵션 카테고리
+-- 옵션 카테고리 -------------------------------------------------------------------------------------------------------
 insert into OPTION_CATEGORY_TB (CATEGORY_NAME)
 values ('environment');
 insert into OPTION_CATEGORY_TB (CATEGORY_NAME)
@@ -684,7 +712,7 @@ values ('rental');
 insert into OPTION_CATEGORY_TB (CATEGORY_NAME)
 values ('sell');
 
--- 옵션 메뉴
+-- 옵션 메뉴 -------------------------------------------------------------------------------------------------------
 insert into OPTION_TB (OPTION_CATEGORY_ID, OPTION_NAME)
 values (1, '산');
 insert into OPTION_TB (OPTION_CATEGORY_ID, OPTION_NAME)
@@ -774,7 +802,7 @@ values (9, '술');
 insert into OPTION_TB (OPTION_CATEGORY_ID, OPTION_NAME)
 values (9, '등유');
 
--- option management
+-- 옵션 management -------------------------------------------------------------------------------------------------------
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (1, 1),
        (1, 8),
@@ -795,6 +823,7 @@ values (1, 1),
        (1, 38),
        (1, 39),
        (1, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (2, 1),
        (2, 6),
@@ -818,6 +847,7 @@ values (2, 1),
        (2, 38),
        (2, 39),
        (2, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (3, 1),
        (3, 2),
@@ -842,6 +872,7 @@ values (3, 1),
        (3, 38),
        (3, 39),
        (3, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (4, 1),
        (4, 6),
@@ -865,6 +896,7 @@ values (4, 1),
        (4, 38),
        (4, 39),
        (4, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (5, 1),
        (5, 4),
@@ -889,6 +921,7 @@ values (5, 1),
        (5, 38),
        (5, 39),
        (5, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (6, 1),
        (6, 5),
@@ -912,6 +945,7 @@ values (6, 1),
        (6, 38),
        (6, 39),
        (6, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (7, 1),
        (7, 4),
@@ -933,6 +967,7 @@ values (7, 1),
        (7, 38),
        (7, 39),
        (7, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (8, 1),
        (8, 8),
@@ -949,6 +984,7 @@ values (8, 1),
        (8, 38),
        (8, 39),
        (8, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (9, 1),
        (9, 4),
@@ -970,6 +1006,7 @@ values (9, 1),
        (9, 38),
        (9, 39),
        (9, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (10, 2),
        (10, 4),
@@ -991,6 +1028,7 @@ values (10, 2),
        (10, 38),
        (10, 39),
        (10, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (11, 1),
        (11, 5),
@@ -1018,6 +1056,7 @@ values (11, 1),
        (11, 38),
        (11, 39),
        (11, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (12, 1),
        (12, 2),
@@ -1040,6 +1079,7 @@ values (12, 1),
        (12, 38),
        (12, 39),
        (12, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (13, 5),
        (13, 8),
@@ -1062,6 +1102,7 @@ values (13, 5),
        (13, 38),
        (13, 39),
        (13, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (14, 1),
        (14, 3),
@@ -1084,6 +1125,7 @@ values (14, 1),
        (14, 38),
        (14, 39),
        (14, 40);
+
 insert into OPTION_MANAGEMENT_TB (CAMP_ID, OPTION_ID)
 values (15, 1),
        (15, 2),
@@ -1107,14 +1149,13 @@ values (15, 1),
        (15, 39),
        (15, 40);
 
-
--- FAQ 카테고리
+-- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)
 values ('결제/환불');
 insert into BOARD_CATEGORY_TB (TITLE)
 values ('회원/로그인');
 
--- FAQ
+-- FAQ -------------------------------------------------------------------------------------------------------
 insert into BOARD_TB (TITLE, CONTENT, USER_ID, CREATED_AT, BOARD_CATEGORY_ID)
 values ('예약을 취소하고 싶어요',
         '예약자 본인이 직접 예약확인/취소 가능합니다.
@@ -1169,7 +1210,7 @@ values ('로그인이 안 돼요.',
 insert into BOARD_TB (TITLE, CONTENT, USER_ID, CREATED_AT, BOARD_CATEGORY_ID)
 values ('비회원도 예약을 하거나 예약 조회를 할 수 있나요?', '아니요, 가입을 하셔야 가능합니다.', 1, now(), 2);
 
--- 공지사항
+-- 공지사항 -------------------------------------------------------------------------------------------------------
 insert into NOTICE_TB (TITLE, CONTENT, USER_ID, CREATED_AT)
 values ('YAYoung 임시 점검 안내',
         'YAYoung 사이트 서비스 개선을 위한 작업으로 인하여
