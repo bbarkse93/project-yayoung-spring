@@ -37,14 +37,14 @@ public class Camp {
 
     private String holiday;
 
-    private Timestamp campCheckIn;
+    private String campCheckIn;
 
-    private Timestamp campCheckOut;
+    private String campCheckOut;
 
     private String campFieldImage;
 
     @Builder
-    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite, String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, Timestamp campCheckIn, Timestamp campCheckOut, String campFieldImage) {
+    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite, String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn, String campCheckOut, String campFieldImage) {
         this.id = id;
         this.campName = campName;
         this.campAddress = campAddress;

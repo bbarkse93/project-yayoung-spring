@@ -1,5 +1,6 @@
 package com.example.team_project.board;
 
+import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,11 +24,14 @@ public class Board {
     @Column(length = 50, nullable = false)
     private String title;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 1000, nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BoardCategory boardCategory;
 
     @CreationTimestamp
     private Timestamp createdAt;

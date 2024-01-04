@@ -23,7 +23,7 @@ public class Notice {
     @Column(length = 50, nullable = false)
     private String title;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 1000, nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
