@@ -1,1 +1,1 @@
-insert into user_tb(username, password, email, user_created_at) values('ssar', '1234', 'ssar@nate.com', NOW());
+insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at) values('ssar', '1234', 'ssar', true, false, NOW());

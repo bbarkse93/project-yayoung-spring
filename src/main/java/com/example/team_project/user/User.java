@@ -1,5 +1,6 @@
 package com.example.team_project.user;
 
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,24 +20,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String username; // 인증시 필요한 필드
+    @Column(length = 50, nullable = false, unique = true)
+    private String username;
 
-    @Column(length = 256, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 256, nullable = false)
-    private String email;
+    @Column(length = 50, nullable = false)
+    private String nickname;
+
+    private String userImage;
+
+    private boolean role;
+
+    private boolean isWithdraw;
 
     @CreationTimestamp
     private Timestamp userCreatedAt;
 
     @Builder
-    public User(Integer id, String username, String password, String email, Timestamp userCreatedAt) {
+    public User(Integer id, String username, String password, String nickname, String userImage, boolean role, boolean isWithdraw, Timestamp userCreatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.email = email;
+        this.nickname = nickname;
+        this.userImage = userImage;
+        this.role = role;
+        this.isWithdraw = isWithdraw;
         this.userCreatedAt = userCreatedAt;
     }
 }
