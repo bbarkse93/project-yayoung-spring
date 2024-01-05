@@ -1,5 +1,7 @@
 insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
 values ('ssar', '1234', 'ssar', true, false, NOW());
+insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
+values ('admin', '1234', 'admin', true, false, NOW());
 
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
