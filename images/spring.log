@@ -1,0 +1,8 @@
+2024-01-05T14:21:39.276+09:00  INFO 9160 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 12 class path changes (0 additions, 12 deletions, 0 modifications)
+2024-01-05T14:21:39.282+09:00  INFO 9160 --- [Thread-16] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-05T14:21:39.285+09:00  INFO 9160 --- [Thread-16] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-05T14:21:39.285+09:00 TRACE 9160 --- [Thread-16] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryClosed from [org.hibernate.internal.SessionFactoryImpl@5d500692] for TypeConfiguration
+2024-01-05T14:21:39.285+09:00 DEBUG 9160 --- [Thread-16] o.h.type.spi.TypeConfiguration$Scope     : Un-scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration$Scope@7d0ac1ae] from SessionFactory [org.hibernate.internal.SessionFactoryImpl@5d500692]
+2024-01-05T14:21:39.493+09:00  WARN 9160 --- [Thread-16] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-214]
+2024-01-05T14:21:39.493+09:00  INFO 9160 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2024-01-05T14:21:39.498+09:00  INFO 9160 --- [Thread-16] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
