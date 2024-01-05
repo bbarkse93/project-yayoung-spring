@@ -22,12 +22,11 @@ public class UserRestController {
         return ResponseEntity.ok().body("TEST");
     }
 
-
     // me 페이지 요청
 //    @GetMapping("/my-page")
 //    public ResponseEntity<?> myPage() {
 //        // @RequestHeader("Authorization") String token
-//        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+//         DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
 //        // Integer userId = decodedJWT.getClaim("id")
 //
 //        return ResponseEntity.ok().body(user);
