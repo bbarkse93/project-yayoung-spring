@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.example.team_project.order.Order;
 
@@ -35,12 +37,28 @@ public class OrderRespDTO {
 	@Getter
 	@ToString
 	public static class CampScheduleListDTO{
-		private String fieldName;
-		private String campAddress;
-		private String checkInDate;
-		private String checkInDDay;
+		private List<CampScheduleDTO> campScheduleDTOs; 
 		
 		public CampScheduleListDTO(List<Order> orders) {
+			this.campScheduleDTOs = orders.stream()
+					.map(order -> new CampScheduleDTO(order)).collect(Collectors.toList());
+		}
+		
+		@Getter
+		public class CampScheduleDTO{
+			private String fieldName;
+			private String campAddress;
+			private String checkInDate;
+			private String checkInDDay;
+			
+			public CampScheduleDTO(Order order) {
+				this.fieldName = order.getCampField().getFieldName();
+				this.campAddress = order.getCampField().getCamp().getCampAddress();
+				this.checkInDate = new SimpleDateFormat("MM/dd(EE)").format(order.getCheckInDate());
+				this.checkInDDay = formatDDay(order.getCheckInDate());
+			}
+			
+			
 			
 		}
 		
