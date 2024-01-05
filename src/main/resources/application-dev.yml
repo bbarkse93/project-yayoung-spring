@@ -37,3 +37,10 @@ spring:
     ansi:
       enabled: always
 
+#logging:
+#  level:
+#    "[com.example]": ERROR
+#    "[org.hibernate.type]": TRACE
+#  file:
+#    path: ./images/
+
