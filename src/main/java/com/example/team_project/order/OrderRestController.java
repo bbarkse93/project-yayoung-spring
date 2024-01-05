@@ -43,6 +43,16 @@ public class OrderRestController {
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     
+    // 내 캠핑장 조회(지난 캠핑)
+    @GetMapping("/myCampField")
+    public ResponseEntity<?> myCampFieldList(/*@RequestHeader("Authorization") String token*/){
+    	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	//Integer userId = decodedJWT.getClaim("id").asInt();
+    	// 테스트 용 하드 코딩
+    	OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(1);
+    	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId);
+    	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
     
     
     
