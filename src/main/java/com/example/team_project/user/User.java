@@ -56,5 +56,6 @@ public class User {
     public void updateUserImage(String userImage){
         this.userImage = userImage;
     }
+    public void updateIsWithDraw(boolean isWithdraw) {this.isWithdraw = isWithdraw;}
 
 }
