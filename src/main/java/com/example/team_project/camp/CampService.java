@@ -1,6 +1,6 @@
 package com.example.team_project.camp;
 
-import com.example.team_project.camp.camp_bookmark.CampJPARepository;
+import com.example.team_project.camp.camp_bookmark.CampBookmarkJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CampService {
 
-    private final CampJPARepository campJPARepository;
+    private final CampBookmarkJPARepository campJPARepository;
 
 }
