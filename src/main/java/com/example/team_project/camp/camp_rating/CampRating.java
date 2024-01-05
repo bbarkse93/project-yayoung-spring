@@ -20,9 +20,9 @@ public class CampRating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer cleanliness;
-    private Integer managementness;
-    private Integer friendliness;
+    private double cleanliness;
+    private double managementness;
+    private double friendliness;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
