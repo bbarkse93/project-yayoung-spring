@@ -18,6 +18,18 @@ public class UserRespDTO {
         }
     }
 
+    // ME 회원 탈퇴
+    @Data
+    public static class withDrawDTO {
+        private String nickname;
+        private boolean isWithdraw;
+
+        public withDrawDTO(User user) {
+            this.nickname = user.getNickname();
+            this.isWithdraw = user.isWithdraw();
+        }
+    }
+
 
 
 }

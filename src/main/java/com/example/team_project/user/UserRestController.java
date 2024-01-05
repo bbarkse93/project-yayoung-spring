@@ -5,6 +5,7 @@ import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project._core.utils.JwtTokenUtils;
 import com.example.team_project.user._dto.UserReqDTO;
 import com.example.team_project.user._dto.UserRespDTO;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserRestController {
 
     private final UserService userService;
+    private final HttpSession session;
 
     @GetMapping("/test")
     public ResponseEntity<?> test() {
@@ -37,7 +39,7 @@ public class UserRestController {
     // ME 프로필 페이지 요청
     // localhost:8080/user/my-page/profile
     @GetMapping("/my-page/profile")
-    public ResponseEntity<?> proflieDetail() {
+    public ResponseEntity<?> profliePage() {
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id")
@@ -53,11 +55,26 @@ public class UserRestController {
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id")
-        System.out.println("내부 : " + requestDTO);
         UserRespDTO.UserDTO responseDTO = userService.profileUpdate(requestDTO, 1);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
+    // ME 로그아웃
+    // localhost:8080/user/logout
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(){
+        session.invalidate();
+        return ResponseEntity.ok().body(ApiUtils.success("로그아웃 완료"));
+    }
 
-
+    // ME 회원탈퇴
+    // localhost:8080/user/withDraw
+    @PutMapping("/withDraw")
+    public ResponseEntity<?> withDraw(){
+        // @RequestHeader("Authorization") String token
+        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+        // Integer userId = decodedJWT.getClaim("id")
+        UserRespDTO.withDrawDTO responseDTO = userService.withDraw(1);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }

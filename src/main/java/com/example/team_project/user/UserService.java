@@ -40,7 +40,11 @@ public class UserService {
         return new UserRespDTO.UserDTO(user);
     }
 
-
-
-
+    // ME 회원 탈퇴
+    @Transactional
+    public UserRespDTO.withDrawDTO withDraw(Integer userId) {
+        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + userId));
+        user.updateIsWithDraw(true);
+        return new UserRespDTO.withDrawDTO(user);
+    }
 }
