@@ -17,4 +17,7 @@ public class UserRestController {
     public ResponseEntity<?> test(){
         return ResponseEntity.ok().body("TEST");
     }
+    
+    
+    
 }
