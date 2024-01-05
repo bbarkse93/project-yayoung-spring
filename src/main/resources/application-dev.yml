@@ -43,3 +43,4 @@ spring:
 #    "[org.hibernate.type]": TRACE
 #  file:
 #    path: ./images/
+
