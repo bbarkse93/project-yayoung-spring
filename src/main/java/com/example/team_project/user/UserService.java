@@ -31,7 +31,7 @@ public class UserService {
     // ME 프로필 수정
 //    @Transactional
 //    public UserRespDTO.UserDTO profileUpdate(UserReqDTO.ProfileUpdateDTO requestDTO, Integer userId) {
-//        User user =
+//        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + userId));
 //
 //        User user = User.builder()
 //                .nickname(requestDTO.getNickname())
