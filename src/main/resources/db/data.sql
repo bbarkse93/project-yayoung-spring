@@ -1,5 +1,8 @@
 insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
 values ('ssar', '1234', 'ssar', true, false, NOW());
+insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
+values ('admin', '1234', 'admin', true, false, NOW());
+
 -- 캠프
 insert into CAMP_TB  (CAMP_NAME ,CAMP_ADDRESS ,CAMP_CALL_NUMBER ,CAMP_WEBSITE ,CAMP_REFUND_POLICY ,CAMP_WATER ,CAMP_GARBAGE_BAG, HOLIDAY ,CAMP_CHECK_IN ,CAMP_CHECK_OUT ,CAMP_FIELD_IMAGE)
 values ('(주)아웃오브파크', '강원도 춘천시 남면 가옹개길 52-9', '1522-1861', 'http://outofpark.com/main/', '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', 'camp_map/camp1.png');
