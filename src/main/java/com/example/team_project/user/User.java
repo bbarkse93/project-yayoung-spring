@@ -49,4 +49,12 @@ public class User {
         this.isWithdraw = isWithdraw;
         this.userCreatedAt = userCreatedAt;
     }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
+    public void updateUserImage(String userImage){
+        this.userImage = userImage;
+    }
+
 }
