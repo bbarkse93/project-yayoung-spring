@@ -1,7 +1,7 @@
-insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
-values ('ssar', '1234', 'ssar', true, false, NOW());
-insert into user_tb(username, password, nickname, role, is_withdraw, user_created_at)
-values ('admin', '1234', 'admin', true, false, NOW());
+insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
+values ('ssar', '1234', 'ssar', true,'user/user-profile.jpg', false, NOW());
+insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
+values ('admin', '1234', 'admin', true, 'user/user-profile.jpg', false, NOW());
 
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
@@ -1150,6 +1150,19 @@ values (15, 1),
        (15, 38),
        (15, 39),
        (15, 40);
+
+-- 북마크 -------------------------------------------------------------------------------------------------------
+insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(1, 1);
+insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(2, 1);
+insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(3, 1);
+
+-- 결제 -------------------------------------------------------------------------------------------------------
+insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
+values ('2024-01-10', '2024-01-15', 1, 1, now());
+insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
+values ('2024-01-11', '2024-01-15', 1, 3, now());
+insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
+values ('2024-01-14', '2024-01-18', 1, 5, now());
 
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)
