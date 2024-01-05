@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.example.team_project.order.Order;
@@ -54,7 +53,7 @@ public class OrderRespDTO {
 			public CampScheduleDTO(Order order) {
 				this.fieldName = order.getCampField().getFieldName();
 				this.campAddress = order.getCampField().getCamp().getCampAddress();
-				this.checkInDate = new SimpleDateFormat("MM/dd(EE)").format(order.getCheckInDate());
+				this.checkInDate = new SimpleDateFormat("MM월 dd일").format(order.getCheckInDate());
 				this.checkInDDay = formatDDay(order.getCheckInDate());
 			}
 			
