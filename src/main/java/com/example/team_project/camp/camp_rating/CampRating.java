@@ -43,4 +43,8 @@ public class CampRating {
         this.camp = camp;
         this.campReview = campReview;
     }
+
+    public double total () {
+        return (cleanliness + managementness + friendliness / 3);
+    }
 }
