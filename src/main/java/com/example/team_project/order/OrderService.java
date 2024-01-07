@@ -33,9 +33,9 @@ public class OrderService {
 
 	// 아이디로 내 캠핑장 목록 검색
 	public OrderRespDTO.myCampFieldListDTO myCampFieldList(int userId) {
-		//List<DTO> myCampList = orderJPARepository.findAllByUserId(userId);
+		List<Order> orders = orderJPARepository.findAllByUserId(userId);
 		
-		return new OrderRespDTO.myCampFieldListDTO();
+		return new OrderRespDTO.myCampFieldListDTO(orders);
 	}
 	
 

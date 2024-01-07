@@ -9,5 +9,6 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	Order findFirstByUserIdOrderByCheckInDateAsc(Integer userId);
 	// 아이디로 캠핑 일정 목록 조회
 	List<Order> findAllByUserIdOrderByCheckInDateAsc(int userId);
+	List<Order> findAllByUserId(int userId);
 	
 }

@@ -69,18 +69,10 @@ public class OrderRespDTO {
 	@Getter
 	public static class myCampFieldListDTO {
 		List<MyCampDTO> myCampDTOs;
-		//이미지 - 리뷰
-		//캠핑장 명 - 캠프
-		// 주소 - 캠프
-		// 주문의 기간 - checkInDate, checkoutDate
-		// 레이팅의 평점 - grade;
-
 		// 인자 넣어야 함
-		public myCampFieldListDTO() {
+		public myCampFieldListDTO(List<Order> orders) {
 			this.myCampDTOs = null;
 		}
-		
-		 
 		@ToString
 		@Getter
 		public class MyCampDTO{
