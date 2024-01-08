@@ -31,7 +31,7 @@ public class CampRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     
-    // 내 캠핑장 조회(지난 캠핑)
+    //내 캠핑장 연도별 목록 조회
     @GetMapping("/myCamp")
     public ResponseEntity<?> myCampList(/*@RequestBody CampReqDTO.MyCampListDTO requestDTO ,@RequestHeader("Authorization") String token*/){
     	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);

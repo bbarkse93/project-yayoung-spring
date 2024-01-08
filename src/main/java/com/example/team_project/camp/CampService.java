@@ -42,7 +42,7 @@ public class CampService {
         return new CampRespDTO.CampBookMarkListDTO(campBookmarkList);
     }
 
-
+    //내 캠핑장 연도별 목록 조회
 	public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
 		List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
 		if(campReviews == null) throw new Exception404("작성하신 리뷰가 없습니다");

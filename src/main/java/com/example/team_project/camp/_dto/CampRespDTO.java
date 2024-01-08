@@ -48,7 +48,6 @@ public class CampRespDTO {
     
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
 	final static String DATEFORMAT2 = "MM월 dd일";
-	final static String DATEFORMAT3 = "MM/dd(EE)";
     
 	@Data
 	public static class MyCampListDTO {
@@ -71,16 +70,18 @@ public class CampRespDTO {
 			private String campName;
 			private String reviewImage;
 			public MyCampDTO(CampReview campReview) {
+				Order order = campReview.getOrder();
+				Camp camp = campReview.getCamp();
 				this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
 				this.checkInDate = TimestampUtils.timeStampToDate
-						(campReview.getOrder().getCheckInDate(), "yyyy년 MM월 dd일");
-				Boolean yearCheck = campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() 
-						== campReview.getOrder().getCheckOutDate().toLocalDateTime().getYear();
+						(order.getCheckInDate(), "yyyy년 MM월 dd일");
+				Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() 
+						== order.getCheckOutDate().toLocalDateTime().getYear();
 				String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
 				this.checkOutDate = TimestampUtils.timeStampToDate
-						(campReview.getOrder().getCheckOutDate(), dateFormat);
-				this.campAddress = campReview.getCamp().getCampAddress();
-				this.campName = campReview.getCamp().getCampName();
+						(order.getCheckOutDate(), dateFormat);
+				this.campAddress = camp.getCampAddress();
+				this.campName = camp.getCampName();
 				this.reviewImage = campReview.getReviewImage();
 			}
 			
