@@ -1165,6 +1165,18 @@ values ('2024-01-11', '2024-01-15', 1, 3, now());
 insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
 values ('2024-01-14', '2024-01-18', 1, 5, now());
 
+-- 평점 ------------------------------------------------------------------------------------------------------------
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 1, 4.0, 5.0, 4.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 1, 5.0, 5.0, 4.0, 1 );
+
+-- 리뷰 -----------------------------------------------------------------------------------------------------------
+insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values (1, 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values (2, 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
+
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)
 values ('결제/환불');
