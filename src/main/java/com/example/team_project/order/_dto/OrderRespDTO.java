@@ -51,7 +51,7 @@ public class OrderRespDTO {
 			private String checkInDDay;
 			
 			public CampScheduleDTO(Order order) {
-				this.fieldName = order.getCampField().getFieldName();
+				this.fieldName = order.getCampField().getCamp().getCampName();
 				this.campAddress = order.getCampField().getCamp().getCampAddress();
 				this.checkInDate = new SimpleDateFormat("MM월 dd일").format(order.getCheckInDate());
 				this.checkInDDay = formatDDay(order.getCheckInDate());
