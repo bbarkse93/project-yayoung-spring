@@ -9,6 +9,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.team_project.camp.Camp;
+import com.example.team_project.camp_field.CampField;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -46,14 +48,15 @@ public class OrderRespDTO {
 		@Getter
 		@ToString
 		public class CampScheduleDTO{
-			private String fieldName;
+			private String campName;
 			private String campAddress;
 			private String checkInDate;
 			private String checkInDDay;
 			
 			public CampScheduleDTO(Order order) {
-				this.fieldName = order.getCampField().getCamp().getCampName();
-				this.campAddress = order.getCampField().getCamp().getCampAddress();
+				Camp camp = order.getCampField().getCamp();
+				this.campName = camp.getCampName();
+				this.campAddress = camp.getCampAddress();
 				this.checkInDate = new SimpleDateFormat("MM월 dd일").format(order.getCheckInDate());
 				this.checkInDDay = formatDDay(order.getCheckInDate());
 			}

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class TimestampUtils {
 
-    public static String timeStampToDate(Timestamp time, String dateFormat) {
+    public static String timeStampToDate(Timestamp time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(time);
     }
