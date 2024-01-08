@@ -36,7 +36,7 @@ public class Camp {
     private boolean campGarbageBag;
 
     private String holiday;
-
+    
     private String campCheckIn;
 
     private String campCheckOut;
@@ -44,7 +44,9 @@ public class Camp {
     private String campFieldImage;
 
     @Builder
-    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite, String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn, String campCheckOut, String campFieldImage) {
+    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite,
+            String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn,
+            String campCheckOut, String campFieldImage) {
         this.id = id;
         this.campName = campName;
         this.campAddress = campAddress;
@@ -58,4 +60,5 @@ public class Camp {
         this.campCheckOut = campCheckOut;
         this.campFieldImage = campFieldImage;
     }
+
 }
