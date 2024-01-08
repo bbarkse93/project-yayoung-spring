@@ -3,6 +3,7 @@ ifndef::snippets[]
 endif::[]
 
 :user: user-rest-controller_test
+:camp: camp-rest-controller_test
 
 = REST API
 :toc: left
@@ -17,4 +18,10 @@ include::{snippets}/{user}/my-page_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{user}/my-page_test/http-response.adoc[]
 
+== 캠프
+=== 1. 캠프 목록
+===== Request Example
+include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
 
+===== Response Example
+include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]

@@ -450,6 +450,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_1_회원정보">1. 회원정보</a></li>
 </ul>
 </li>
+<li><a href="#_캠프">캠프</a>
+<ul class="sectlevel2">
+<li><a href="#_1_캠프_목록">1. 캠프 목록</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -490,11 +495,239 @@ Content-Length: 136
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_캠프">캠프</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_캠프_목록">1. 캠프 목록</h3>
+<div class="sect4">
+<h5 id="_request_example_2">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_2">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 7443
+
+{
+  "success" : true,
+  "response" : [ {
+    "id" : 1,
+    "campName" : "(주)아웃오브파크",
+    "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+    "campCallNumber" : "1522-1861",
+    "campWebsite" : "http://outofpark.com/main/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp1.png"
+  }, {
+    "id" : 2,
+    "campName" : "파크킹",
+    "campAddress" : "경북 김천시 어모면 은림로 62-11",
+    "campCallNumber" : "054-434-6677",
+    "campWebsite" : "https://www.instagram.com/amazingpark6211/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp2.png"
+  }, {
+    "id" : 3,
+    "campName" : "디캠고흥",
+    "campAddress" : "강원 횡성군 서원면 서원서로102번길 3-18",
+    "campCallNumber" : "033-345-3336",
+    "campWebsite" : "https://www.instagram.com/salon.de.bonj/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp3.png"
+  }, {
+    "id" : 4,
+    "campName" : "캠프달링",
+    "campAddress" : "경기 가평군 설악면 유명산길 61-75",
+    "campCallNumber" : "010-3148-9970",
+    "campWebsite" : "http://healingpia.co.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp4.png"
+  }, {
+    "id" : 5,
+    "campName" : "STX 오토캠핑장",
+    "campAddress" : "충남 태안군 소원면 산간이길 158-24",
+    "campCallNumber" : "043-1668-3972",
+    "campWebsite" : "https://map.naver.com/v5/entry/place/1791561655?c=14047305.3983138,4408436.9604705,15,0,0,0,dh&amp;amp;placePath=%2Fbooking%3Fentry=plt",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp5.png"
+  }, {
+    "id" : 6,
+    "campName" : "청주 옥화포시즌캠핑장",
+    "campAddress" : "강원 평창군 평창읍 뇌운계곡로 659-6",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "https://pcglamping.modoo.at/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp6.png"
+  }, {
+    "id" : 7,
+    "campName" : "휘게 포레스트",
+    "campAddress" : "충북 충주시 앙성면 학교말2길 50",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "http://www.binaecamping.co.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp7.png"
+  }, {
+    "id" : 8,
+    "campName" : "초이스캠프앤카라반",
+    "campAddress" : "충남 태안군 남면 몽산포길 63-23",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "https://solbeachcamp.modoo.at/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp8.png"
+  }, {
+    "id" : 9,
+    "campName" : "초록여울캠핑장",
+    "campAddress" : "경북 포항시 북구 죽장면 새마을로 3351",
+    "campCallNumber" : "033-332-0119",
+    "campWebsite" : "http://www.gaoncamp.com/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp9.png"
+  }, {
+    "id" : 10,
+    "campName" : "소리의섬 캠핑장",
+    "campAddress" : "충북 충주시 앙성면 남한강변길 218-2",
+    "campCallNumber" : "033-332-0229",
+    "campWebsite" : "http://limsglamping.modoo.at",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp10.png"
+  }, {
+    "id" : 11,
+    "campName" : "림스 캠핑장",
+    "campAddress" : "전남 강진군 강진읍 해강로 1038-30",
+    "campCallNumber" : "033-332-0229",
+    "campWebsite" : "http://limsglamping.modoo.at",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp11.png"
+  }, {
+    "id" : 12,
+    "campName" : "단아한",
+    "campAddress" : "전북 순창군 팔덕면 산동신흥길 6",
+    "campCallNumber" : "031-581-9977",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp12.png"
+  }, {
+    "id" : 13,
+    "campName" : "원주 두리 캠핑장",
+    "campAddress" : "경기 가평군 가평읍 호반로 1700",
+    "campCallNumber" : "031-581-9977",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp13.png"
+  }, {
+    "id" : 14,
+    "campName" : "너른뜰 캠핑장",
+    "campAddress" : "충남 부여군 세도면 대흥로 163",
+    "campCallNumber" : "031-581-9917",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp14.png"
+  }, {
+    "id" : 15,
+    "campName" : "개네집 캠핑장",
+    "campAddress" : "경상북도 영덕군 병곡면 병곡리 58-5",
+    "campCallNumber" : "031-557-7757",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "camp_map/camp15.png"
+  } ],
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-08 14:31:59 +0900
+Last updated 2024-01-08 15:57:20 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
