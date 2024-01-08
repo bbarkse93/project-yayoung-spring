@@ -1,5 +1,8 @@
 package com.example.team_project.camp;
 
+import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.camp._dto.CampRespDTO;
+import com.example.team_project.notice._dto.NoticeRespDTO;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -41,4 +44,15 @@ public class CampRestController {
     //     }
     //     return ResponseEntity.ok(camp);
     // }
+
+    // ME 관심캠핑장 목록 페이지 요청
+    // localhost:8080/camp/bookmark-list
+    @GetMapping("/bookmark-list")
+    public ResponseEntity<?> campBookmarkPage() {
+        // @RequestHeader("Authorization") String token
+        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+        // Integer userId = decodedJWT.getClaim("id")
+        CampRespDTO.CampBookMarkListDTO responseDTO = campService.campBookMarkPage(1);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }

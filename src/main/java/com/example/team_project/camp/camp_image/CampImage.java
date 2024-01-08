@@ -29,4 +29,5 @@ public class CampImage {
         this.campImage = campImage;
         this.camp = camp;
     }
+
 }
