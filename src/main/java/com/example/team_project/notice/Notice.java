@@ -1,5 +1,6 @@
 package com.example.team_project.notice;
 
+import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,5 +40,9 @@ public class Notice {
         this.content = content;
         this.user = user;
         this.createdAt = createdAt;
+    }
+
+    public String formatCreatdAt (){
+        return TimestampUtils.timeStampToDate(createdAt);
     }
 }
