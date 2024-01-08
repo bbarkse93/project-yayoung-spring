@@ -74,7 +74,7 @@ public class CampRespDTO {
 				Camp camp = campReview.getCamp();
 				this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
 				this.checkInDate = TimestampUtils.timeStampToDate
-						(order.getCheckInDate(), "yyyy년 MM월 dd일");
+						(order.getCheckInDate(), DATEFORMAT1);
 				Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() 
 						== order.getCheckOutDate().toLocalDateTime().getYear();
 				String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
