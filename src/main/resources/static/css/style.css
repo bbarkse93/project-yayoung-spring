@@ -1,0 +1,320 @@
+@import url(common.css);
+
+.custom_body {
+    overflow-x: hidden;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    color: inherit;
+    text-decoration: none;
+    caret-color: transparent;
+}
+
+.top .page_title {
+    font-weight: bold;
+    font-size: 28px;
+    padding-bottom: 3px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    margin: 0 40px;
+}
+
+.logo {
+    color: white;
+    text-decoration-line: none;
+}
+
+.logo a:hover {
+    text-decoration: none;
+}
+
+.flex_center {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px
+}
+
+.main {
+    width: 1280px;
+    height: 100%;
+    display: flex;
+}
+
+.container {
+    width: 20%;
+    border-right: 0.5px solid var(--line_01);
+    padding: 0 28px;
+}
+
+.container .section1 {
+    margin-bottom: 20px;
+}
+
+.section_title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.section_ul {
+    font-size: 16px;
+    list-style: none;
+    margin-left: 12px;
+}
+
+.section_ul a {
+    margin-left: 10px;
+    color: var(--font_01);
+    transition-duration: 0.2s;
+    text-decoration: none;
+}
+
+.section_ul a:hover {
+    text-decoration: none;
+    color: var(--primary_01);
+}
+
+.section_ul li {
+    margin: 10px 0;
+}
+
+.short_line {
+    background-color: var(--line_01);
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+}
+
+.check_container {
+    height: 100%;
+    width: 80%;
+    padding: 0 28px;
+}
+
+.admin_container_title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.custom_search {
+    text-align: end;
+    margin-bottom: 40px;
+}
+
+.custom_search input {
+    height: 40px;
+    width: 30%;
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    padding: 10px;
+    font-size: 14px;
+}
+
+.custom_search i {
+    position: relative;
+    content: "\f0f3";
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--font_01);
+    top: 10px;
+    transform: translate(0, -50%);
+    right: 40px;
+}
+
+.custom_search_button {
+    width: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.custom_flex {
+    display: flex;
+}
+
+.custom_flex_center {
+    display: flex;
+    justify-content: center;
+}
+
+.camp_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.camp_container .box {
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px var(--line_01);
+}
+
+.camp_container .camp_img {
+    width: 100%;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.camp_container .p1 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.camp_container .p2 {
+    font-size: 13px;
+    margin-top: 10px;
+    color: var(--font_02);
+}
+
+.camp_container .p3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--font_02);
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.camp_container .p4 {
+    margin-right: 10px;
+}
+
+.camp_container .reservation_count {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.box .review_button {
+    font-size: 14px;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--primary_02);
+    color: var(--primary_01);
+    border: none;
+    width: 80%;
+}
+
+.box .review_button:hover {
+    text-decoration: none;
+}
+
+.custom_modal_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    color: var(--line_01);
+    pointer-events: auto;
+    background-color: var(--def_wh);
+    background-clip: padding-box;
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    outline: 0;
+}
+
+.custom_modal_header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.custom_modal_body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 10px;
+    background-color: var(--primary_02);
+    height: 260px;
+}
+
+.custom_modal_body .button {
+    display: flex;
+    justify-content: end;
+}
+
+.custom_modal_body .body {
+    text-align: center;
+    color: var(--font_01);
+}
+
+.custom_modal_body .body .count {
+    font-size: 40px;
+    margin: 8px 0 30px;
+}
+
+.custom_modal_body .body .detail_review {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.custom_modal_footer {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: var(--def_wh);
+    border-top: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.custom_modal_footer .review_delete_button {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: start;
+}
+
+.custom_modal_footer .review_user {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.custom_modal_footer .review_count {
+    color: var(--font_01);
+    font-weight: bold;
+}
+
+.custom_modal_footer .user_form {
+    display: flex;
+    color: var(--font_01);
+}
+
+.custom_modal_footer .review_user_img img {
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+}
+
+.custom_modal_footer .review_form .review {
+    padding: 10px;
+    font-size: 14px;
+    color: var(--font_01);
+}
+
+.user_th th {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.user_td td {
+    text-align: center;
+    font-size: 14px;
+    vertical-align: center;
+}
+
+.user_td .profile_button {
+    padding: 8px;
+    border: 0.5px solid var(--line_01);
+    background-color: var(--def_wh);
+    border-radius: 5px;
+    color: var(--point_01);
+}

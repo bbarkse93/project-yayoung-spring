@@ -1,0 +1,68 @@
+@import url(reset.css);
+
+/* commmon */
+:root {
+    --primary_01: #104b3a;
+    --primary_02: #F6F5EA;
+    --point_01: #AE5A2A;
+    --point_02: #87BFCE;
+    --line_01: #dcdcdc;
+    --font_01: #2C2C34;
+    --font_02: #6C6A6B;
+    --font_03: #BFBFC1;
+    --back_01: #F1F1F2;
+    --back_02: #FCFBF8;
+    --def_wh: #fff;
+    --def_bl: #000;
+}
+
+
+
+.top {
+    width: 100%;
+    height: 75px;
+    background-color: var(--primary_01);
+}
+
+.date {
+    text-align: right;
+    color: var(--font_03);
+    font-size: 12px;
+}
+
+.search {
+    width: 300px;
+}
+
+
+.center_btn {
+    display: flex;
+    align-items: center;
+}
+
+.wait_btn {
+    padding: 10px;
+    border-radius: 50px;
+    background-color: var(--line_01);
+}
+
+.accept_btn {
+    padding: 10px;
+    border-radius: 50px;
+    background-color: var(--point_02);
+}
+
+.refuse_btn {
+    padding: 10px;
+    border-radius: 50px;
+    background-color: var(--point_02);
+}
+
+
+.double_btn .btn_fill {
+    border: 1px solid var(--primary_01);
+    background-color: var(--primary_01);
+    color: var(--def_wh);
+}
+
+
