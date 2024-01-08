@@ -5,4 +5,9 @@ import lombok.Data;
 @Data
 public class CampReqDTO {
 
+	@Data
+	public static class MyCampListDTO {
+		private Integer year;
+	}
+	
 }

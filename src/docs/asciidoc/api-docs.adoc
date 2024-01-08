@@ -1,0 +1,28 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:user: user-rest-controller_test
+:camp: camp-rest-controller_test
+
+= REST API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 회원
+=== 1. 회원정보
+===== Request Example
+include::{snippets}/{user}/my-page_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/my-page_test/http-response.adoc[]
+
+== 캠프
+=== 1. 캠프정보
+===== Request Example
+include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
+
