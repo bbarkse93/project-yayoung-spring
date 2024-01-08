@@ -35,11 +35,7 @@ public class OrderRespDTO {
 		
 		public ImminentOrderDetailDTO(Order order) {
 			this.campName = order.getCampField().getCamp().getCampName();
-<<<<<<< HEAD
-			this.checkInDate = new SimpleDateFormat("MM/dd(EE)").format(order.getCheckInDate());
-=======
 			this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT3);
->>>>>>> dev
 			this.checkInDDay = formatDDay(order.getCheckInDate());
 		}
 	}
