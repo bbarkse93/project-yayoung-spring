@@ -83,7 +83,7 @@ public class Camp {
             for (CampRating campRating: campRatingList) {
                 campTotalRatingSum+=campRating.total();
             }
-            formatRating = String.valueOf(campTotalRatingSum/3);
+            formatRating = String.valueOf(campTotalRatingSum/campRatingList.size());
         }else{
             formatRating = "평가없음";
         }
