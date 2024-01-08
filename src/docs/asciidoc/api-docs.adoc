@@ -19,9 +19,18 @@ include::{snippets}/{user}/my-page_test/http-request.adoc[]
 include::{snippets}/{user}/my-page_test/http-response.adoc[]
 
 == 캠프
+<<<<<<< HEAD
 === 1. 캠프 목록
 ===== Request Example
 include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
+=======
+=== 1. 캠프정보
+===== Request Example
+include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
+>>>>>>> 0681050434f905dd3d23a2aa31075170debbaf27
 
 ===== Response Example
 include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]

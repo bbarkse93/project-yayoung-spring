@@ -1,5 +1,6 @@
 package com.example.team_project.order;
 
+import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
@@ -29,7 +30,7 @@ public class Order {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private CampField campField;
+    private CampField campField;    
 
     @CreationTimestamp
     private Timestamp createdAt;
