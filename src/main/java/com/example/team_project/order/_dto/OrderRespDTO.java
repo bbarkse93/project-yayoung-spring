@@ -22,12 +22,12 @@ public class OrderRespDTO {
 	@Getter
 	@ToString
 	public static class ImminentOrderDetailDTO {
-		private String fieldName;
+		private String campName;
 		private String checkInDate;
 		private String checkInDDay;
 		
 		public ImminentOrderDetailDTO(Order order) {
-			this.fieldName = order.getCampField().getFieldName();
+			this.campName = order.getCampField().getCamp().getCampName();
 			this.checkInDate = new SimpleDateFormat("MM/dd(EE)").format(order.getCheckInDate());
 			this.checkInDDay = formatDDay(order.getCheckInDate());
 		}
