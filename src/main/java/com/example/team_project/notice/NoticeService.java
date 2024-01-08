@@ -15,6 +15,7 @@ public class NoticeService {
 
     private final NoticeJPARepository noticeJPARepository;
 
+    // ME 공지사항 페이지 요청
     public NoticeRespDTO.NoticeListDTO noticePage() {
         List<Notice> noticeList = noticeJPARepository.findAll();
 
