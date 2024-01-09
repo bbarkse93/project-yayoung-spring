@@ -16,7 +16,10 @@ import com.example.team_project.camp.camp_image.CampImageJPARepository;
 import com.example.team_project.camp.camp_rating.CampRatingJPARepository;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
+import com.example.team_project.user.User;
+import com.example.team_project.user.UserJPARepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Transactional
@@ -25,10 +28,13 @@ import lombok.RequiredArgsConstructor;
 public class CampService {
 
     private final CampJPARepository campJPARepository;
+    private final UserJPARepository userJPARepository;
 
+    // 사용자 캠핑장 목록 출력 기능
     public List<CampListDTO> getAllCamps() {
         List<Camp> camps = campJPARepository.findAll();
-        return camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
+        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
+        return campList;
 
     }
 
@@ -47,20 +53,48 @@ public class CampService {
                 camp.getHoliday(),
                 camp.getCampCheckIn(),
                 camp.getCampCheckOut(),
-                camp.getCampFieldImage()); 
-            }
+                camp.getCampFieldImage());
+    }
 
+    // 사용자 관심 캠핑장 등록 기능
+    public CampBookmark addBookmark(Integer userId, Integer campId) {
+        User user = userJPARepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Camp camp = campJPARepository.findById(campId)
+                .orElseThrow(() -> new EntityNotFoundException("Camp not found"));
+
+        CampBookmark campBookmark = CampBookmark.builder()
+                .user(user)
+                .camp(camp)
+                .build();
+        return campBookmarkJPARepository.save(campBookmark);
+    }
+
+    // 관심 캠핑장 등록 후 버튼 재클릭 시 해제 기능
+    public void bookmarkRemove(Integer userId, Integer campId) {
+        List<CampBookmark> bookmarks = campBookmarkJPARepository.findByUserId(userId);
+        for (CampBookmark bookmark : bookmarks) {
+            if (bookmark.getCamp().getId().equals(campId)) {
+                campBookmarkJPARepository.delete(bookmark);
+                break;
+            }
+        }
+    }
+
+    // 사용자의 관심 캠핑장 조회 기능
+    public List<CampBookmark> getUserBookmarks(Integer userId) {
+        return campBookmarkJPARepository.findByUserId(userId);
+    }
 
     private final CampBookmarkJPARepository campBookmarkJPARepository;
     private final CampImageJPARepository campImageJPARepository;
     private final CampRatingJPARepository campRatingJPARepository;
     private final CampReviewJPARepository campReviewJPARepository;
 
-
     // ME 관심캠핑장 목록 페이지 요청
     public CampRespDTO.CampBookMarkListDTO campBookMarkPage(Integer userId) {
         List<CampBookmark> campBookmarkList = campBookmarkJPARepository.findByUserId(userId);
-        for (CampBookmark campBookmark:campBookmarkList) {
+        for (CampBookmark campBookmark : campBookmarkList) {
             System.out.println("campBookmark : " + campBookmark.getCamp().getId());
         }
         return new CampRespDTO.CampBookMarkListDTO(campBookmarkList);
