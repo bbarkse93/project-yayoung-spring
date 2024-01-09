@@ -39,7 +39,7 @@ public class UserRestController {
     // ME 프로필 페이지 요청
     // localhost:8080/user/my-page/profile
     @GetMapping("/my-page/profile")
-    public ResponseEntity<?> profliePage() {
+    public ResponseEntity<?> profilePage() {
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id")
