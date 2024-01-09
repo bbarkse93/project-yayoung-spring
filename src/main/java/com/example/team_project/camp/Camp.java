@@ -46,7 +46,7 @@ public class Camp {
     private boolean campGarbageBag;
 
     private String holiday;
-    
+
     private String campCheckIn;
 
     private String campCheckOut;
@@ -83,15 +83,15 @@ public class Camp {
     }
 
     // camp의 총 평점
-    public String formatTotalRating () {
+    public String formatTotalRating() {
         String formatRating;
-        if(!campRatingList.isEmpty()){
+        if (!campRatingList.isEmpty()) {
             double campTotalRatingSum = 0;
-            for (CampRating campRating: campRatingList) {
-                campTotalRatingSum+=campRating.total();
+            for (CampRating campRating : campRatingList) {
+                campTotalRatingSum += campRating.total();
             }
-            formatRating = String.valueOf(campTotalRatingSum/campRatingList.size());
-        }else{
+            formatRating = String.valueOf(campTotalRatingSum / campRatingList.size());
+        } else {
             formatRating = "평가없음";
         }
         return formatRating;
