@@ -453,6 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_캠프">캠프</a>
 <ul class="sectlevel2">
 <li><a href="#_1_캠프_목록">1. 캠프 목록</a></li>
+<li><a href="#_2_캠프_정보">2. 캠프 정보</a></li>
 </ul>
 </li>
 </ul>
@@ -721,13 +722,57 @@ Content-Length: 7443
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_2_캠프_정보">2. 캠프 정보</h3>
+<div class="sect4">
+<h5 id="_request_example_3">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_3">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 668
+
+{
+  "success" : true,
+  "response" : {
+    "myCampDTOs" : [ {
+      "totalRating" : "4",
+      "checkInDate" : "2024년 01월 15일",
+      "checkOutDate" : "01월 10일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
+      "totalRating" : "5",
+      "checkInDate" : "2024년 01월 15일",
+      "checkOutDate" : "01월 11일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-08 15:57:20 +0900
+Last updated 2024-01-09 10:57:06 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

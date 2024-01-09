@@ -27,9 +27,10 @@ include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]
 
-=== 2. 캠프정보
+=== 2. 캠프 정보
 ===== Request Example
 include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
+
