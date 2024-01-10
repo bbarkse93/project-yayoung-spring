@@ -589,111 +589,111 @@ VALUES ('1', '50000', 15),
 
 -- 캠프 사진 LIST -------------------------------------------------------------------------------------------------------
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp1-1.jpg', 1),
-       ('camp_image/camp1-2.jpg', 1),
-       ('camp_image/camp1-3.jpg', 1),
-       ('camp_image/camp1-4.jpg', 1),
-       ('camp_image/camp1-5.jpg', 1),
-       ('camp_image/camp1-6.jpg', 1),
-       ('camp_image/camp1-7.jpg', 1),
-       ('camp_image/camp1-8.jpg', 1);
+values ('/images/camp_image/camp1-1.jpg', 1),
+       ('/images/camp_image/camp1-2.jpg', 1),
+       ('/images/camp_image/camp1-3.jpg', 1),
+       ('/images/camp_image/camp1-4.jpg', 1),
+       ('/images/camp_image/camp1-5.jpg', 1),
+       ('/images/camp_image/camp1-6.jpg', 1),
+       ('/images/camp_image/camp1-7.jpg', 1),
+       ('/images/camp_image/camp1-8.jpg', 1);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp2-1.jpg', 2),
-       ('camp_image/camp2-2.jpg', 2),
-       ('camp_image/camp2-3.jpg', 2),
-       ('camp_image/camp2-4.jpg', 2),
-       ('camp_image/camp2-5.jpg', 2);
+values ('/images/camp_image/camp2-1.jpg', 2),
+       ('/images/camp_image/camp2-2.jpg', 2),
+       ('/images/camp_image/camp2-3.jpg', 2),
+       ('/images/camp_image/camp2-4.jpg', 2),
+       ('/images/camp_image/camp2-5.jpg', 2);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp3-1.jpg', 3),
-       ('camp_image/camp3-2.jpg', 3),
-       ('camp_image/camp3-3.jpg', 3),
-       ('camp_image/camp3-4.jpg', 3),
-       ('camp_image/camp3-5.jpg', 3);
+values ('/images/camp_image/camp3-1.jpg', 3),
+       ('/images/camp_image/camp3-2.jpg', 3),
+       ('/images/camp_image/camp3-3.jpg', 3),
+       ('/images/camp_image/camp3-4.jpg', 3),
+       ('/images/camp_image/camp3-5.jpg', 3);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp4-1.jpg', 4),
-       ('camp_image/camp4-2.jpg', 4),
-       ('camp_image/camp4-3.jpg', 4),
-       ('camp_image/camp4-4.jpg', 4),
-       ('camp_image/camp4-5.jpg', 4);
+values ('/images/camp_image/camp4-1.jpg', 4),
+       ('/images/camp_image/camp4-2.jpg', 4),
+       ('/images/camp_image/camp4-3.jpg', 4),
+       ('/images/camp_image/camp4-4.jpg', 4),
+       ('/images/camp_image/camp4-5.jpg', 4);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp5-1.jpg', 5),
-       ('camp_image/camp5-2.jpg', 5),
-       ('camp_image/camp5-3.jpg', 5),
-       ('camp_image/camp5-4.jpg', 5),
-       ('camp_image/camp5-5.jpg', 5);
+values ('/images/camp_image/camp5-1.jpg', 5),
+       ('/images/camp_image/camp5-2.jpg', 5),
+       ('/images/camp_image/camp5-3.jpg', 5),
+       ('/images/camp_image/camp5-4.jpg', 5),
+       ('/images/camp_image/camp5-5.jpg', 5);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp6-1.jpg', 6),
-       ('camp_image/camp6-2.jpg', 6),
-       ('camp_image/camp6-3.jpg', 6),
-       ('camp_image/camp6-4.jpg', 6),
-       ('camp_image/camp6-5.jpg', 6);
+values ('/images/camp_image/camp6-1.jpg', 6),
+       ('/images/camp_image/camp6-2.jpg', 6),
+       ('/images/camp_image/camp6-3.jpg', 6),
+       ('/images/camp_image/camp6-4.jpg', 6),
+       ('/images/camp_image/camp6-5.jpg', 6);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp7-1.jpg', 7),
-       ('camp_image/camp7-2.jpg', 7),
-       ('camp_image/camp7-3.jpg', 7);
+values ('/images/camp_image/camp7-1.jpg', 7),
+       ('/images/camp_image/camp7-2.jpg', 7),
+       ('/images/camp_image/camp7-3.jpg', 7);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp8-1.jpg', 8),
-       ('camp_image/camp8-2.jpg', 8),
-       ('camp_image/camp8-3.jpg', 8),
-       ('camp_image/camp8-4.jpg', 8),
-       ('camp_image/camp8-5.jpg', 8);
+values ('/images/camp_image/camp8-1.jpg', 8),
+       ('/images/camp_image/camp8-2.jpg', 8),
+       ('/images/camp_image/camp8-3.jpg', 8),
+       ('/images/camp_image/camp8-4.jpg', 8),
+       ('/images/camp_image/camp8-5.jpg', 8);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp9-1.jpg', 9),
-       ('camp_image/camp9-2.jpg', 9),
-       ('camp_image/camp9-3.jpg', 9),
-       ('camp_image/camp9-4.jpg', 9),
-       ('camp_image/camp9-5.jpg', 9),
-       ('camp_image/camp9-6.jpg', 9),
-       ('camp_image/camp9-7.jpg', 9);
+values ('/images/camp_image/camp9-1.jpg', 9),
+       ('/images/camp_image/camp9-2.jpg', 9),
+       ('/images/camp_image/camp9-3.jpg', 9),
+       ('/images/camp_image/camp9-4.jpg', 9),
+       ('/images/camp_image/camp9-5.jpg', 9),
+       ('/images/camp_image/camp9-6.jpg', 9),
+       ('/images/camp_image/camp9-7.jpg', 9);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp10-1.jpg', 10),
-       ('camp_image/camp10-2.jpg', 10),
-       ('camp_image/camp10-3.jpg', 10),
-       ('camp_image/camp10-4.jpg', 10),
-       ('camp_image/camp10-5.jpg', 10);
+values ('/images/camp_image/camp10-1.jpg', 10),
+       ('/images/camp_image/camp10-2.jpg', 10),
+       ('/images/camp_image/camp10-3.jpg', 10),
+       ('/images/camp_image/camp10-4.jpg', 10),
+       ('/images/camp_image/camp10-5.jpg', 10);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp11-1.jpg', 11),
-       ('camp_image/camp11-2.jpg', 11),
-       ('camp_image/camp11-3.jpg', 11),
-       ('camp_image/camp11-4.jpg', 11),
-       ('camp_image/camp11-5.jpg', 11);
+values ('/images/camp_image/camp11-1.jpg', 11),
+       ('/images/camp_image/camp11-2.jpg', 11),
+       ('/images/camp_image/camp11-3.jpg', 11),
+       ('/images/camp_image/camp11-4.jpg', 11),
+       ('/images/camp_image/camp11-5.jpg', 11);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp12-1.jpg', 12),
-       ('camp_image/camp12-2.jpg', 12),
-       ('camp_image/camp12-3.jpg', 12),
-       ('camp_image/camp12-4.jpg', 12);
+values ('/images/camp_image/camp12-1.jpg', 12),
+       ('/images/camp_image/camp12-2.jpg', 12),
+       ('/images/camp_image/camp12-3.jpg', 12),
+       ('/images/camp_image/camp12-4.jpg', 12);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp13-1.jpg', 13),
-       ('camp_image/camp13-2.jpg', 13),
-       ('camp_image/camp13-3.jpg', 13),
-       ('camp_image/camp13-4.jpg', 13),
-       ('camp_image/camp13-5.jpg', 13);
+values ('/images/camp_image/camp13-1.jpg', 13),
+       ('/images/camp_image/camp13-2.jpg', 13),
+       ('/images/camp_image/camp13-3.jpg', 13),
+       ('/images/camp_image/camp13-4.jpg', 13),
+       ('/images/camp_image/camp13-5.jpg', 13);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp14-1.jpg', 14),
-       ('camp_image/camp14-2.jpg', 14),
-       ('camp_image/camp14-3.jpg', 14),
-       ('camp_image/camp14-4.jpg', 14),
-       ('camp_image/camp14-5.jpg', 14);
+values ('/images/camp_image/camp14-1.jpg', 14),
+       ('/images/camp_image/camp14-2.jpg', 14),
+       ('/images/camp_image/camp14-3.jpg', 14),
+       ('/images/camp_image/camp14-4.jpg', 14),
+       ('/images/camp_image/camp14-5.jpg', 14);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp15-1.jpg', 15),
-       ('camp_image/camp15-2.jpg', 15),
-       ('camp_image/camp15-3.jpg', 15),
-       ('camp_image/camp15-4.jpg', 15),
-       ('camp_image/camp15-5.jpg', 15);
+values ('/images/camp_image/camp15-1.jpg', 15),
+       ('/images/camp_image/camp15-2.jpg', 15),
+       ('/images/camp_image/camp15-3.jpg', 15),
+       ('/images/camp_image/camp15-4.jpg', 15),
+       ('/images/camp_image/camp15-5.jpg', 15);
 
 -- 옵션 카테고리 -------------------------------------------------------------------------------------------------------
 insert into OPTION_CATEGORY_TB (CATEGORY_NAME)
