@@ -19,8 +19,40 @@ import lombok.Data;
 @Data
 public class CampRespDTO {
 
+    // 전우진 240108
+    // 캠핑장 목록 페이지
     @Data
     public static class CampListDTO {
+        private List<CampDTO> campDTOList;
+
+        public CampListDTO(List<Camp> campList) {
+            this.campDTOList = campList.stream().map(CampDTO::new).collect(Collectors.toList());
+        }
+        @Data
+        public static class CampDTO {
+            private Integer id;
+            private String campName;
+            private String campAddress;
+            private String campImage;
+            private String campRating;
+
+            public CampDTO(Camp camp) {
+                this.id = camp.getId();
+                this.campName = camp.getCampName();
+                this.campAddress = camp.getCampAddress();
+                this.campImage = camp.firstCampImage();
+                this.campRating = camp.formatTotalRating();
+            }
+    }
+        
+    }
+
+
+
+    // 전우진 240109
+    // 캠핑장 상세 정보 페이지
+    @Data
+    public static class CampDetailDTO {
         private Integer id;
         private String campName;
         private String campAddress;
@@ -33,27 +65,25 @@ public class CampRespDTO {
         private String campCheckIn;
         private String campCheckOut;
         private String campFieldImage;
-        
 
-    public CampListDTO(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite,
-                       String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, 
-                       String campCheckIn, String campCheckOut, String campFieldImage) {
-        this.id = id;
-        this.campName = campName;
-        this.campAddress = campAddress;
-        this.campCallNumber = campCallNumber;
-        this.campWebsite = campWebsite;
-        this.campRefundPolicy = campRefundPolicy;
-        this.campWater = campWater;
-        this.campGarbageBag = campGarbageBag;
-        this.holiday = holiday;
-        this.campCheckIn = campCheckIn;
-        this.campCheckOut = campCheckOut;
-        this.campFieldImage = campFieldImage;
+        private List<String> imageUrls; // 캠핑장 이미지 URL 리스트
+
+        public CampDetailDTO(Camp camp, List<String> imageUrls) {
+            this.id = camp.getId();
+            this.campName = camp.getCampName();
+            this.campAddress = camp.getCampAddress();
+            this.campCallNumber = camp.getCampCallNumber();
+            this.campWebsite = camp.getCampWebsite();
+            this.campRefundPolicy = camp.getCampRefundPolicy();
+            this.campWater = camp.isCampWater();
+            this.campGarbageBag = camp.isCampGarbageBag();
+            this.holiday = camp.getHoliday();
+            this.campCheckIn = camp.getCampCheckIn();
+            this.campCheckOut = camp.getCampCheckOut();
+            this.campFieldImage = camp.getCampFieldImage();
+            this.imageUrls = imageUrls;
         }
     }
-        
-
 
     // ME 캠핑 북마크 리스트 페이지 요청
     @Data
@@ -81,8 +111,52 @@ public class CampRespDTO {
             }
         }
     }
-    
+
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
+    // 승신님 충돌 났길래 어떤걸 날려야 할지 몰라서 일단 주석처리 해뒀어요 -우진 
+    // final static String DATEFORMAT2 = "MM월 dd일";
+
+    // @Data
+    // public static class MyCampListDTO {
+    //     private List<MyCampDTO> myCampDTOs;
+
+    //     public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+    //         this.myCampDTOs = campReviews.stream()
+    //                 .filter(campReview -> campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+    //                 .sorted(Comparator.comparing(campReview -> {
+    //                     Order order = campReview.getOrder();
+    //                     return order.getCheckInDate();
+    //                 }))
+    //                 .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+    //     }
+
+    //     @Data
+    //     public class MyCampDTO {
+    //         private String totalRating;
+    //         private String checkInDate;
+    //         private String checkOutDate;
+    //         private String campAddress;
+    //         private String campName;
+    //         private String reviewImage;
+
+    //         public MyCampDTO(CampReview campReview) {
+    //             Order order = campReview.getOrder();
+    //             Camp camp = campReview.getCamp();
+    //             this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+    //             this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT1);
+    //             Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() == order.getCheckOutDate()
+    //                     .toLocalDateTime().getYear();
+    //             String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+    //             this.checkOutDate = TimestampUtils.timeStampToDate(order.getCheckOutDate(), dateFormat);
+    //             this.campAddress = camp.getCampAddress();
+    //             this.campName = camp.getCampName();
+    //             this.reviewImage = campReview.getReviewImage();
+    //         }
+
+    //     }
+
+    // }
+
 	final static String DATEFORMAT2 = "MM월 dd일";
 	// 내 캠핑장 연도별 DTO
 	@Data
@@ -120,6 +194,7 @@ public class CampRespDTO {
 				this.campName = camp.getCampName();
 				this.reviewImage = campReview.getReviewImage();
 			}
+
 		}
 	}
 	
@@ -196,8 +271,5 @@ public class CampRespDTO {
 		DecimalFormat decimalFormat = new DecimalFormat("#,###");
 		return decimalFormat.format(price);  
 	}
-    
-	
-	
-    
+
 }
