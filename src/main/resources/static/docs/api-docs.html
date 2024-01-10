@@ -453,17 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_캠프">캠프</a>
 <ul class="sectlevel2">
 <li><a href="#_1_캠프_목록">1. 캠프 목록</a></li>
-<li><a href="#_2_방문한_캠프_목록">2. 방문한 캠프 목록</a></li>
-</ul>
-</li>
-<li><a href="#_캠프구역">캠프구역</a>
-<ul class="sectlevel2">
-<li><a href="#_1_캠프_구역_목록">1. 캠프 구역 목록</a></li>
-</ul>
-</li>
-<li><a href="#_주문">주문</a>
-<ul class="sectlevel2">
-<li><a href="#_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</a></li>
+<li><a href="#_2_캠프_정보">2. 캠프 정보</a></li>
 </ul>
 </li>
 </ul>
@@ -733,12 +723,12 @@ Content-Length: 7443
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_방문한_캠프_목록">2. 방문한 캠프 목록</h3>
+<h3 id="_2_캠프_정보">2. 캠프 정보</h3>
 <div class="sect4">
 <h5 id="_request_example_3">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp?year=2024 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -749,168 +739,26 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1246
+Content-Length: 668
 
 {
   "success" : true,
   "response" : {
     "myCampDTOs" : [ {
-      "totalRating" : "5",
-      "checkInDate" : "2024년 01월 11일",
-      "checkOutDate" : "01월 15일",
-      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
-      "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
-    }, {
-      "totalRating" : "3",
-      "checkInDate" : "2024년 01월 17일",
-      "checkOutDate" : "01월 18일",
-      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
-      "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
-    }, {
       "totalRating" : "4",
-      "checkInDate" : "2024년 01월 20일",
-      "checkOutDate" : "01월 25일",
+      "checkInDate" : "2024년 01월 15일",
+      "checkOutDate" : "01월 10일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
       "reviewImage" : "camp_image/camp1-1.jpg"
     }, {
       "totalRating" : "5",
-      "checkInDate" : "2024년 02월 03일",
-      "checkOutDate" : "02월 10일",
+      "checkInDate" : "2024년 01월 15일",
+      "checkOutDate" : "01월 11일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
       "reviewImage" : "camp_image/camp1-1.jpg"
     } ]
-  },
-  "error" : null
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_캠프구역">캠프구역</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_캠프_구역_목록">1. 캠프 구역 목록</h3>
-<div class="sect4">
-<h5 id="_request_example_4">Request Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp-field/list?campId=1&amp;checkInDate=2024-01-10&amp;checkOutDate=2024-01-15 HTTP/1.1
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_response_example_4">Response Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 1539
-
-{
-  "success" : true,
-  "response" : {
-    "campFieldDTOs" : [ {
-      "fieldName" : "캠핑사이트-1",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑사이트-2",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑사이트-3",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑사이트-4",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑사이트-5",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑사이트-6",
-      "nights" : 5,
-      "totalPrice" : "250,000"
-    }, {
-      "fieldName" : "캠핑카 13-1",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 17-1",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 20-1",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 20-2",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 20-3",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 20-4",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 26-1",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    }, {
-      "fieldName" : "캠핑카 26-2",
-      "nights" : 5,
-      "totalPrice" : "300,000"
-    } ]
-  },
-  "error" : null
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_주문">주문</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</h3>
-<div class="sect4">
-<h5 id="_request_example_5">Request Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/imminentOrder HTTP/1.1
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_response_example_5">Response Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-Content-Length: 174
-
-{
-  "success" : true,
-  "response" : {
-    "campName" : "(주)아웃오브파크",
-    "checkInDate" : "01/10(월)",
-    "checkInDDay" : "D-0"
   },
   "error" : null
 }</code></pre>
@@ -924,7 +772,7 @@ Content-Length: 174
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-10 11:26:45 +0900
+Last updated 2024-01-09 10:57:06 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

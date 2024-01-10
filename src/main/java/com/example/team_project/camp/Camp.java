@@ -1,5 +1,6 @@
 package com.example.team_project.camp;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.example.team_project.camp.camp_image.CampImage;
@@ -90,7 +91,10 @@ public class Camp {
             for (CampRating campRating : campRatingList) {
                 campTotalRatingSum += campRating.total();
             }
-            formatRating = String.valueOf(campTotalRatingSum / campRatingList.size());
+
+            double averageRating = campTotalRatingSum / campRatingList.size();
+            DecimalFormat decimalFormat = new DecimalFormat("#.#"); // 소수점 첫째 자리까지 표시
+            formatRating = decimalFormat.format(averageRating);
         } else {
             formatRating = "평가없음";
         }
