@@ -1,6 +1,7 @@
 package com.example.team_project.camp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,11 @@ import com.example.team_project.camp.camp_image.CampImageJPARepository;
 import com.example.team_project.camp.camp_rating.CampRatingJPARepository;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
+import com.example.team_project.camp_field.CampField;
+import com.example.team_project.camp_field.CampFieldJPARepository;
+import com.example.team_project.camp_field._dto.CampFieldReqDTO;
+import com.example.team_project.camp_field._dto.CampFieldRespDTO;
+import com.example.team_project.camp_field._dto.CampFieldRespDTO.CampFieldListDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
 
@@ -29,6 +35,7 @@ public class CampService {
 
     private final CampJPARepository campJPARepository;
     private final UserJPARepository userJPARepository;
+    private final CampFieldJPARepository campFieldJPARepository;
 
     // 사용자 캠핑장 목록 출력 기능
     public List<CampListDTO> getAllCamps() {
@@ -105,5 +112,17 @@ public class CampService {
 		List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
 		if(campReviews == null) throw new Exception404("작성하신 리뷰가 없습니다");
 		return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
+	}
+
+	
+	//캠프장 아이디를 받아 캠프 구역 목록 조회 + 캠프장 지도 + 상세정보 조회
+	public CampRespDTO.CampFieldListDTO  campFieldList(CampReqDTO.CampFieldListDTO requestDTO) {
+		// 캠프장 정보 조회
+		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
+				new Exception404("해당 캠프장이 존재하지 않습니다."));
+		// 캠프 구역 목록 조회
+		List<CampField> campfields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
+		if(campfields == null)throw new Exception404("잘못된 캠프장 명입니다.");
+		return new CampRespDTO.CampFieldListDTO(campfields, camp, requestDTO.getCheckInDate(),requestDTO.getCheckOutDate());
 	}
 }

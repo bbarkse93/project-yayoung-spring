@@ -20,11 +20,6 @@ public class CampFieldRestController {
 
     private final CampFieldService campFieldService;
     
-    //캠프장 아이디를 받아 캠프 구역 목록 조회
-    @GetMapping("/list")
-    public ResponseEntity<?> campFieldList(@ModelAttribute CampFieldReqDTO.CampFieldListDTO requestDTO){
-    	CampFieldRespDTO.CampFieldListDTO responseDTO = campFieldService.campFieldList(requestDTO);
-    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
+   
 
 }

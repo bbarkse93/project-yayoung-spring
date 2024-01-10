@@ -448,12 +448,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_회원">회원</a>
 <ul class="sectlevel2">
 <li><a href="#_1_회원정보">1. 회원정보</a></li>
+<li><a href="#_2_프로필_페이지">2. 프로필 페이지</a></li>
+<li><a href="#_3_프로필_수정">3. 프로필 수정</a></li>
+<li><a href="#_4_로그아웃">4. 로그아웃</a></li>
+<li><a href="#_5_회원탈퇴">5. 회원탈퇴</a></li>
 </ul>
 </li>
 <li><a href="#_캠프">캠프</a>
 <ul class="sectlevel2">
 <li><a href="#_1_캠프_목록">1. 캠프 목록</a></li>
-<li><a href="#_2_캠프_정보">2. 캠프 정보</a></li>
+<li><a href="#_2_방문한_캠프_목록">2. 방문한 캠프 목록</a></li>
+<li><a href="#_3_결제_캠프_구역">3. 결제 - 캠프 구역</a></li>
+</ul>
+</li>
+<li><a href="#_주문">주문</a>
+<ul class="sectlevel2">
+<li><a href="#_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</a></li>
+<li><a href="#_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</a></li>
+</ul>
+</li>
+<li><a href="#_공지사항">공지사항</a>
+<ul class="sectlevel2">
+<li><a href="#_1_공지사항목록">1. 공지사항목록</a></li>
+</ul>
+</li>
+<li><a href="#_faq">FAQ</a>
+<ul class="sectlevel2">
+<li><a href="#_1_faq목록">1. FAQ목록</a></li>
 </ul>
 </li>
 </ul>
@@ -480,13 +501,146 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 136
+Content-Length: 163
 
 {
   "success" : true,
   "response" : {
+    "userId" : 1,
     "nickname" : "ssar",
-    "userImage" : "user/user-profile.jpg"
+    "userImage" : "/images/user/user-profile.jpg"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_프로필_페이지">2. 프로필 페이지</h3>
+<div class="sect4">
+<h5 id="_request_example_2">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /user/my-page/profile HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_2">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 163
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "ssar",
+    "userImage" : "/images/user/user-profile.jpg"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_프로필_수정">3. 프로필 수정</h3>
+<div class="sect4">
+<h5 id="_request_example_3">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /user/my-page/profile HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 6548
+Host: localhost:8080
+
+{
+  "nickname" : "love",
+  "userImage" : "/9j/4AAQSkZJRgABAQEASABIAAD/7QBgUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAACccAVoAAxslRxwCAAACAAIcAjwABjEwMzQ0MBwCNwAIMjAyMzExMjEAOEJJTQQlAAAAAAAQ8fKzVvc4hHJRGrmqK+pyNv/hAQhFeGlmAABNTQAqAAAACAAGARIAAwAAAAEAAQAAARoABQAAAAEAAABWARsABQAAAAEAAABeASgAAwAAAAEAAgAAAhMAAwAAAAEAAQAAh2kABAAAAAEAAABmAAAAAAAAAEgAAAABAAAASAAAAAEACZAAAAcAAAAEMDIyMZADAAIAAAAUAAAA2JEBAAcAAAAEAQIDAJKGAAcAAAASAAAA7KAAAAcAAAAEMDEwMKABAAMAAAABAAEAAKACAAQAAAABAAAEkqADAAQAAAABAAAJ5KQGAAMAAAABAAAAAAAAAAAyMDIzOjExOjIxIDEwOjM0OjQwAEFTQ0lJAAAAU2NyZWVuc2hvdAAA/+ICKElDQ19QUk9GSUxFAAEBAAACGGFwcGwEAAAAbW50clJHQiBYWVogB+YAAQABAAAAAAAAYWNzcEFQUEwAAAAAQVBQTAAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBs7P2jjjiFR8NttL1PetoYLwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKZGVzYwAAAPwAAAAwY3BydAAAASwAAABQd3RwdAAAAXwAAAAUclhZWgAAAZAAAAAUZ1hZWgAAAaQAAAAUYlhZWgAAAbgAAAAUclRSQwAAAcwAAAAgY2hhZAAAAewAAAAsYlRSQwAAAcwAAAAgZ1RSQwAAAcwAAAAgbWx1YwAAAAAAAAABAAAADGVuVVMAAAAUAAAAHABEAGkAcwBwAGwAYQB5ACAAUAAzbWx1YwAAAAAAAAABAAAADGVuVVMAAAA0AAAAHABDAG8AcAB5AHIAaQBnAGgAdAAgAEEAcABwAGwAZQAgAEkAbgBjAC4ALAAgADIAMAAyADJYWVogAAAAAAAA9tUAAQAAAADTLFhZWiAAAAAAAACD3wAAPb////+7WFlaIAAAAAAAAEq/AACxNwAACrlYWVogAAAAAAAAKDgAABELAADIuXBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbc2YzMgAAAAAAAQxCAAAF3v//8yYAAAeTAAD9kP//+6L///2jAAAD3AAAwG7/2wBDAAEBAQEBAQEBAQEBAQECAgMCAgICAgQDAwIDBQQFBQUEBAQFBgcGBQUHBgQEBgkGBwgICAgIBQYJCgkICgcICAj/2wBDAQEBAQICAgQCAgQIBQQFCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAj/wAARCABQAFADASIAAhEBAxEB/8QAHQAAAgIDAQEBAAAAAAAAAAAACAkFCgQGBwILA//EADsQAAEDAgUDAwEGBAQHAQAAAAECAwQFEQAGBxIhCDFBEyJRYQkUMkJxgRVSkcEjJGKhChZTY3OSsfD/xAAaAQACAwEBAAAAAAAAAAAAAAAHCAQFBgMC/8QALxEAAQMDAQYDCQEBAAAAAAAAAQIDBAAFESEGEjFBYXEHIjITFEKBkaGx0eHB8P/aAAwDAQACEQMRAD8ArJR6ehIQUoOw87r8mw+Ppg6ejlOUoC9TZtdzDlrL9SjwYj0MVJnf6qUvK3JaIUDuvsJTYgi1+2A1TGU2wlClt71JB2AX5/XHZNDM2TNP9QKDmCmfwt1SlrgPCosFxktPWQSsd7JJC7jkbMaXaSAqTBdYTxI/GtZrZycI05p5XAH+V61hyfFyvqBmOHTA+7QH31TaWp2OplMiM77kqSkgcbt4+LAfGNBQ2YyGlFLaAk2I+P1J74O/qOy5mGpUUVTPOeMs5hzdQXEwxDgoDQTFcVf2gkqUASk3I+cAtMfbjMNNqaU25uCiV2G4XHf5/vfEbZG9iZAS4fUnQ9x++NSNrrMYk9SB6Vajsf8AiKzoikIcUlCiEW5Va20fXn+mGo/Zo9J2TupvNGoVQ1Ap6q9kyhQ2Gm4jMpTPrTH1EpLimyFBKW2nPI9y0nkJthUVMnvJlJlMuKZkMqDiFpF+U8g3+ht3xag+yz6i84a+UXUV3NtCyRRHaLIhw2V0WnJh/ed7SlKLyUkp3AoB4sPcr5xYXV9YjqKOdV9qZSXgFcuVHXpp07aBaHNxo2SNKaDk1lxzamSlCnXJKu5SuSolSlDvtUb/AEtgj0ZjjwGm2aWxFgsfmShCUBX7ADG0JgQp8GQl6CxNiPNbJkVxN0zGh4I8LF7pV3B47HgadRqDmjS6Ka/SVS80abO+5D6rrfpQJ/C6e5QOfceR2V8kWyHFoUVKOetExpKVDdTp0qf1v1frenGkufs+5YoozVWqXTlyo0L3KDqtyUkuJR7lIQFKWQnkhBAt3wFeiXWDn3PWbavlvNFU04zlS0Uv7+mq5bhSYrVPfDwQIz6XlKClOIPqJKSCLKB7HH4aldVOTsn0p+fW69HoULaUBS1XW4q3CW0i6lqPgJBJ+McBpubs36iIbm5cYcytl567qZElkKfdSeykRxYJJv3cNx/Ljj72k+UamunsTnpVXpqM4gNKUj1iARcG+355+Lf2xLMNvR1rDYuSiyFbbAKB4xhMuoaC2wglBTylJ8fy/wBr+P2wSfTdpO3qJmv+KVpmIrKcBe99C1+2Q9a6GueSkCxP0sPOC1erq1CjLku+lI+vT50L7NaXZslEZr1KP06/Kum1OgOZzkRJrWUY1IpcuhNhc6U6S65IW0hXq7+SfdusPggcYFTUHQfVmlRpdVaobdfojYKlvUx0OlpA7lTYsu3m9jb9sOK/5Hpeb5QpEmuUOiTA36bMVb6W3pAHYNpPCj8dhew842fLOTctZcfmx58qTUZsVpIcaee9JTi1AlDbVrJC1W23J489jhU7X4hyYDqw0BuKOd0/vtTT3fw/iT2Ue1J30pxvD5cqQZRo33aEhx91O78O1PPNvzE8eMWAfsbM107LeV9VkKfQ0/JrsbckqF7JjDv/AOxtjmlc0D0+i5YzrqfGyflKLnsNF+PEYfTIQg3F/TSs+mp0pBuoAKJHA+VY9K3VhL0c1MqFMmOtUui1uUFAhW0MSgpQSFDwFJVt+hCfnBvt22rd1iuBlBSUgHUj/KCV02MXapCC6sK3iRoDy796vmUDMMWdCBbkEuEAEBXdONspVaTFVLYXFNRo74P3mOLKNzwVoSe5t3T+YfUcp40O6pYdYiU8Ozd7q0gfi7HB8Zd1dhORkOIdbcJ72PINvpikRPSsYOlWBjlB0oUOpX7O/J9XzM7rTo9BaW6+hT0+AgqddLX4gqAtSj6Se92kjgX29rYG3KceFlBaYyYzMeOxudQ02/u9RzfzdZJUT344thv9J1EMRTjkRDLkBxW92GlQBBPdbRPCVE909j9D34Dqv05Zd1VmVLP+lVWg0PNqrqnwltBtme7/AN0W3MunybFKu5H5sVLkMb5da41NZcAGF1RtSpKSloB1xKj7eOUX+bH6f74bf0qZTpkrRDKc2myEwqo9PmOqlNJS6WpSSoA7SCFAJQkbDwQbfooJLqW3HG3C8EpuPYCndz5PjxhlPQbqYhUeq6bSEuNIizf4rFUOLpUkoWnx+bYoeeTjceKcVxy1FaPhIJ7fys14YS0NXMJX8QIHfSmj5ZyZMlsxZNQp9KpFZTGMhySSP8u3wFrK1D/DHckjt2BsMc7rLtIos+nuZfVBqlAcXMDcwAPthTb6vTN+d6Vue5K039rlgcbLnXT1Gc8rVnL1RqddE2bEdiuuF9baZUVY4EbadoULjgi9wTY44JQdM63ojpHQdOsoUCtKytSHH6mpUyT95qK5DqytauQlCWb2IQkAJUCfN8KylKFgrUfPnhjTHemhbUoKShON3HHOue3athyD1MaUa25izzkPIGTapFVlxxAqaqs6lMNp62xSGnE7lXCw4kIUAo2JsMJz+0V0kjU6tU7UGJTqbRFzS5CntxVXS/IRZYdulIG4oWkHsfbc84dXkmE5AyrDNQdgS82PFbn3VhlhJmz3Dcle2yFqTcXUT+Ugq+Rj63tHahP6bKy1UIVRFbgvNz2i6zb37rPLWtJKVEpIFgbC1/GNTszL90ubTrIKUK0Ouc54/fWsttRCMi3uNLIUtOoIHDHD7UsLpG6wa3QqjAyRm2prTVo42w5S1cTmx4J/6gA/cc/OH76WdQrlUhxlJqBKiAT7u/6Yp6VaiyWX/VaDsSc2oONrSopUkg3CkkfBHcYYb0vdT9QDkPJmbJfoVxs2YevtTPHHbwFi3KfPcfGDLe7GdXWefKgxbbrwaeq1zl/VR6QuMpyUsJI7hXbBM5Q1BU3JjVePU3otSQENl0+4OI5uhafzp7ceL3FsKi6T8qaudSFZaomm1AkzoEdaUz6u/dECB/5HrG6/htIKz8Ac4sfdPPSRlTSiC3WMzyXs9ZrShKzIlREIjwyObsNlRUOfzquo28YqbcwsHBGlWUl1GNK+b+9IK1KdXuSQ2QpA7hNr2NvPB/pjufTFmuXlPVnKEtEsM06RJ+5vFSbp9N3vYf0v+l/1HxtVvVcUq9x7lK/MPKQP1xnU2f8Aw6fDl/4lmVh5J5CrpNwn45sP0F8GO6xhIjrZPBQI+1Ce1SixJQ8nikg1afoDbz9Fp6kP1mUypsJSy2sJVIV23qWANjfBsLgkC/bHINT9OdRK0tytMaoIYobQQRRytt9oBIulPvQRYG3G62JDpU1LgawadUCoS30NyFM7JCW+F7WghKkk+CoqSBb8t/jBxZ/YkQsgyItFhUN2IWCXGG0pUpQ29iLW78WBv5wkcpL8SQpo6FJwacaNIZfaS4Pi4UMnSNkuAae5VZ6mKrm6SlSarWX2U7I6m3DtbYZACEWNyQngHnzjfNd8vOv5crtPqU9ivUaUy6xYw/TWW1pKSop/CopvftzgXemjOMwZ/wA9Zbn1yS1T4zoq7jLwKLcWCNv8u4A2+nOCmzZm6j5piR3qo1LpynSrapL5WHQB3KT4/THB55Zd3lHXTHTnXsI8nlGnOqZmcsv/AMEzTmPL+4KjRZr7CgTdIKVlJI7W7f74sI/Zqf8AD/5519XlrWvq2j5j0s0hWW51Oy404Ytar7fCkOPuEboEdQsRx66weA2CFE0OhX7P7Q/JPUBX9cNT6dC1dz+qvOTsvRZTXq02gJK97b3oK4fk87gtwFDfG1JV78WoItbcYpgl1J5UOKWyUPNuAL3ju24kXCr+OCb/AK4Z2HtGiQyAyeQyeuKXaVZFMun2gxqcfWoTTjTLImj2TqBkbTbKFFyplqntBiLToDaGozaALHapIN1HglSiVE8kk84mZ1TSl5p2nhypupG6/O2Pfwq3F+4tiJFQlV5bkdmRGo0dwcpSAkyufNuEK57efnGZFpKYRSpD/wBzdT+FSiRf98eE5NdAoJr5aJS423eRvSDcmw/F37EeOe+PTgK3HFjatoH2quBcAcbv6W/f98TZp7qysOPhVx+K47gg2t444v8ANsG102/Z3dRvVLlup5nyBlun0HI8ZpS0VuuyDCiT3AQPTjHapT6xc3KUlKdpubkDBNfkttJ33TgChnGYW4rdQMmsnoB1xlad6jwsg1iUk5Vr6/QSt7gxZO1QQsHvySEkdvPgYexNzuKPRvScdcVNU4VMxUu7FykAkBSfNwQfoP3vhZulX2QOtkevpzRnrVLIWS6ZSZSHlKpa3Z0tQbsq6EqDSUlQTxuJ78ji2HDZS6Xs26iUSiVWsVHLKKEUPyG5CuH4jTLgAWqxCVLJFwBbkHxhdfEe1sTZaXoBBKh5sdOdMB4fXF2JGU3OGifTn8UsKpZ2zDI6k22KHAjBFSZVHqrTrCWHVNKKBsU5+EK95IUe4vzzg+6zpFMnVGjUejZVzJNzHKa/yaEMm6VJeQo2T2VvQFWF7EX+MMG0V6WNLGHcu5sTHptezZNZVIkIkloOtykvK5UCQCh1tQIHNykptwcG0/otllqCxLyVVY2Vdp9ZMZspUwy6FBdw2VXCdyRdHa315xDi7BtLbQtwneHHHMVYy9tVoWpKBoeHShj0C6Z826RT26/W6emfWnEMPx0tAegQpsBbbilHaSCLBaTyD8p5M1L1QjzxIlJl0+aFlQbfYISEnuhTSrpUB2NiDxcE98bll7UhmuIOTMyR6bl7PbbSlMsl5K4lXbSOVxlnuf5mj70/6hziMi5voz81yhz3ojLyLpMGQ+nsPzR3Ce3+n/5ggQba0ygNsnArATbg68sqdGTWc1WmkD7tXobc+jn8D7QKnoQ+hPuW39D7k+L9sS02CIrDbsWWJlOdAW04le5Cx4KT/wDv7YjqhEpzDCJEOZDlQl8i7qb2+O/BGIGl1uHGbnwo1QiOxEne5HW6n/DJ5unni/yMWYaUDhVQd8cRX//Z"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_3">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 190
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "love",
+    "userImage" : ".\\images\\love_6f8825b7-309c-4f5e-aa78-a6173315561b.png"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_로그아웃">4. 로그아웃</h3>
+<div class="sect4">
+<h5 id="_request_example_4">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /user/logout HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_4">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 82
+
+{
+  "success" : true,
+  "response" : "로그아웃 완료",
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_회원탈퇴">5. 회원탈퇴</h3>
+<div class="sect4">
+<h5 id="_request_example_5">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /user/withDraw HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_5">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 135
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "love",
+    "withdraw" : true
   },
   "error" : null
 }</code></pre>
@@ -502,7 +656,7 @@ Content-Length: 136
 <div class="sect2">
 <h3 id="_1_캠프_목록">1. 캠프 목록</h3>
 <div class="sect4">
-<h5 id="_request_example_2">Request Example</h5>
+<h5 id="_request_example_6">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/list HTTP/1.1
@@ -511,12 +665,12 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_2">Response Example</h5>
+<h5 id="_response_example_6">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 7443
+Content-Length: 7563
 
 {
   "success" : true,
@@ -532,7 +686,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp1.png"
+    "campFieldImage" : "/images/camp_map/camp1.png"
   }, {
     "id" : 2,
     "campName" : "파크킹",
@@ -545,7 +699,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp2.png"
+    "campFieldImage" : "/images/camp_map/camp2.png"
   }, {
     "id" : 3,
     "campName" : "디캠고흥",
@@ -558,7 +712,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp3.png"
+    "campFieldImage" : "/images/camp_map/camp3.png"
   }, {
     "id" : 4,
     "campName" : "캠프달링",
@@ -571,7 +725,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp4.png"
+    "campFieldImage" : "/images/camp_map/camp4.png"
   }, {
     "id" : 5,
     "campName" : "STX 오토캠핑장",
@@ -584,7 +738,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp5.png"
+    "campFieldImage" : "/images/camp_map/camp5.png"
   }, {
     "id" : 6,
     "campName" : "청주 옥화포시즌캠핑장",
@@ -597,7 +751,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp6.png"
+    "campFieldImage" : "/images/camp_map/camp6.png"
   }, {
     "id" : 7,
     "campName" : "휘게 포레스트",
@@ -610,7 +764,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp7.png"
+    "campFieldImage" : "/images/camp_map/camp7.png"
   }, {
     "id" : 8,
     "campName" : "초이스캠프앤카라반",
@@ -623,7 +777,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp8.png"
+    "campFieldImage" : "/images/camp_map/camp8.png"
   }, {
     "id" : 9,
     "campName" : "초록여울캠핑장",
@@ -636,7 +790,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp9.png"
+    "campFieldImage" : "/images/camp_map/camp9.png"
   }, {
     "id" : 10,
     "campName" : "소리의섬 캠핑장",
@@ -649,7 +803,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp10.png"
+    "campFieldImage" : "/images/camp_map/camp10.png"
   }, {
     "id" : 11,
     "campName" : "림스 캠핑장",
@@ -662,7 +816,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp11.png"
+    "campFieldImage" : "/images/camp_map/camp11.png"
   }, {
     "id" : 12,
     "campName" : "단아한",
@@ -675,7 +829,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp12.png"
+    "campFieldImage" : "/images/camp_map/camp12.png"
   }, {
     "id" : 13,
     "campName" : "원주 두리 캠핑장",
@@ -688,7 +842,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp13.png"
+    "campFieldImage" : "/images/camp_map/camp13.png"
   }, {
     "id" : 14,
     "campName" : "너른뜰 캠핑장",
@@ -701,7 +855,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp14.png"
+    "campFieldImage" : "/images/camp_map/camp14.png"
   }, {
     "id" : 15,
     "campName" : "개네집 캠핑장",
@@ -714,7 +868,7 @@ Content-Length: 7443
     "holiday" : "없음",
     "campCheckIn" : "14:00",
     "campCheckOut" : "13:00",
-    "campFieldImage" : "camp_map/camp15.png"
+    "campFieldImage" : "/images/camp_map/camp15.png"
   } ],
   "error" : null
 }</code></pre>
@@ -723,41 +877,446 @@ Content-Length: 7443
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_캠프_정보">2. 캠프 정보</h3>
+<h3 id="_2_방문한_캠프_목록">2. 방문한 캠프 목록</h3>
 <div class="sect4">
-<h5 id="_request_example_3">Request Example</h5>
+<h5 id="_request_example_7">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp?year=2024 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_3">Response Example</h5>
+<h5 id="_response_example_7">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 668
+Content-Length: 1246
 
 {
   "success" : true,
   "response" : {
     "myCampDTOs" : [ {
+      "totalRating" : "5",
+      "checkInDate" : "2024년 01월 11일",
+      "checkOutDate" : "01월 15일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
+      "totalRating" : "3",
+      "checkInDate" : "2024년 01월 17일",
+      "checkOutDate" : "01월 18일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
       "totalRating" : "4",
-      "checkInDate" : "2024년 01월 15일",
-      "checkOutDate" : "01월 10일",
+      "checkInDate" : "2024년 01월 20일",
+      "checkOutDate" : "01월 25일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
       "reviewImage" : "camp_image/camp1-1.jpg"
     }, {
       "totalRating" : "5",
-      "checkInDate" : "2024년 01월 15일",
-      "checkOutDate" : "01월 11일",
+      "checkInDate" : "2024년 02월 03일",
+      "checkOutDate" : "02월 10일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
       "reviewImage" : "camp_image/camp1-1.jpg"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_결제_캠프_구역">3. 결제 - 캠프 구역</h3>
+<div class="sect4">
+<h5 id="_request_example_8">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/field-list?campId=1&amp;checkInDate=2024-01-10&amp;checkOutDate=2024-01-15 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_8">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1972
+
+{
+  "success" : true,
+  "response" : {
+    "campInfoDTO" : {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "minPrice" : "50,000",
+      "maxPrice" : "60,000",
+      "isOpen" : true,
+      "campImage" : "/images/camp_image/camp1-1.jpg",
+      "campFieldImage" : "/images/camp_map/camp1.png"
+    },
+    "checkInDate" : "2024-01-10",
+    "checkOutDate" : "2024-01-15",
+    "nights" : 5,
+    "campFieldDTOs" : [ {
+      "fieldName" : "캠핑사이트-1",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-2",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-3",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-4",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-5",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-6",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑카 13-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 17-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-2",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-3",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-4",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 26-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 26-2",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_주문">주문</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</h3>
+<div class="sect4">
+<h5 id="_request_example_9">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/imminentOrder HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_9">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 174
+
+{
+  "success" : true,
+  "response" : {
+    "campName" : "(주)아웃오브파크",
+    "checkInDate" : "01/11(목)",
+    "checkInDDay" : "D-1"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</h3>
+<div class="sect4">
+<h5 id="_request_example_10">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/campSchedule HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_10">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1046
+
+{
+  "success" : true,
+  "response" : {
+    "campScheduleDTOs" : [ {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 11일",
+      "checkInDDay" : "D-1",
+      "campField" : "캠핑사이트-3"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 17일",
+      "checkInDDay" : "D-7",
+      "campField" : "캠핑사이트-5"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 20일",
+      "checkInDDay" : "D-10",
+      "campField" : "캠핑사이트-3"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "02월 03일",
+      "checkInDDay" : "D-24",
+      "campField" : "캠핑사이트-3"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_공지사항">공지사항</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_공지사항목록">1. 공지사항목록</h3>
+<div class="sect4">
+<h5 id="_request_example_11">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notice/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_11">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 11115
+
+{
+  "success" : true,
+  "response" : {
+    "noticeDTOList" : [ {
+      "noticeId" : 1,
+      "title" : "YAYoung 임시 점검 안내",
+      "content" : "YAYoung 사이트 서비스 개선을 위한 작업으로 인하여\n아래와 같이 일시적으로 YAYoung 홈페이지 접속이 불가능할 예정입니다.\n\n- 작업일시 : 2023년 10월 13일 (금) 00:00 ~ 06:00\n- 작업내용 : DB 작업\n\nYAYoung 서비스 이용에 불편을 드리게 되어 죄송합니다.\n더 나은 서비스를 제공할 수 있도록 노력하는 YAYoung이 되겠습니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 2,
+      "title" : "YAYoung 리뉴얼 오픈",
+      "content" : "Don`t Worry 캠핑!\nBe Happy YAYoung!!\nYAYoung 리뉴얼 오픈\n\nYAYoung 앱이 리뉴얼 오픈합니다.\n사용은 편리해졌고, 혜택은 다양해졌습니다.\n\n강력해진 Q-Point(적립금) 제도\n\n- YAYoung 예약, 쇼핑 이용 시 현금처럼 사용이 가능한 포인트 입니다.\n- 다양한 활동을 통해서 Q-Point를 적립하실 수 있습니다.\n- 예약, 쇼핑, 방문(출석), 게시글 작성, 홍보 참여 등 포인트 적립 기회가 다양해졌습니다.\n\n회원등급제도\n\n- YAYoung을 많이 이용할수록 혜택도 더욱 커집니다.\n- 1년 동안의 누적 활동 지수를 기준으로 내년 등급이 결정되며, 등급별로 다양한 혜택을 받으실 수 있습니다.\n- 등급은 Basic, Bronze, Silver, Gold, Platinum, VIP 총 6등급으로 나눠집니다.\n\n사용성 개선\n좀 더 쉽게 이동하세요.\n메뉴 버튼을 적용하여 원하는 페이지로 쉽게 이동이 가능해졌습니다.\n\n고객만족을 위해 더욱 노력하는 YAYoung이 되겠습니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 3,
+      "title" : "서버 점검으로 인한 서비스 일시 중지 안내",
+      "content" : "※ 서버 일시 중지 안내\n\n서비스 향상을 위한 서버 점검 작업으로 인해 작업 시간 동안  서비스가 중지됨을 알려드립니다.\n\n▶ 일시 : 28일(화) 01시 - 07시\n▶ 내용 : 서버 점검으로 인한 작업\n\n위 시간 동안 예약에 대한 모든 서비스가 중지 되오니 참고하시기 바랍니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 4,
+      "title" : "카카오 소셜로그인 장애 안내",
+      "content" : "현재 어플 및 PC로그인 중 카카오 소셜로그인이 정상적으로 작동되지 않음을 확인하였습니다.\n\n최근 카카오API 정책변경으로 인해 기능 보완이 필요해보입니다.\n조치 될때까지 카카오 로그인 서비스는 잠시 중단하겠습니다.\n\n기존에 카카오로그인으로 활동하신분은 죄송하지만 다른 로그인 방법을 이용해주시기 바랍니다.\n\n불편 드려 죄송합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 5,
+      "title" : "캠핑장 내 공용 와이파이 사용 안내",
+      "content" : "연곡해변 솔향기 캠핑장을 찾는 고객분들에게 알려드립니다 .\n\n캠핑장 내 강릉시에서 운영하는 공용 와이파이가 설치되어 있지만 지형적인 여건으로 인하여 와이파이 신호가 매우 약하여 노트북을 이용한 사무업무 혹은 동영상 강의 등을 재생할 경우 인터넷 연결이 원활하지 않은 경우가 많습니다.\n\n카라반 내부를 포함하여 캠핑장 내 전 구역에 캠핑장에서 개별적으로 운영하는 와이파이가 없으므로 이용에 참고하시기 바랍니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 6,
+      "title" : "YAYoung 개인정보처리방침 개정 안내",
+      "content" : "보다 나은 서비스 제공을 위해 YAYoung의 개인정보처리방침이 다음과 같이 변경됨을 알려 드립니다.\n\n▶ 개인정보처리방침 변경 및 시행일 : 2023년 12월 26일\n▶ 개인정보처리방침 주요 변경 내용\n\nYAYoung는 더 나은 서비스 제공을 위해 항상 최선을 다하겠습니다.\n\n앞으로도 지속적인 서비스 이용과 관심 부탁드립니다.\n감사합니다",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 7,
+      "title" : "자주 묻는 질문 FAQ 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 8,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 9,
+      "title" : "개인정보 처리방침 개정 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 10,
+      "title" : "카카오톡 로그인 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 11,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 12,
+      "title" : "YAYoung 서비스 점검 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 13,
+      "title" : "개인정보 방침 처리 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 14,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 15,
+      "title" : "1월 프로모션 종료 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_faq">FAQ</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_faq목록">1. FAQ목록</h3>
+<div class="sect4">
+<h5 id="_request_example_12">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /board/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_12">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 3844
+
+{
+  "success" : true,
+  "response" : {
+    "paymentDTOList" : [ {
+      "faqId" : 1,
+      "title" : "예약을 취소하고 싶어요",
+      "content" : "예약자 본인이 직접 예약확인/취소 가능합니다.\n예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다."
+    }, {
+      "faqId" : 2,
+      "title" : "예약 완료후 바로 취소했는데 수수료가 나왔어요",
+      "content" : "취소 수수료는 예약 시점과는 무관합니다.\n예약 후 바로 취소하더라도 입실일/이용일로부터 남은 날짜 기준으로 수수료가 부과됩니다. 특히, 이용일 10일 이내 예약 건은 더욱 신중한 예약 바랍니다."
+    }, {
+      "faqId" : 3,
+      "title" : "입실일을 변경하고 싶어요",
+      "content" : "예약 이용일 변경은 불가능합니다.\n취소 수수료를 확인하시고 기존 예약건을 취소하신 다음 재예약하셔야 합니다."
+    }, {
+      "faqId" : 4,
+      "title" : "천재지변으로 인한 예약취소는 어떻게 하나요?",
+      "content" : "일반적인 우천에 의한 예약 취소 및 변경 불가합니다.\n태풍 등 기상 특보 시, 입실 당일 현장 날씨 및 캠핑장/펜션의 정책에 따라 연기 또는 취소 결정됩니다.\n입실 당일 오전에 캠핑장/펜션에 연락하셔서 안내 받으시기 바랍니다."
+    }, {
+      "faqId" : 5,
+      "title" : "객실 타입을 변경하고 싶어요",
+      "content" : "YAYoung 고객센터(070-1111-1111)로 문의하시기 바랍니다."
+    }, {
+      "faqId" : 6,
+      "title" : "취소 수수료 산정은 어떻게 되나요?",
+      "content" : "당일 취소 불가, 2일 전 환불 100%입니다."
+    }, {
+      "faqId" : 7,
+      "title" : "예약 취소 했는데 언제 환불이 되나요?",
+      "content" : "예약 취소 후 간편결제 사업자, 은행 또는 신용카드사에 따라 환불 절차에 일정 시간이 소요될 수 있습니다.\n영업일 기준(토/일/공휴일 제외) 실시간 계좌이체는 2~3일, 신용카드는 3~5일 소요됩니다."
+    } ],
+    "userDTOList" : [ {
+      "faqId" : 8,
+      "title" : "회원탈퇴 후 제 SNS계정에 아직 연결되어 있다고 뜨네요",
+      "content" : "회원탈퇴를 하셨더라도, 연결된 SNS 계정은 해당 계정 설정에서 연결 해제를 해주셔야 합니다."
+    }, {
+      "faqId" : 9,
+      "title" : "탈퇴하고 싶어요.",
+      "content" : "아래 경로를 통해 탈퇴 할 수 있습니다.\n\n▶ ME &gt; 설정 &gt; 회원탈퇴"
+    }, {
+      "faqId" : 10,
+      "title" : "회원 정보 수정은 어떻게 하나요?",
+      "content" : "아래 경로를 통해 회원 정보를 수정할 수 있습니다.\n\n▶ ME &gt; 프로필 클릭"
+    }, {
+      "faqId" : 11,
+      "title" : "제가 설정한 적 없는 닉네임으로 되어있어요.",
+      "content" : "고객님의 개인 정보가 유출된 것이 아니니 안심하세요.\n아래의 경로를 통해 닉네임을 변경할 수 있습니다."
+    }, {
+      "faqId" : 12,
+      "title" : "제 개인정보를 안전하게 보호하려면 어떻게 해야 하죠?",
+      "content" : "YAYoung는 고객님의 소중한 개인정보를 더욱 안전하게 보호하도록 노력하겠습니다.\n"
+    }, {
+      "faqId" : 13,
+      "title" : "로그인이 안 돼요.",
+      "content" : "이메일로 가입한 계정이 있는지 확인해주세요."
+    }, {
+      "faqId" : 14,
+      "title" : "비회원도 예약을 하거나 예약 조회를 할 수 있나요?",
+      "content" : "아니요, 가입을 하셔야 가능합니다."
     } ]
   },
   "error" : null
@@ -772,7 +1331,7 @@ Content-Length: 668
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-09 10:57:06 +0900
+Last updated 2024-01-10 17:15:52 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

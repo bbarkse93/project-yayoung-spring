@@ -66,15 +66,12 @@ include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
 
-
-== 캠프구역
-
-=== 1. 캠프 구역 목록
+=== 3. 결제 - 캠프 구역
 ===== Request Example
-include::{snippets}/{camp-field}/camp-field-list_test/http-request.adoc[]
+include::{snippets}/{camp}/camp-field-list_test/http-request.adoc[]
 
 ===== Response Example
-include::{snippets}/{camp-field}/camp-field-list_test/http-response.adoc[]
+include::{snippets}/{camp}/camp-field-list_test/http-response.adoc[]
 
 == 주문
 
@@ -85,6 +82,12 @@ include::{snippets}/{order}/imminent-order-detail_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{order}/imminent-order-detail_test/http-response.adoc[]
 
+=== 2. 다가오는 캠프 목록
+===== Request Example
+include::{snippets}/{order}/camp-schedule-list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{order}/camp-schedule-list_test/http-response.adoc[]
 
 == 공지사항
 === 1. 공지사항목록
