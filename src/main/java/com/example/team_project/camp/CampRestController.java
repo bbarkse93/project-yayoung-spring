@@ -87,8 +87,6 @@ public class CampRestController {
     	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	//Integer userId = decodedJWT.getClaim("id").asInt();
     	// 테스트 용 하드 코딩
-//    	CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
-//    	requestDTO.setYear(2024);
     	CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1 , requestDTO);
     	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

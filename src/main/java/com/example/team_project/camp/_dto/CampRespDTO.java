@@ -7,6 +7,8 @@ import com.example.team_project.camp.camp_image.CampImage;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.order.Order;
+
+import ch.qos.logback.core.joran.conditional.IfAction;
 import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
@@ -89,8 +91,9 @@ public class CampRespDTO {
 	public static class MyCampListDTO {
 		private List<MyCampDTO> myCampDTOs;
 		public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+			System.out.println("------------"+year);
 			this.myCampDTOs = campReviews.stream()
-					.filter(campReview -> campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+					.filter(campReview -> year==null || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
 					.sorted(Comparator.comparing(campReview -> {
 	                    Order order = campReview.getOrder();
 	                    return order.getCheckInDate();

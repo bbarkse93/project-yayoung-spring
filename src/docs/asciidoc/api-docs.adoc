@@ -4,6 +4,8 @@ endif::[]
 
 :user: user-rest-controller_test
 :camp: camp-rest-controller_test
+:camp-field: camp-field-rest-controller_test
+:order: order-rest-controller_test
 
 = REST API
 :toc: left
@@ -27,10 +29,28 @@ include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]
 
-=== 2. 캠프 정보
+=== 2. 방문한 캠프 목록
 ===== Request Example
 include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
+
+== 캠프구역
+
+=== 1. 캠프 구역 목록
+===== Request Example
+include::{snippets}/{camp-field}/camp-field-list_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp-field}/camp-field-list_test/http-response.adoc[]
+
+== 주문
+
+=== 1. 다가오는 캠프 일정
+===== Request Example
+include::{snippets}/{order}/imminent-order-detail_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{order}/imminent-order-detail_test/http-response.adoc[]
 
