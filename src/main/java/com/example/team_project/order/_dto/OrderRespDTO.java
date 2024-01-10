@@ -57,6 +57,7 @@ public class OrderRespDTO {
 			private String campAddress;
 			private String checkInDate;
 			private String checkInDDay;
+			private String campField;
 			
 			public CampScheduleDTO(Order order) {
 				Camp camp = order.getCampField().getCamp();
@@ -64,6 +65,7 @@ public class OrderRespDTO {
 				this.campAddress = camp.getCampAddress();
 				this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT2);
 				this.checkInDDay = formatDDay(order.getCheckInDate());
+				this.campField = order.getCampField().getFieldName();
 			}
 			
 			

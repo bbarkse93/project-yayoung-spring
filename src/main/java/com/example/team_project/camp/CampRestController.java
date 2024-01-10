@@ -16,7 +16,6 @@ import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampListDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
-
 import lombok.RequiredArgsConstructor;;
 
 @RequestMapping("/camp")
@@ -91,5 +90,13 @@ public class CampRestController {
     	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+    
+    //캠프장 아이디를 받아 캠프 구역 목록 조회
+    @GetMapping("/field-list")
+    public ResponseEntity<?> campFieldList(@ModelAttribute CampReqDTO.CampFieldListDTO requestDTO){
+    	CampRespDTO.CampFieldListDTO responseDTO = campService.campFieldList(requestDTO);
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    
     
 }
