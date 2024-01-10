@@ -1,22 +1,30 @@
 package com.example.team_project.admin;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/admin")
-@RequiredArgsConstructor
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
-    private AdminService adminService;
-    private HttpSession session;
-
-    @GetMapping("/main")
-    public String adminMainPage(){
-        return "admin/playday";
+    @GetMapping("/current-camp")
+    public String currentCampPage(){
+        return "admin/camp_current";
     }
 
+    @GetMapping("/user")
+    public String userPage(){
+        return "admin/user_management";
+    }
+
+    @GetMapping("/customer/faq")
+    public String faqPage(){
+        return "admin/customer_faq";
+    }
+
+    @GetMapping("/customer/notice")
+    public String noticePage(){
+        return "admin/customer_notice";
+    }
 }

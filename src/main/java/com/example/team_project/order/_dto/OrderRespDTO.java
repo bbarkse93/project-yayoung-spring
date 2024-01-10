@@ -7,8 +7,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.example.team_project._core.utils.TimestampUtils;
+import com.example.team_project.camp.Camp;
+import com.example.team_project.camp_field.CampField;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -18,17 +22,20 @@ import lombok.ToString;
 
 @Data
 public class OrderRespDTO {
+	final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
+	final static String DATEFORMAT2 = "MM월 dd일";
+	final static String DATEFORMAT3 = "MM/dd(EE)";
 	
 	@Getter
 	@ToString
 	public static class ImminentOrderDetailDTO {
-		private String fieldName;
+		private String campName;
 		private String checkInDate;
 		private String checkInDDay;
 		
 		public ImminentOrderDetailDTO(Order order) {
-			this.fieldName = order.getCampField().getFieldName();
-			this.checkInDate = new SimpleDateFormat("MM/dd(EE)").format(order.getCheckInDate());
+			this.campName = order.getCampField().getCamp().getCampName();
+			this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT3);
 			this.checkInDDay = formatDDay(order.getCheckInDate());
 		}
 	}
@@ -44,17 +51,21 @@ public class OrderRespDTO {
 		}
 		
 		@Getter
+		@ToString
 		public class CampScheduleDTO{
-			private String fieldName;
+			private String campName;
 			private String campAddress;
 			private String checkInDate;
 			private String checkInDDay;
+			private String campField;
 			
 			public CampScheduleDTO(Order order) {
-				this.fieldName = order.getCampField().getFieldName();
-				this.campAddress = order.getCampField().getCamp().getCampAddress();
-				this.checkInDate = new SimpleDateFormat("MM월 dd일").format(order.getCheckInDate());
+				Camp camp = order.getCampField().getCamp();
+				this.campName = camp.getCampName();
+				this.campAddress = camp.getCampAddress();
+				this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT2);
 				this.checkInDDay = formatDDay(order.getCheckInDate());
+				this.campField = order.getCampField().getFieldName();
 			}
 			
 			
@@ -63,7 +74,7 @@ public class OrderRespDTO {
 		
 		
 	}
-	
+
 	// 현재와 비교해 D-day를 반환하는 함수
 	public static String formatDDay(Timestamp date) {
 		ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
