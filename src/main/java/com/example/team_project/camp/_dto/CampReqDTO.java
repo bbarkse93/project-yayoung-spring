@@ -9,5 +9,12 @@ public class CampReqDTO {
 	public static class MyCampListDTO {
 		private Integer year;
 	}
+
+	@Data
+	public static class CampBookmarkDTO {
+		private Integer userId;
+		private Integer campId;
+	}
+
 	
 }
