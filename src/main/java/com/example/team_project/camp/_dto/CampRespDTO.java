@@ -91,7 +91,6 @@ public class CampRespDTO {
 	public static class MyCampListDTO {
 		private List<MyCampDTO> myCampDTOs;
 		public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-			System.out.println("------------"+year);
 			this.myCampDTOs = campReviews.stream()
 					.filter(campReview -> year==null || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
 					.sorted(Comparator.comparing(campReview -> {
