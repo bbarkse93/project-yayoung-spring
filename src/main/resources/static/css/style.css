@@ -140,6 +140,16 @@
     justify-content: center;
 }
 
+.custom_flex_between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom_flex_end {
+    display: flex;
+    justify-content: end;
+}
+
 .camp_container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -221,7 +231,7 @@
 .review_modal_body {
     position: relative;
     flex: 1 1 auto;
-    padding: 10px;
+    padding: 15px;
     background-color: var(--primary_02);
     height: 260px;
     border-top-left-radius: 5px;
@@ -251,7 +261,7 @@
 .review_modal_footer {
     flex-shrink: 0;
     flex-wrap: wrap;
-    padding: 10px;
+    padding: 15px;
     background-color: var(--def_wh);
     border-top: 5px;
     border-bottom-right-radius: 5px;
@@ -306,15 +316,15 @@
 .user_modal_body {
     position: relative;
     flex: 1 1 auto;
-    padding: 10px;
-    background-color: var(--back_03);
+    padding: 15px;
+    background-color: var(--back_01);
     height: 260px;
     text-align: center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
-.user_modal_body img{
+.user_modal_body img {
     width: 165px;
     height: 165px;
     object-fit: cover;
@@ -336,7 +346,7 @@
 .user_modal_footer {
     flex-shrink: 0;
     flex-wrap: wrap;
-    padding: 10px;
+    padding: 15px;
     background-color: var(--def_wh);
     border-top: 5px;
     border-bottom-right-radius: 5px;
@@ -357,11 +367,11 @@
 
 .order_data::-webkit-scrollbar-thumb {
     border-radius: 3px; /* 스크롤바 둥근 테두리 */
-    background-color: var(--font_03);
+    background-color: var(--back_01);
 }
 
 .order_data::-webkit-scrollbar-track {
-    background: var(--def_wh);  /*스크롤바 뒷 배경 색상*/
+    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
 }
 
 /* 스크롤바의 폭 너비 */
@@ -371,14 +381,14 @@
 
 .review_data::-webkit-scrollbar-thumb {
     border-radius: 3px; /* 스크롤바 둥근 테두리 */
-    background-color: var(--font_03);
+    background-color: var(--back_01);
 }
 
 .review_data::-webkit-scrollbar-track {
-    background: var(--def_wh);  /*스크롤바 뒷 배경 색상*/
+    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
 }
 
-.user_modal_footer .review_count, .order_count{
+.user_modal_footer .review_count, .order_count {
     color: var(--font_01);
     font-size: 15px;
     font-weight: bold;
@@ -391,6 +401,7 @@
     font-size: 16px;
     font-weight: 500;
 }
+
 .user_td td {
     text-align: center;
     font-size: 15px;
@@ -409,6 +420,7 @@
     font-size: 14px;
     font-weight: 500;
 }
+
 .order_td td {
     text-align: center;
     font-size: 13px;
@@ -423,17 +435,18 @@
 
 /*******************************************************/
 
-.tab_container{
+.tab_container {
     width: 500px;
     margin: 0 auto;
 }
 
-ul.tabs{
+ul.tabs {
     margin: 0px;
     padding: 0px;
     list-style: none;
 }
-ul.tabs li{
+
+ul.tabs li {
     background: none;
     color: #222;
     display: inline-block;
@@ -441,22 +454,22 @@ ul.tabs li{
     cursor: pointer;
 }
 
-ul.tabs li.current{
-    background: #ededed;
-    color: #222;
+ul.tabs li.current {
+    background: var(--font_01);
+    color: var(--def_wh);
+    border-radius: 5px;
 }
 
-.tab-content{
+.tab-content {
     display: none;
-    background: #ededed;
+    background: var(--def_wh);
     padding: 15px;
 }
 
-.tab-content.current{
+.tab-content.current {
     display: inherit;
 }
 
-/*************************************************/
 .faq_th th {
     text-align: center;
     font-size: 16px;
@@ -465,24 +478,21 @@ ul.tabs li.current{
 
 .faq_td .title {
     text-overflow: ellipsis;
-    overflow:hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .faq_td .content {
     text-overflow: ellipsis;
-    overflow:hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    height: 45px;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
 .faq_td td {
     text-align: center;
     font-size: 15px;
     vertical-align: middle;
+    height: 45px;
 }
 
 .faq_td .profile_button {
@@ -490,4 +500,146 @@ ul.tabs li.current{
     border: none;
     border-radius: 5px;
     background-color: var(--back_03);
+}
+
+.faq_modal_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--line_01);
+    pointer-events: auto;
+    background-color: var(--def_wh);
+    background-clip: padding-box;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.faq_modal_body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 15px;
+    background-color: var(--def_wh);
+    height: 490px;
+    border-radius: 5px;
+}
+
+.faq_modal_body .button {
+    display: flex;
+    justify-content: end;
+}
+
+.faq_modal_body .body {
+    text-align: center;
+    color: var(--font_01);
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px;
+    white-space: pre;
+}
+
+.faq_modal_body .column {
+    text-align: start;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    height: 21px;
+}
+
+.faq_modal_body .input{
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    margin-bottom: 20px;
+    caret-color: var(--point_01);
+}
+
+.faq_modal_body .input:focus {
+    outline: none;
+}
+
+.faq_modal_body .textarea {
+    height: 250px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    caret-color: var(--point_01);
+    line-height: 20px;
+    resize: none;
+}
+
+.faq_modal_body .textarea:focus {
+    outline: none;
+}
+
+/* 스크롤바의 폭 너비 */
+.textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    border-radius: 3px; /* 스크롤바 둥근 테두리 */
+    background-color: var(--back_01);
+}
+
+.textarea::-webkit-scrollbar-track {
+    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
+}
+
+/****************************************************************/
+/*summernote*/
+
+.note-editor.note-airframe, .note-editor.note-frame {
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 5px;
+    white-space: pre;
+}
+
+.note-editable, .note-toolbar {
+    text-align: start;
+}
+
+.dropdown-toggle::after{
+    display: none;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;;
+}
+
+.note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar {
+    display: none;
+}
+
+.note-editable b, .note-editable strong {
+    font-weight: bold;
+}
+.note-editable b {
+    font-weight: 800;
+}
+
+.note-editor{
+    white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    caret-color: var(--point_01);
+    line-height: 20px !important;
+}
+
+.note-editor .note-toolbar .note-style .dropdown-style h4 {
+    font-size: 18px;
+}
+
+.note-editor .note-toolbar .note-style .dropdown-style p {
+    font-size: 16px;
+}
+
+.pointFont {
+    font-size: 18px;
+}
+
+.normalFont {
+    font-size: 16px;
 }

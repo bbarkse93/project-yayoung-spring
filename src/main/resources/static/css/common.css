@@ -47,6 +47,42 @@
     width: 93px;
 }
 
+.update_button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--font_01);
+    background-color: var(--back_03);
+    width: 93px;
+}
+
+.insert_button {
+    border: none;
+    padding: 10px;
+    width: 93px;
+    border-radius: 5px;
+    background-color: var(--font_01);
+    color: var(--def_wh);
+}
+
+.update_to_modal {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--font_01);
+    background-color: var(--back_03);
+    width: 93px;
+}
+
+.insert_to_modal {
+    border: none;
+    padding: 10px;
+    width: 93px;
+    border-radius: 5px;
+    background-color: var(--font_01);
+    color: var(--def_wh);
+}
+
 .already_deleted_button {
     padding: 10px;
     border: none;

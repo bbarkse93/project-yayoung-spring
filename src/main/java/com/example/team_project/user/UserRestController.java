@@ -40,6 +40,7 @@ public class UserRestController {
     // localhost:8080/user/my-page/profile
     @GetMapping("/my-page/profile")
     public ResponseEntity<?> profilePage() {
+        System.out.println("Get이요~");
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id")
@@ -52,6 +53,10 @@ public class UserRestController {
     // localhost:8080/user/my-page/profile
     @PutMapping("/my-page/profile")
     public ResponseEntity<?> profileUpdate(@RequestBody UserReqDTO.ProfileUpdateDTO requestDTO){
+        System.out.println("Put이요~");
+        System.out.println("Put이요~" + requestDTO.getNickname());
+        System.out.println("Put이요~" + requestDTO.getUserImage());
+
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id")
