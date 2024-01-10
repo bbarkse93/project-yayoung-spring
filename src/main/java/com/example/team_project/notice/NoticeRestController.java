@@ -19,6 +19,7 @@ public class NoticeRestController {
     private final NoticeService noticeService;
 
     // ME 공지사항 페이지 요청
+    // localhost:8080/notice/list
     @GetMapping("/list")
     public ResponseEntity<?> noticePage() {
         NoticeRespDTO.NoticeListDTO responseDTO = noticeService.noticePage();

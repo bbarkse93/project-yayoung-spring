@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<title>REST API</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment @import statement to use as custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite::before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+:not(pre)>code.nobreak{word-wrap:normal}
+:not(pre)>code.nowrap{white-space:nowrap}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
+table.tableblock{max-width:100%;border-collapse:separate}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>REST API</h1>
+<div class="details">
+<span id="revnumber">version 0.0.1-SNAPSHOT</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_회원">회원</a>
+<ul class="sectlevel2">
+<li><a href="#_1_회원정보">1. 회원정보</a></li>
+<li><a href="#_2_프로필_페이지">2. 프로필 페이지</a></li>
+<li><a href="#_3_프로필_수정">3. 프로필 수정</a></li>
+<li><a href="#_4_로그아웃">4. 로그아웃</a></li>
+<li><a href="#_5_회원탈퇴">5. 회원탈퇴</a></li>
+</ul>
+</li>
+<li><a href="#_캠프">캠프</a>
+<ul class="sectlevel2">
+<li><a href="#_1_캠프_목록">1. 캠프 목록</a></li>
+<li><a href="#_2_방문한_캠프_목록">2. 방문한 캠프 목록</a></li>
+<li><a href="#_3_결제_캠프_구역">3. 결제 - 캠프 구역</a></li>
+</ul>
+</li>
+<li><a href="#_주문">주문</a>
+<ul class="sectlevel2">
+<li><a href="#_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</a></li>
+<li><a href="#_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</a></li>
+</ul>
+</li>
+<li><a href="#_공지사항">공지사항</a>
+<ul class="sectlevel2">
+<li><a href="#_1_공지사항목록">1. 공지사항목록</a></li>
+</ul>
+</li>
+<li><a href="#_faq">FAQ</a>
+<ul class="sectlevel2">
+<li><a href="#_1_faq목록">1. FAQ목록</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_회원">회원</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_회원정보">1. 회원정보</h3>
+<div class="sect4">
+<h5 id="_request_example">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /user/my-page HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 163
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "ssar",
+    "userImage" : "/images/user/user-profile.jpg"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_프로필_페이지">2. 프로필 페이지</h3>
+<div class="sect4">
+<h5 id="_request_example_2">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /user/my-page/profile HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_2">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 163
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "ssar",
+    "userImage" : "/images/user/user-profile.jpg"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_프로필_수정">3. 프로필 수정</h3>
+<div class="sect4">
+<h5 id="_request_example_3">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /user/my-page/profile HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 6548
+Host: localhost:8080
+
+{
+  "nickname" : "love",
+  "userImage" : "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"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_3">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 190
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "love",
+    "userImage" : ".\\images\\love_6f8825b7-309c-4f5e-aa78-a6173315561b.png"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_로그아웃">4. 로그아웃</h3>
+<div class="sect4">
+<h5 id="_request_example_4">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /user/logout HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_4">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 82
+
+{
+  "success" : true,
+  "response" : "로그아웃 완료",
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_5_회원탈퇴">5. 회원탈퇴</h3>
+<div class="sect4">
+<h5 id="_request_example_5">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /user/withDraw HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_5">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 135
+
+{
+  "success" : true,
+  "response" : {
+    "userId" : 1,
+    "nickname" : "love",
+    "withdraw" : true
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_캠프">캠프</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_캠프_목록">1. 캠프 목록</h3>
+<div class="sect4">
+<h5 id="_request_example_6">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_6">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 7563
+
+{
+  "success" : true,
+  "response" : [ {
+    "id" : 1,
+    "campName" : "(주)아웃오브파크",
+    "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+    "campCallNumber" : "1522-1861",
+    "campWebsite" : "http://outofpark.com/main/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp1.png"
+  }, {
+    "id" : 2,
+    "campName" : "파크킹",
+    "campAddress" : "경북 김천시 어모면 은림로 62-11",
+    "campCallNumber" : "054-434-6677",
+    "campWebsite" : "https://www.instagram.com/amazingpark6211/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp2.png"
+  }, {
+    "id" : 3,
+    "campName" : "디캠고흥",
+    "campAddress" : "강원 횡성군 서원면 서원서로102번길 3-18",
+    "campCallNumber" : "033-345-3336",
+    "campWebsite" : "https://www.instagram.com/salon.de.bonj/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp3.png"
+  }, {
+    "id" : 4,
+    "campName" : "캠프달링",
+    "campAddress" : "경기 가평군 설악면 유명산길 61-75",
+    "campCallNumber" : "010-3148-9970",
+    "campWebsite" : "http://healingpia.co.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp4.png"
+  }, {
+    "id" : 5,
+    "campName" : "STX 오토캠핑장",
+    "campAddress" : "충남 태안군 소원면 산간이길 158-24",
+    "campCallNumber" : "043-1668-3972",
+    "campWebsite" : "https://map.naver.com/v5/entry/place/1791561655?c=14047305.3983138,4408436.9604705,15,0,0,0,dh&amp;amp;placePath=%2Fbooking%3Fentry=plt",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp5.png"
+  }, {
+    "id" : 6,
+    "campName" : "청주 옥화포시즌캠핑장",
+    "campAddress" : "강원 평창군 평창읍 뇌운계곡로 659-6",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "https://pcglamping.modoo.at/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp6.png"
+  }, {
+    "id" : 7,
+    "campName" : "휘게 포레스트",
+    "campAddress" : "충북 충주시 앙성면 학교말2길 50",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "http://www.binaecamping.co.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp7.png"
+  }, {
+    "id" : 8,
+    "campName" : "초이스캠프앤카라반",
+    "campAddress" : "충남 태안군 남면 몽산포길 63-23",
+    "campCallNumber" : "033-332-0009",
+    "campWebsite" : "https://solbeachcamp.modoo.at/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp8.png"
+  }, {
+    "id" : 9,
+    "campName" : "초록여울캠핑장",
+    "campAddress" : "경북 포항시 북구 죽장면 새마을로 3351",
+    "campCallNumber" : "033-332-0119",
+    "campWebsite" : "http://www.gaoncamp.com/",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp9.png"
+  }, {
+    "id" : 10,
+    "campName" : "소리의섬 캠핑장",
+    "campAddress" : "충북 충주시 앙성면 남한강변길 218-2",
+    "campCallNumber" : "033-332-0229",
+    "campWebsite" : "http://limsglamping.modoo.at",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp10.png"
+  }, {
+    "id" : 11,
+    "campName" : "림스 캠핑장",
+    "campAddress" : "전남 강진군 강진읍 해강로 1038-30",
+    "campCallNumber" : "033-332-0229",
+    "campWebsite" : "http://limsglamping.modoo.at",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp11.png"
+  }, {
+    "id" : 12,
+    "campName" : "단아한",
+    "campAddress" : "전북 순창군 팔덕면 산동신흥길 6",
+    "campCallNumber" : "031-581-9977",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp12.png"
+  }, {
+    "id" : 13,
+    "campName" : "원주 두리 캠핑장",
+    "campAddress" : "경기 가평군 가평읍 호반로 1700",
+    "campCallNumber" : "031-581-9977",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp13.png"
+  }, {
+    "id" : 14,
+    "campName" : "너른뜰 캠핑장",
+    "campAddress" : "충남 부여군 세도면 대흥로 163",
+    "campCallNumber" : "031-581-9917",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp14.png"
+  }, {
+    "id" : 15,
+    "campName" : "개네집 캠핑장",
+    "campAddress" : "경상북도 영덕군 병곡면 병곡리 58-5",
+    "campCallNumber" : "031-557-7757",
+    "campWebsite" : "Www.toycamp.kr",
+    "campRefundPolicy" : "당일 취소 불가, 2일 전 100% 환불",
+    "campWater" : true,
+    "campGarbageBag" : true,
+    "holiday" : "없음",
+    "campCheckIn" : "14:00",
+    "campCheckOut" : "13:00",
+    "campFieldImage" : "/images/camp_map/camp15.png"
+  } ],
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_방문한_캠프_목록">2. 방문한 캠프 목록</h3>
+<div class="sect4">
+<h5 id="_request_example_7">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/myCamp?year=2024 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_7">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1246
+
+{
+  "success" : true,
+  "response" : {
+    "myCampDTOs" : [ {
+      "totalRating" : "5",
+      "checkInDate" : "2024년 01월 11일",
+      "checkOutDate" : "01월 15일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
+      "totalRating" : "3",
+      "checkInDate" : "2024년 01월 17일",
+      "checkOutDate" : "01월 18일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
+      "totalRating" : "4",
+      "checkInDate" : "2024년 01월 20일",
+      "checkOutDate" : "01월 25일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    }, {
+      "totalRating" : "5",
+      "checkInDate" : "2024년 02월 03일",
+      "checkOutDate" : "02월 10일",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "campName" : "(주)아웃오브파크",
+      "reviewImage" : "camp_image/camp1-1.jpg"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_결제_캠프_구역">3. 결제 - 캠프 구역</h3>
+<div class="sect4">
+<h5 id="_request_example_8">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/field-list?campId=1&amp;checkInDate=2024-01-10&amp;checkOutDate=2024-01-15 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_8">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1972
+
+{
+  "success" : true,
+  "response" : {
+    "campInfoDTO" : {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "minPrice" : "50,000",
+      "maxPrice" : "60,000",
+      "isOpen" : true,
+      "campImage" : "/images/camp_image/camp1-1.jpg",
+      "campFieldImage" : "/images/camp_map/camp1.png"
+    },
+    "checkInDate" : "2024-01-10",
+    "checkOutDate" : "2024-01-15",
+    "nights" : 5,
+    "campFieldDTOs" : [ {
+      "fieldName" : "캠핑사이트-1",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-2",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-3",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-4",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-5",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑사이트-6",
+      "nights" : 5,
+      "totalPrice" : "250,000"
+    }, {
+      "fieldName" : "캠핑카 13-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 17-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-2",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-3",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 20-4",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 26-1",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    }, {
+      "fieldName" : "캠핑카 26-2",
+      "nights" : 5,
+      "totalPrice" : "300,000"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_주문">주문</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</h3>
+<div class="sect4">
+<h5 id="_request_example_9">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/imminentOrder HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_9">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 174
+
+{
+  "success" : true,
+  "response" : {
+    "campName" : "(주)아웃오브파크",
+    "checkInDate" : "01/11(목)",
+    "checkInDDay" : "D-1"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</h3>
+<div class="sect4">
+<h5 id="_request_example_10">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/campSchedule HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_10">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 1046
+
+{
+  "success" : true,
+  "response" : {
+    "campScheduleDTOs" : [ {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 11일",
+      "checkInDDay" : "D-1",
+      "campField" : "캠핑사이트-3"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 17일",
+      "checkInDDay" : "D-7",
+      "campField" : "캠핑사이트-5"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "01월 20일",
+      "checkInDDay" : "D-10",
+      "campField" : "캠핑사이트-3"
+    }, {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "checkInDate" : "02월 03일",
+      "checkInDDay" : "D-24",
+      "campField" : "캠핑사이트-3"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_공지사항">공지사항</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_공지사항목록">1. 공지사항목록</h3>
+<div class="sect4">
+<h5 id="_request_example_11">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notice/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_11">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 11115
+
+{
+  "success" : true,
+  "response" : {
+    "noticeDTOList" : [ {
+      "noticeId" : 1,
+      "title" : "YAYoung 임시 점검 안내",
+      "content" : "YAYoung 사이트 서비스 개선을 위한 작업으로 인하여\n아래와 같이 일시적으로 YAYoung 홈페이지 접속이 불가능할 예정입니다.\n\n- 작업일시 : 2023년 10월 13일 (금) 00:00 ~ 06:00\n- 작업내용 : DB 작업\n\nYAYoung 서비스 이용에 불편을 드리게 되어 죄송합니다.\n더 나은 서비스를 제공할 수 있도록 노력하는 YAYoung이 되겠습니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 2,
+      "title" : "YAYoung 리뉴얼 오픈",
+      "content" : "Don`t Worry 캠핑!\nBe Happy YAYoung!!\nYAYoung 리뉴얼 오픈\n\nYAYoung 앱이 리뉴얼 오픈합니다.\n사용은 편리해졌고, 혜택은 다양해졌습니다.\n\n강력해진 Q-Point(적립금) 제도\n\n- YAYoung 예약, 쇼핑 이용 시 현금처럼 사용이 가능한 포인트 입니다.\n- 다양한 활동을 통해서 Q-Point를 적립하실 수 있습니다.\n- 예약, 쇼핑, 방문(출석), 게시글 작성, 홍보 참여 등 포인트 적립 기회가 다양해졌습니다.\n\n회원등급제도\n\n- YAYoung을 많이 이용할수록 혜택도 더욱 커집니다.\n- 1년 동안의 누적 활동 지수를 기준으로 내년 등급이 결정되며, 등급별로 다양한 혜택을 받으실 수 있습니다.\n- 등급은 Basic, Bronze, Silver, Gold, Platinum, VIP 총 6등급으로 나눠집니다.\n\n사용성 개선\n좀 더 쉽게 이동하세요.\n메뉴 버튼을 적용하여 원하는 페이지로 쉽게 이동이 가능해졌습니다.\n\n고객만족을 위해 더욱 노력하는 YAYoung이 되겠습니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 3,
+      "title" : "서버 점검으로 인한 서비스 일시 중지 안내",
+      "content" : "※ 서버 일시 중지 안내\n\n서비스 향상을 위한 서버 점검 작업으로 인해 작업 시간 동안  서비스가 중지됨을 알려드립니다.\n\n▶ 일시 : 28일(화) 01시 - 07시\n▶ 내용 : 서버 점검으로 인한 작업\n\n위 시간 동안 예약에 대한 모든 서비스가 중지 되오니 참고하시기 바랍니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 4,
+      "title" : "카카오 소셜로그인 장애 안내",
+      "content" : "현재 어플 및 PC로그인 중 카카오 소셜로그인이 정상적으로 작동되지 않음을 확인하였습니다.\n\n최근 카카오API 정책변경으로 인해 기능 보완이 필요해보입니다.\n조치 될때까지 카카오 로그인 서비스는 잠시 중단하겠습니다.\n\n기존에 카카오로그인으로 활동하신분은 죄송하지만 다른 로그인 방법을 이용해주시기 바랍니다.\n\n불편 드려 죄송합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 5,
+      "title" : "캠핑장 내 공용 와이파이 사용 안내",
+      "content" : "연곡해변 솔향기 캠핑장을 찾는 고객분들에게 알려드립니다 .\n\n캠핑장 내 강릉시에서 운영하는 공용 와이파이가 설치되어 있지만 지형적인 여건으로 인하여 와이파이 신호가 매우 약하여 노트북을 이용한 사무업무 혹은 동영상 강의 등을 재생할 경우 인터넷 연결이 원활하지 않은 경우가 많습니다.\n\n카라반 내부를 포함하여 캠핑장 내 전 구역에 캠핑장에서 개별적으로 운영하는 와이파이가 없으므로 이용에 참고하시기 바랍니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 6,
+      "title" : "YAYoung 개인정보처리방침 개정 안내",
+      "content" : "보다 나은 서비스 제공을 위해 YAYoung의 개인정보처리방침이 다음과 같이 변경됨을 알려 드립니다.\n\n▶ 개인정보처리방침 변경 및 시행일 : 2023년 12월 26일\n▶ 개인정보처리방침 주요 변경 내용\n\nYAYoung는 더 나은 서비스 제공을 위해 항상 최선을 다하겠습니다.\n\n앞으로도 지속적인 서비스 이용과 관심 부탁드립니다.\n감사합니다",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 7,
+      "title" : "자주 묻는 질문 FAQ 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 8,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 9,
+      "title" : "개인정보 처리방침 개정 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 10,
+      "title" : "카카오톡 로그인 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 11,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 12,
+      "title" : "YAYoung 서비스 점검 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 13,
+      "title" : "개인정보 방침 처리 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 14,
+      "title" : "전자금융거래 이용약관 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    }, {
+      "noticeId" : 15,
+      "title" : "1월 프로모션 종료 안내",
+      "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
+      "createdAt" : "2024-01-10"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_faq">FAQ</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_faq목록">1. FAQ목록</h3>
+<div class="sect4">
+<h5 id="_request_example_12">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /board/list HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_12">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 3844
+
+{
+  "success" : true,
+  "response" : {
+    "paymentDTOList" : [ {
+      "faqId" : 1,
+      "title" : "예약을 취소하고 싶어요",
+      "content" : "예약자 본인이 직접 예약확인/취소 가능합니다.\n예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다."
+    }, {
+      "faqId" : 2,
+      "title" : "예약 완료후 바로 취소했는데 수수료가 나왔어요",
+      "content" : "취소 수수료는 예약 시점과는 무관합니다.\n예약 후 바로 취소하더라도 입실일/이용일로부터 남은 날짜 기준으로 수수료가 부과됩니다. 특히, 이용일 10일 이내 예약 건은 더욱 신중한 예약 바랍니다."
+    }, {
+      "faqId" : 3,
+      "title" : "입실일을 변경하고 싶어요",
+      "content" : "예약 이용일 변경은 불가능합니다.\n취소 수수료를 확인하시고 기존 예약건을 취소하신 다음 재예약하셔야 합니다."
+    }, {
+      "faqId" : 4,
+      "title" : "천재지변으로 인한 예약취소는 어떻게 하나요?",
+      "content" : "일반적인 우천에 의한 예약 취소 및 변경 불가합니다.\n태풍 등 기상 특보 시, 입실 당일 현장 날씨 및 캠핑장/펜션의 정책에 따라 연기 또는 취소 결정됩니다.\n입실 당일 오전에 캠핑장/펜션에 연락하셔서 안내 받으시기 바랍니다."
+    }, {
+      "faqId" : 5,
+      "title" : "객실 타입을 변경하고 싶어요",
+      "content" : "YAYoung 고객센터(070-1111-1111)로 문의하시기 바랍니다."
+    }, {
+      "faqId" : 6,
+      "title" : "취소 수수료 산정은 어떻게 되나요?",
+      "content" : "당일 취소 불가, 2일 전 환불 100%입니다."
+    }, {
+      "faqId" : 7,
+      "title" : "예약 취소 했는데 언제 환불이 되나요?",
+      "content" : "예약 취소 후 간편결제 사업자, 은행 또는 신용카드사에 따라 환불 절차에 일정 시간이 소요될 수 있습니다.\n영업일 기준(토/일/공휴일 제외) 실시간 계좌이체는 2~3일, 신용카드는 3~5일 소요됩니다."
+    } ],
+    "userDTOList" : [ {
+      "faqId" : 8,
+      "title" : "회원탈퇴 후 제 SNS계정에 아직 연결되어 있다고 뜨네요",
+      "content" : "회원탈퇴를 하셨더라도, 연결된 SNS 계정은 해당 계정 설정에서 연결 해제를 해주셔야 합니다."
+    }, {
+      "faqId" : 9,
+      "title" : "탈퇴하고 싶어요.",
+      "content" : "아래 경로를 통해 탈퇴 할 수 있습니다.\n\n▶ ME &gt; 설정 &gt; 회원탈퇴"
+    }, {
+      "faqId" : 10,
+      "title" : "회원 정보 수정은 어떻게 하나요?",
+      "content" : "아래 경로를 통해 회원 정보를 수정할 수 있습니다.\n\n▶ ME &gt; 프로필 클릭"
+    }, {
+      "faqId" : 11,
+      "title" : "제가 설정한 적 없는 닉네임으로 되어있어요.",
+      "content" : "고객님의 개인 정보가 유출된 것이 아니니 안심하세요.\n아래의 경로를 통해 닉네임을 변경할 수 있습니다."
+    }, {
+      "faqId" : 12,
+      "title" : "제 개인정보를 안전하게 보호하려면 어떻게 해야 하죠?",
+      "content" : "YAYoung는 고객님의 소중한 개인정보를 더욱 안전하게 보호하도록 노력하겠습니다.\n"
+    }, {
+      "faqId" : 13,
+      "title" : "로그인이 안 돼요.",
+      "content" : "이메일로 가입한 계정이 있는지 확인해주세요."
+    }, {
+      "faqId" : 14,
+      "title" : "비회원도 예약을 하거나 예약 조회를 할 수 있나요?",
+      "content" : "아니요, 가입을 하셔야 가능합니다."
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 0.0.1-SNAPSHOT<br>
+Last updated 2024-01-08 15:57:20 +0900
+
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>

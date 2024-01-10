@@ -29,7 +29,7 @@ public class Order {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private CampField campField;
+    private CampField campField;    
 
     @CreationTimestamp
     private Timestamp createdAt;

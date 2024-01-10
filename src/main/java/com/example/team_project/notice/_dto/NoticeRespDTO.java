@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 @Data
 public class NoticeRespDTO {
 
+    // ME 공지사항 페이지 요청
     @Data
     public static class NoticeListDTO {
         private List<NoticeDTO> noticeDTOList;

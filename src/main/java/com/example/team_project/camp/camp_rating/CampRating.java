@@ -30,7 +30,7 @@ public class CampRating {
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private CampReview campReview;
 
     @Builder
@@ -42,5 +42,9 @@ public class CampRating {
         this.user = user;
         this.camp = camp;
         this.campReview = campReview;
+    }
+
+    public double total () {
+        return ((cleanliness + managementness + friendliness) / 3.0);
     }
 }

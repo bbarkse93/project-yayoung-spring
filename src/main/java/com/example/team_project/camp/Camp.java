@@ -1,12 +1,23 @@
 package com.example.team_project.camp;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
+import com.example.team_project.camp.camp_image.CampImage;
+import com.example.team_project.camp.camp_rating.CampRating;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
-import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,8 +54,16 @@ public class Camp {
 
     private String campFieldImage;
 
+    @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
+    private List<CampImage> campImageList;
+
+    @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
+    private List<CampRating> campRatingList;
+
     @Builder
-    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite, String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn, String campCheckOut, String campFieldImage) {
+    public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite,
+            String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn,
+            String campCheckOut, String campFieldImage) {
         this.id = id;
         this.campName = campName;
         this.campAddress = campAddress;
@@ -57,5 +76,28 @@ public class Camp {
         this.campCheckIn = campCheckIn;
         this.campCheckOut = campCheckOut;
         this.campFieldImage = campFieldImage;
+    }
+
+    // camp 대표 이미지
+    public String firstCampImage() {
+        return campImageList.get(0).getCampImage();
+    }
+
+    // camp의 총 평점
+    public String formatTotalRating() {
+        String formatRating;
+        if (!campRatingList.isEmpty()) {
+            double campTotalRatingSum = 0;
+            for (CampRating campRating : campRatingList) {
+                campTotalRatingSum += campRating.total();
+            }
+
+            double averageRating = campTotalRatingSum / campRatingList.size();
+            DecimalFormat decimalFormat = new DecimalFormat("#.#"); // 소수점 첫째 자리까지 표시
+            formatRating = decimalFormat.format(averageRating);
+        } else {
+            formatRating = "평가없음";
+        }
+        return formatRating;
     }
 }
