@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.IntStream;
+import com.example.team_project.MyWithRestDoc;
+import com.example.team_project.camp._dto.CampReqDTO;
 
 @SpringBootTest
 
@@ -31,37 +33,52 @@ public class CampRestController_test extends MyWithRestDoc {
                 ResultActions resultActions = mockMvc.perform(
                                 MockMvcRequestBuilders
                                                 .get("/camp/list"));
-                
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-		ObjectMapper om = new ObjectMapper();
-		Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
-		Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
-		List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTOList"), new TypeReference<List<Map<String, Object>>>() {});
 
+                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+                ObjectMapper om = new ObjectMapper();
+                Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {
+                });
+                Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"),
+                                new TypeReference<Map<String, Object>>() {
+                                });
+                List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTOList"),
+                                new TypeReference<List<Map<String, Object>>>() {
+                                });
 
                 // then
-		resultActions
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
-			.andDo(document);
-		IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
-			Map<String, Object> listDataDTO = listDatsMap.get(i);
-				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campDTOList["+ i +"].id").value(listDataDTO.get("id")))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campDTOList["+ i +"].campName").value(listDataDTO.get("campName")))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campDTOList["+ i +"].campAddress").value(listDataDTO.get("campAddress")))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campDTOList["+ i +"].campImage").value(listDataDTO.get("campImage")))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campDTOList["+ i +"].campRating").value(listDataDTO.get("campRating")))
-							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
-							.andDo(MockMvcResultHandlers.print());
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-		});
-	}
-
+                resultActions
+                                .andExpect(MockMvcResultMatchers.status().isOk())
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+                                .andDo(document);
+                IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
+                        Map<String, Object> listDataDTO = listDatsMap.get(i);
+                        try {
+                                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
+                                                .andExpect(MockMvcResultMatchers
+                                                                .jsonPath("$.response.campDTOList[" + i + "].id")
+                                                                .value(listDataDTO.get("id")))
+                                                .andExpect(MockMvcResultMatchers
+                                                                .jsonPath("$.response.campDTOList[" + i + "].campName")
+                                                                .value(listDataDTO.get("campName")))
+                                                .andExpect(MockMvcResultMatchers
+                                                                .jsonPath("$.response.campDTOList[" + i
+                                                                                + "].campAddress")
+                                                                .value(listDataDTO.get("campAddress")))
+                                                .andExpect(MockMvcResultMatchers
+                                                                .jsonPath("$.response.campDTOList[" + i + "].campImage")
+                                                                .value(listDataDTO.get("campImage")))
+                                                .andExpect(MockMvcResultMatchers
+                                                                .jsonPath("$.response.campDTOList[" + i
+                                                                                + "].campRating")
+                                                                .value(listDataDTO.get("campRating")))
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+                                                .andDo(MockMvcResultHandlers.print());
+                        } catch (Exception e) {
+                                throw new RuntimeException(e);
+                        }
+                });
+        }
 
 
         // resultMathers
@@ -100,124 +117,69 @@ public class CampRestController_test extends MyWithRestDoc {
         // getAllCamps_test(resultActions,);
         // }
 
-        @Test
-        public void myCampList_test() throws Exception {
 
-                // <<<<<<< HEAD
-                // // given
+    @Test
+    public void myCampList_test() throws Exception {
 
-                // // when
-                // ResultActions resultActions = mockMvc.perform(
-                // MockMvcRequestBuilders
-                // .get("/camp/myCamp")
-                // =======
+        // given
+    	CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
+    	requestDTO.setYear(2024);
 
-                // given
-                CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
-                requestDTO.setYear(2024);
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/camp/myCamp")
+                        .param("year", String.valueOf(requestDTO.getYear()))
 
-                // when
-                ResultActions resultActions = mockMvc.perform(
-                                MockMvcRequestBuilders
-                                                .get("/camp/myCamp")
-                                                .param("year", String.valueOf(requestDTO.getYear()))
-                // >>>>>>> 49ca34ec683043c61db92d7f5b5a8b311c4b2c6f
+        );
 
-                );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+        // then
 
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-                System.out.println(responseBody);
-                // then
-
-                // <<<<<<< HEAD
-                // resultActions
-                // .andExpect(MockMvcResultMatchers.status().isOk())
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].totalRating")
-                // .value(4))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkInDate")
-                // .value("2024년 01월 15일"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkOutDate")
-                // .value("01월 10일"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campAddress")
-                // .value("강원도 춘천시 남면 가옹개길 52-9"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campName")
-                // .value("(주)아웃오브파크"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].reviewImage")
-                // .value("camp_image/camp1-1.jpg"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].totalRating")
-                // .value(5))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkInDate")
-                // .value("2024년 01월 15일"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkOutDate")
-                // .value("01월 11일"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campAddress")
-                // .value("강원도 춘천시 남면 가옹개길 52-9"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campName")
-                // .value("(주)아웃오브파크"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].reviewImage")
-                // .value("camp_image/camp1-1.jpg"))
-                // .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
-                // .andDo(MockMvcResultHandlers.print())
-                // .andDo(document);
-                // }
-                // =======
-                resultActions
-                                .andExpect(MockMvcResultMatchers.status().isOk())
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].totalRating")
-                                                .value(5))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkInDate")
-                                                .value("2024년 01월 11일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkOutDate")
-                                                .value("01월 15일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campAddress")
-                                                .value("강원도 춘천시 남면 가옹개길 52-9"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campName")
-                                                .value("(주)아웃오브파크"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].reviewImage")
-                                                .value("camp_image/camp1-1.jpg"))
-
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].totalRating")
-                                                .value(3))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkInDate")
-                                                .value("2024년 01월 17일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkOutDate")
-                                                .value("01월 18일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campAddress")
-                                                .value("강원도 춘천시 남면 가옹개길 52-9"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campName")
-                                                .value("(주)아웃오브파크"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].reviewImage")
-                                                .value("camp_image/camp1-1.jpg"))
-
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].totalRating")
-                                                .value(4))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].checkInDate")
-                                                .value("2024년 01월 20일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].checkOutDate")
-                                                .value("01월 25일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].campAddress")
-                                                .value("강원도 춘천시 남면 가옹개길 52-9"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].campName")
-                                                .value("(주)아웃오브파크"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].reviewImage")
-                                                .value("camp_image/camp1-1.jpg"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].totalRating")
-                                                .value(5))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].checkInDate")
-                                                .value("2024년 02월 03일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].checkOutDate")
-                                                .value("02월 10일"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].campAddress")
-                                                .value("강원도 춘천시 남면 가옹개길 52-9"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].campName")
-                                                .value("(주)아웃오브파크"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].reviewImage")
-                                                .value("camp_image/camp1-1.jpg"))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
-                                .andDo(MockMvcResultHandlers.print())
-                                .andDo(document);
-        }
-        // >>>>>>> 49ca34ec683043c61db92d7f5b5a8b311c4b2c6f
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].totalRating").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkInDate")
+                        .value("2024년 01월 11일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].checkOutDate").value("01월 15일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campAddress")
+                        .value("강원도 춘천시 남면 가옹개길 52-9"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campName").value("(주)아웃오브파크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].reviewImage")
+                        .value("camp_image/camp1-1.jpg"))
+                
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].totalRating").value(3))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkInDate")
+                		.value("2024년 01월 17일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkOutDate").value("01월 18일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campAddress")
+                		.value("강원도 춘천시 남면 가옹개길 52-9"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campName").value("(주)아웃오브파크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].reviewImage")
+                		.value("camp_image/camp1-1.jpg"))
+                
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].totalRating").value(4))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].checkInDate")
+                		.value("2024년 01월 20일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].checkOutDate").value("01월 25일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].campAddress")
+                		.value("강원도 춘천시 남면 가옹개길 52-9"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].campName").value("(주)아웃오브파크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].reviewImage")
+                		.value("camp_image/camp1-1.jpg"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].totalRating").value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].checkInDate")
+                		.value("2024년 02월 03일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].checkOutDate").value("02월 10일"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].campAddress")
+                		.value("강원도 춘천시 남면 가옹개길 52-9"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].campName").value("(주)아웃오브파크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].reviewImage")
+                		.value("camp_image/camp1-1.jpg"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
+    }
 }
