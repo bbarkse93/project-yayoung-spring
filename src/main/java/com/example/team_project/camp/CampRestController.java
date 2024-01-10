@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,19 +47,20 @@ public class CampRestController {
     // }
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllCamps(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getAllCamps() {
         // 인증검사
         try {
             // 토큰 검증 및 userId 추출
-            DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-            Integer userId = decodedJWT.getClaim("id").asInt();
+            // @RequestHeader("Authorization") String token
+            // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+            // Integer userId = decodedJWT.getClaim("id").asInt();
 
             // userJPARepository.findById(userId)
             // .orElseThrow(() => new EntityNotFoundException("User not found"));
 
             // 핵심로직
-            List<CampListDTO> campDTOs = campService.getAllCamps();
-            return ResponseEntity.ok(ApiUtils.success(campDTOs));
+            CampRespDTO.CampListDTO responseDTO = campService.getAllCamps();
+            return ResponseEntity.ok(ApiUtils.success(responseDTO));
         } catch (JWTVerificationException | EntityNotFoundException e) {
             // 인증 실패 혹은 사용자 미발견시 처리
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -132,19 +134,28 @@ public class CampRestController {
 
     // 내 캠핑장 연도별 목록 조회
     @GetMapping("/myCamp")
-    public ResponseEntity<?> myCampList(/*
-                                         * @RequestParam("year") CampReqDTO.MyCampListDTO requestDTO
-                                         * ,@RequestHeader("Authorization") String token
-                                         */) {
-        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-        // Integer userId = decodedJWT.getClaim("id").asInt();
-        // 테스트 용 하드 코딩
-        CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
-        requestDTO.setYear(2024);
-        CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1, requestDTO);
-        // OrderRespDTO.myCampFieldListDTO responseDTO =
-        // orderService.myCampFieldList(userId, requestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    // 승신님 충돌 났길래 어떤걸 날려야 할지 몰라서 일단 주석처리 해뒀어요 -우진
+    // public ResponseEntity<?> myCampList(/*
+    //                                      * @RequestParam("year") CampReqDTO.MyCampListDTO requestDTO
+    //                                      * ,@RequestHeader("Authorization") String token
+    //                                      */) {
+    //     // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    //     // Integer userId = decodedJWT.getClaim("id").asInt();
+    //     // 테스트 용 하드 코딩
+    //     CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
+    //     requestDTO.setYear(2024);
+    //     CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1, requestDTO);
+    //     // OrderRespDTO.myCampFieldListDTO responseDTO =
+    //     // orderService.myCampFieldList(userId, requestDTO);
+    //     return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+
+    public ResponseEntity<?> myCampList(@ModelAttribute CampReqDTO.MyCampListDTO requestDTO /*,@RequestHeader("Authorization") String token*/){
+    	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	//Integer userId = decodedJWT.getClaim("id").asInt();
+    	// 테스트 용 하드 코딩
+    	CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1 , requestDTO);
+    	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
+    	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 }

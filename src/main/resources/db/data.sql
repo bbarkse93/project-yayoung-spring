@@ -1,71 +1,71 @@
 -- 유저 -------------------------------------------------------------------------------------------------------
 insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
-values ('ssar', '1234', 'ssar', true,'user/user-profile.jpg', false, NOW());
+values ('ssar', '1234', 'ssar', true,'/images/user/user-profile.jpg', false, NOW());
 insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
-values ('admin', '1234', 'admin', true, 'user/user-profile.jpg', false, NOW());
+values ('admin', '1234', 'admin', true, '/images/user/user-profile.jpg', false, NOW());
 
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('(주)아웃오브파크', '강원도 춘천시 남면 가옹개길 52-9', '1522-1861', 'http://outofpark.com/main/', '당일 취소 불가, 2일 전 100% 환불', true,
-        true, '없음', '14:00', '13:00', 'camp_map/camp1.png');
+        true, '없음', '14:00', '13:00', '/images/camp_map/camp1.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('파크킹', '경북 김천시 어모면 은림로 62-11', '054-434-6677', 'https://www.instagram.com/amazingpark6211/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', 'camp_map/camp2.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp2.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('디캠고흥', '강원 횡성군 서원면 서원서로102번길 3-18', '033-345-3336', 'https://www.instagram.com/salon.de.bonj/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', 'camp_map/camp3.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp3.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('캠프달링', '경기 가평군 설악면 유명산길 61-75', '010-3148-9970', 'http://healingpia.co.kr', '당일 취소 불가, 2일 전 100% 환불', true,
-        true, '없음', '14:00', '13:00', 'camp_map/camp4.png');
+        true, '없음', '14:00', '13:00', '/images/camp_map/camp4.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('STX 오토캠핑장', '충남 태안군 소원면 산간이길 158-24', '043-1668-3972',
         'https://map.naver.com/v5/entry/place/1791561655?c=14047305.3983138,4408436.9604705,15,0,0,0,dh&amp;placePath=%2Fbooking%3Fentry=plt',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', 'camp_map/camp5.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp5.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('청주 옥화포시즌캠핑장', '강원 평창군 평창읍 뇌운계곡로 659-6', '033-332-0009', 'https://pcglamping.modoo.at/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', 'camp_map/camp6.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp6.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('휘게 포레스트', '충북 충주시 앙성면 학교말2길 50', '033-332-0009', 'http://www.binaecamping.co.kr', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', 'camp_map/camp7.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp7.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('초이스캠프앤카라반', '충남 태안군 남면 몽산포길 63-23', '033-332-0009', 'https://solbeachcamp.modoo.at/', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', 'camp_map/camp8.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp8.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('초록여울캠핑장', '경북 포항시 북구 죽장면 새마을로 3351', '033-332-0119', 'http://www.gaoncamp.com/', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', 'camp_map/camp9.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp9.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('소리의섬 캠핑장', '충북 충주시 앙성면 남한강변길 218-2', '033-332-0229', 'http://limsglamping.modoo.at', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', 'camp_map/camp10.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp10.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('림스 캠핑장', '전남 강진군 강진읍 해강로 1038-30', '033-332-0229', 'http://limsglamping.modoo.at', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', 'camp_map/camp11.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp11.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('단아한', '전북 순창군 팔덕면 산동신흥길 6', '031-581-9977', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true, '없음',
-        '14:00', '13:00', 'camp_map/camp12.png');
+        '14:00', '13:00', '/images/camp_map/camp12.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('원주 두리 캠핑장', '경기 가평군 가평읍 호반로 1700', '031-581-9977', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true,
-        '없음', '14:00', '13:00', 'camp_map/camp13.png');
+        '없음', '14:00', '13:00', '/images/camp_map/camp13.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('너른뜰 캠핑장', '충남 부여군 세도면 대흥로 163', '031-581-9917', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true, '없음',
-        '14:00', '13:00', 'camp_map/camp14.png');
+        '14:00', '13:00', '/images/camp_map/camp14.png');
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
 values ('개네집 캠핑장', '경상북도 영덕군 병곡면 병곡리 58-5', '031-557-7757', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true,
-        '없음', '14:00', '13:00', 'camp_map/camp15.png');
+        '없음', '14:00', '13:00', '/images/camp_map/camp15.png');
 
 -- 캠프 구역 -------------------------------------------------------------------------------------------------------
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
@@ -589,111 +589,111 @@ VALUES ('1', '50000', 15),
 
 -- 캠프 사진 LIST -------------------------------------------------------------------------------------------------------
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp1-1.jpg', 1),
-       ('camp_image/camp1-2.jpg', 1),
-       ('camp_image/camp1-3.jpg', 1),
-       ('camp_image/camp1-4.jpg', 1),
-       ('camp_image/camp1-5.jpg', 1),
-       ('camp_image/camp1-6.jpg', 1),
-       ('camp_image/camp1-7.jpg', 1),
-       ('camp_image/camp1-8.jpg', 1);
+values ('/images/camp_image/camp1-1.jpg', 1),
+       ('/images/camp_image/camp1-2.jpg', 1),
+       ('/images/camp_image/camp1-3.jpg', 1),
+       ('/images/camp_image/camp1-4.jpg', 1),
+       ('/images/camp_image/camp1-5.jpg', 1),
+       ('/images/camp_image/camp1-6.jpg', 1),
+       ('/images/camp_image/camp1-7.jpg', 1),
+       ('/images/camp_image/camp1-8.jpg', 1);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp2-1.jpg', 2),
-       ('camp_image/camp2-2.jpg', 2),
-       ('camp_image/camp2-3.jpg', 2),
-       ('camp_image/camp2-4.jpg', 2),
-       ('camp_image/camp2-5.jpg', 2);
+values ('/images/camp_image/camp2-1.jpg', 2),
+       ('/images/camp_image/camp2-2.jpg', 2),
+       ('/images/camp_image/camp2-3.jpg', 2),
+       ('/images/camp_image/camp2-4.jpg', 2),
+       ('/images/camp_image/camp2-5.jpg', 2);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp3-1.jpg', 3),
-       ('camp_image/camp3-2.jpg', 3),
-       ('camp_image/camp3-3.jpg', 3),
-       ('camp_image/camp3-4.jpg', 3),
-       ('camp_image/camp3-5.jpg', 3);
+values ('/images/camp_image/camp3-1.jpg', 3),
+       ('/images/camp_image/camp3-2.jpg', 3),
+       ('/images/camp_image/camp3-3.jpg', 3),
+       ('/images/camp_image/camp3-4.jpg', 3),
+       ('/images/camp_image/camp3-5.jpg', 3);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp4-1.jpg', 4),
-       ('camp_image/camp4-2.jpg', 4),
-       ('camp_image/camp4-3.jpg', 4),
-       ('camp_image/camp4-4.jpg', 4),
-       ('camp_image/camp4-5.jpg', 4);
+values ('/images/camp_image/camp4-1.jpg', 4),
+       ('/images/camp_image/camp4-2.jpg', 4),
+       ('/images/camp_image/camp4-3.jpg', 4),
+       ('/images/camp_image/camp4-4.jpg', 4),
+       ('/images/camp_image/camp4-5.jpg', 4);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp5-1.jpg', 5),
-       ('camp_image/camp5-2.jpg', 5),
-       ('camp_image/camp5-3.jpg', 5),
-       ('camp_image/camp5-4.jpg', 5),
-       ('camp_image/camp5-5.jpg', 5);
+values ('/images/camp_image/camp5-1.jpg', 5),
+       ('/images/camp_image/camp5-2.jpg', 5),
+       ('/images/camp_image/camp5-3.jpg', 5),
+       ('/images/camp_image/camp5-4.jpg', 5),
+       ('/images/camp_image/camp5-5.jpg', 5);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp6-1.jpg', 6),
-       ('camp_image/camp6-2.jpg', 6),
-       ('camp_image/camp6-3.jpg', 6),
-       ('camp_image/camp6-4.jpg', 6),
-       ('camp_image/camp6-5.jpg', 6);
+values ('/images/camp_image/camp6-1.jpg', 6),
+       ('/images/camp_image/camp6-2.jpg', 6),
+       ('/images/camp_image/camp6-3.jpg', 6),
+       ('/images/camp_image/camp6-4.jpg', 6),
+       ('/images/camp_image/camp6-5.jpg', 6);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp7-1.jpg', 7),
-       ('camp_image/camp7-2.jpg', 7),
-       ('camp_image/camp7-3.jpg', 7);
+values ('/images/camp_image/camp7-1.jpg', 7),
+       ('/images/camp_image/camp7-2.jpg', 7),
+       ('/images/camp_image/camp7-3.jpg', 7);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp8-1.jpg', 8),
-       ('camp_image/camp8-2.jpg', 8),
-       ('camp_image/camp8-3.jpg', 8),
-       ('camp_image/camp8-4.jpg', 8),
-       ('camp_image/camp8-5.jpg', 8);
+values ('/images/camp_image/camp8-1.jpg', 8),
+       ('/images/camp_image/camp8-2.jpg', 8),
+       ('/images/camp_image/camp8-3.jpg', 8),
+       ('/images/camp_image/camp8-4.jpg', 8),
+       ('/images/camp_image/camp8-5.jpg', 8);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp9-1.jpg', 9),
-       ('camp_image/camp9-2.jpg', 9),
-       ('camp_image/camp9-3.jpg', 9),
-       ('camp_image/camp9-4.jpg', 9),
-       ('camp_image/camp9-5.jpg', 9),
-       ('camp_image/camp9-6.jpg', 9),
-       ('camp_image/camp9-7.jpg', 9);
+values ('/images/camp_image/camp9-1.jpg', 9),
+       ('/images/camp_image/camp9-2.jpg', 9),
+       ('/images/camp_image/camp9-3.jpg', 9),
+       ('/images/camp_image/camp9-4.jpg', 9),
+       ('/images/camp_image/camp9-5.jpg', 9),
+       ('/images/camp_image/camp9-6.jpg', 9),
+       ('/images/camp_image/camp9-7.jpg', 9);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp10-1.jpg', 10),
-       ('camp_image/camp10-2.jpg', 10),
-       ('camp_image/camp10-3.jpg', 10),
-       ('camp_image/camp10-4.jpg', 10),
-       ('camp_image/camp10-5.jpg', 10);
+values ('/images/camp_image/camp10-1.jpg', 10),
+       ('/images/camp_image/camp10-2.jpg', 10),
+       ('/images/camp_image/camp10-3.jpg', 10),
+       ('/images/camp_image/camp10-4.jpg', 10),
+       ('/images/camp_image/camp10-5.jpg', 10);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp11-1.jpg', 11),
-       ('camp_image/camp11-2.jpg', 11),
-       ('camp_image/camp11-3.jpg', 11),
-       ('camp_image/camp11-4.jpg', 11),
-       ('camp_image/camp11-5.jpg', 11);
+values ('/images/camp_image/camp11-1.jpg', 11),
+       ('/images/camp_image/camp11-2.jpg', 11),
+       ('/images/camp_image/camp11-3.jpg', 11),
+       ('/images/camp_image/camp11-4.jpg', 11),
+       ('/images/camp_image/camp11-5.jpg', 11);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp12-1.jpg', 12),
-       ('camp_image/camp12-2.jpg', 12),
-       ('camp_image/camp12-3.jpg', 12),
-       ('camp_image/camp12-4.jpg', 12);
+values ('/images/camp_image/camp12-1.jpg', 12),
+       ('/images/camp_image/camp12-2.jpg', 12),
+       ('/images/camp_image/camp12-3.jpg', 12),
+       ('/images/camp_image/camp12-4.jpg', 12);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp13-1.jpg', 13),
-       ('camp_image/camp13-2.jpg', 13),
-       ('camp_image/camp13-3.jpg', 13),
-       ('camp_image/camp13-4.jpg', 13),
-       ('camp_image/camp13-5.jpg', 13);
+values ('/images/camp_image/camp13-1.jpg', 13),
+       ('/images/camp_image/camp13-2.jpg', 13),
+       ('/images/camp_image/camp13-3.jpg', 13),
+       ('/images/camp_image/camp13-4.jpg', 13),
+       ('/images/camp_image/camp13-5.jpg', 13);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp14-1.jpg', 14),
-       ('camp_image/camp14-2.jpg', 14),
-       ('camp_image/camp14-3.jpg', 14),
-       ('camp_image/camp14-4.jpg', 14),
-       ('camp_image/camp14-5.jpg', 14);
+values ('/images/camp_image/camp14-1.jpg', 14),
+       ('/images/camp_image/camp14-2.jpg', 14),
+       ('/images/camp_image/camp14-3.jpg', 14),
+       ('/images/camp_image/camp14-4.jpg', 14),
+       ('/images/camp_image/camp14-5.jpg', 14);
 
 insert into CAMP_IMAGE_TB (CAMP_IMAGE, CAMP_ID)
-values ('camp_image/camp15-1.jpg', 15),
-       ('camp_image/camp15-2.jpg', 15),
-       ('camp_image/camp15-3.jpg', 15),
-       ('camp_image/camp15-4.jpg', 15),
-       ('camp_image/camp15-5.jpg', 15);
+values ('/images/camp_image/camp15-1.jpg', 15),
+       ('/images/camp_image/camp15-2.jpg', 15),
+       ('/images/camp_image/camp15-3.jpg', 15),
+       ('/images/camp_image/camp15-4.jpg', 15),
+       ('/images/camp_image/camp15-5.jpg', 15);
 
 -- 옵션 카테고리 -------------------------------------------------------------------------------------------------------
 insert into OPTION_CATEGORY_TB (CATEGORY_NAME)
@@ -1158,24 +1158,40 @@ insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(2, 1);
 insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(3, 1);
 
 -- 결제 -------------------------------------------------------------------------------------------------------
-insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
-values ('2024-01-10', '2024-01-15', 1, 1, now());
-insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
+values ('2022-01-10', '2022-01-15', 1, 1, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
 values ('2024-01-11', '2024-01-15', 1, 3, now());
-insert into order_tb (check_out_date, check_in_date, user_id, camp_field_id, created_at)
-values ('2024-01-14', '2024-01-18', 1, 5, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
+values ('2024-01-17', '2024-01-18', 1, 5, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
+values ('2024-01-20', '2024-01-25', 1, 3, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
+values ('2024-02-03', '2024-02-10', 1, 3, now());
 
 -- 평점 ------------------------------------------------------------------------------------------------------------
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 1, 4.0, 5.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 1, 5.0, 5.0, 4.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 1, 3.0, 2.0, 3.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 1, 4.0, 3.0, 4.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 1, 5.0, 4.0, 5.0, 1 );
 
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
 values (1, 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
 values (2, 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values (3, 3, 1, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', 'camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values (4, 4, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values (5, 5, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', 'camp_image/camp1-1.jpg', now()  );
 
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)

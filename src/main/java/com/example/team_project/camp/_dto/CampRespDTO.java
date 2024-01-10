@@ -7,6 +7,8 @@ import com.example.team_project.camp.camp_image.CampImage;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.order.Order;
+
+import ch.qos.logback.core.joran.conditional.IfAction;
 import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
@@ -23,20 +25,31 @@ public class CampRespDTO {
     // 캠핑장 목록 페이지
     @Data
     public static class CampListDTO {
-        private Integer id;
-        private String campName;
-        private String campAddress;
-        private String campImage;
-        private String campRating;
+        private List<CampDTO> campDTOList;
 
-        public CampListDTO(Camp camp) {
-            this.id = camp.getId();
-            this.campName = camp.getCampName();
-            this.campAddress = camp.getCampAddress();
-            this.campImage = camp.firstCampImage();
-            this.campRating = camp.formatTotalRating();
+        public CampListDTO(List<Camp> campList) {
+            this.campDTOList = campList.stream().map(CampDTO::new).collect(Collectors.toList());
         }
+        @Data
+        public static class CampDTO {
+            private Integer id;
+            private String campName;
+            private String campAddress;
+            private String campImage;
+            private String campRating;
+
+            public CampDTO(Camp camp) {
+                this.id = camp.getId();
+                this.campName = camp.getCampName();
+                this.campAddress = camp.getCampAddress();
+                this.campImage = camp.firstCampImage();
+                this.campRating = camp.formatTotalRating();
+            }
     }
+        
+    }
+
+
 
     // 전우진 240109
     // 캠핑장 상세 정보 페이지
@@ -102,47 +115,88 @@ public class CampRespDTO {
     }
 
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
-    final static String DATEFORMAT2 = "MM월 dd일";
+    // 승신님 충돌 났길래 어떤걸 날려야 할지 몰라서 일단 주석처리 해뒀어요 -우진 
+    // final static String DATEFORMAT2 = "MM월 dd일";
 
-    @Data
-    public static class MyCampListDTO {
-        private List<MyCampDTO> myCampDTOs;
+    // @Data
+    // public static class MyCampListDTO {
+    //     private List<MyCampDTO> myCampDTOs;
 
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
-                        return order.getCheckInDate();
-                    }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
-        }
+    //     public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+    //         this.myCampDTOs = campReviews.stream()
+    //                 .filter(campReview -> campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+    //                 .sorted(Comparator.comparing(campReview -> {
+    //                     Order order = campReview.getOrder();
+    //                     return order.getCheckInDate();
+    //                 }))
+    //                 .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+    //     }
 
-        @Data
-        public class MyCampDTO {
-            private String totalRating;
-            private String checkInDate;
-            private String checkOutDate;
-            private String campAddress;
-            private String campName;
-            private String reviewImage;
+    //     @Data
+    //     public class MyCampDTO {
+    //         private String totalRating;
+    //         private String checkInDate;
+    //         private String checkOutDate;
+    //         private String campAddress;
+    //         private String campName;
+    //         private String reviewImage;
 
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
-                this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT1);
-                Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() == order.getCheckOutDate()
-                        .toLocalDateTime().getYear();
-                String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
-                this.checkOutDate = TimestampUtils.timeStampToDate(order.getCheckOutDate(), dateFormat);
-                this.campAddress = camp.getCampAddress();
-                this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
-            }
+    //         public MyCampDTO(CampReview campReview) {
+    //             Order order = campReview.getOrder();
+    //             Camp camp = campReview.getCamp();
+    //             this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+    //             this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT1);
+    //             Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() == order.getCheckOutDate()
+    //                     .toLocalDateTime().getYear();
+    //             String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+    //             this.checkOutDate = TimestampUtils.timeStampToDate(order.getCheckOutDate(), dateFormat);
+    //             this.campAddress = camp.getCampAddress();
+    //             this.campName = camp.getCampName();
+    //             this.reviewImage = campReview.getReviewImage();
+    //         }
 
-        }
+    //     }
 
-    }
+    // }
 
+	final static String DATEFORMAT2 = "MM월 dd일";
+    
+	@Data
+	public static class MyCampListDTO {
+		private List<MyCampDTO> myCampDTOs;
+		public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+			System.out.println("------------"+year);
+			this.myCampDTOs = campReviews.stream()
+					.filter(campReview -> year==null || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+					.sorted(Comparator.comparing(campReview -> {
+	                    Order order = campReview.getOrder();
+	                    return order.getCheckInDate();
+	                }))
+					.map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+		}
+		@Data
+		public class MyCampDTO{
+			private String totalRating; 
+			private String checkInDate; 
+			private String checkOutDate;
+			private String campAddress;
+			private String campName;
+			private String reviewImage;
+			public MyCampDTO(CampReview campReview) {
+				Order order = campReview.getOrder();
+				Camp camp = campReview.getCamp();
+				this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+				this.checkInDate = TimestampUtils.timeStampToDate
+						(order.getCheckInDate(), DATEFORMAT1);
+				Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() 
+						== order.getCheckOutDate().toLocalDateTime().getYear();
+				String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+				this.checkOutDate = TimestampUtils.timeStampToDate
+						(order.getCheckOutDate(), dateFormat);
+				this.campAddress = camp.getCampAddress();
+				this.campName = camp.getCampName();
+				this.reviewImage = campReview.getReviewImage();
+			}
+		}	
+	}
 }

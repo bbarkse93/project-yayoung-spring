@@ -52,44 +52,45 @@
                 <ul class="tabs">
                     <li class="tab-link current" data-tab="tab-1">tab1</li>
                     <li class="tab-link" data-tab="tab-2">tab2</li>
-                    <li class="tab-link" data-tab="tab-3">tab3</li>
                 </ul>
-                <div id="tab-1" class="tab-content current">tab content1</div>
+                <div id="tab-1" class="tab-content current">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="faq_th">
+                            <th>#</th>
+                            <th style="width: 200px">제목</th>
+                            <th style="width: 350px">내용</th>
+                            <th>작성 날짜</th>
+                            <th>수정</th>
+                            <th>삭제</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="faq_td">
+                            <td>1</td>
+                            <td class="title">예약을 취소하고 싶어요</td>
+                            <td class="content">예약자 본인이 직접 예약확인/취소 가능합니다.
+                                예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다.</td>
+                            <td>2022.03.03</td>
+                            <td>
+                                <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal">
+                                    프로필 보기
+                                </button>
+                            </td>
+                            <td>
+                                <button class="delete_Button" id="userDelete" data-id="1">삭제
+                                </button>
+                                <!--                            <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료-->
+                                <!--                            </button>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div id="tab-2" class="tab-content">tab content2</div>
-                <div id="tab-3" class="tab-content">tab content3</div>
 
             </div>
-<!--            <table class="table table-hover">-->
-<!--                <thead>-->
-<!--                <tr class="user_th">-->
-<!--                    <th>#</th>-->
-<!--                    <th>회원 유저네임</th>-->
-<!--                    <th>회원 닉네임</th>-->
-<!--                    <th>회원 프로필</th>-->
-<!--                    <th>회원 가입 날짜</th>-->
-<!--                    <th>회원 삭제</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr class="user_td">-->
-<!--                    <td>1</td>-->
-<!--                    <td>kakao.오리</td>-->
-<!--                    <td>오리</td>-->
-<!--                    <td>-->
-<!--                        <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal">-->
-<!--                            프로필 보기-->
-<!--                        </button>-->
-<!--                    </td>-->
-<!--                    <td>2022.03.03</td>-->
-<!--                    <td>-->
-<!--                        <button class="delete_Button" id="userDelete" data-id="1">삭제-->
-<!--                        </button>-->
-<!--                        &lt;!&ndash;                            <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            </button>&ndash;&gt;-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
+
 
             <div class="modal" id="review_modal">
                 <div class="modal-dialog modal-lg">
