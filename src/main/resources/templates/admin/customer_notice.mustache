@@ -26,7 +26,7 @@
             <div class="section1">
                 <div class="section_title">고객센터</div>
                 <ul class="section_ul">
-                    <li><i class="fa-solid fa-question"></i><a href="/admin/funding/movie-open/setting">FAQ</a></li>
+                    <li><i class="fa-solid fa-question"></i><a href="/admin/customer">FAQ</a></li>
                     <li><i class="fa-regular fa-clipboard"></i><a
                             href="/admin/funding/off-movie-open/setting">공지사항</a></li>
                 </ul>
@@ -38,7 +38,7 @@
         <!--컨테이너2 시작-->
         <div class="check_container">
             <div class="admin_container_title">
-                <h3>FAQ</h3>
+                <h3>공지사항</h3>
             </div>
             <form id="search-form" action="/admin/funding/confirm/search" method="get">
                 <div class="custom_search">
@@ -48,120 +48,93 @@
                     </button>
                 </div>
             </form>
-            <table class="table table-hover">
-                <thead>
-                <tr class="user_th">
-                    <th>#</th>
-                    <th>회원 유저네임</th>
-                    <th>회원 닉네임</th>
-                    <th>회원 프로필</th>
-                    <th>회원 가입 날짜</th>
-                    <th>회원 삭제</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="user_td">
-                    <td>1</td>
-                    <td>kakao.오리</td>
-                    <td>오리</td>
-                    <td>
-                        <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal">
-                            프로필 보기
-                        </button>
-                    </td>
-                    <td>2022.03.03</td>
-                    <td>
-                        <button class="delete_Button" id="userDelete" data-id="1">삭제
-                        </button>
-                        <!--                            <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료-->
-                        <!--                            </button>-->
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div>
+                <div class="custom_flex_end">
+                    <button type="button" class="insert_to_modal" data-bs-toggle="modal"
+                            data-bs-target="#fqa_insert_modal">등록
+                    </button>
+                </div>
+                <div style="padding: 15px">
+                    <table class="table table-hover" style="table-layout: fixed">
+                        <thead>
+                        <tr class="faq_th">
+                            <th style="width: 50px">#</th>
+                            <th style="width: 250px">제목</th>
+                            <th style="width: 300px">내용</th>
+                            <th>작성 날짜</th>
+                            <th>수정</th>
+                            <th>삭제</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="faq_td">
+                            <td>1</td>
+                            <td class="title">예약을 취소하고 싶어요</td>
+                            <td class="content">예약자 본인이 직접 예약확인/취소 가능합니다.
+                                예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다.
+                            </td>
+                            <td>2022.03.03</td>
+                            <td>
+                                <button type="button" class="update_to_modal" data-bs-toggle="modal"
+                                        data-bs-target="#faq_modal">
+                                    수정
+                                </button>
+                            </td>
+                            <td>
+                                <button class="delete_Button" id="userDelete" data-id="1">삭제
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-            <div class="modal" id="review_modal">
+
+            <div class="modal" id="faq_modal">
                 <div class="modal-dialog modal-lg">
-                    <div class="review_modal_content">
+                    <div class="faq_modal_content">
 
                         <!-- Modal body -->
-                        <div class="review_modal_body">
+                        <div class="faq_modal_body">
                             <div class="button">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="body">
-                                <div style="font-weight: bold">진천포레스트 캠핑장</div>
-                                <div class="count">4.7</div>
-                                <br>
-                                <div style="font-size: 14px; font-weight: 500">세부항목</div>
-                                <div style="font-size: 13px" class="custom_flex detail_review">
-                                    <div style="text-align: start; margin-right: 15px">
-                                        <p>청결도</p>
-                                        <p>관리수준</p>
-                                        <p>친절도</p>
-                                    </div>
-                                    <div style="text-align: start">
-                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
-                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
-                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
-                                    </div>
-                                </div>
+                                <div class="column">공지사항 수정</div>
+                                <input type="hidden" value="1" class="column_id">
+                                <input class="input" type="text" placeholder="예약을 취소하고 싶어요">
+                                <div class="update_summernote"></div>
+                            </div>
+                            <div class="button" style="margin-right: 10px;">
+                                <button type="button" class="update_button update_submit" data-bs-dismiss="modal">수정
+                                    <input type="hidden" value="예약자 본인이 직접 예약확인/취소 가능합니다.
+예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다." class="content">
+                                </button>
                             </div>
                         </div>
-                        <!-- Modal footer -->
-                        <div class="review_modal_footer">
-                            <div class="review_count">
-                                총 리뷰 - <span class="custom_font_point1">1</span>개
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="fqa_insert_modal">
+                <div class="modal-dialog modal-lg">
+                    <div class="faq_modal_content">
+
+                        <!-- Modal body -->
+                        <div class="faq_modal_body">
+                            <div class="button">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <br>
-                            <table class="table table-hover">
-                                <thead>
-                                <tr class="review_th">
-                                    <th>#</th>
-                                    <th style="width: 80px">닉네임</th>
-                                    <th style="width: 332px">리뷰</th>
-                                    <th style="width: 108px">평점</th>
-                                    <th>작성 날짜</th>
-                                    <th>리뷰 삭제</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="review_td">
-                                        <td>1</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>2</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-                                        이게 무신 말이에용 ㅎ해해ㅐ해해해해</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>3</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="body">
+                                <div class="column">공지사항 등록</div>
+                                <input type="hidden" value="1" class="column_id">
+                                <input class="input" type="text" placeholder="제목을 입력해주세요">
+                                <div class="insert_summernote"></div>
+                            </div>
+                            <div class="button" style="margin-right: 10px;">
+                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal">등록
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,6 +143,68 @@
         <!--컨테이너2 끝-->
     </div>
 </div>
+<script>
+
+    let updateButton = document.querySelector('.update_submit');
+    updateButton.addEventListener("click", function () {
+        alert("수정이 완료되었습니다.");
+    });
+
+    let submitButton = document.querySelector('.insert_submit');
+    submitButton.addEventListener("click", function () {
+        alert("등록이 완료되었습니다.");
+    });
+
+    $(document).ready(function () {
+        let placeholder = "";
+        let className = "";
+        let content = $('.content').text();
+        console.log("placeholder : " + content);
+
+        $('.update_to_modal').click(function() {
+            placeholder = content;
+            className = '.update_summernote';
+            initializeSummernote();
+        });
+
+        $('.insert_to_modal').click(function() {
+            placeholder = "내용을 입력해주세요.";
+            className = '.insert_summernote';
+            initializeSummernote();
+        });
+
+        function initializeSummernote(){
+            $(className).summernote({
+                placeholder: placeholder,
+                tabsize: 2,
+                height: 200,
+                font: '돋움체',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['forecolor']],
+                    ['para', ['paragraph']],
+                    ['table', ['table']],
+                ],
+                styleTags: [
+                    {
+                        title: '강조',
+                        tag: 'h4',
+                        className: 'pointFont',
+                        value: 'h4'
+                    },
+                    {
+                        title: '일반(숫자)',
+                        tag: 'p',
+                        className: 'normalFont',
+                        value: 'p'
+                    },
+                ],
+            });
+        }
+
+    });
+</script>
 
 </body>
 </html>

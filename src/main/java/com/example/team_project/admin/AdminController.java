@@ -18,8 +18,13 @@ public class AdminController {
         return "admin/user_management";
     }
 
-    @GetMapping("/customer")
-    public String customerPage(){
+    @GetMapping("/customer/faq")
+    public String faqPage(){
         return "admin/customer_faq";
+    }
+
+    @GetMapping("/customer/notice")
+    public String noticePage(){
+        return "admin/customer_notice";
     }
 }
