@@ -4,6 +4,8 @@ endif::[]
 
 :user: user-rest-controller_test
 :camp: camp-rest-controller_test
+:notice: notice-rest-controller_test
+:board: board-rest-controller_test
 
 = REST API
 :toc: left
@@ -18,6 +20,34 @@ include::{snippets}/{user}/my-page_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{user}/my-page_test/http-response.adoc[]
 
+=== 2. 프로필 페이지
+===== Request Example
+include::{snippets}/{user}/profile-page_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/profile-page_test/http-response.adoc[]
+
+=== 3. 프로필 수정
+===== Request Example
+include::{snippets}/{user}/profile-update_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/profile-update_test/http-response.adoc[]
+
+=== 4. 로그아웃
+===== Request Example
+include::{snippets}/{user}/logout_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/logout_test/http-response.adoc[]
+
+=== 5. 회원탈퇴
+===== Request Example
+include::{snippets}/{user}/with-draw_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/with-draw_test/http-response.adoc[]
+
 == 캠프
 
 === 1. 캠프 목록
@@ -27,9 +57,25 @@ include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]
 
-=== 2. 캠프정보
+=== 2. 캠프 정보
 ===== Request Example
 include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
+
+== 공지사항
+=== 1. 공지사항목록
+===== Request Example
+include::{snippets}/{notice}/notice-page_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{notice}/notice-page_test/http-response.adoc[]
+
+== FAQ
+=== 1. FAQ목록
+===== Request Example
+include::{snippets}/{board}/board-page_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{board}/board-page_test/http-response.adoc[]

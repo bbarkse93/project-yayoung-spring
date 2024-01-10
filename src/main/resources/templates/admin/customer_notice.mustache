@@ -1,0 +1,175 @@
+{{>admin/layout/manager_header}}
+
+<!--컨테이너1 시작-->
+<div class="flex_center">
+    <div class="main">
+        <div class="container">
+            <div class="section1">
+                <div class="section_title">캠핑장</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-tents"></i><a href="/admin/funding-ready-list">캠핑장 등록</a>
+                    </li>
+                    <li><i class="fa-solid fa-binoculars"></i><a href="/admin/current-camp">캠핑장 수정 · 삭제</a></li>
+                    <li><i class="fa-solid fa-compass"></i><a href="/admin/funding-management">캠핑장 현황 · 리뷰 관리</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">회원</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-user"></i><a href="/admin/user">회원 관리</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">고객센터</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-question"></i><a href="/admin/funding/movie-open/setting">FAQ</a></li>
+                    <li><i class="fa-regular fa-clipboard"></i><a
+                            href="/admin/funding/off-movie-open/setting">공지사항</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+        </div>
+        <!--컨테이너1 끝-->
+
+        <!--컨테이너2 시작-->
+        <div class="check_container">
+            <div class="admin_container_title">
+                <h3>FAQ</h3>
+            </div>
+            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+                <div class="custom_search">
+                    <input type="text" name="keyword" placeholder="검색 하기">
+                    <button type="submit" class="custom_search_button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+            <table class="table table-hover">
+                <thead>
+                <tr class="user_th">
+                    <th>#</th>
+                    <th>회원 유저네임</th>
+                    <th>회원 닉네임</th>
+                    <th>회원 프로필</th>
+                    <th>회원 가입 날짜</th>
+                    <th>회원 삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="user_td">
+                    <td>1</td>
+                    <td>kakao.오리</td>
+                    <td>오리</td>
+                    <td>
+                        <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal">
+                            프로필 보기
+                        </button>
+                    </td>
+                    <td>2022.03.03</td>
+                    <td>
+                        <button class="delete_Button" id="userDelete" data-id="1">삭제
+                        </button>
+                        <!--                            <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료-->
+                        <!--                            </button>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="modal" id="review_modal">
+                <div class="modal-dialog modal-lg">
+                    <div class="review_modal_content">
+
+                        <!-- Modal body -->
+                        <div class="review_modal_body">
+                            <div class="button">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="body">
+                                <div style="font-weight: bold">진천포레스트 캠핑장</div>
+                                <div class="count">4.7</div>
+                                <br>
+                                <div style="font-size: 14px; font-weight: 500">세부항목</div>
+                                <div style="font-size: 13px" class="custom_flex detail_review">
+                                    <div style="text-align: start; margin-right: 15px">
+                                        <p>청결도</p>
+                                        <p>관리수준</p>
+                                        <p>친절도</p>
+                                    </div>
+                                    <div style="text-align: start">
+                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
+                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
+                                        <p><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="review_modal_footer">
+                            <div class="review_count">
+                                총 리뷰 - <span class="custom_font_point1">1</span>개
+                            </div>
+                            <br>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="review_th">
+                                    <th>#</th>
+                                    <th style="width: 80px">닉네임</th>
+                                    <th style="width: 332px">리뷰</th>
+                                    <th style="width: 108px">평점</th>
+                                    <th>작성 날짜</th>
+                                    <th>리뷰 삭제</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="review_td">
+                                        <td>1</td>
+                                        <td>오리</td>
+                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
+                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
+                                        </td>
+                                        <td>2022-08-04</td>
+                                        <td>
+                                            <button class="review_button">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="review_td">
+                                        <td>2</td>
+                                        <td>오리</td>
+                                        <td>체크아웃 시간이 13시라서 너무 좋아요~ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
+                                        이게 무신 말이에용 ㅎ해해ㅐ해해해해</td>
+                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
+                                        </td>
+                                        <td>2022-08-04</td>
+                                        <td>
+                                            <button class="review_button">삭제</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="review_td">
+                                        <td>3</td>
+                                        <td>오리</td>
+                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
+                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
+                                        </td>
+                                        <td>2022-08-04</td>
+                                        <td>
+                                            <button class="review_button">삭제</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--컨테이너2 끝-->
+    </div>
+</div>
+
+</body>
+</html>
