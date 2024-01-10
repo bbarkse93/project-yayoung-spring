@@ -26,7 +26,6 @@ import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampListDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampBookMarkListDTO.CampBookmarkDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
-
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;;
@@ -156,6 +155,13 @@ public class CampRestController {
     	CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1 , requestDTO);
     	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+    
+    //캠프장 아이디를 받아 캠프 구역 목록 조회
+    @GetMapping("/field-list")
+    public ResponseEntity<?> campFieldList(@ModelAttribute CampReqDTO.CampFieldListDTO requestDTO){
+    	CampRespDTO.CampFieldListDTO responseDTO = campService.campFieldList(requestDTO);
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 }
