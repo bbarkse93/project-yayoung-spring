@@ -1,6 +1,7 @@
 package com.example.team_project.camp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -40,9 +41,12 @@ public class CampService {
     // 사용자 캠핑장 목록 출력 기능
     public List<CampListDTO> getAllCamps() {
         List<Camp> camps = campJPARepository.findAll();
-        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
-        return campList;
-
+        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
+                .map(c -> new CampListDTO(c))
+                .collect(Collectors.toList());
+        // List<CampListDTO> campList =
+        // camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
+        return responseDTO;
     }
 
     private CampListDTO convertToCampRespDto(Camp camp) {
@@ -51,29 +55,31 @@ public class CampService {
         return new CampListDTO(camp);
     }
 
-    // 사용자 관심 캠핑장 등록 기능
-    public CampBookmark addBookmark(Integer userId, Integer campId) {
+    // 북마크 추가
+    public CampBookmark addBookmark(Integer userId, CampReqDTO.CampBookmarkDTO dto) {
         User user = userJPARepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        Camp camp = campJPARepository.findById(campId)
+
+        Camp camp = campJPARepository.findById(dto.getCampId())
                 .orElseThrow(() -> new EntityNotFoundException("Camp not found"));
 
         CampBookmark campBookmark = CampBookmark.builder()
-                .user(user)
-                .camp(camp)
+                .user(User.builder().id(user.getId()).build())
+                .camp(Camp.builder().id(camp.getId()).build())
                 .build();
-        return campBookmarkJPARepository.save(campBookmark);
+
+        CampBookmark response = campBookmarkJPARepository.save(campBookmark);
+
+        return response;
     }
 
-    // 관심 캠핑장 등록 후 버튼 재클릭 시 해제 기능
+    // 북마크 해제
     public void removeBookmark(Integer userId, Integer campId) {
         List<CampBookmark> bookmarks = campBookmarkJPARepository.findByUserId(userId);
-        for (CampBookmark bookmark : bookmarks) {
-            if (bookmark.getCamp().getId().equals(campId)) {
-                campBookmarkJPARepository.delete(bookmark);
-                break;
-            }
-        }
+        bookmarks.stream()
+                .filter(bookmark -> bookmark.getCamp().getId().equals(campId))
+                .findFirst()
+                .ifPresent(campBookmarkJPARepository::delete);
     }
 
     // 사용자의 관심 캠핑장 조회 기능

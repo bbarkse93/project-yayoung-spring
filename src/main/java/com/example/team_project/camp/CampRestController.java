@@ -2,22 +2,32 @@ package com.example.team_project.camp;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project._core.utils.JwtTokenUtils;
 import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampListDTO;
+import com.example.team_project.camp._dto.CampRespDTO.CampBookMarkListDTO.CampBookmarkDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;;
 
 @RequestMapping("/camp")
@@ -25,6 +35,7 @@ import lombok.RequiredArgsConstructor;;
 @RestController
 public class CampRestController {
 
+    @Autowired
     private final CampService campService;
 
     // 캠핑장 리스트 페이지
@@ -35,9 +46,25 @@ public class CampRestController {
     // }
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllCamps() {
-        List<CampListDTO> campDTOs = campService.getAllCamps();
-        return ResponseEntity.ok(ApiUtils.success(campDTOs));
+    public ResponseEntity<?> getAllCamps(@RequestHeader("Authorization") String token) {
+        // 인증검사
+        try {
+            // 토큰 검증 및 userId 추출
+            DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+            Integer userId = decodedJWT.getClaim("id").asInt();
+
+            // userJPARepository.findById(userId)
+            // .orElseThrow(() => new EntityNotFoundException("User not found"));
+
+            // 핵심로직
+            List<CampListDTO> campDTOs = campService.getAllCamps();
+            return ResponseEntity.ok(ApiUtils.success(campDTOs));
+        } catch (JWTVerificationException | EntityNotFoundException e) {
+            // 인증 실패 혹은 사용자 미발견시 처리
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ApiUtils.error(e.getMessage(), HttpStatus.UNAUTHORIZED));
+        }
+
     }
 
     // 캠핑장 상세정보 페이지
@@ -52,15 +79,29 @@ public class CampRestController {
 
     // 관심 캠핑장 등록 기능
     @PostMapping("/bookmark")
-    public ResponseEntity<?> addBookmark(@RequestBody CampReqDTO.CampBookmarkDTO campBookmarkDTO) {
-        CampBookmark campBookmark = campService.addBookmark(campBookmarkDTO.getUserId(), campBookmarkDTO.getCampId());
-        return ResponseEntity.ok(campBookmark);
+    public ResponseEntity<?> addBookmark(
+            @RequestBody CampReqDTO.CampBookmarkDTO dto
+    // , @RequestHeader("Authorization") String token
+    ) {
+        // 토큰 처리를 위한 서비스를 통해 userId 추출
+        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+        // Integer userId = decodedJWT.getClaim("id").asInt();
+        System.out.println("컨트롤러");
+        campService.addBookmark(1, dto);
+
+        // OrderRespDTO.myCampFieldListDTO responseDTO =
+        // orderService.myCampFieldList(userId, requestDTO);
+        return ResponseEntity.ok(ApiUtils.success("북마크 성공"));
     }
 
     // 관심 캠핑장 등록 해제 기능
-    @PostMapping("/bookmark-remove")
-    public ResponseEntity<?> bookmarkRemove(@RequestBody CampReqDTO.CampBookmarkDTO campBookmarkDTO) {
-        campService.bookmarkRemove(campBookmarkDTO.getUserId(), campBookmarkDTO.getCampId());
+    @DeleteMapping("/bookmark")
+    public ResponseEntity<?> removeBookmark(@RequestParam Integer campId,
+            @RequestHeader("Authorization") String token) {
+        DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+        Integer userId = decodedJWT.getClaim("id").asInt();
+
+        campService.removeBookmark(userId, campId);
         return ResponseEntity.ok().build();
     }
 

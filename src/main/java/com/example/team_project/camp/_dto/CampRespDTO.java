@@ -26,29 +26,15 @@ public class CampRespDTO {
         private Integer id;
         private String campName;
         private String campAddress;
-        private String campCallNumber;
-        private String campWebsite;
-        private String campRefundPolicy;
-        private boolean campWater;
-        private boolean campGarbageBag;
-        private String holiday;
-        private String campCheckIn;
-        private String campCheckOut;
-        private String campFieldImage;
+        private String campImage;
+        private String campRating;
 
         public CampListDTO(Camp camp) {
             this.id = camp.getId();
             this.campName = camp.getCampName();
             this.campAddress = camp.getCampAddress();
-            this.campCallNumber = camp.getCampCallNumber();
-            this.campWebsite = camp.getCampWebsite();
-            this.campRefundPolicy = camp.getCampRefundPolicy();
-            this.campWater = camp.isCampWater();
-            this.campGarbageBag = camp.isCampGarbageBag();
-            this.holiday = camp.getHoliday();
-            this.campCheckIn = camp.getCampCheckIn();
-            this.campCheckOut = camp.getCampCheckOut();
-            this.campFieldImage = camp.getCampFieldImage();
+            this.campImage = camp.firstCampImage();
+            this.campRating = camp.formatTotalRating();
         }
     }
 

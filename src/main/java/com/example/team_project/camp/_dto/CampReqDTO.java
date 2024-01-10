@@ -12,7 +12,6 @@ public class CampReqDTO {
 
 	@Data
 	public static class CampBookmarkDTO {
-		private Integer userId;
 		private Integer campId;
 	}
 
