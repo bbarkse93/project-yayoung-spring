@@ -455,3 +455,39 @@ ul.tabs li.current{
 .tab-content.current{
     display: inherit;
 }
+
+/*************************************************/
+.faq_th th {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.faq_td .title {
+    text-overflow: ellipsis;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.faq_td .content {
+    text-overflow: ellipsis;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: 45px;
+}
+.faq_td td {
+    text-align: center;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.faq_td .profile_button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--back_03);
+}
