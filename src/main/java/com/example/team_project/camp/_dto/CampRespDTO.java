@@ -113,50 +113,6 @@ public class CampRespDTO {
     }
 
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
-    // 승신님 충돌 났길래 어떤걸 날려야 할지 몰라서 일단 주석처리 해뒀어요 -우진 
-    // final static String DATEFORMAT2 = "MM월 dd일";
-
-    // @Data
-    // public static class MyCampListDTO {
-    //     private List<MyCampDTO> myCampDTOs;
-
-    //     public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-    //         this.myCampDTOs = campReviews.stream()
-    //                 .filter(campReview -> campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-    //                 .sorted(Comparator.comparing(campReview -> {
-    //                     Order order = campReview.getOrder();
-    //                     return order.getCheckInDate();
-    //                 }))
-    //                 .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
-    //     }
-
-    //     @Data
-    //     public class MyCampDTO {
-    //         private String totalRating;
-    //         private String checkInDate;
-    //         private String checkOutDate;
-    //         private String campAddress;
-    //         private String campName;
-    //         private String reviewImage;
-
-    //         public MyCampDTO(CampReview campReview) {
-    //             Order order = campReview.getOrder();
-    //             Camp camp = campReview.getCamp();
-    //             this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
-    //             this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT1);
-    //             Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() == order.getCheckOutDate()
-    //                     .toLocalDateTime().getYear();
-    //             String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
-    //             this.checkOutDate = TimestampUtils.timeStampToDate(order.getCheckOutDate(), dateFormat);
-    //             this.campAddress = camp.getCampAddress();
-    //             this.campName = camp.getCampName();
-    //             this.reviewImage = campReview.getReviewImage();
-    //         }
-
-    //     }
-
-    // }
-
 	final static String DATEFORMAT2 = "MM월 dd일";
 	// 내 캠핑장 연도별 DTO
 	@Data
