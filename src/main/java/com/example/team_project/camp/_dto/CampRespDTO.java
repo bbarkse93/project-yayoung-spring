@@ -1,12 +1,19 @@
 package com.example.team_project.camp._dto;
 
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.dialect.aggregate.AggregateSupport.AggregateColumnWriteExpression;
+
+import com.example.team_project._core.erroes.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
@@ -15,6 +22,7 @@ import com.example.team_project.camp_field.CampField;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
+import net.bytebuddy.asm.Advice.This;
 
 @Data
 public class CampRespDTO {
@@ -158,14 +166,16 @@ public class CampRespDTO {
 	@Data
 	public static class CampFieldListDTO{
 		private CampInfoDTO campInfoDTO;
+		private Integer campId;
 		private String checkInDate;
 		private String checkOutDate;
 		private Integer nights;
 		private List<CampFieldDTO> campFieldDTOs;
-		public CampFieldListDTO(List<CampField> campFields, Camp camp, String checkInDate, String checkOutDate) {
+		public CampFieldListDTO(List<CampField> campFields, Camp camp, CampReqDTO.CampFieldListDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
-			this.checkInDate = checkInDate;
-			this.checkOutDate = checkOutDate;
+			this.campId = requestDTO.getCampId();
+			this.checkInDate = requestDTO.getCheckInDate();
+			this.checkOutDate = requestDTO.getCheckOutDate();
 			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
 			this.nights = period.getDays();
 			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField, nights)).collect(Collectors.toList());
@@ -173,11 +183,9 @@ public class CampRespDTO {
 		@Data
 		public static class CampFieldDTO{
 			private String fieldName; // 캠프 구역
-			private Integer nights; // 숙박일수
 			private String totalPrice;	// 총 금액
 			public CampFieldDTO(CampField campField, Integer nights) {
 				this.fieldName = campField.getFieldName();
-				this.nights = nights;
 				this.totalPrice = priceFormat(Integer.parseInt(campField.getPrice())*nights);
 			}
 		}
@@ -216,6 +224,19 @@ public class CampRespDTO {
                 	.orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
 		// 운영 상태 = 운영 시간 내에 해당하고 휴일이 아닐 것(미완성)
+        Timestamp now = TimestampUtils.findCurrnetTime();
+        String today = String.valueOf(now).substring(0, 10);  
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        // 휴일의 예시를 알 수 없어 현재는 미반영
+        Date checkInDate; // 운영 시작 시간
+        Date checkOutDate; // 운영 종료 시간
+		try {
+			checkInDate  = timeFormat.parse(today+" "+camp.getCampCheckIn());
+			checkOutDate = timeFormat.parse(today+" "+camp.getCampCheckOut());
+			campInfo.setIsOpen(now.compareTo(checkInDate) >= 0 && now.compareTo(checkOutDate) < 0);
+		} catch (ParseException e) {
+			throw new Exception500("서버 에러가 발생했습니다");
+		}
 		campInfo.setIsOpen(true);
 		campInfo.setCampImage(camp.firstCampImage());
 		campInfo.setCampFieldImage(camp.getCampFieldImage());

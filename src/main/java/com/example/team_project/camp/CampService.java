@@ -130,7 +130,7 @@ public class CampService {
 		// 캠프 구역 목록 조회
 		List<CampField> campfields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
 		if(campfields == null)throw new Exception404("잘못된 캠프장 명입니다.");
-		return new CampRespDTO.CampFieldListDTO(campfields, camp, requestDTO.getCheckInDate(),requestDTO.getCheckOutDate());
+		return new CampRespDTO.CampFieldListDTO(campfields, camp, requestDTO);
 	}
 
 }
