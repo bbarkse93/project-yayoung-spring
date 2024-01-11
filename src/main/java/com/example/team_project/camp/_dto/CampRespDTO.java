@@ -3,8 +3,10 @@ package com.example.team_project.camp._dto;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.example.team_project._core.utils.TimestampUtils;
@@ -14,6 +16,8 @@ import com.example.team_project.camp.camp_image.CampImage;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp_field.CampField;
+import com.example.team_project.option.Option;
+import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -41,58 +45,79 @@ public class CampRespDTO {
         }
     }
 
-
     // 전우진 240109
     // 캠핑장 상세 정보 페이지
     @Data
     public static class CampDetailDTO {
-        private Integer id;
-        private String campName;
-        private String campAddress;
-        private String campCallNumber;
-        private String campWebsite;
-        private String campRefundPolicy;
-        private boolean campWater;
-        private boolean campGarbageBag;
-        private String holiday;
-        private String campCheckIn;
-        private String campCheckOut;
-        private String campFieldImage;
+        private CampDTO campInfo;
+        private RatingAverages campRating;
+        private long reviewCount;
         private List<CampImageDTO> images;
-        private List<CampRatingDTO> ratings;
+        private List<OptionManagementDTO> options;
 
-        public CampDetailDTO(Camp camp, List<CampImage> images, List<CampRating> ratings) {
-            this.id = camp.getId();
-            this.campName = camp.getCampName();
-            this.campAddress = camp.getCampAddress();
-            this.campCallNumber = camp.getCampCallNumber();
-            this.campWebsite = camp.getCampWebsite();
-            this.campRefundPolicy = camp.getCampRefundPolicy();
-            this.campWater = camp.isCampWater();
-            this.campGarbageBag = camp.isCampGarbageBag();
-            this.holiday = camp.getHoliday();
-            this.campCheckIn = camp.getCampCheckIn();
-            this.campCheckOut = camp.getCampCheckOut();
-            this.campFieldImage = camp.getCampFieldImage();
-            this.images = images.stream().map(c -> new CampImageDTO(c)).collect(Collectors.toList());
-            this.ratings = ratings.stream().map(r -> new CampRatingDTO(r)).collect(Collectors.toList());
+        public CampDetailDTO(Camp camp, long reviewCount) {
+            this.campInfo = new CampDTO(camp);
+            this.campRating = ratingAverages(camp.getCampRatingList());
+            this.images = camp.getCampImageList().stream().map(c -> new CampImageDTO(c)).collect(Collectors.toList());
+            this.reviewCount = reviewCount;
+            this.options = camp.getOptionManagementList().stream().map(c -> new OptionManagementDTO(c)).collect(Collectors.toList());
         }
 
-
-
         @Data
-        public static class CampImageDTO{
-            private Integer campImageId;
-            private String campImage;
+        public static class CampDTO {
+            private Integer id;
+            private String campName;
+            private String campAddress;
+            private String campCallNumber;
+            private String campWebsite;
+            private String campRefundPolicy;
+            private boolean campWater;
+            private boolean campGarbageBag;
+            private String holiday;
+            private String campCheckIn;
+            private String campCheckOut;
+            private String campFieldImage;
+            private CampFieldDTO campPrice;
 
-            public CampImageDTO(CampImage campImage) {
-                this.campImageId = campImage.getId();
-                this.campImage = campImage.getCampImage();
+            public CampDTO(Camp camp) {
+                this.id = camp.getId();
+                this.campName = camp.getCampName();
+                this.campAddress = camp.getCampAddress();
+                this.campCallNumber = camp.getCampCallNumber();
+                this.campWebsite = camp.getCampWebsite();
+                this.campRefundPolicy = camp.getCampRefundPolicy();
+                this.campWater = camp.isCampWater();
+                this.campGarbageBag = camp.isCampGarbageBag();
+                this.holiday = camp.getHoliday();
+                this.campCheckIn = camp.getCampCheckIn();
+                this.campCheckOut = camp.getCampCheckOut();
+                this.campFieldImage = camp.getCampFieldImage();
+                this.campPrice = new CampFieldDTO(camp.getCampFieldList());
             }
         }
 
         @Data
-        public static class CampRatingDTO{
+        public static class CampFieldDTO{
+            private Integer minPrice;
+            private Integer maxPrice;
+
+            public CampFieldDTO(List<CampField> campField) {
+//                this.minPrice = campField.stream().mapToInt(c -> c.getPrice()).max()
+                this.minPrice = campField.stream()
+                        .map(CampField::getPrice)
+                        .map(Integer::parseInt)
+                        .min(Comparator.naturalOrder())
+                        .orElseThrow();
+                this.maxPrice = campField.stream()
+                        .map(CampField::getPrice)
+                        .map(Integer::parseInt)
+                        .max(Comparator.naturalOrder())
+                        .orElseThrow();
+            }
+        }
+
+        @Data
+        public static class CampRatingDTO {
             private Integer campRatingId;
             private double cleanliness;
             private double managementness;
@@ -105,7 +130,51 @@ public class CampRespDTO {
                 this.friendliness = campRating.getFriendliness();
             }
         }
+
+        @Data
+        public static class RatingAverages {
+            private double cleanlinessAverage;
+            private double managementnessAverage;
+            private double friendlinessAverage;
+
+            public RatingAverages(double cleanlinessAverage, double managementnessAverage, double friendlinessAverage) {
+                this.cleanlinessAverage = cleanlinessAverage;
+                this.managementnessAverage = managementnessAverage;
+                this.friendlinessAverage = friendlinessAverage;
+            }
+
+        }
+
+        @Data
+        public static class OptionManagementDTO{
+            private Integer optionId;
+            private String optionName;
+
+            public OptionManagementDTO(OptionManagement optionManagement) {
+                this.optionId = optionManagement.getOption().getId();
+                this.optionName = optionManagement.getOption().getOptionName();
+            }
+        }
+
+        private RatingAverages ratingAverages(List<CampRating> ratings) {
+            double cleanlinessAverage = ratings.stream().mapToDouble(CampRating::getCleanliness).average().orElse(0);
+            double managementnessAverage = ratings.stream().mapToDouble(CampRating::getManagementness).average().orElse(0);
+            double friendlinessAverage = ratings.stream().mapToDouble(CampRating::getFriendliness).average().orElse(0);
+            return new RatingAverages(cleanlinessAverage, managementnessAverage, friendlinessAverage);
+        }
+
+        @Data
+        public static class CampImageDTO {
+            private Integer campImageId;
+            private String campImage;
+
+            public CampImageDTO(CampImage campImage) {
+                this.campImageId = campImage.getId();
+                this.campImage = campImage.getCampImage();
+            }
+        }
     }
+
 
     // ME 캠핑 북마크 리스트 페이지 요청
     @Data

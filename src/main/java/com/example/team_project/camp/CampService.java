@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.team_project.camp.camp_rating.CampRating;
+import jakarta.servlet.http.HttpServlet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,16 +58,12 @@ public class CampService {
 
     }
 
-    // 사용자 캠핑장 상세 페이지 이미지 슬라이더
     public CampDetailDTO getCampDetail(Integer campId) {
         Camp camp = campJPARepository.findById(campId)
-                .orElseThrow(() -> new EntityNotFoundException("Camp not found"));
+                .orElseThrow(() -> new Exception404("해당 캠프장이 존재하지 않습니다."));
+        long campCount = campReviewJPARepository.countByCampId(camp.getId());
 
-        List<CampImage> images = campImageJPARepository.findByCampId(camp.getId());
-        List<CampRating> ratings = campRatingJPARepository.findByCampId(camp.getId());
-
-        // CampDetailDTO 생성 및 반환
-        return new CampDetailDTO(camp, images, ratings);
+        return new CampDetailDTO(camp, campCount);
     }
 
     // 북마크 추가

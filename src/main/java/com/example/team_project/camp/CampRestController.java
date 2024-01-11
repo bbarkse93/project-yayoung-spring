@@ -76,7 +76,7 @@ public class CampRestController {
      public ResponseEntity<?> getCampDetail(@PathVariable Integer id) {
          CampDetailDTO camp = campService.getCampDetail(id);
 
-     return ResponseEntity.ok(ApiUtils.success(camp));
+         return ResponseEntity.ok(ApiUtils.success(camp));
      }
 
     // 관심 캠핑장 등록 기능
