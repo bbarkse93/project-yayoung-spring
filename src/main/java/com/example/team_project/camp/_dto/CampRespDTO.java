@@ -23,7 +23,6 @@ import com.example.team_project.order.Order;
 import com.example.team_project.order._dto.OrderReqDTO;
 
 import lombok.Data;
-import net.bytebuddy.asm.Advice.This;
 
 @Data
 public class CampRespDTO {
