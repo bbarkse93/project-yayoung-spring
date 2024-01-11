@@ -32,7 +32,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campName").value("(주)아웃오브파크"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDate").value("01/11(목)"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDate").value("01/11(Thu)"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDDay").value("D-1"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
 	            .andDo(MockMvcResultHandlers.print())
