@@ -197,6 +197,7 @@ public class CampRespDTO {
 	@Data
 	public static class PaymentDetailDTO{
 		private CampInfoDTO campInfoDTO;
+		private Integer campId;
 		private String checkInDate;
 		private String checkOutDate;
 		private String fieldName;
@@ -204,6 +205,7 @@ public class CampRespDTO {
 		private String totalPrice;
 		public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields);
+			this.campId = requestDTO.getCampId();
 			this.checkInDate = requestDTO.getCheckInDate();
 			this.checkOutDate = requestDTO.getCheckOutDate();
 			this.fieldName = requestDTO.getFieldName();
@@ -249,7 +251,6 @@ public class CampRespDTO {
                 	.max(Comparator.naturalOrder())
                 	.orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
-		// 운영 상태 = 운영 시간 내에 해당하고 휴일이 아닐 것(미완성)
         Timestamp now = TimestampUtils.findCurrnetTime();
         String today = String.valueOf(now).substring(0, 10);  
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

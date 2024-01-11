@@ -465,6 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_1_다가오는_캠프_일정">1. 다가오는 캠프 일정</a></li>
 <li><a href="#_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</a></li>
 <li><a href="#_3_캠프_구역_선택">3. 캠프 구역 선택</a></li>
+<li><a href="#_3_결제_화면_정보">3. 결제 화면 정보</a></li>
 </ul>
 </li>
 <li><a href="#_공지사항">공지사항</a>
@@ -909,7 +910,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1697
+Content-Length: 1695
 
 {
   "success" : true,
@@ -920,13 +921,13 @@ Content-Length: 1697
       "minPrice" : "50,000",
       "maxPrice" : "60,000",
       "isOpen" : true,
-      "campImage" : "/images/camp_image/camp1-1.jpg",
-      "campFieldImage" : "/images/camp_map/camp1.png"
+      "campImage" : "/images/camp_image/camp1-1.jpg"
     },
     "campId" : 1,
     "checkInDate" : "2024-01-10",
     "checkOutDate" : "2024-01-15",
     "nights" : 5,
+    "campFieldImage" : "/images/camp_map/camp1.png",
     "campFieldDTOs" : [ {
       "fieldName" : "캠핑사이트-1",
       "totalPrice" : "250,000"
@@ -977,6 +978,49 @@ Content-Length: 1697
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_3_결제_화면_정보">3. 결제 화면 정보</h3>
+<div class="sect4">
+<h5 id="_request_example_11">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/payment?campId=1&amp;checkInDate=2024-01-24&amp;checkOutDate=2024-01-26&amp;fieldName=%EC%BA%A0%ED%95%91%EC%82%AC%EC%9D%B4%ED%8A%B8-1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_11">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 533
+
+{
+  "success" : true,
+  "response" : {
+    "campInfoDTO" : {
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
+      "minPrice" : "50,000",
+      "maxPrice" : "60,000",
+      "isOpen" : true,
+      "campImage" : "/images/camp_image/camp1-1.jpg"
+    },
+    "campId" : 1,
+    "checkInDate" : "2024-01-24",
+    "checkOutDate" : "2024-01-26",
+    "fieldName" : "캠핑사이트-1",
+    "nights" : 2,
+    "totalPrice" : "100,000"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -985,7 +1029,7 @@ Content-Length: 1697
 <div class="sect2">
 <h3 id="_1_공지사항목록">1. 공지사항목록</h3>
 <div class="sect4">
-<h5 id="_request_example_11">Request Example</h5>
+<h5 id="_request_example_12">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notice/list HTTP/1.1
@@ -994,7 +1038,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_11">Response Example</h5>
+<h5 id="_response_example_12">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1095,7 +1139,7 @@ Content-Length: 11115
 <div class="sect2">
 <h3 id="_1_faq목록">1. FAQ목록</h3>
 <div class="sect4">
-<h5 id="_request_example_12">Request Example</h5>
+<h5 id="_request_example_13">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /board/list HTTP/1.1
@@ -1104,7 +1148,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_12">Response Example</h5>
+<h5 id="_response_example_13">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1185,7 +1229,7 @@ Content-Length: 3844
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-11 12:04:30 +0900
+Last updated 2024-01-11 17:31:13 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
