@@ -3,6 +3,7 @@ package com.example.team_project.order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,15 @@ public class OrderRestController {
     	CampRespDTO.CampFieldListDTO responseDTO = orderService.campFieldList(requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+    
+    // 결제 화면에 출력할 정보 조회
+    @GetMapping("/payment")
+    public ResponseEntity<?> paymentDetail(@ModelAttribute OrderReqDTO.PaymentDetailDTO requestDTO){
+    	CampRespDTO.PaymentDetailDTO responseDTO = orderService.paymentDetail(requestDTO); 
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    
+
     
     
     

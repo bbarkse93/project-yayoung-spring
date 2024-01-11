@@ -15,6 +15,7 @@ import com.example.team_project.camp._dto.CampRespDTO.CampFieldListDTO;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampFieldJPARepository;
 import com.example.team_project.order._dto.OrderReqDTO;
+import com.example.team_project.order._dto.OrderReqDTO.PaymentDetailDTO;
 import com.example.team_project.order._dto.OrderRespDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -49,9 +50,23 @@ public class OrderService {
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
 				new Exception404("해당 캠프장이 존재하지 않습니다."));
 		// 캠프 구역 목록 조회
-		List<CampField> campfields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
-		if(campfields == null)throw new Exception404("잘못된 캠프장 명입니다.");
-		return new CampRespDTO.CampFieldListDTO(campfields, camp, requestDTO);
+		List<CampField> campFields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
+		if(campFields == null)
+				throw new Exception404("잘못된 캠프장 명입니다.");
+		return new CampRespDTO.CampFieldListDTO(campFields, camp, requestDTO);
+	}
+
+	// 결제 화면에 출력할 정보 조회
+	public CampRespDTO.PaymentDetailDTO paymentDetail(OrderReqDTO.PaymentDetailDTO requestDTO) {
+		
+		// 캠프장 정보 조회
+		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
+				new Exception404("해당 캠프장이 존재하지 않습니다."));
+		// 캠프 구역 목록 조회
+		List<CampField> campFields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
+		if(campFields == null)
+				throw new Exception404("잘못된 캠프장 명입니다.");
+		return new CampRespDTO.PaymentDetailDTO(campFields, camp, requestDTO);
 	}
 
 }
