@@ -34,9 +34,9 @@ public class UserService {
     public UserRespDTO.UserDTO profileUpdate(UserReqDTO.ProfileUpdateDTO requestDTO, Integer userId) {
         User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + userId));
         // 사진 디코딩
-        // String decodeImage = ImageUtils.encodeImage(requestDTO.getUserImage(), requestDTO.getNickname());
+         String decodeImage = ImageUtils.encodeImage(requestDTO.getUserImage(), requestDTO.getNickname());
         user.updateNickname(requestDTO.getNickname());
-        user.updateUserImage(requestDTO.getUserImage());
+        user.updateUserImage(decodeImage);
         return new UserRespDTO.UserDTO(user);
     }
 
