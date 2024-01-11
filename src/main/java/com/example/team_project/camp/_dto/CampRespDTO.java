@@ -257,6 +257,7 @@ public class CampRespDTO {
 		private String checkInDate;
 		private String checkOutDate;
 		private Integer nights;
+		private String campFieldImage;
 		private List<CampFieldDTO> campFieldDTOs;
 		public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
@@ -265,6 +266,7 @@ public class CampRespDTO {
 			this.checkOutDate = requestDTO.getCheckOutDate();
 			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
 			this.nights = period.getDays();
+			this.campFieldImage = camp.getCampFieldImage();
 			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField, nights)).collect(Collectors.toList());
 		}
 		@Data
@@ -278,6 +280,33 @@ public class CampRespDTO {
 		}
 	}
 	
+	//결제 화면 정보 조회
+	@Data
+	public static class PaymentDetailDTO{
+		private CampInfoDTO campInfoDTO;
+		private Integer campId;
+		private String checkInDate;
+		private String checkOutDate;
+		private String fieldName;
+		private Integer nights;
+		private String totalPrice;
+		public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
+			this.campInfoDTO = getCampInfo(camp, campFields);
+			this.campId = requestDTO.getCampId();
+			this.checkInDate = requestDTO.getCheckInDate();
+			this.checkOutDate = requestDTO.getCheckOutDate();
+			this.fieldName = requestDTO.getFieldName();
+			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
+			this.nights = period.getDays();
+			CampField campFieldEntity = camp.getCampFieldList().stream()
+					.filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
+					.findFirst()
+					.orElse(null);
+			this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice())*nights);
+		}
+		
+	}
+	
 	//캠프 상단 정보
 	@Data
 	public static class CampInfoDTO{
@@ -287,7 +316,6 @@ public class CampRespDTO {
 		private String maxPrice;
 		private Boolean isOpen; // 운영 상태
 		private String campImage;
-		private String campFieldImage;
 	}
 	
 	// 캠프 정보(상단) 가져오는 메서드
@@ -311,7 +339,6 @@ public class CampRespDTO {
                 .orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
 
-		// 운영 상태 = 운영 시간 내에 해당하고 휴일이 아닐 것(미완성)
         Timestamp now = TimestampUtils.findCurrnetTime();
         String today = String.valueOf(now).substring(0, 10);  
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -327,7 +354,6 @@ public class CampRespDTO {
 		}
 		campInfo.setIsOpen(true);
 		campInfo.setCampImage(camp.firstCampImage());
-		campInfo.setCampFieldImage(camp.getCampFieldImage());
 		return campInfo;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.team_project.camp.camp_image.CampImage;
 import com.example.team_project.camp.camp_rating.CampRating;
+import com.example.team_project.camp_field.CampField;
 
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.option.Option;
@@ -62,6 +63,9 @@ public class Camp {
 
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<CampRating> campRatingList;
+    
+    @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
+    private List<CampField> campFieldList;
 
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<CampField> campFieldList;
