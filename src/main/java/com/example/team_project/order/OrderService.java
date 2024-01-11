@@ -58,7 +58,6 @@ public class OrderService {
 
 	// 결제 화면에 출력할 정보 조회
 	public CampRespDTO.PaymentDetailDTO paymentDetail(OrderReqDTO.PaymentDetailDTO requestDTO) {
-		
 		// 캠프장 정보 조회
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
 				new Exception404("해당 캠프장이 존재하지 않습니다."));

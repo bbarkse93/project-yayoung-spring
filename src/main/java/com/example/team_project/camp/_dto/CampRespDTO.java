@@ -199,16 +199,21 @@ public class CampRespDTO {
 		private CampInfoDTO campInfoDTO;
 		private String checkInDate;
 		private String checkOutDate;
-		private String campField;
+		private String fieldName;
 		private Integer nights;
-		private String price;
+		private String totalPrice;
 		public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields);
 			this.checkInDate = requestDTO.getCheckInDate();
 			this.checkOutDate = requestDTO.getCheckOutDate();
-			this.campField = requestDTO.getCampField();
-			this.nights = requestDTO.getNights();
-			this.price = requestDTO.getPrice();
+			this.fieldName = requestDTO.getFieldName();
+			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
+			this.nights = period.getDays();
+			CampField campFieldEntity = camp.getCampFieldList().stream()
+					.filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
+					.findFirst()
+					.orElse(null);
+			this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice())*nights);
 		}
 		
 	}
