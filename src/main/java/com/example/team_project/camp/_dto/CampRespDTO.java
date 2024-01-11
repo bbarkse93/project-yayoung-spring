@@ -20,6 +20,7 @@ import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.order.Order;
+import com.example.team_project.order._dto.OrderReqDTO;
 
 import lombok.Data;
 import net.bytebuddy.asm.Advice.This;
@@ -171,7 +172,7 @@ public class CampRespDTO {
 		private String checkOutDate;
 		private Integer nights;
 		private List<CampFieldDTO> campFieldDTOs;
-		public CampFieldListDTO(List<CampField> campFields, Camp camp, CampReqDTO.CampFieldListDTO requestDTO) {
+		public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
 			this.campId = requestDTO.getCampId();
 			this.checkInDate = requestDTO.getCheckInDate();
@@ -210,12 +211,12 @@ public class CampRespDTO {
 		campInfo.setCampAddress(camp.getCampAddress());		
 		// 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
 	    // 최소 가격 찾기
-		Integer integerMinprice = campFields.stream()
+		Integer integerMinPrice = campFields.stream()
 	                .map(CampField::getPrice)
 	                .map(Integer::parseInt)
 	                .min(Comparator.naturalOrder())
 	                .orElseThrow();
-		campInfo.setMinPrice(priceFormat(integerMinprice));
+		campInfo.setMinPrice(priceFormat(integerMinPrice));
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
                 	.map(CampField::getPrice)

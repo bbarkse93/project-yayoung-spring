@@ -133,22 +133,8 @@ public class CampRestController {
 
     // 내 캠핑장 연도별 목록 조회
     @GetMapping("/myCamp")
-    // 승신님 충돌 났길래 어떤걸 날려야 할지 몰라서 일단 주석처리 해뒀어요 -우진
-    // public ResponseEntity<?> myCampList(/*
-    //                                      * @RequestParam("year") CampReqDTO.MyCampListDTO requestDTO
-    //                                      * ,@RequestHeader("Authorization") String token
-    //                                      */) {
-    //     // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-    //     // Integer userId = decodedJWT.getClaim("id").asInt();
-    //     // 테스트 용 하드 코딩
-    //     CampReqDTO.MyCampListDTO requestDTO = new CampReqDTO.MyCampListDTO();
-    //     requestDTO.setYear(2024);
-    //     CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(1, requestDTO);
-    //     // OrderRespDTO.myCampFieldListDTO responseDTO =
-    //     // orderService.myCampFieldList(userId, requestDTO);
-    //     return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
-
-    public ResponseEntity<?> myCampList(@ModelAttribute CampReqDTO.MyCampListDTO requestDTO /*,@RequestHeader("Authorization") String token*/){
+    public ResponseEntity<?> myCampList(@ModelAttribute CampReqDTO.MyCampListDTO requestDTO 
+    						/*,@RequestHeader("Authorization") String token*/){
     	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	//Integer userId = decodedJWT.getClaim("id").asInt();
     	// 테스트 용 하드 코딩
@@ -157,11 +143,6 @@ public class CampRestController {
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     
-    //캠프장 아이디를 받아 캠프 구역 목록 조회
-    @GetMapping("/field-list")
-    public ResponseEntity<?> campFieldList(@ModelAttribute CampReqDTO.CampFieldListDTO requestDTO){
-    	CampRespDTO.CampFieldListDTO responseDTO = campService.campFieldList(requestDTO);
-    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
+    
 
 }
