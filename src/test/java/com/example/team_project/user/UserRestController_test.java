@@ -156,7 +156,7 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.userId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("love"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("ssar"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.withdraw").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())
