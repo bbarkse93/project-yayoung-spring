@@ -53,7 +53,7 @@
 .section_title {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .section_ul {
@@ -75,7 +75,7 @@
 }
 
 .section_ul li {
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 .short_line {
@@ -143,11 +143,35 @@
 .custom_flex_between {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.custom_flex_around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .custom_flex_end {
     display: flex;
     justify-content: end;
+}
+
+.custom_flex_align_center {
+    display: flex;
+    align-items: center;
+}
+
+.custom_hr {
+    margin: 28px 0;
+    opacity: .1;
+    color: inherit;
+    border: 0;
+    border-top: var(--font_01) solid 0.7px;
+}
+
+.custom_center {
+    text-align: center;
 }
 
 .camp_container {
@@ -539,6 +563,7 @@ ul.tabs li.current {
 }
 
 .faq_modal_body .column {
+    display: flex;
     text-align: start;
     font-size: 20px;
     font-weight: bold;
@@ -628,6 +653,20 @@ ul.tabs li.current {
     line-height: 20px !important;
 }
 
+/* 스크롤바의 폭 너비 */
+.note-editor::-webkit-scrollbar {
+    width: 8px;
+}
+
+.note-editor::-webkit-scrollbar-thumb {
+    border-radius: 3px; /* 스크롤바 둥근 테두리 */
+    background-color: var(--back_01);
+}
+
+.note-editor::-webkit-scrollbar-track {
+    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
+}
+
 .note-editor .note-toolbar .note-style .dropdown-style h4 {
     font-size: 18px;
 }
@@ -643,3 +682,80 @@ ul.tabs li.current {
 .normalFont {
     font-size: 16px;
 }
+
+/*****************************************************/
+
+.camp_save_form {
+    margin-top: 40px;
+}
+
+.camp_save_form .title {
+    font-size: 20px;
+    font-weight: 500;
+    width: 177px;
+}
+
+.camp_save_form .setTitle {
+    font-size: 20px;
+    font-weight: 500;
+    width: 100px;
+}
+
+.camp_save_form .underTitle{
+    font-size: 20px;
+    font-weight: 500;
+    width: 177px;
+    margin-bottom: 14px;
+}
+
+
+.camp_save_form .input {
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    padding: 10px;
+}
+
+.camp_save_form .term {
+    margin-bottom: 26px;
+}
+
+.camp_long_input {
+    width: 790px;
+}
+
+.camp_m_middle_input {
+    width: 290px;
+}
+
+.camp_middle_input {
+    width: 240px;
+}
+
+.camp_short_input {
+    width: 185px;
+}
+
+.form-select {
+    width: 114px;
+    height: 45.5px;
+}
+
+.form_select_middle {
+    width: 178px;
+    height: 45.5px;
+}
+
+.form_select_long {
+    width: 290px;
+    height: 45.5px;
+}
+
+.camp_img button {
+    border: none;
+    background-color: transparent;
+}
+
+.camp_img button img {
+    width: 38px;
+}
+
