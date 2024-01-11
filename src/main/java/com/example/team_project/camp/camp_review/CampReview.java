@@ -34,19 +34,20 @@ public class CampReview {
     
     @OneToOne(fetch = FetchType.LAZY)
     private Order order;
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     private CampRating campRating;
 
     private Timestamp createdAt;
 
     @Builder
-    public CampReview(Integer id, String content, String reviewImage, User user, Camp camp, Timestamp createdAt) {
+    public CampReview(Integer id, String content, String reviewImage, User user, Camp camp, Timestamp createdAt, CampRating campRating) {
         this.id = id;
         this.content = content;
         this.reviewImage = reviewImage;
         this.user = user;
         this.camp = camp;
         this.createdAt = createdAt;
+        this.campRating = campRating;
     }
 }
