@@ -755,3 +755,7 @@ ul.tabs li.current {
     background-color: transparent;
 }
 
+.camp_img button img {
+    width: 38px;
+}
+
