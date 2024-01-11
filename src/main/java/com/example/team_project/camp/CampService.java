@@ -1,18 +1,17 @@
 package com.example.team_project.camp;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.team_project.camp.camp_rating.CampRating;
+import jakarta.servlet.http.HttpServlet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.camp._dto.CampReqDTO;
-import com.example.team_project.camp._dto.CampReqDTO.CampBookmarkDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
-import com.example.team_project.camp._dto.CampRespDTO.CampListDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_bookmark.CampBookmarkJPARepository;
 import com.example.team_project.camp.camp_image.CampImage;
@@ -22,9 +21,6 @@ import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampFieldJPARepository;
-import com.example.team_project.camp_field._dto.CampFieldReqDTO;
-import com.example.team_project.camp_field._dto.CampFieldRespDTO;
-import com.example.team_project.camp_field._dto.CampFieldRespDTO.CampFieldListDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
 
@@ -46,19 +42,23 @@ public class CampService {
 
 
     // 사용자 캠핑장 목록 출력 기능
-    public CampRespDTO.CampListDTO getAllCamps() {
+    public List<CampRespDTO.CampListDTO> getAllCamps() {
         List<Camp> camps = campJPARepository.findAll();
+        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
+                .map(c -> new CampRespDTO.CampListDTO(c))
+                .collect(Collectors.toList());
+//        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
+        return responseDTO;
 
-        // List<CampListDTO> campList =
-        // camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
-        return new CampRespDTO.CampListDTO(camps) ;
     }
 
-    // private CampListDTO convertToCampRespDto(Camp camp) {
-    //     // Camp 엔티티 객체를 받아서 CampRespDTO 객체로 변환하는 로직
-    //     // 필요한 필드를 매핑하고 DTO 객체를 반환
-    //     return new CampListDTO(camp);
-    // }
+    public CampDetailDTO getCampDetail(Integer campId) {
+        Camp camp = campJPARepository.findById(campId)
+                .orElseThrow(() -> new Exception404("해당 캠프장이 존재하지 않습니다."));
+        long campCount = campReviewJPARepository.countByCampId(camp.getId());
+
+        return new CampDetailDTO(camp, campCount);
+    }
 
     // 북마크 추가
     public CampBookmark addBookmark(Integer userId, CampReqDTO.CampBookmarkDTO dto) {
@@ -87,22 +87,13 @@ public class CampService {
                 .ifPresent(campBookmarkJPARepository::delete);
     }
 
+
+
     // 사용자의 관심 캠핑장 조회 기능
     public List<CampBookmark> getUserBookmarks(Integer userId) {
         return campBookmarkJPARepository.findByUserId(userId);
     }
 
-    // 사용자 캠핑장 상세 페이지 이미지 슬라이더
-    public CampDetailDTO getCampDetails(Integer campId) {
-        Camp camp = campJPARepository.findById(campId)
-                .orElseThrow(() -> new EntityNotFoundException("Camp not found"));
-
-        List<CampImage> images = campImageJPARepository.findByCampId(campId);
-        List<String> imageUrls = images.stream().map(CampImage::getCampImage).collect(Collectors.toList());
-
-        // CampDetailDTO 생성 및 반환
-        return new CampDetailDTO(camp, imageUrls);
-    }
 
     // ME 관심캠핑장 목록 페이지 요청
     public CampRespDTO.CampBookMarkListDTO campBookMarkPage(Integer userId) {
@@ -121,16 +112,5 @@ public class CampService {
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 
-	
-	//캠프장 아이디를 받아 캠프 구역 목록 조회 + 캠프장 지도 + 상세정보 조회
-	public CampRespDTO.CampFieldListDTO  campFieldList(CampReqDTO.CampFieldListDTO requestDTO) {
-		// 캠프장 정보 조회
-		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
-				new Exception404("해당 캠프장이 존재하지 않습니다."));
-		// 캠프 구역 목록 조회
-		List<CampField> campfields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
-		if(campfields == null)throw new Exception404("잘못된 캠프장 명입니다.");
-		return new CampRespDTO.CampFieldListDTO(campfields, camp, requestDTO.getCheckInDate(),requestDTO.getCheckOutDate());
-	}
 
 }
