@@ -13,9 +13,9 @@ public class AdminController {
         return "admin/camp_current";
     }
 
-    @GetMapping("/camp/save")
-    public String SaveCampPage(){
-        return "admin/camp_save";
+    @GetMapping("/camp/setting")
+    public String campSettingPage(){
+        return "admin/camp_setting";
     }
 
     @GetMapping("/user")

@@ -135,6 +135,10 @@
     color: var(--point_01);
 }
 
+.custom_font_point3 {
+    color: var(--point_03);
+}
+
 .custom_flex_center {
     display: flex;
     justify-content: center;
@@ -163,15 +167,21 @@
 }
 
 .custom_hr {
-    margin: 28px 0;
     opacity: .1;
     color: inherit;
     border: 0;
     border-top: var(--font_01) solid 0.7px;
+    margin: 30px 0px;
 }
 
 .custom_center {
     text-align: center;
+}
+
+.custom_grid_center {
+    text-align: center;
+    display: grid;
+    place-items: center;
 }
 
 .camp_container {
@@ -685,69 +695,172 @@ ul.tabs li.current {
 
 /*****************************************************/
 
-.camp_save_form {
+
+.camp_insert_modal_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--line_01);
+    pointer-events: auto;
+    background-color: var(--def_wh);
+    background-clip: padding-box;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.camp_update_modal_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--line_01);
+    pointer-events: auto;
+    background-color: var(--def_wh);
+    background-clip: padding-box;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.camp_modal_body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 15px;
+    background-color: var(--def_wh);
+    border-radius: 5px;
+    width: 1000px;
+}
+
+.camp_modal_body .button {
+    display: flex;
+    justify-content: end;
+}
+
+.camp_modal_body .body {
+    text-align: center;
+    color: var(--font_01);
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px;
+}
+
+.camp_modal_body .column {
+    display: flex;
+    text-align: start;
+    font-size: 20px;
+    font-weight: bold;
+    height: 21px;
+}
+
+.camp_form {
     margin-top: 40px;
 }
 
-.camp_save_form .title {
-    font-size: 20px;
-    font-weight: 500;
-    width: 177px;
+.custom_margin_bottom {
+    margin-bottom: 20px;
 }
 
-.camp_save_form .setTitle {
-    font-size: 20px;
-    font-weight: 500;
-    width: 100px;
+.custom_mini_margin_bottom {
+    margin-bottom: 10px;
 }
 
-.camp_save_form .underTitle{
-    font-size: 20px;
+/* 스크롤바의 폭 너비 */
+.body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.body::-webkit-scrollbar-thumb {
+    border-radius: 3px; /* 스크롤바 둥근 테두리 */
+    background-color: var(--back_01);
+}
+
+.body::-webkit-scrollbar-track {
+    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
+}
+
+.camp_form .title {
+    font-size: 17px;
     font-weight: 500;
-    width: 177px;
+    width: 21%;
+    text-align: start;
+}
+
+.camp_form .sub_title {
+    font-weight: bold;
+    width: 20%;
+    text-align: start;
+    font-size: 15px;
+}
+
+.camp_form .set_title {
+    font-size: 17px;
+    font-weight: 500;
+    width: 32%;
+}
+
+.camp_form .option_title{
+    font-size: 17px;
+    font-weight: 500;
+    width: 70%;
     margin-bottom: 14px;
 }
 
+.camp_form .column_title {
+    font-size: 17px;
+    font-weight: 500;
+    width: 21%;
+    text-align: start;
+    margin-bottom: 14px;
+}
 
-.camp_save_form .input {
+.camp_form .input {
     border-radius: 5px;
     border: 0.5px solid var(--line_01);
     padding: 10px;
-}
-
-.camp_save_form .term {
-    margin-bottom: 26px;
+    font-size: 15px;
 }
 
 .camp_long_input {
-    width: 790px;
+    width: 100%;
+    /*max-width: 790px;*/
+    /*box-sizing: content-box;*/
 }
 
 .camp_m_middle_input {
-    width: 290px;
+    width: 78%;
+    /*max-width: 290px;*/
+    /*box-sizing: content-box;*/
 }
 
 .camp_middle_input {
-    width: 240px;
+    width: 57%;
+    /*max-width: 240px;*/
+    /*box-sizing: content-box;*/
 }
 
 .camp_short_input {
-    width: 185px;
+    width: 66%;
+    /*max-width: 185px;*/
+    /*box-sizing: content-box;*/
 }
+
 
 .form-select {
     width: 114px;
     height: 45.5px;
+    font-size: 15px;
 }
 
 .form_select_middle {
     width: 178px;
     height: 45.5px;
+    font-size: 15px;
 }
 
 .form_select_long {
     width: 290px;
     height: 45.5px;
+    font-size: 15px;
 }
 
 .camp_img button {
@@ -756,6 +869,110 @@ ul.tabs li.current {
 }
 
 .camp_img button img {
-    width: 38px;
+    width: 32px;
+}
+
+.camp_select_form {
+    background-color: var(--back_03);
+    height: 100px;
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+
+.camera_icon {
+    width: 18px;
+    margin-right: 4px;
+}
+
+.camera_receive_form {
+    margin-right: 10px;
+    background-color: var(--def_wh);
+    border: 0.5px solid var(--line_01);
+    height: 100px;
+    width: 130px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.camp_pic_style {
+    width: 130px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+.camp_pic_upload_label {
+    display: none;
+}
+
+.camp_site button {
+    border: none;
+    background-color: transparent;
+}
+
+.camp_site button img {
+    width: 32px;
+}
+
+.camp_site_pic_form {
+    background-color: var(--back_03);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 5px;
+    max-height: 100%;
+    height: 300px;
+
+}
+
+.camp_site_pic {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.camp_site_img .content {
+    text-align: start;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--font_02);
+}
+
+.form-check {
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: 0.125rem;
+    display: flex;
+    align-items: end;
+    font-size: 15px;
+    width: 13%;
+}
+
+.camp_site_insert_form {
+    width: 60%;
+}
+
+.add_camp_site {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.camp_site_name_input {
+    width: 60%;
+}
+
+.camp_site_price_input {
+    width: 35%;
 }
 
