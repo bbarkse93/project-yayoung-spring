@@ -68,9 +68,6 @@ public class Camp {
     private List<CampField> campFieldList;
 
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
-    private List<CampField> campFieldList;
-
-    @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<OptionManagement> optionManagementList;
 
     @Builder
