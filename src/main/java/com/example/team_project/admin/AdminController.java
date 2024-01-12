@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/current-camp")
+    @GetMapping("/camp/current")
     public String currentCampPage(){
         return "admin/camp_current";
+    }
+
+    @GetMapping("/camp/setting")
+    public String campSettingPage(){
+        return "admin/camp_setting";
     }
 
     @GetMapping("/user")

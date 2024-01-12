@@ -1,5 +1,7 @@
 package com.example.team_project.camp._dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -15,12 +17,11 @@ public class CampReqDTO {
 		private Integer campId;
 	}
 
-	
 	@Data
-	public static class CampFieldListDTO{
-		private Integer campId; // 캠프장 아이디
-		private String checkInDate; //체크인 날짜
-		private String checkOutDate; //체크아웃 날짜
+	public static class CampListDTO{
+		private List<String> optionNames; // 필터 옵션
+		private List<String> regionNames; // 지역 옵션
 	}
+	
 	
 }
