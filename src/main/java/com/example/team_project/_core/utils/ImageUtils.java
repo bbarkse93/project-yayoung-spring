@@ -1,6 +1,6 @@
 package com.example.team_project._core.utils;
 
-import com.example.team_project._core.erroes.exception.Exception400;
+import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project._core.vo.MyPath;
 
 import java.nio.file.Files;

@@ -1,6 +1,6 @@
-package com.example.team_project._core.erroes;
+package com.example.team_project._core.errors;
 
-import com.example.team_project._core.erroes.exception.*;
+import com.example.team_project._core.errors.exception.*;
 import com.example.team_project._core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

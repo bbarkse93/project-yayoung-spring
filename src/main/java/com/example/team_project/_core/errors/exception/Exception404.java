@@ -1,4 +1,4 @@
-package com.example.team_project._core.erroes.exception;
+package com.example.team_project._core.errors.exception;
 
 import com.example.team_project._core.utils.ApiUtils;
 import lombok.Getter;

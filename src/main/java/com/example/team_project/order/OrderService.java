@@ -5,18 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampJPARepository;
-import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
-import com.example.team_project.camp._dto.CampRespDTO.CampFieldListDTO;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampFieldJPARepository;
 import com.example.team_project.order._dto.OrderReqDTO;
 import com.example.team_project.order._dto.OrderReqDTO.OrderWriteDTO;
-import com.example.team_project.order._dto.OrderReqDTO.PaymentDetailDTO;
 import com.example.team_project.order._dto.OrderRespDTO;
 
 import lombok.RequiredArgsConstructor;

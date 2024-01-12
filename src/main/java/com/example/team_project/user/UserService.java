@@ -1,14 +1,12 @@
 package com.example.team_project.user;
 
-import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.user._dto.UserReqDTO;
 import com.example.team_project.user._dto.UserRespDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
