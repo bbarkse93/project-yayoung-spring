@@ -15,6 +15,7 @@ import com.example.team_project.camp._dto.CampRespDTO.CampFieldListDTO;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampFieldJPARepository;
 import com.example.team_project.order._dto.OrderReqDTO;
+import com.example.team_project.order._dto.OrderReqDTO.OrderWriteDTO;
 import com.example.team_project.order._dto.OrderReqDTO.PaymentDetailDTO;
 import com.example.team_project.order._dto.OrderRespDTO;
 
@@ -66,6 +67,13 @@ public class OrderService {
 		if(campFields == null)
 				throw new Exception404("잘못된 캠프장 명입니다.");
 		return new CampRespDTO.PaymentDetailDTO(campFields, camp, requestDTO);
+	}
+
+	// 캠핑 결제
+	public OrderRespDTO paymentWrite(int userId, OrderWriteDTO requestDTO) {
+		// DB 삽입 로직
+		
+		return null;
 	}
 
 }
