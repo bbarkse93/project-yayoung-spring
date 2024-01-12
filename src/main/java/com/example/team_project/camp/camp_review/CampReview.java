@@ -41,12 +41,14 @@ public class CampReview {
     private Timestamp createdAt;
 
     @Builder
-    public CampReview(Integer id, String content, String reviewImage, User user, Camp camp, Timestamp createdAt) {
+    public CampReview(Integer id, String content, String reviewImage, User user, Camp camp, CampRating campRating, Timestamp createdAt) {
         this.id = id;
         this.content = content;
         this.reviewImage = reviewImage;
         this.user = user;
         this.camp = camp;
+        this.campRating = campRating;
         this.createdAt = createdAt;
     }
+
 }

@@ -34,7 +34,8 @@ public class CampRating {
     private CampReview campReview;
 
     @Builder
-    public CampRating(Integer id, Integer cleanliness, Integer managementness, Integer friendliness, User user, Camp camp, CampReview campReview) {
+    public CampRating(Integer id, double cleanliness, double managementness, double friendliness, 
+    User user, Camp camp, CampReview campReview) {
         this.id = id;
         this.cleanliness = cleanliness;
         this.managementness = managementness;
@@ -46,5 +47,14 @@ public class CampRating {
 
     public double total () {
         return ((cleanliness + managementness + friendliness) / 3.0);
+    }
+
+    public void setCleanliness(double cleanliness) {
+    }
+
+    public void setManagementness(double managementness) {
+    }
+
+    public void setFriendliness(double friendliness) {
     }
 }
