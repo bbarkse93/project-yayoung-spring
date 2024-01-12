@@ -234,7 +234,7 @@
 
 .box .review_button {
     font-size: 14px;
-    margin: 20px;
+    margin: 6px 0 15px;
     padding: 10px;
     border-radius: 5px;
     background-color: var(--primary_02);
@@ -317,7 +317,7 @@
 
 .review_td td {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     vertical-align: middle;
 }
 
@@ -325,7 +325,7 @@
     border: none;
     padding: 8px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 13px;
     width: 60px;
     background-color: var(--point_03);
     color: var(--def_wh);
@@ -457,7 +457,7 @@
 
 .order_td td {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     vertical-align: middle;
     height: 45px;
 }

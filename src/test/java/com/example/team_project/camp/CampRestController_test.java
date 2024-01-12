@@ -37,40 +37,35 @@ public class CampRestController_test extends MyWithRestDoc {
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         ObjectMapper om = new ObjectMapper();
-        Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {
-        });
-        Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"),
-                new TypeReference<Map<String, Object>>() {
-                });
-        List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTOList"),
-                new TypeReference<List<Map<String, Object>>>() {
-                });
+        Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+        List<Map<String, Object>> listDatsMap = om.convertValue(bodyMap.get("response"),new TypeReference<List<Map<String, Object>>>() {});
+//        List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTOList"),new TypeReference<List<Map<String, Object>>>() {});
 
         // then
         resultActions
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray())
                 .andDo(document);
         IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
             Map<String, Object> listDataDTO = listDatsMap.get(i);
             try {
                 mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].id")
+                                .jsonPath("$.response[" + i + "].id")
                                 .value(listDataDTO.get("id")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].campName")
+                                .jsonPath("$.response[" + i + "].campName")
                                 .value(listDataDTO.get("campName")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i
+                                .jsonPath("$.response[" + i
                                         + "].campAddress")
                                 .value(listDataDTO.get("campAddress")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].campImage")
+                                .jsonPath("$.response[" + i + "].campImage")
                                 .value(listDataDTO.get("campImage")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i
+                                .jsonPath("$.response[" + i
                                         + "].campRating")
                                 .value(listDataDTO.get("campRating")))
                         .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
