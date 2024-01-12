@@ -1,5 +1,6 @@
 package com.example.team_project.camp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,10 @@ public class CampService {
     // 사용자 캠핑장 목록 출력 기능
     public List<CampRespDTO.CampListDTO> getAllCamps() {
         List<Camp> camps = campJPARepository.findAll();
+    	List<String> optionNames = new ArrayList<>();
+    	optionNames.add("산");
+    	optionNames.add("물놀이장");
+    	//List<Camp> camps = campJPARepository.mFindFilteredAll(optionNames);
         List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
                 .map(c -> new CampRespDTO.CampListDTO(c))
                 .collect(Collectors.toList());

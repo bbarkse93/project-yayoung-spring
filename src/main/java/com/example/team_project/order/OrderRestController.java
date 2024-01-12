@@ -63,6 +63,18 @@ public class OrderRestController {
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
     
+    // 캠핑 결제
+    @PostMapping("/payment")
+    public ResponseEntity<?> paymentWrite(@RequestBody OrderReqDTO.OrderWriteDTO requestDTO /*,@RequestHeader("Authorization") String token*/){
+    	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	//Integer userId = decodedJWT.getClaim("id").asInt();
+    	System.out.println(requestDTO.getCampId());
+    	//테스트 용 하드 코딩
+    	OrderRespDTO responseDTO = orderService.paymentWrite(1, requestDTO);
+    	//OrderRespDTO responseDTO = orderService.paymentWrite(userId, requestDTO);
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    
 
     
     

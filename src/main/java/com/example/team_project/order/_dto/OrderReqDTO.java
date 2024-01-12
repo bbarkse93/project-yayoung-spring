@@ -7,8 +7,6 @@ public class OrderReqDTO {
 	@Data
 	public static class CampFieldListDTO{
 		private Integer campId; // 캠프장 아이디
-		private String checkInDate; //체크인 날짜
-		private String checkOutDate; //체크아웃 날짜
 	}
 	
 	@Data
@@ -18,5 +16,14 @@ public class OrderReqDTO {
 		private String  checkInDate; //체크인 날짜
 		private String  checkOutDate; //체크아웃 날짜
 	}
+	
+	@Data
+	public static class OrderWriteDTO{
+		private Integer campId;
+		private String  checkIn;
+		private String  checkOut;
+		private String  fieldName;
+	}
+	
 	
 }

@@ -254,28 +254,21 @@ public class CampRespDTO {
 	public static class CampFieldListDTO{
 		private CampInfoDTO campInfoDTO;
 		private Integer campId;
-		private String checkInDate;
-		private String checkOutDate;
-		private Integer nights;
 		private String campFieldImage;
 		private List<CampFieldDTO> campFieldDTOs;
 		public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
 			this.campId = requestDTO.getCampId();
-			this.checkInDate = requestDTO.getCheckInDate();
-			this.checkOutDate = requestDTO.getCheckOutDate();
-			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
-			this.nights = period.getDays();
 			this.campFieldImage = camp.getCampFieldImage();
-			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField, nights)).collect(Collectors.toList());
+			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField)).collect(Collectors.toList());
 		}
 		@Data
 		public static class CampFieldDTO{
 			private String fieldName; // 캠프 구역
-			private String totalPrice;	// 총 금액
-			public CampFieldDTO(CampField campField, Integer nights) {
+			private String price;	// 총 금액
+			public CampFieldDTO(CampField campField) {
 				this.fieldName = campField.getFieldName();
-				this.totalPrice = priceFormat(Integer.parseInt(campField.getPrice())*nights);
+				this.price = priceFormat(Integer.parseInt(campField.getPrice()));
 			}
 		}
 	}
