@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.hibernate.boot.model.internal.OptionalDeterminationSecondPass;
+import org.hibernate.cache.spi.support.RegionNameQualifier;
 import org.hibernate.dialect.aggregate.AggregateSupport.AggregateColumnWriteExpression;
 
 import com.example.team_project._core.erroes.exception.Exception500;
@@ -39,8 +41,46 @@ public class CampRespDTO {
     public static class CampListDTO {
         private List<CampDTO> campDTO;
 
-        public CampListDTO(List<Camp> campList) {
-            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
+        	// 환경 필터 적용
+//        	if(requestDTO.getOptionNames().size()!=0) {
+//        		for (String optionName : requestDTO.getOptionNames()) {
+//        			campList = campList.stream()
+//        					.filter(camp -> camp.getOptionManagementList()
+//        							.stream()
+//        							.filter(om -> optionName.contains(om.getOption().getOptionName()))
+//        							.findAny().isPresent())
+//        					.collect(Collectors.toList());
+//        		}
+//        	}
+        	
+        	if (requestDTO.getOptionNames().size() != 0) {
+        	    campList = campList.stream()
+        	            .filter(camp -> requestDTO.getOptionNames()
+        	                    .stream()
+        	                    .allMatch(optionName ->
+        	                            camp.getOptionManagementList()
+        	                                    .stream()
+        	                                    .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
+        	                    )
+        	            )
+        	            .collect(Collectors.toList());
+        	}
+        	
+        	// 지역 필터 적용
+        	if(requestDTO.getRegionNames().size()!=0) {
+        		campList =	campList.stream()
+        			  .filter(camp -> {
+        	                for (String regionName : requestDTO.getRegionNames()) {
+        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+        	                        return true;
+        	                    }
+        	                }
+        	                return false;
+        	            })
+        	            .collect(Collectors.toList());
+        	}
+        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
         }
 
         @Data
