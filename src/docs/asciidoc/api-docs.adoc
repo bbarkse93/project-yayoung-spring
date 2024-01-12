@@ -59,7 +59,14 @@ include::{snippets}/{camp}/get-all-camps_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/get-all-camps_test/http-response.adoc[]
 
-=== 2. 방문한 캠프 목록
+=== 2. 캠프 상세보기
+===== Request Example
+include::{snippets}/{camp}/get-camp-detail_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp}/get-camp-detail_test/http-response.adoc[]
+
+=== 3. 방문한 캠프 목록
 ===== Request Example
 include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 

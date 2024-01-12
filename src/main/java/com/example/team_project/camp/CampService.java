@@ -42,13 +42,13 @@ public class CampService {
 
 
     // 사용자 캠핑장 목록 출력 기능
-    public List<CampRespDTO.CampListDTO> getAllCamps() {
+    public CampRespDTO.CampListDTO getAllCamps() {
         List<Camp> camps = campJPARepository.findAll();
-        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
-                .map(c -> new CampRespDTO.CampListDTO(c))
-                .collect(Collectors.toList());
+//        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
+//                .map(c -> new CampRespDTO.CampListDTO(c))
+//                .collect(Collectors.toList());
 //        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
-        return responseDTO;
+        return new CampRespDTO.CampListDTO(camps);
 
     }
 
