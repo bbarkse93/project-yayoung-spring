@@ -25,20 +25,22 @@ public class AdminController {
 
     // TODO 로그인, 로그아웃, (비밀번호 변경 로직) 만들어야 함....
 
-    // 캠핑장 관리 페이지 요청(GET)
+    // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
-    public String campSettingPage(@RequestParam(defaultValue = "0") Integer page, Model model){
+    public String campSettingSearch(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "0") Integer page, Model model) {
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
+        System.out.println("컨트롤러 진입 키워드 값 : " + keyword);
+        System.out.println("컨트롤러 진입 페이징 값 : " + page);
+
         // 전체목록
-        List<AdminRespDTO.CampDTO> campListAll = adminService.campList();
+        int campAllSize = adminService.campList(keyword).size();
+
         // 페이징목록
-        List<AdminRespDTO.CampDTO> campListDTO = adminService.campPage(page, PAGESIZE);
+        List<AdminRespDTO.CampDTO> campListDTO = adminService.campSearchPage(page, keyword, PAGESIZE);
 
-        int campAllSize = campListAll.size();
-        // 총 게시물 수
-
+        System.out.println("campListDTO의 값은 ? : " + campListDTO);
         model.addAttribute("campListDTO", campListDTO);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
@@ -48,7 +50,6 @@ public class AdminController {
                         || ((campAllSize % PAGESIZE == 0) && (campAllSize / PAGESIZE) - 1 == page));
         return "admin/camp_setting";
     }
-
 
 
 

@@ -51,12 +51,14 @@ public class Camp {
 
     private String campFieldImage;
 
+    private boolean isDelete;
+
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<CampImage> campImageList;
 
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<CampRating> campRatingList;
-    
+
     @OneToMany(mappedBy = "camp", fetch = FetchType.LAZY)
     private List<CampField> campFieldList;
 
@@ -66,7 +68,7 @@ public class Camp {
     @Builder
     public Camp(Integer id, String campName, String campAddress, String campCallNumber, String campWebsite,
             String campRefundPolicy, boolean campWater, boolean campGarbageBag, String holiday, String campCheckIn,
-            String campCheckOut, String campFieldImage) {
+            String campCheckOut, String campFieldImage, boolean isDelete) {
         this.id = id;
         this.campName = campName;
         this.campAddress = campAddress;
@@ -79,6 +81,7 @@ public class Camp {
         this.campCheckIn = campCheckIn;
         this.campCheckOut = campCheckOut;
         this.campFieldImage = campFieldImage;
+        this.isDelete = isDelete;
     }
 
     // camp 대표 이미지
@@ -103,4 +106,9 @@ public class Camp {
         }
         return formatRating;
     }
+
+    public void updateIsDelete(boolean isDelete) {this.isDelete = isDelete;}
+
+
+
 }

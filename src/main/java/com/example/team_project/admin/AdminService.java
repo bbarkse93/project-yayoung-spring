@@ -1,5 +1,6 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.board.BoardJPARepository;
 import com.example.team_project.camp.Camp;
@@ -27,18 +28,28 @@ public class AdminService {
     private final BoardJPARepository boardJPARepository;
     private final NoticeJPARepository noticeJPARepository;
 
-    // 캠핑장 목록 요청
-    public List<AdminRespDTO.CampDTO> campList() {
-        List<Camp> campList = campJPARepository.findAll();
+    // 캠핑장 목록(캠핑장 수)
+    public List<AdminRespDTO.CampDTO> campList(String keyword) {
+        System.out.println("키워드 : " + keyword);
+        List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
+        System.out.println("페이지나와라 : " + campList.size());
         return campList.stream().map(AdminRespDTO.CampDTO::new).collect(Collectors.toList());
     }
 
-    // 캠핑장 목록 페이징 요청
-    public List<AdminRespDTO.CampDTO> campPage(Integer page, Integer pageSize) {
-          Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
-        // page는 상수가 아니기 때문에 받아야 한다.
-        Page<Camp> campPG = campJPARepository.findAll(pageable);
+    // 캠핑장 목록 페이징(페이징 된 화면 수)
+    public List<AdminRespDTO.CampDTO> campSearchPage(Integer page, String keyword, Integer pageSize) {
+        System.out.println("키워드 : " + keyword);
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
+        Page<Camp> campPG = campJPARepository.mfindSearchPageAll(keyword, pageable);
+        System.out.println("페이지 : " + campPG.toString());
         return campPG.stream().map(AdminRespDTO.CampDTO::new).collect(Collectors.toList());
-
     }
+
+    // 캠핑장 삭제
+    public String deleteCamp(Integer campId) {
+        Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
+        camp.updateIsDelete(true);
+        return "삭제에 성공했습니다.";
+    }
+
 }
