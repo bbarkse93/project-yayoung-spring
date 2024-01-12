@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
