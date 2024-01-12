@@ -69,7 +69,8 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andDo(document);
 
     }
-    /* build 시 계속 실패해서 주석처리 해뒀습니다. - 승신(2024.01.11)
+
+    // build 시 계속 실패해서 주석처리 해뒀습니다. - 승신(2024.01.11)
     // put 요청 - 프로필 수정
     @Test
     public void profileUpdate_test() throws Exception {
@@ -98,14 +99,13 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.userId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("love"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.userImage").value(imgFileName))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())
                 .andDo(document);
-        
+
     }
-	*/
     // get 요청 - 로그아웃
     @Test
     public void logout_test() throws Exception {
@@ -156,7 +156,7 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.userId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("love"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.withdraw").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())

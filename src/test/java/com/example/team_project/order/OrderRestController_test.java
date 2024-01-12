@@ -12,7 +12,8 @@ import com.example.team_project.order._dto.OrderReqDTO;
 
 @SpringBootTest
 public class OrderRestController_test extends MyWithRestDoc {
-	
+
+	//TODO: ("$.response.checkInDDay").value("D-5") 매일 1씩 내려줘야합니다..
 	@Test
 	public void imminentOrderDetail_test() throws Exception {
 		//given
@@ -39,7 +40,8 @@ public class OrderRestController_test extends MyWithRestDoc {
 	            .andDo(MockMvcResultHandlers.print())
 	            .andDo(document);
 	}
-	
+
+	//TODO: ("$.response.campScheduleDTOs[0].checkInDDay").value("D-5") 매일 1씩 내려줘야합니다..
 	@Test
 	public void campScheduleList_test() throws Exception {
 		// given
