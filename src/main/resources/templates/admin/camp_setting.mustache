@@ -53,9 +53,9 @@
                 <div style="padding: 15px">
                     <table class="table table-hover" style="table-layout: fixed">
                         <thead>
-                        <tr class="faq_th">
+                        <tr class="camp_th">
                             <th style="width: 50px">#</th>
-                            <th style="width: 250px">캠핑장</th>
+                            <th style="width: 190px">캠핑장</th>
                             <th style="width: 300px">주소</th>
                             <th>캠핑장 전화번호</th>
                             <th>수정</th>
@@ -63,11 +63,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="faq_td">
-                            <td>1</td>
-                            <td class="title">진천포레스트 캠핑장</td>
-                            <td class="content">창원시 창원동 112-1</td>
-                            <td>2022.03.03</td>
+                        {{#campListDTO}}
+                        <tr class="camp_td">
+                            <td>{{campId}}</td>
+                            <td class="title">{{campName}}</td>
+                            <td class="content">{{campAddress}}</td>
+                            <td>{{campNumber}}</td>
                             <td>
                                 <button type="button" class="update_to_modal" data-bs-toggle="modal"
                                         data-bs-target="#camp_update_modal">
@@ -79,8 +80,13 @@
                                 </button>
                             </td>
                         </tr>
+                        {{/campListDTO}}
                         </tbody>
                     </table>
+                        <ul class="pagination">
+                            <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/setting?page={{prevPage}}">Previous</a></li>
+                            <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/setting?page={{nextPage}}">Next</a></li>
+                        </ul>
                 </div>
             </div>
             <div class="modal" id="camp_insert_modal">
