@@ -37,19 +37,28 @@ public class CampRespDTO {
     // 캠핑장 목록 페이지
     @Data
     public static class CampListDTO {
+        private List<CampDTO> campDTO;
 
-        private Integer id;
-        private String campName;
-        private String campAddress;
-        private String campImage;
-        private String campRating;
+        public CampListDTO(List<Camp> campList) {
+            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        }
 
-        public CampListDTO(Camp camp) {
-            this.id = camp.getId();
-            this.campName = camp.getCampName();
-            this.campAddress = camp.getCampAddress();
-            this.campImage = camp.firstCampImage();
-            this.campRating = camp.formatTotalRating();
+        @Data
+        public static class CampDTO {
+
+            private Integer id;
+            private String campName;
+            private String campAddress;
+            private String campImage;
+            private String campRating;
+
+            public CampDTO(Camp camp) {
+                this.id = camp.getId();
+                this.campName = camp.getCampName();
+                this.campAddress = camp.getCampAddress();
+                this.campImage = camp.firstCampImage();
+                this.campRating = camp.formatTotalRating();
+            }
         }
     }
 
@@ -84,6 +93,7 @@ public class CampRespDTO {
             private String campCheckOut;
             private String campFieldImage;
             private CampFieldDTO campPrice;
+            private String totalRating;
 
             public CampDTO(Camp camp) {
                 this.id = camp.getId();
@@ -99,6 +109,7 @@ public class CampRespDTO {
                 this.campCheckOut = camp.getCampCheckOut();
                 this.campFieldImage = camp.getCampFieldImage();
                 this.campPrice = new CampFieldDTO(camp.getCampFieldList());
+                this.totalRating = camp.formatTotalRating();
             }
         }
 

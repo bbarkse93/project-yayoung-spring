@@ -1,26 +1,19 @@
 package com.example.team_project.camp;
 
-import java.util.List;
-
 import com.example.team_project.MyWithRestDoc;
 import com.example.team_project.camp._dto.CampReqDTO;
-import com.example.team_project.notice._dto.NoticeRespDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-
-import com.example.team_project.MyWithRestDoc;
-import com.example.team_project.camp._dto.CampReqDTO;
 
 @SpringBootTest
 
@@ -37,14 +30,9 @@ public class CampRestController_test extends MyWithRestDoc {
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         ObjectMapper om = new ObjectMapper();
-        Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {
-        });
-        Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"),
-                new TypeReference<Map<String, Object>>() {
-                });
-        List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTOList"),
-                new TypeReference<List<Map<String, Object>>>() {
-                });
+        Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
+        List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTO"), new TypeReference<List<Map<String, Object>>>() {});
 
         // then
         resultActions
@@ -57,20 +45,20 @@ public class CampRestController_test extends MyWithRestDoc {
             try {
                 mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].id")
+                                .jsonPath("$.response.campDTO[" + i + "].id")
                                 .value(listDataDTO.get("id")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].campName")
+                                .jsonPath("$.response.campDTO[" + i + "].campName")
                                 .value(listDataDTO.get("campName")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i
+                                .jsonPath("$.response.campDTO[" + i
                                         + "].campAddress")
                                 .value(listDataDTO.get("campAddress")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i + "].campImage")
+                                .jsonPath("$.response.campDTO[" + i + "].campImage")
                                 .value(listDataDTO.get("campImage")))
                         .andExpect(MockMvcResultMatchers
-                                .jsonPath("$.response.campDTOList[" + i
+                                .jsonPath("$.response.campDTO[" + i
                                         + "].campRating")
                                 .value(listDataDTO.get("campRating")))
                         .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())

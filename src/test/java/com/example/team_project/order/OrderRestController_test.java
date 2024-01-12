@@ -12,7 +12,8 @@ import com.example.team_project.order._dto.OrderReqDTO;
 
 @SpringBootTest
 public class OrderRestController_test extends MyWithRestDoc {
-	
+
+	//TODO: ("$.response.checkInDDay").value("D-5") 매일 1씩 내려줘야합니다..
 	@Test
 	public void imminentOrderDetail_test() throws Exception {
 		//given
@@ -34,12 +35,13 @@ public class OrderRestController_test extends MyWithRestDoc {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campName").value("(주)아웃오브파크"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDate").value("01/17(수)"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDDay").value("D-6"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDDay").value("D-5"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
 	            .andDo(MockMvcResultHandlers.print())
 	            .andDo(document);
 	}
-	
+
+	//TODO: ("$.response.campScheduleDTOs[0].checkInDDay").value("D-5") 매일 1씩 내려줘야합니다..
 	@Test
 	public void campScheduleList_test() throws Exception {
 		// given
@@ -60,17 +62,17 @@ public class OrderRestController_test extends MyWithRestDoc {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].campName").value("(주)아웃오브파크"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].campAddress").value("강원도 춘천시 남면 가옹개길 52-9"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].checkInDate").value("01월 17일"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].checkInDDay").value("D-6"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].checkInDDay").value("D-5"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[0].campField").value("캠핑사이트-5"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].campName").value("(주)아웃오브파크"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].campAddress").value("강원도 춘천시 남면 가옹개길 52-9"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].checkInDate").value("01월 20일"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].checkInDDay").value("D-9"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].checkInDDay").value("D-8"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[1].campField").value("캠핑사이트-3"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].campName").value("(주)아웃오브파크"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].campAddress").value("강원도 춘천시 남면 가옹개길 52-9"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].checkInDate").value("02월 03일"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].checkInDDay").value("D-23"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].checkInDDay").value("D-22"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs[2].campField").value("캠핑사이트-3"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
 				.andDo(MockMvcResultHandlers.print())

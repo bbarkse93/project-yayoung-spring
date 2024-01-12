@@ -66,7 +66,7 @@ public class CampRestController {
         // 인증검사
 
         // 핵심로직
-        List<CampListDTO> campDTOs = campService.getAllCamps();
+        CampListDTO campDTOs = campService.getAllCamps();
         return ResponseEntity.ok(ApiUtils.success(campDTOs));
     }
 
