@@ -44,7 +44,13 @@ public class CampService {
 
     // 사용자 캠핑장 목록 출력 기능
     public CampRespDTO.CampListDTO getAllCamps() {
-        List<Camp> camps = campJPARepository.findAll();
+        //List<Camp> camps = campJPARepository.findAll();
+    	List<String> optionNames = new ArrayList<>();
+    	// optionNames가 없을 때 모든 값 반환
+    	List<Camp> camps = optionNames.size() == 0 ?
+    	campJPARepository.findAll() : 
+    	campJPARepository.mFindFilteredAll(optionNames);
+ 
 //        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
 //                .map(c -> new CampRespDTO.CampListDTO(c))
 //                .collect(Collectors.toList());
