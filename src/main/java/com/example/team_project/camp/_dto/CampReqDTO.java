@@ -20,7 +20,7 @@ public class CampReqDTO {
 	@Data
 	public static class CampListDTO{
 		private List<String> optionNames; // 필터 옵션
-		private List<String> regionNaems; // 지역 옵션
+		private List<String> regionNames; // 지역 옵션
 	}
 	
 	

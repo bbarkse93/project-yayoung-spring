@@ -46,13 +46,10 @@ public class CampService {
     private final CampFieldJPARepository campFieldJPARepository;
 
 
-    // 사용자 캠핑장 목록 출력 기능
+    // 사용자 캠핑장 목록 출력 기능(필터 적용 가능)
     public CampRespDTO.CampListDTO getAllCamps(CampReqDTO.CampListDTO requestDTO) {
 
     	List<Camp> camps = campJPARepository.findAll();
-
-    	
-
     	// 위치 필터
 //        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
 //                .map(c -> new CampRespDTO.CampListDTO(c))
