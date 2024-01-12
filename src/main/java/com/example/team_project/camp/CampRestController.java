@@ -1,5 +1,6 @@
 package com.example.team_project.camp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,16 @@ public class CampRestController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps() {
         // 인증검사
-
+    	//테스트용 하드 코딩
+    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
+    	List<String> optionNames = new ArrayList<>();
+    	optionNames.add("카라반");
+    	optionNames.add("산");
+    	List<String> reigonNames = new ArrayList<>();
+    	requestDTO.setOptionNames(optionNames);
+    	requestDTO.setRegionNaems(reigonNames);
         // 핵심로직
-        CampListDTO campDTOs = campService.getAllCamps();
+        CampListDTO campDTOs = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(campDTOs));
     }
 

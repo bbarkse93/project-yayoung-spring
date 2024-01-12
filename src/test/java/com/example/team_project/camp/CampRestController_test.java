@@ -195,7 +195,7 @@ public class CampRestController_test extends MyWithRestDoc {
                         .value("강원도 춘천시 남면 가옹개길 52-9"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].campName").value("(주)아웃오브파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[0].reviewImage")
-                        .value("camp_image/camp1-1.jpg"))
+                        .value("/images/camp_image/camp1-1.jpg"))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].totalRating").value(3))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].checkInDate")
@@ -205,7 +205,7 @@ public class CampRestController_test extends MyWithRestDoc {
                         .value("강원도 춘천시 남면 가옹개길 52-9"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].campName").value("(주)아웃오브파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[1].reviewImage")
-                        .value("camp_image/camp1-1.jpg"))
+                        .value("/images/camp_image/camp1-1.jpg"))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].totalRating").value(4))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].checkInDate")
@@ -215,7 +215,7 @@ public class CampRestController_test extends MyWithRestDoc {
                         .value("강원도 춘천시 남면 가옹개길 52-9"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].campName").value("(주)아웃오브파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[2].reviewImage")
-                        .value("camp_image/camp1-1.jpg"))
+                        .value("/images/camp_image/camp1-1.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].totalRating").value(5))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].checkInDate")
                         .value("2024년 02월 03일"))
@@ -224,7 +224,7 @@ public class CampRestController_test extends MyWithRestDoc {
                         .value("강원도 춘천시 남면 가옹개길 52-9"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].campName").value("(주)아웃오브파크"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs[3].reviewImage")
-                        .value("camp_image/camp1-1.jpg"))
+                        .value("/images/camp_image/camp1-1.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())
                 .andDo(document);

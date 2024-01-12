@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.hibernate.boot.model.internal.OptionalDeterminationSecondPass;
 import org.hibernate.dialect.aggregate.AggregateSupport.AggregateColumnWriteExpression;
 
 import com.example.team_project._core.erroes.exception.Exception500;
@@ -39,8 +40,19 @@ public class CampRespDTO {
     public static class CampListDTO {
         private List<CampDTO> campDTO;
 
-        public CampListDTO(List<Camp> campList) {
-            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
+        	// 필터 (지역 제외) 적용
+        	if(requestDTO.getOptionNames().size()!=0) {
+        		for (String optionName : requestDTO.getOptionNames()) {
+        			campList = campList.stream()
+        					.filter(camp -> camp.getOptionManagementList()
+        							.stream()
+        							.filter(om -> optionName.contains(om.getOption().getOptionName()))
+        							.findAny().isPresent())
+        					.collect(Collectors.toList());
+        		}
+        	}
+        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
         }
 
         @Data

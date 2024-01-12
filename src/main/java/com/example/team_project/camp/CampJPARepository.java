@@ -10,8 +10,10 @@ public interface CampJPARepository extends JpaRepository<Camp, Integer> {
 	@Query("SELECT ca FROM Camp ca "
 			+ "JOIN ca.optionManagementList om "
 			+ "JOIN om.option op "
-			+ "JOIN op.optionCategory oc "
-			+ "WHERE op.optionName IN :optionNames")
-	List<Camp> mFindFilteredAll(@Param("optionNames") List<String> optionNames);
+			+ "WHERE op.optionName = :optionName")
+	List<Camp> mFindFilteredAll(@Param("optionName") String optionName);
+
+
+
 
 }

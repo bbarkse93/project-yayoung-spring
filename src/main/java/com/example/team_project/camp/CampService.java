@@ -1,6 +1,7 @@
 package com.example.team_project.camp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.camp._dto.CampReqDTO;
+import com.example.team_project.camp._dto.CampReqDTO.CampListDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
@@ -22,6 +24,8 @@ import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampFieldJPARepository;
+import com.example.team_project.option_management.OptionManagement;
+import com.example.team_project.option_management.OptionManagementJPARepository;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
 
@@ -43,19 +47,18 @@ public class CampService {
 
 
     // 사용자 캠핑장 목록 출력 기능
-    public CampRespDTO.CampListDTO getAllCamps() {
-        //List<Camp> camps = campJPARepository.findAll();
-    	List<String> optionNames = new ArrayList<>();
-    	// optionNames가 없을 때 모든 값 반환
-    	List<Camp> camps = optionNames.size() == 0 ?
-    	campJPARepository.findAll() : 
-    	campJPARepository.mFindFilteredAll(optionNames);
- 
+    public CampRespDTO.CampListDTO getAllCamps(CampReqDTO.CampListDTO requestDTO) {
+
+    	List<Camp> camps = campJPARepository.findAll();
+
+    	
+
+    	// 위치 필터
 //        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
 //                .map(c -> new CampRespDTO.CampListDTO(c))
 //                .collect(Collectors.toList());
 //        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
-        return new CampRespDTO.CampListDTO(camps);
+        return new CampRespDTO.CampListDTO(camps, requestDTO);
 
     }
 
