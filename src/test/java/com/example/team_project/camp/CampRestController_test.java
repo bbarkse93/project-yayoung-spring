@@ -34,6 +34,7 @@ public class CampRestController_test extends MyWithRestDoc {
         Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
         List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTO"), new TypeReference<List<Map<String, Object>>>() {});
 
+        
         // then
         resultActions
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -130,8 +131,8 @@ public class CampRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[2].optionName").value("오토캠핑"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[3].optionId").value("11"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[3].optionName").value("데크"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionId").value("11"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionName").value("데크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionId").value("12"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionName").value("파쇄석"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[5].optionId").value("14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[5].optionName").value("전기"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[6].optionId").value("15"))
