@@ -95,9 +95,6 @@ public class CampService {
     // ME 관심캠핑장 목록 페이지 요청
     public CampRespDTO.CampBookMarkListDTO campBookMarkPage(Integer userId) {
         List<CampBookmark> campBookmarkList = campBookmarkJPARepository.findByUserId(userId);
-        for (CampBookmark campBookmark : campBookmarkList) {
-            System.out.println("campBookmark : " + campBookmark.getCamp().getId());
-        }
         return new CampRespDTO.CampBookMarkListDTO(campBookmarkList);
     }
 

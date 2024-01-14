@@ -27,23 +27,20 @@ public class AdminController {
 
     // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
-    public String campSettingSearch(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "0") Integer page, Model model) {
+    public String campSettingSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
-
-        System.out.println("컨트롤러 진입 키워드 값 : " + keyword);
-        System.out.println("컨트롤러 진입 페이징 값 : " + page);
 
         // 전체목록
         int campAllSize = adminService.campList(keyword).size();
 
         // 페이징목록
-        List<AdminRespDTO.CampDTO> campListDTO = adminService.campSearchPage(page, keyword, PAGESIZE);
+        List<AdminRespDTO.CampDTO> campDTOList = adminService.campSearch(page, keyword, PAGESIZE);
 
-        System.out.println("campListDTO의 값은 ? : " + campListDTO);
-        model.addAttribute("campListDTO", campListDTO);
+        model.addAttribute("campDTOList", campDTOList);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("first", page == 0);
         model.addAttribute("last",
                 (campAllSize / PAGESIZE) == page
@@ -52,15 +49,33 @@ public class AdminController {
     }
 
 
-
-
     /******************************************************************************************/
 
     // 캠핑장 현황 페이지 요청(GET)
     @GetMapping("/camp/current")
-    public String currentCampPage(){
+    public String campCurrentSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+        // 페이지당 게시물 수 상수로 고정
+        final int PAGESIZE = 5;
+
+        // 전체목록
+        int campAllSize = adminService.ratingCampList(keyword).size();
+
+        // 페이징목록
+        List<AdminRespDTO.RatingCampDTO> ratingCampDTOList = adminService.ratingCampSearch(page, keyword, PAGESIZE);
+
+        model.addAttribute("ratingCampDTOList", ratingCampDTOList);
+        model.addAttribute("nextPage", page + 1);
+        model.addAttribute("prevPage", page - 1);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("first", page == 0);
+        model.addAttribute("last",
+                (campAllSize / PAGESIZE) == page
+                        || ((campAllSize % PAGESIZE == 0) && (campAllSize / PAGESIZE) - 1 == page));
         return "admin/camp_current";
     }
+
+
+    /******************************************************************************************/
 
     // 회원 관리 페이지 요청(GET)
     @GetMapping("/user")

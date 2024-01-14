@@ -1,12 +1,15 @@
 package com.example.team_project.camp_field;
 
 import com.example.team_project.camp.Camp;
+import com.example.team_project.order.Order;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,6 +26,9 @@ public class CampField {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
+
+    @OneToMany(mappedBy = "campField", fetch = FetchType.LAZY)
+    private List<Order> order;
 
     @Builder
     public CampField(Integer id, String fieldName, String price, Camp camp) {

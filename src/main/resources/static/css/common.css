@@ -65,6 +65,15 @@
     color: var(--def_wh);
 }
 
+.review_button {
+    border: none;
+    padding: 10px;
+    width: 93px;
+    border-radius: 5px;
+    background-color: var(--primary_02);
+    color: var(--def_bl);
+}
+
 .update_to_modal {
     padding: 10px;
     border: none;

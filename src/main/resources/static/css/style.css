@@ -142,6 +142,7 @@
 .custom_flex_center {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .custom_flex_between {
@@ -182,69 +183,6 @@
     text-align: center;
     display: grid;
     place-items: center;
-}
-
-.camp_container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.camp_container .box {
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px var(--line_01);
-}
-
-.camp_container .camp_img {
-    width: 100%;
-    padding: 15px;
-    border-radius: 20px;
-}
-
-.camp_container .p1 {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.camp_container .p2 {
-    font-size: 13px;
-    margin-top: 10px;
-    color: var(--font_02);
-}
-
-.camp_container .p3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--font_02);
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.camp_container .p4 {
-    margin-right: 10px;
-}
-
-.camp_container .reservation_count {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-.box .review_button {
-    font-size: 14px;
-    margin: 6px 0 15px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--primary_02);
-    color: var(--primary_01);
-    border: none;
-    width: 80%;
-}
-
-.box .review_button:hover {
-    text-decoration: none;
 }
 
 /*----------------------------------------*/
@@ -998,8 +936,9 @@ ul.tabs li.current {
     text-align: center;
     font-size: 15px;
     vertical-align: middle;
-    height: 45px;
+    height: 52px;
 }
+
 
 .camp_td .profile_button {
     padding: 10px;

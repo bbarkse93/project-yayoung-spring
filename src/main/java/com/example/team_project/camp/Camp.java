@@ -10,6 +10,7 @@ import com.example.team_project.camp_field.CampField;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.option.Option;
 import com.example.team_project.option_management.OptionManagement;
+import com.example.team_project.order.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -99,10 +100,29 @@ public class Camp {
             }
 
             double averageRating = campTotalRatingSum / campRatingList.size();
-            DecimalFormat decimalFormat = new DecimalFormat("#.#"); // 소수점 첫째 자리까지 표시
+            System.out.println("평균 평점 ::: " + averageRating);
+            DecimalFormat decimalFormat = new DecimalFormat("#.0"); // 소수점 첫째 자리까지 표시
             formatRating = decimalFormat.format(averageRating);
+            System.out.println("포맷팅 평균 평점 ::: " + formatRating);
         } else {
             formatRating = "평가없음";
+        }
+        return formatRating;
+    }
+
+    // camp 각 평점
+    public String formatRating(List<Double> ratings) {
+        String formatRating;
+        if(!campRatingList.isEmpty()) {
+            double totalRating = 0;
+            for(double rating : ratings) {
+                totalRating += rating;
+            }
+            double avrageRating = totalRating / ratings.size();
+            DecimalFormat decimalFormat = new DecimalFormat("#.0"); // 소수점 첫째 자리까지 표시
+            formatRating = decimalFormat.format(avrageRating);
+        }else{
+            formatRating = "0.0";
         }
         return formatRating;
     }

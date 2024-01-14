@@ -1,20 +1,23 @@
+async function fetchReview(campId) {
+    try {
+        let response = await fetch('/admin/camp/review/' + campId);
+        if (response.ok) {
+            let apiUtil = await response.json();
+            let campReviewDTO = apiUtil.response;
+            let campName = document.getElementById('campName');
+            let campCount = document.getElementById('campCount');
+            campName.innerHTML = campReviewDTO.campName;
+            campCount.innerHTML = campReviewDTO.campTotalRating;
 
-    let currentPage = 2;
-    let isLoading = false;
-    window.onload = function () {
-    console.log("온로드 실행");
-    isLoading = false;
-};
+        } else {
+            console.error("실패", response.statusText);
+        }
+    } catch (e) {
+        console.error("실패", e.message);
+    }
 
-    $(window).scroll(function () {
-    // 스크롤 이동 시 실행되는 코드
-    console.log("제이쿼리 스크롤");
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-    // 페이지 하단에 도달했을 때만 추가 데이터 로드
-    loadMoreData();
 }
 
-});
 
 
     // fetch로 새로운 데이터 받아오기
@@ -28,15 +31,6 @@
     throw new Error(responseBody.error);
 }
 }
-
-    // 마우스 스크롤 감지 후 새로운 데이터를 받아온 후 새로운 요소 생성하기
-    function loadMoreData() {
-
-    if (isLoading) {
-    return;
-}
-    isLoading = true;
-
     // 로딩 딜레이 주기
     setTimeout(async () => {
     try {
@@ -74,36 +68,4 @@
 
     var scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
-    window.addEventListener("scroll", function () {
-    // 현재 스크롤 위치 가져오기
-    var scrollPosition = window.scrollY;
-
-    // 스크롤 위치가 300px 이상이면 버튼 표시, 아니면 숨김
-    if (scrollPosition > 500) {
-    scrollToTopBtn.style.display = "block";
-} else {
-    scrollToTopBtn.style.display = "none";
-}
-});
-
-    // 버튼 클릭 시 맨 위로 스크롤하는 함수
-    function scrollToTop() {
-    window.scrollTo({
-    top: 0,
-    behavior: "smooth" // 부드러운 스크롤 적용
-});
-}
-
-    // 버튼에 클릭 이벤트 리스너 추가
-    scrollToTopBtn.addEventListener("click", scrollToTop);
-}
-
-    function formatPrice(number) {
-    if(number === 0){
-    return 0;
-} else {
-    const formatter = new Intl.NumberFormat('en-US');
-    return formatter.format(number);
-}
-}
 
