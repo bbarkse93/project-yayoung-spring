@@ -22,18 +22,25 @@ public class CampRestController_test extends MyWithRestDoc {
     @Test
     public void getAllCamps_test() throws Exception {
         // given
-
+    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
+    	requestDTO.setOptionNames(null);
+    	requestDTO.setRegionNames(null);
+    	
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/camp/list"));
+                        .get("/camp/list")
+                        .param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                        .param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null));
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
         ObjectMapper om = new ObjectMapper();
         Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
         Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
         List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTO"), new TypeReference<List<Map<String, Object>>>() {});
 
+        
         // then
         resultActions
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -43,7 +50,9 @@ public class CampRestController_test extends MyWithRestDoc {
         IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
             Map<String, Object> listDataDTO = listDatsMap.get(i);
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
+                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list")
+                			.param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                			.param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null))
                         .andExpect(MockMvcResultMatchers
                                 .jsonPath("$.response.campDTO[" + i + "].id")
                                 .value(listDataDTO.get("id")))
@@ -130,8 +139,8 @@ public class CampRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[2].optionName").value("오토캠핑"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[3].optionId").value("11"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[3].optionName").value("데크"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionId").value("11"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionName").value("데크"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionId").value("12"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].optionName").value("파쇄석"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[5].optionId").value("14"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[5].optionName").value("전기"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.options[6].optionId").value("15"))

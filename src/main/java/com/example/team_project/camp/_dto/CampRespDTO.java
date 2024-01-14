@@ -46,34 +46,34 @@ public class CampRespDTO {
 //        					.collect(Collectors.toList());
 //        		}
 //        	}
-
-            if (requestDTO.getOptionNames().size() != 0) {
-                campList = campList.stream()
-                        .filter(camp -> requestDTO.getOptionNames()
-                                .stream()
-                                .allMatch(optionName ->
-                                        camp.getOptionManagementList()
-                                                .stream()
-                                                .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
-                                )
-                        )
-                        .collect(Collectors.toList());
-            }
-
-            // 지역 필터 적용
-            if (requestDTO.getRegionNames().size() != 0) {
-                campList = campList.stream()
-                        .filter(camp -> {
-                            for (String regionName : requestDTO.getRegionNames()) {
-                                if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        })
-                        .collect(Collectors.toList());
-            }
-            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        	
+        	if (requestDTO.getOptionNames() != null) {
+        	    campList = campList.stream()
+        	            .filter(camp -> requestDTO.getOptionNames()
+        	                    .stream()
+        	                    .allMatch(optionName ->
+        	                            camp.getOptionManagementList()
+        	                                    .stream()
+        	                                    .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
+        	                    )
+        	            )
+        	            .collect(Collectors.toList());
+        	}
+        	
+        	// 지역 필터 적용
+        	if(requestDTO.getRegionNames() != null) {
+        		campList =	campList.stream()
+        			  .filter(camp -> {
+        	                for (String regionName : requestDTO.getRegionNames()) {
+        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+        	                        return true;
+        	                    }
+        	                }
+        	                return false;
+        	            })
+        	            .collect(Collectors.toList());
+        	}
+        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
         }
 
         @Data
@@ -399,130 +399,96 @@ public class CampRespDTO {
     }
 
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
-    final static String DATEFORMAT2 = "MM월 dd일";
+	final static String DATEFORMAT2 = "MM월 dd일";
+	// 내 캠핑장 연도별 DTO
+	@Data
+	public static class MyCampListDTO {
+		private List<MyCampDTO> myCampDTOs;
+		public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+			this.myCampDTOs = campReviews.stream()
+					.filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+					.sorted(Comparator.comparing(campReview -> {
+	                    Order order = campReview.getOrder();
+	                    return order.getCheckInDate();
+	                }))
+					.map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+		}
+		@Data
+		public class MyCampDTO{
+			private String totalRating; 
+			private String checkInDate; 
+			private String checkOutDate;
+			private String campAddress;
+			private String campName;
+			private String reviewImage;
+			public MyCampDTO(CampReview campReview) {
+				Order order = campReview.getOrder();
+				Camp camp = campReview.getCamp();
+				this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+				this.checkInDate = TimestampUtils.timeStampToDate
+						(order.getCheckInDate(), DATEFORMAT1);
+				Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() 
+						== order.getCheckOutDate().toLocalDateTime().getYear();
+				String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+				this.checkOutDate = TimestampUtils.timeStampToDate
+						(order.getCheckOutDate(), dateFormat);
+				this.campAddress = camp.getCampAddress();
+				this.campName = camp.getCampName();
+				this.reviewImage = campReview.getReviewImage();
+			}
 
-    // 내 캠핑장 연도별 DTO
-    @Data
-    public static class MyCampListDTO {
-        private List<MyCampDTO> myCampDTOs;
+		}
+	}
+	
+	// 캠프 구역 불러오기
+	@Data
+	public static class CampFieldListDTO{
+		private CampInfoDTO campInfoDTO;
+		private Integer campId;
+		private String campFieldImage;
+		private List<CampFieldDTO> campFieldDTOs;
+		public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
+			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
+			this.campId = requestDTO.getCampId();
+			this.campFieldImage = camp.getCampFieldImage();
+			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField)).collect(Collectors.toList());
+		}
+		@Data
+		public static class CampFieldDTO{
+			private String fieldName; // 캠프 구역
+			private String price;	// 총 금액
+			public CampFieldDTO(CampField campField) {
+				this.fieldName = campField.getFieldName();
+				this.price = priceFormat(Integer.parseInt(campField.getPrice()));
+			}
+		}
+	}
+		
+	//캠프 상단 정보
+	@Data
+	public static class CampInfoDTO{
+		private String campName;
+		private String campAddress;
+		private String minPrice;
+		private String maxPrice;
+		private Boolean isOpen; // 운영 상태
+		private String campImage;
+	}
+	
+	// 캠프 정보(상단) 가져오는 메서드
+	public static CampInfoDTO getCampInfo(Camp camp, List<CampField> campFields) {
+		CampInfoDTO campInfo = new CampInfoDTO();
+		campInfo.setCampName(camp.getCampName());
+		campInfo.setCampAddress(camp.getCampAddress());		
+		// 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
+	    // 최소 가격 찾기
+		Integer integerMinPrice = campFields.stream()
+	                .map(CampField::getPrice)
+	                .map(Integer::parseInt)
+	                .min(Comparator.naturalOrder())
+	                .orElseThrow();
+		campInfo.setMinPrice(priceFormat(integerMinPrice));
 
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> (year == null) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
-                        return order.getCheckInDate();
-                    }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
-        }
-
-        @Data
-        public class MyCampDTO {
-            private String totalRating;
-            private String checkInDate;
-            private String checkOutDate;
-            private String campAddress;
-            private String campName;
-            private String reviewImage;
-
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
-                this.checkInDate = TimestampUtils.timeStampToDate
-                        (order.getCheckInDate(), DATEFORMAT1);
-                Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
-                        == order.getCheckOutDate().toLocalDateTime().getYear();
-                String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
-                this.checkOutDate = TimestampUtils.timeStampToDate
-                        (order.getCheckOutDate(), dateFormat);
-                this.campAddress = camp.getCampAddress();
-                this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
-            }
-
-        }
-    }
-
-    // 캠프 구역 불러오기
-    @Data
-    public static class CampFieldListDTO {
-        private CampInfoDTO campInfoDTO;
-        private Integer campId;
-        private String campFieldImage;
-        private List<CampFieldDTO> campFieldDTOs;
-
-        public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
-            this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
-            this.campId = requestDTO.getCampId();
-            this.campFieldImage = camp.getCampFieldImage();
-            this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField)).collect(Collectors.toList());
-        }
-
-        @Data
-        public static class CampFieldDTO {
-            private String fieldName; // 캠프 구역
-            private String price;    // 총 금액
-
-            public CampFieldDTO(CampField campField) {
-                this.fieldName = campField.getFieldName();
-                this.price = priceFormat(Integer.parseInt(campField.getPrice()));
-            }
-        }
-    }
-
-    //결제 화면 정보 조회
-    @Data
-    public static class PaymentDetailDTO {
-        private CampInfoDTO campInfoDTO;
-        private Integer campId;
-        private String checkInDate;
-        private String checkOutDate;
-        private String fieldName;
-        private Integer nights;
-        private String totalPrice;
-
-        public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
-            this.campInfoDTO = getCampInfo(camp, campFields);
-            this.campId = requestDTO.getCampId();
-            this.checkInDate = requestDTO.getCheckInDate();
-            this.checkOutDate = requestDTO.getCheckOutDate();
-            this.fieldName = requestDTO.getFieldName();
-            Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
-            this.nights = period.getDays();
-            CampField campFieldEntity = camp.getCampFieldList().stream()
-                    .filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
-                    .findFirst()
-                    .orElse(null);
-            this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice()) * nights);
-        }
-
-    }
-
-    //캠프 상단 정보
-    @Data
-    public static class CampInfoDTO {
-        private String campName;
-        private String campAddress;
-        private String minPrice;
-        private String maxPrice;
-        private Boolean isOpen; // 운영 상태
-        private String campImage;
-    }
-
-    // 캠프 정보(상단) 가져오는 메서드
-    public static CampInfoDTO getCampInfo(Camp camp, List<CampField> campFields) {
-        CampInfoDTO campInfo = new CampInfoDTO();
-        campInfo.setCampName(camp.getCampName());
-        campInfo.setCampAddress(camp.getCampAddress());
-        // 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
-        // 최소 가격 찾기
-        Integer integerMinPrice = campFields.stream()
-                .map(CampField::getPrice)
-                .map(Integer::parseInt)
-                .min(Comparator.naturalOrder())
-                .orElseThrow();
-        campInfo.setMinPrice(priceFormat(integerMinPrice));
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
                 .map(CampField::getPrice)
