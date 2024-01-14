@@ -33,7 +33,6 @@ import lombok.RequiredArgsConstructor;;
 @RestController
 public class CampRestController {
 
-    @Autowired
     private final CampService campService;
 
 //    @GetMapping("/list")
