@@ -53,23 +53,22 @@
                 <div style="padding: 15px">
                     <table class="table table-hover" style="table-layout: fixed">
                         <thead>
-                        <tr class="faq_th">
+                        <tr class="camp_th">
                             <th style="width: 50px">#</th>
-                            <th style="width: 250px">캠핑장</th>
+                            <th style="width: 190px">캠핑장</th>
                             <th style="width: 300px">주소</th>
-                            <th>등록 날짜</th>
+                            <th>캠핑장 전화번호</th>
                             <th>수정</th>
                             <th>삭제</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="faq_td">
-                            <td>1</td>
-                            <td class="title">예약을 취소하고 싶어요</td>
-                            <td class="content">예약자 본인이 직접 예약확인/취소 가능합니다.
-                                예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다.
-                            </td>
-                            <td>2022.03.03</td>
+                        {{#campListDTO}}
+                        <tr class="camp_td">
+                            <td>{{campId}}</td>
+                            <td class="title">{{campName}}</td>
+                            <td class="content">{{campAddress}}</td>
+                            <td>{{campNumber}}</td>
                             <td>
                                 <button type="button" class="update_to_modal" data-bs-toggle="modal"
                                         data-bs-target="#camp_update_modal">
@@ -81,8 +80,13 @@
                                 </button>
                             </td>
                         </tr>
+                        {{/campListDTO}}
                         </tbody>
                     </table>
+                        <ul class="pagination">
+                            <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/setting?page={{prevPage}}">Previous</a></li>
+                            <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/setting?page={{nextPage}}">Next</a></li>
+                        </ul>
                 </div>
             </div>
             <div class="modal" id="camp_insert_modal">
