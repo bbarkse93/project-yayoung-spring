@@ -22,13 +22,19 @@ public class CampRestController_test extends MyWithRestDoc {
     @Test
     public void getAllCamps_test() throws Exception {
         // given
-
+    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
+    	requestDTO.setOptionNames(null);
+    	requestDTO.setRegionNames(null);
+    	
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/camp/list"));
+                        .get("/camp/list")
+                        .param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                        .param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null));
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
         ObjectMapper om = new ObjectMapper();
         Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
         Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
@@ -44,7 +50,9 @@ public class CampRestController_test extends MyWithRestDoc {
         IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
             Map<String, Object> listDataDTO = listDatsMap.get(i);
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
+                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list")
+                			.param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                			.param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null))
                         .andExpect(MockMvcResultMatchers
                                 .jsonPath("$.response.campDTO[" + i + "].id")
                                 .value(listDataDTO.get("id")))

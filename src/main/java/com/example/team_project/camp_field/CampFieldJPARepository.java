@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CampFieldJPARepository extends JpaRepository<CampField, Integer> {
 
 	List<CampField> findAllByCampId(Integer campId);
+
+	CampField findByFieldNameAndCampId(String fieldName, Integer campId);
 }

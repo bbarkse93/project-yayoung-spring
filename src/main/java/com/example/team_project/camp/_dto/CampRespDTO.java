@@ -47,7 +47,7 @@ public class CampRespDTO {
 //        		}
 //        	}
         	
-        	if (requestDTO.getOptionNames().size() != 0) {
+        	if (requestDTO.getOptionNames() != null) {
         	    campList = campList.stream()
         	            .filter(camp -> requestDTO.getOptionNames()
         	                    .stream()
@@ -61,7 +61,7 @@ public class CampRespDTO {
         	}
         	
         	// 지역 필터 적용
-        	if(requestDTO.getRegionNames().size()!=0) {
+        	if(requestDTO.getRegionNames() != null) {
         		campList =	campList.stream()
         			  .filter(camp -> {
         	                for (String regionName : requestDTO.getRegionNames()) {
@@ -316,34 +316,7 @@ public class CampRespDTO {
 			}
 		}
 	}
-	
-	//결제 화면 정보 조회
-	@Data
-	public static class PaymentDetailDTO{
-		private CampInfoDTO campInfoDTO;
-		private Integer campId;
-		private String checkInDate;
-		private String checkOutDate;
-		private String fieldName;
-		private Integer nights;
-		private String totalPrice;
-		public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
-			this.campInfoDTO = getCampInfo(camp, campFields);
-			this.campId = requestDTO.getCampId();
-			this.checkInDate = requestDTO.getCheckInDate();
-			this.checkOutDate = requestDTO.getCheckOutDate();
-			this.fieldName = requestDTO.getFieldName();
-			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
-			this.nights = period.getDays();
-			CampField campFieldEntity = camp.getCampFieldList().stream()
-					.filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
-					.findFirst()
-					.orElse(null);
-			this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice())*nights);
-		}
 		
-	}
-	
 	//캠프 상단 정보
 	@Data
 	public static class CampInfoDTO{

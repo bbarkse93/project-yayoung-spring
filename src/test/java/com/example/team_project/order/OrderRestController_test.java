@@ -161,49 +161,37 @@ public class OrderRestController_test extends MyWithRestDoc {
 	}
 	
 	@Test
-	public void paymentDetail_test() throws Exception {
+	public void paymentWrite_test() throws Exception {
 		
 		//given
-		OrderReqDTO.PaymentDetailDTO requestDTO = new OrderReqDTO.PaymentDetailDTO();
+		OrderReqDTO.OrderWriteDTO requestDTO = new OrderReqDTO.OrderWriteDTO();
 		requestDTO.setCampId(1);
-		requestDTO.setCheckInDate("2024-01-24");
-		requestDTO.setCheckOutDate("2024-01-26");
+		requestDTO.setCheckIn("2024-01-25");
+		requestDTO.setCheckOut("2024-01-28");
 		requestDTO.setFieldName("캠핑사이트-1");
 		
 		//when
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
-						.get("/order/payment")
+						.post("/order/payment")
 						.param("campId", String.valueOf(requestDTO.getCampId()))
-						.param("checkInDate", requestDTO.getCheckInDate())
-						.param("checkOutDate", requestDTO.getCheckOutDate())
+						.param("checkIn", requestDTO.getCheckIn())
+						.param("checkOut", requestDTO.getCheckOut())
 						.param("fieldName", requestDTO.getFieldName())
 				);
-		String responsebody = resultActions
+		String responseBody = resultActions
 						.andReturn()
 						.getResponse()
 						.getContentAsString();
-		System.out.println("ResultActions :" + responsebody);
-		
+		System.out.println("ResultActions :" + responseBody);
 		
 		//then
 		resultActions
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.campName").value("(주)아웃오브파크"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.campAddress").value("강원도 춘천시 남면 가옹개길 52-9"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.minPrice").value("50,000"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.maxPrice").value("60,000"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.isOpen").value(true))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.campImage").value("/images/camp_image/camp1-1.jpg"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campId").value(1))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDate").value("2024-01-24"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkOutDate").value("2024-01-26"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.fieldName").value("캠핑사이트-1"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.nights").value(2))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value("100,000"))
-				.andDo(MockMvcResultHandlers.print())
-				.andDo(document);		
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("캠핑 결제 성공"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+			.andDo(MockMvcResultHandlers.print())
+			.andDo(document);	
 	}
-	
-	
 }

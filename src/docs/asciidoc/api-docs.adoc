@@ -96,12 +96,12 @@ include::{snippets}/{order}/camp-field-list_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{order}/camp-field-list_test/http-response.adoc[]
 
-=== 4. 결제 화면 정보
+=== 4. 결제 등록
 ===== Request Example
-include::{snippets}/{order}/payment-detail_test/http-request.adoc[]
+include::{snippets}/{order}/payment-write_test/http-request.adoc[]
 
 ===== Response Example
-include::{snippets}/{order}/payment-detail_test/http-response.adoc[]
+include::{snippets}/{order}/payment-write_test/http-response.adoc[]
 
 == 공지사항
 === 1. 공지사항목록
