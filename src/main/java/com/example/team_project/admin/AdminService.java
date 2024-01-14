@@ -1,6 +1,6 @@
 package com.example.team_project.admin;
 
-import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.board.BoardJPARepository;
 import com.example.team_project.camp.Camp;
