@@ -466,8 +466,8 @@ public class CampRespDTO {
 			private String checkOutDate;
 			public ReservedCampFieldDTO(Order order) {
 				this.fieldName = order.getCampField().getFieldName();
-				this.checkInDate = String.valueOf(order.getCheckInDate());
-				this.checkOutDate = String.valueOf(order.getCheckOutDate());
+				this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
+				this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
 			}
 			
 			

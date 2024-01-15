@@ -23,5 +23,11 @@ public class OrderReqDTO {
 		private String  fieldName;
 	}
 	
+	@Data
+	public static class OrderDeleteDTO{
+		@NotNull
+		private Integer orderId;
+	}
+	
 	
 }

@@ -20,6 +20,7 @@ import com.example.team_project.order._dto.OrderRespDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Transactional
@@ -63,7 +64,7 @@ public class OrderService {
 
 
 	// 캠핑 결제
-	public Order paymentWrite(int userId, OrderReqDTO.OrderWriteDTO requestDTO) {
+	public OrderRespDTO.PaymentWriteDTO paymentWrite(int userId, OrderReqDTO.OrderWriteDTO requestDTO) {
 		// requestDTO 가공 로직
 		Timestamp checkInDate  = TimestampUtils.convertToTimestamp(requestDTO.getCheckIn());
 		Timestamp checkOutDate = TimestampUtils.convertToTimestamp(requestDTO.getCheckOut());
@@ -78,8 +79,18 @@ public class OrderService {
 							.user(user)
 							.campField(campField)
 							.build());
-		// 결과 반환
-		return response;
+		if(response == null)
+			throw new Exception404("잘못된 예약입니다");
+		// 결과 반환( + 캠프장 지도 반환 필요)
+		return new OrderRespDTO.PaymentWriteDTO(campField.getCamp().getCampFieldImage());
+	}
+
+	// 캠핑 환불 DB 처리
+	public void orderDelete(Integer userId, @Valid OrderReqDTO.OrderDeleteDTO requestDTO) {
+		Order order = orderJPARepository.findById(requestDTO.getOrderId())
+						.orElseThrow(()-> new Exception404("잘못된 예약번호입니다."));
+		orderJPARepository.delete(order);
+		
 	}
 
 }
