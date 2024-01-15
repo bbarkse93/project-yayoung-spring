@@ -204,7 +204,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		resultActions
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("결제 등록 성공"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.response.campFieldImage").value("/images/camp_map/camp1.png"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
 			.andDo(MockMvcResultHandlers.print())
 			.andDo(document);	

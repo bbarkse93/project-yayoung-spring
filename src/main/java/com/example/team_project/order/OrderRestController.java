@@ -77,9 +77,6 @@ public class OrderRestController {
     	//테스트 용 하드 코딩
     	orderService.orderDelete(1, requestDTO);
 //    	orderService.orderDelete(userId, requestDTO);
-    	//캠프 스케줄 반환
-    	OrderRespDTO.CampScheduleListDTO responseDTO = orderService.campScheduleList(1);
-//    	OrderRespDTO.CampScheduleListDTO responseDTO = orderService.campScheduleList(userId);
     	return ResponseEntity.ok(ApiUtils.success("환불 처리 완료"));
     }
     

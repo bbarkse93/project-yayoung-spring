@@ -80,8 +80,8 @@ public class OrderService {
 							.campField(campField)
 							.build());
 		if(response == null)
-			throw new Exception404("잘못된 예약입니다");
-		// 결과 반환( + 캠프장 지도 반환 필요)
+			throw new Exception404("예약에 실패했습니다.");
+		// 결과 반환
 		return new OrderRespDTO.PaymentWriteDTO(campField.getCamp().getCampFieldImage());
 	}
 
