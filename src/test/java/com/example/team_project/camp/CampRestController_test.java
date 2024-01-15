@@ -20,60 +20,64 @@ import java.util.stream.IntStream;
 
 public class CampRestController_test extends MyWithRestDoc {
 
-        @Test
-        public void getAllCamps_test() throws Exception {
-                // given
+    @Test
+    public void getAllCamps_test() throws Exception {
+        // given
+    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
+    	requestDTO.setOptionNames(null);
+    	requestDTO.setRegionNames(null);
+    	
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/camp/list")
+                        .param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                        .param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null));
 
-                // when
-                ResultActions resultActions = mockMvc.perform(
-                                MockMvcRequestBuilders
-                                                .get("/camp/list"));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+        ObjectMapper om = new ObjectMapper();
+        Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
+        List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTO"), new TypeReference<List<Map<String, Object>>>() {});
 
-                String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-                ObjectMapper om = new ObjectMapper();
-                Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {
-                });
-                Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"),
-                                new TypeReference<Map<String, Object>>() {
-                                });
-                List<Map<String, Object>> listDatsMap = om.convertValue(responseMap.get("campDTO"),
-                                new TypeReference<List<Map<String, Object>>>() {
-                                });
-
-                // then
-                resultActions
-                                .andExpect(MockMvcResultMatchers.status().isOk())
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
-                                .andDo(document);
-                IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
-                        Map<String, Object> listDataDTO = listDatsMap.get(i);
-                        try {
-                                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list"))
-                                                .andExpect(MockMvcResultMatchers
-                                                                .jsonPath("$.response.campDTO[" + i + "].id")
-                                                                .value(listDataDTO.get("id")))
-                                                .andExpect(MockMvcResultMatchers
-                                                                .jsonPath("$.response.campDTO[" + i + "].campName")
-                                                                .value(listDataDTO.get("campName")))
-                                                .andExpect(MockMvcResultMatchers
-                                                                .jsonPath("$.response.campDTO[" + i
-                                                                                + "].campAddress")
-                                                                .value(listDataDTO.get("campAddress")))
-                                                .andExpect(MockMvcResultMatchers
-                                                                .jsonPath("$.response.campDTO[" + i + "].campImage")
-                                                                .value(listDataDTO.get("campImage")))
-                                                .andExpect(MockMvcResultMatchers
-                                                                .jsonPath("$.response.campDTO[" + i
-                                                                                + "].campRating")
-                                                                .value(listDataDTO.get("campRating")))
-                                                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
-                                                .andDo(MockMvcResultHandlers.print());
-                        } catch (Exception e) {
-                                throw new RuntimeException(e);
-                        }
-                });
-        }
+        
+        // then
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+                .andDo(document);
+        IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
+            Map<String, Object> listDataDTO = listDatsMap.get(i);
+            try {
+                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list")
+                			.param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
+                			.param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null))
+                        .andExpect(MockMvcResultMatchers
+                                .jsonPath("$.response.campDTO[" + i + "].id")
+                                .value(listDataDTO.get("id")))
+                        .andExpect(MockMvcResultMatchers
+                                .jsonPath("$.response.campDTO[" + i + "].campName")
+                                .value(listDataDTO.get("campName")))
+                        .andExpect(MockMvcResultMatchers
+                                .jsonPath("$.response.campDTO[" + i
+                                        + "].campAddress")
+                                .value(listDataDTO.get("campAddress")))
+                        .andExpect(MockMvcResultMatchers
+                                .jsonPath("$.response.campDTO[" + i + "].campImage")
+                                .value(listDataDTO.get("campImage")))
+                        .andExpect(MockMvcResultMatchers
+                                .jsonPath("$.response.campDTO[" + i
+                                        + "].campRating")
+                                .value(listDataDTO.get("campRating")))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+                        .andDo(MockMvcResultHandlers.print());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
         @Test
         public void getCampDetail_test() throws Exception {

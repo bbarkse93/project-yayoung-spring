@@ -4,11 +4,10 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.example.team_project._core.errors.exception.Exception500;
@@ -38,7 +37,7 @@ public class CampRespDTO {
         private List<CampDTO> campDTO;
 
         public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
-        	// 환경 필터 적용
+            // 환경 필터 적용
 //        	if(requestDTO.getOptionNames().size()!=0) {
 //        		for (String optionName : requestDTO.getOptionNames()) {
 //        			campList = campList.stream()
@@ -50,7 +49,7 @@ public class CampRespDTO {
 //        		}
 //        	}
         	
-        	if (requestDTO.getOptionNames().size() != 0) {
+        	if (requestDTO.getOptionNames() != null) {
         	    campList = campList.stream()
         	            .filter(camp -> requestDTO.getOptionNames()
         	                    .stream()
@@ -64,7 +63,7 @@ public class CampRespDTO {
         	}
         	
         	// 지역 필터 적용
-        	if(requestDTO.getRegionNames().size()!=0) {
+        	if(requestDTO.getRegionNames() != null) {
         		campList =	campList.stream()
         			  .filter(camp -> {
         	                for (String regionName : requestDTO.getRegionNames()) {
@@ -104,14 +103,14 @@ public class CampRespDTO {
         private RatingAverages campRating;
         private long reviewCount;
         private List<CampImageDTO> images;
-        private List<OptionManagementDTO> options;
+        private Map<String, List<OptionManagementDTO>> options;
 
         public CampDetailDTO(Camp camp, long reviewCount) {
             this.campInfo = new CampDTO(camp);
             this.campRating = ratingAverages(camp.getCampRatingList());
             this.images = camp.getCampImageList().stream().map(c -> new CampImageDTO(c)).collect(Collectors.toList());
+            this.options = camp.getOptionManagementList().stream().map(c -> new OptionManagementDTO(c)).collect(Collectors.groupingBy(OptionManagementDTO::getCategoryName));
             this.reviewCount = reviewCount;
-            this.options = camp.getOptionManagementList().stream().map(c -> new OptionManagementDTO(c)).collect(Collectors.toList());
         }
 
         @Data
@@ -150,7 +149,7 @@ public class CampRespDTO {
         }
 
         @Data
-        public static class CampFieldDTO{
+        public static class CampFieldDTO {
             private Integer minPrice;
             private Integer maxPrice;
 
@@ -196,15 +195,18 @@ public class CampRespDTO {
             }
 
         }
-
         @Data
-        public static class OptionManagementDTO{
+        public static class OptionManagementDTO {
             private Integer optionId;
             private String optionName;
+            private Integer categoryId;
+            private String categoryName;
 
             public OptionManagementDTO(OptionManagement optionManagement) {
                 this.optionId = optionManagement.getOption().getId();
                 this.optionName = optionManagement.getOption().getOptionName();
+                this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+                this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
             }
         }
 
@@ -248,6 +250,150 @@ public class CampRespDTO {
             this.managementness = campRating.getManagementness();
             this.friendliness = campRating.getFriendliness();
         }
+//        @Data
+//        public static class OptionManagementDTO {
+//            private List<EnvironmentDTO> environment;
+//            private List<CampingTypeDTO> campingType;
+//            private List<SiteTypeDTO> siteType;
+//            private List<MainFacilityDTO> mainFacility;
+//            private List<HaveFacilityDTO> haveFacility;
+//            private List<ExerciseFacilityDTO> exerciseFacility;
+//            private List<RentalDTO> rental;
+//            private List<SellDTO> sell;
+//
+//            public OptionManagementDTO(OptionManagement optionManagement) {
+//                this.environment = optionManagement.stream().map(o -> new EnvironmentDTO(o)).collect(Collectors.toList());
+//                this.campingType = optionManagement.stream().map(o -> new CampingTypeDTO(o)).collect(Collectors.toList());
+//                this.siteType = optionManagement.stream().map(o -> new SiteTypeDTO(o)).collect(Collectors.toList());
+//                this.mainFacility = optionManagement.stream().map(o -> new MainFacilityDTO(o)).collect(Collectors.toList());
+//                this.haveFacility = optionManagement.stream().map(o -> new HaveFacilityDTO(o)).collect(Collectors.toList());
+//                this.exerciseFacility = optionManagement.stream().map(o -> new ExerciseFacilityDTO(o)).collect(Collectors.toList());
+//                this.rental = optionManagement.stream().map(o -> new RentalDTO(o)).collect(Collectors.toList());
+//                this.sell = optionManagement.stream().map(o -> new SellDTO(o)).collect(Collectors.toList());
+//            }
+//
+//            @Data
+//            public static class EnvironmentDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public EnvironmentDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class CampingTypeDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public CampingTypeDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class SiteTypeDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public SiteTypeDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class MainFacilityDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public MainFacilityDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class HaveFacilityDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public HaveFacilityDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class ExerciseFacilityDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public ExerciseFacilityDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class RentalDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public RentalDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//
+//            @Data
+//            public static class SellDTO {
+//                private Integer optionId;
+//                private String optionName;
+//                private Integer categoryId;
+//                private String categoryName;
+//
+//                public SellDTO(OptionManagement optionManagement) {
+//                    this.optionId = optionManagement.getOption().getId();
+//                    this.optionName = optionManagement.getOption().getOptionName();
+//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
+//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
+//                }
+//            }
+//        }
+
+
 
         public CampRatingDTO(double total, double cleanlinessAvg, double managementnessAvg, double friendlinessAvg) {
         }
@@ -424,34 +570,7 @@ public class CampRespDTO {
 			}
 		}
 	}
-	
-	//결제 화면 정보 조회
-	@Data
-	public static class PaymentDetailDTO{
-		private CampInfoDTO campInfoDTO;
-		private Integer campId;
-		private String checkInDate;
-		private String checkOutDate;
-		private String fieldName;
-		private Integer nights;
-		private String totalPrice;
-		public PaymentDetailDTO(List<CampField> campFields, Camp camp, OrderReqDTO.PaymentDetailDTO requestDTO) {
-			this.campInfoDTO = getCampInfo(camp, campFields);
-			this.campId = requestDTO.getCampId();
-			this.checkInDate = requestDTO.getCheckInDate();
-			this.checkOutDate = requestDTO.getCheckOutDate();
-			this.fieldName = requestDTO.getFieldName();
-			Period period = Period.between(LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate));
-			this.nights = period.getDays();
-			CampField campFieldEntity = camp.getCampFieldList().stream()
-					.filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
-					.findFirst()
-					.orElse(null);
-			this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice())*nights);
-		}
 		
-	}
-	
 	//캠프 상단 정보
 	@Data
 	public static class CampInfoDTO{
@@ -476,6 +595,7 @@ public class CampRespDTO {
 	                .min(Comparator.naturalOrder())
 	                .orElseThrow();
 		campInfo.setMinPrice(priceFormat(integerMinPrice));
+
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
                 .map(CampField::getPrice)
@@ -484,27 +604,27 @@ public class CampRespDTO {
                 .orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
         Timestamp now = TimestampUtils.findCurrnetTime();
-        String today = String.valueOf(now).substring(0, 10);  
+        String today = String.valueOf(now).substring(0, 10);
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         // 휴일의 예시를 알 수 없어 현재는 미반영
         Date checkInDate; // 운영 시작 시간
         Date checkOutDate; // 운영 종료 시간
-		try {
-			checkInDate  = timeFormat.parse(today+" "+camp.getCampCheckIn());
-			checkOutDate = timeFormat.parse(today+" "+camp.getCampCheckOut());
-			campInfo.setIsOpen(now.compareTo(checkInDate) >= 0 && now.compareTo(checkOutDate) < 0);
-		} catch (ParseException e) {
-			throw new Exception500("서버 에러가 발생했습니다");
-		}
-		campInfo.setIsOpen(true);
-		campInfo.setCampImage(camp.firstCampImage());
-		return campInfo;
-	}
-	
-	// 금액 포맷팅
-	public static String priceFormat(Integer price) {
-		DecimalFormat decimalFormat = new DecimalFormat("#,###");
-		return decimalFormat.format(price);  
-	}
+        try {
+            checkInDate = timeFormat.parse(today + " " + camp.getCampCheckIn());
+            checkOutDate = timeFormat.parse(today + " " + camp.getCampCheckOut());
+            campInfo.setIsOpen(now.compareTo(checkInDate) >= 0 && now.compareTo(checkOutDate) < 0);
+        } catch (ParseException e) {
+            throw new Exception500("서버 에러가 발생했습니다");
+        }
+        campInfo.setIsOpen(true);
+        campInfo.setCampImage(camp.firstCampImage());
+        return campInfo;
+    }
+
+    // 금액 포맷팅
+    public static String priceFormat(Integer price) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(price);
+    }
 
 }

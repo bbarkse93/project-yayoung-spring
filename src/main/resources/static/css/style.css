@@ -234,7 +234,7 @@
 
 .box .review_button {
     font-size: 14px;
-    margin: 20px;
+    margin: 6px 0 15px;
     padding: 10px;
     border-radius: 5px;
     background-color: var(--primary_02);
@@ -317,7 +317,7 @@
 
 .review_td td {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     vertical-align: middle;
 }
 
@@ -325,7 +325,7 @@
     border: none;
     padding: 8px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 13px;
     width: 60px;
     background-color: var(--point_03);
     color: var(--def_wh);
@@ -457,7 +457,7 @@
 
 .order_td td {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     vertical-align: middle;
     height: 45px;
 }
@@ -974,5 +974,37 @@ ul.tabs li.current {
 
 .camp_site_price_input {
     width: 35%;
+}
+
+.camp_th th {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.camp_td .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.camp_td .content {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.camp_td td {
+    text-align: center;
+    font-size: 15px;
+    vertical-align: middle;
+    height: 45px;
+}
+
+.camp_td .profile_button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--back_03);
 }
 

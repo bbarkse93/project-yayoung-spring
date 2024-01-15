@@ -1,3 +1,18 @@
+var idx = 0;
+
+var data = {
+    "names": [
+        {"name":"John"},
+        {"name":"Mary"}
+    ],
+    "idx": function() {
+        return idx++;
+    }
+};
+
+var html = Mustache.render(template, data);
+
+
 let photoCount;
 let campSiteCount;
 

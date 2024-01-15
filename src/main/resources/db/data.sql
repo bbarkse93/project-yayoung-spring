@@ -6,66 +6,66 @@ values ('admin', '1234', 'admin', true, '/images/user/user-profile.jpg', false, 
 
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('(주)아웃오브파크', '강원도 춘천시 남면 가옹개길 52-9', '1522-1861', 'http://outofpark.com/main/', '당일 취소 불가, 2일 전 100% 환불', true,
-        true, '없음', '14:00', '13:00', '/images/camp_map/camp1.png');
+        true, '없음', '14:00', '13:00', '/images/camp_map/camp1.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('파크킹', '경북 김천시 어모면 은림로 62-11', '054-434-6677', 'https://www.instagram.com/amazingpark6211/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp2.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp2.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('디캠고흥', '강원 횡성군 서원면 서원서로102번길 3-18', '033-345-3336', 'https://www.instagram.com/salon.de.bonj/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp3.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp3.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('캠프달링', '경기 가평군 설악면 유명산길 61-75', '010-3148-9970', 'http://healingpia.co.kr', '당일 취소 불가, 2일 전 100% 환불', true,
-        true, '없음', '14:00', '13:00', '/images/camp_map/camp4.png');
+        true, '없음', '14:00', '13:00', '/images/camp_map/camp4.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('STX 오토캠핑장', '충남 태안군 소원면 산간이길 158-24', '043-1668-3972',
         'https://map.naver.com/v5/entry/place/1791561655?c=14047305.3983138,4408436.9604705,15,0,0,0,dh&amp;placePath=%2Fbooking%3Fentry=plt',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp5.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp5.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('청주 옥화포시즌캠핑장', '강원 평창군 평창읍 뇌운계곡로 659-6', '033-332-0009', 'https://pcglamping.modoo.at/',
-        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp6.png');
+        '당일 취소 불가, 2일 전 100% 환불', true, true, '없음', '14:00', '13:00', '/images/camp_map/camp6.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('휘게 포레스트', '충북 충주시 앙성면 학교말2길 50', '033-332-0009', 'http://www.binaecamping.co.kr', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp7.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp7.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('초이스캠프앤카라반', '충남 태안군 남면 몽산포길 63-23', '033-332-0009', 'https://solbeachcamp.modoo.at/', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp8.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp8.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('초록여울캠핑장', '경북 포항시 북구 죽장면 새마을로 3351', '033-332-0119', 'http://www.gaoncamp.com/', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp9.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp9.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('소리의섬 캠핑장', '충북 충주시 앙성면 남한강변길 218-2', '033-332-0229', 'http://limsglamping.modoo.at', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp10.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp10.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('림스 캠핑장', '전남 강진군 강진읍 해강로 1038-30', '033-332-0229', 'http://limsglamping.modoo.at', '당일 취소 불가, 2일 전 100% 환불',
-        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp11.png');
+        true, true, '없음', '14:00', '13:00', '/images/camp_map/camp11.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('단아한', '전북 순창군 팔덕면 산동신흥길 6', '031-581-9977', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true, '없음',
-        '14:00', '13:00', '/images/camp_map/camp12.png');
+        '14:00', '13:00', '/images/camp_map/camp12.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('원주 두리 캠핑장', '경기 가평군 가평읍 호반로 1700', '031-581-9977', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true,
-        '없음', '14:00', '13:00', '/images/camp_map/camp13.png');
+        '없음', '14:00', '13:00', '/images/camp_map/camp13.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('너른뜰 캠핑장', '충남 부여군 세도면 대흥로 163', '031-581-9917', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true, '없음',
-        '14:00', '13:00', '/images/camp_map/camp14.png');
+        '14:00', '13:00', '/images/camp_map/camp14.png', false);
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
-                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE)
+                     CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
 values ('개네집 캠핑장', '경상북도 영덕군 병곡면 병곡리 58-5', '031-557-7757', 'Www.toycamp.kr', '당일 취소 불가, 2일 전 100% 환불', true, true,
-        '없음', '14:00', '13:00', '/images/camp_map/camp15.png');
+        '없음', '14:00', '13:00', '/images/camp_map/camp15.png', false);
 
 -- 캠프 구역 -------------------------------------------------------------------------------------------------------
 INSERT INTO CAMP_FIELD_TB (FIELD_NAME, PRICE, CAMP_ID)
@@ -1179,7 +1179,18 @@ values ( 1, 3.0, 2.0, 3.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 1, 4.0, 3.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
-values ( 1, 5.0, 4.0, 5.0, 1 );
+values ( 2, 1.0, 5.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 5.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 4.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 4.0, 1.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 1.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 3.0, 1.0, 5.0, 1 );
+
 
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
