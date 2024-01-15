@@ -61,15 +61,7 @@ public class CampRestController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
         // 인증검사
-    	//테스트용 하드 코딩
-//    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
-//    	List<String> optionNames = new ArrayList<>();
-//    	optionNames.add("카라반");
-//    	optionNames.add("산");
-//    	List<String> reigonNames = new ArrayList<>();
-//    	reigonNames.add("충남");
-//    	requestDTO.setOptionNames(optionNames);
-//    	requestDTO.setRegionNames(reigonNames);
+
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));

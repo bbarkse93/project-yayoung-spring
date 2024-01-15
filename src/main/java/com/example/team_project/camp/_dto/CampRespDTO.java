@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.stream.Collectors;
 
 @Data
@@ -36,17 +37,6 @@ public class CampRespDTO {
 
         public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
             // 환경 필터 적용
-//        	if(requestDTO.getOptionNames().size()!=0) {
-//        		for (String optionName : requestDTO.getOptionNames()) {
-//        			campList = campList.stream()
-//        					.filter(camp -> camp.getOptionManagementList()
-//        							.stream()
-//        							.filter(om -> optionName.contains(om.getOption().getOptionName()))
-//        							.findAny().isPresent())
-//        					.collect(Collectors.toList());
-//        		}
-//        	}
-        	
         	if (requestDTO.getOptionNames() != null) {
         	    campList = campList.stream()
         	            .filter(camp -> requestDTO.getOptionNames()
@@ -447,21 +437,42 @@ public class CampRespDTO {
 		private Integer campId;
 		private String campFieldImage;
 		private List<CampFieldDTO> campFieldDTOs;
-		public CampFieldListDTO(List<CampField> campFields, Camp camp, OrderReqDTO.CampFieldListDTO requestDTO) {
+		private List<ReservedCampFieldDTO> reservedCampFieldDTOs; 
+		public CampFieldListDTO(List<CampField> campFields, Camp camp, List<Order> orders, OrderReqDTO.CampFieldListDTO requestDTO) {
 			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
 			this.campId = requestDTO.getCampId();
 			this.campFieldImage = camp.getCampFieldImage();
-			this.campFieldDTOs = campFields.stream().map(campField -> new CampFieldDTO(campField)).collect(Collectors.toList());
+			this.reservedCampFieldDTOs = orders.stream()
+					.filter(order ->order.getCampField().getCamp().getId() == requestDTO.getCampId())
+					.map(order -> new ReservedCampFieldDTO(order))
+					.collect(Collectors.toList());
+			this.campFieldDTOs = campFields.stream()
+					.map(campField -> new CampFieldDTO(campField))
+					.collect(Collectors.toList());
 		}
 		@Data
 		public static class CampFieldDTO{
 			private String fieldName; // 캠프 구역
-			private String price;	// 총 금액
+			private String price;	// 금액
 			public CampFieldDTO(CampField campField) {
 				this.fieldName = campField.getFieldName();
 				this.price = priceFormat(Integer.parseInt(campField.getPrice()));
 			}
 		}
+		@Data
+		public static class ReservedCampFieldDTO{
+			private String fieldName;
+			private String checkInDate;
+			private String checkOutDate;
+			public ReservedCampFieldDTO(Order order) {
+				this.fieldName = order.getCampField().getFieldName();
+				this.checkInDate = String.valueOf(order.getCheckInDate());
+				this.checkOutDate = String.valueOf(order.getCheckOutDate());
+			}
+			
+			
+		}
+		
 	}
 		
 	//캠프 상단 정보

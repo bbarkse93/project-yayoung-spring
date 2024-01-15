@@ -67,7 +67,7 @@ public class OrderRestController {
     	//테스트 용 하드 코딩
     	Order responseDTO = orderService.paymentWrite(1, requestDTO);
     	//Order responseDTO = orderService.paymentWrite(userId, requestDTO);
-    	return ResponseEntity.ok(ApiUtils.success("캠핑 결제 성공"));
+    	return ResponseEntity.ok(ApiUtils.success("결제 등록 성공"));
     }
     
 
