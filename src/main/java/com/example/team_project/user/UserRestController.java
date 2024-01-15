@@ -55,7 +55,7 @@ public class UserRestController {
     public ResponseEntity<?> profileUpdate(@RequestBody UserReqDTO.ProfileUpdateDTO requestDTO){
         System.out.println("Put이요~");
         System.out.println("Put이요~" + requestDTO.getNickname());
-        System.out.println("Put이요~" + requestDTO.getUserImage());
+//        System.out.println("Put이요~" + requestDTO.getUserImage());
 
         // @RequestHeader("Authorization") String token
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
