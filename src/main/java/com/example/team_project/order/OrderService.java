@@ -54,12 +54,10 @@ public class OrderService {
 				new Exception404("해당 캠프장이 존재하지 않습니다."));
 		// 캠프 구역 목록 조회
 		List<CampField> campFields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
+		if(campFields == null)
+			throw new Exception404("잘못된 캠프장 명입니다.");
 		// 제외할 예약 구역 조회
 		List<Order> orders = orderJPARepository.findAllByCheckInDateAfterOrderByCheckInDateAsc(TimestampUtils.findCurrnetTime());
-		System.out.println(orders.get(1).getCampField().getFieldName());
-		// 현재 예약이 찬 시간대와 해당하는 캠프 구역을 조회
-		if(campFields == null)
-				throw new Exception404("잘못된 캠프장 명입니다.");
 		return new CampRespDTO.CampFieldListDTO(campFields, camp, orders, requestDTO);
 	}
 

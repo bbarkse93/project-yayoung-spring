@@ -443,7 +443,7 @@ public class CampRespDTO {
 			this.campId = requestDTO.getCampId();
 			this.campFieldImage = camp.getCampFieldImage();
 			this.reservedCampFieldDTOs = orders.stream()
-					.filter(order ->order.getCampField().getCamp().getId() == requestDTO.getCampId())
+					.filter(order -> order != null && order.getCampField().getCamp().getId() == requestDTO.getCampId())
 					.map(order -> new ReservedCampFieldDTO(order))
 					.collect(Collectors.toList());
 			this.campFieldDTOs = campFields.stream()

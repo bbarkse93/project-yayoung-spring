@@ -22,7 +22,7 @@ public class TimestampUtils {
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         return Timestamp.valueOf(localDateTime);
     }
-    
+    // String 타입의 날짜를 Timestamp 타입으로 변경
     public static Timestamp convertToTimestamp(String dateString) {
     	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDate;
