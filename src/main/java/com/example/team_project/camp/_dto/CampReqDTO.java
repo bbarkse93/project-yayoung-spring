@@ -2,6 +2,7 @@ package com.example.team_project.camp._dto;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -14,6 +15,7 @@ public class CampReqDTO {
 
 	@Data
 	public static class CampBookmarkDTO {
+		@NotNull
 		private Integer campId;
 	}
 

@@ -1,11 +1,10 @@
 package com.example.team_project.order;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project._core.utils.JwtTokenUtils;
-import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.order._dto.OrderReqDTO;
 import com.example.team_project.order._dto.OrderRespDTO;
@@ -65,9 +63,21 @@ public class OrderRestController {
     	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	//Integer userId = decodedJWT.getClaim("id").asInt();
     	//테스트 용 하드 코딩
-    	Order responseDTO = orderService.paymentWrite(1, requestDTO);
+    	OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(1, requestDTO);
     	//Order responseDTO = orderService.paymentWrite(userId, requestDTO);
-    	return ResponseEntity.ok(ApiUtils.success("캠핑 결제 성공"));
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    
+    // 캠핑 환불 DB 처리
+    @DeleteMapping("/refund")
+    public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO /*,@RequestHeader("Authorization") String token*/){
+    	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	//Integer userId = decodedJWT.getClaim("id").asInt();
+    	
+    	//테스트 용 하드 코딩
+    	orderService.orderDelete(1, requestDTO);
+//    	orderService.orderDelete(userId, requestDTO);
+    	return ResponseEntity.ok(ApiUtils.success("환불 처리 완료"));
     }
     
 

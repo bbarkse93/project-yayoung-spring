@@ -26,6 +26,8 @@ import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampListDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;;
 
 @RequestMapping("/camp")
@@ -57,19 +59,11 @@ public class CampRestController {
 //        }
 //
 //    }
-    //캠핑장 목록 조회(필터 적용 가능)(요청 DTO를 어떤 형식으로 받을지 미정)
+    //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
         // 인증검사
-    	//테스트용 하드 코딩
-//    	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
-//    	List<String> optionNames = new ArrayList<>();
-//    	optionNames.add("카라반");
-//    	optionNames.add("산");
-//    	List<String> reigonNames = new ArrayList<>();
-//    	reigonNames.add("충남");
-//    	requestDTO.setOptionNames(optionNames);
-//    	requestDTO.setRegionNames(reigonNames);
+
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
@@ -87,14 +81,14 @@ public class CampRestController {
     // 관심 캠핑장 등록 기능
     @PostMapping("/bookmark")
     public ResponseEntity<?> addBookmark(
-            @RequestBody CampReqDTO.CampBookmarkDTO dto
+            @Valid CampReqDTO.CampBookmarkDTO requestDTO
     // , @RequestHeader("Authorization") String token
     ) {
         // 토큰 처리를 위한 서비스를 통해 userId 추출
         // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
         // Integer userId = decodedJWT.getClaim("id").asInt();
         System.out.println("컨트롤러");
-        campService.addBookmark(1, dto);
+        campService.addBookmark(1, requestDTO);
 
         // OrderRespDTO.myCampFieldListDTO responseDTO =
         // orderService.myCampFieldList(userId, requestDTO);
