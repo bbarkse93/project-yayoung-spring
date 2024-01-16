@@ -50,20 +50,23 @@ public class CampRespDTO {
         	            .collect(Collectors.toList());
         	}
         	
-        	// 지역 필터 적용
-        	if(requestDTO.getRegionNames() != null) {
-        		campList =	campList.stream()
-        			  .filter(camp -> {
-        	                for (String regionName : requestDTO.getRegionNames()) {
-        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
-        	                        return true;
-        	                    }
-        	                }
-        	                return false;
-        	            })
-        	            .collect(Collectors.toList());
-        	}
+//        	// 지역 필터 적용
+//        	if(requestDTO.getRegionNames() != null) {
+//        		campList =	campList.stream()
+//        			  .filter(camp -> {
+//        	                for (String regionName : requestDTO.getRegionNames()) {
+//        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+//        	                        return true;
+//        	                    }
+//        	                }
+//        	                return false;
+//        	            })
+//        	            .collect(Collectors.toList());
+//        	}
         	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        	System.out.println("DTO 진입 : "+ requestDTO.getOptionNames());
+        	System.out.println("DTO 진입 : "+ campDTO);
+
         }
 
         @Data

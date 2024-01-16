@@ -37,35 +37,15 @@ public class CampRestController {
 
     private final CampService campService;
 
-//    @GetMapping("/list")
-//    public ResponseEntity<?> getAllCamps() {
-//        // 인증검사
-//        try {
-//            // 토큰 검증 및 userId 추출
-//            // @RequestHeader("Authorization") String token
-//            // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-//            // Integer userId = decodedJWT.getClaim("id").asInt();
-//
-//            // userJPARepository.findById(userId)
-//            // .orElseThrow(() => new EntityNotFoundException("User not found"));
-//
-//            // 핵심로직
-//            CampRespDTO.CampListDTO responseDTO = campService.getAllCamps();
-//            return ResponseEntity.ok(ApiUtils.success(responseDTO));
-//        } catch (JWTVerificationException | EntityNotFoundException e) {
-//            // 인증 실패 혹은 사용자 미발견시 처리
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                    .body(ApiUtils.error(e.getMessage(), HttpStatus.UNAUTHORIZED));
-//        }
-//
-//    }
     //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
+    	System.out.println("리스트 컨트롤러 진입 : " + requestDTO.getOptionNames());
         // 인증검사
 
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
+        System.out.println("응답 잘 되나? "+responseDTO.getCampDTO().get(0).getCampName());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
@@ -97,20 +77,26 @@ public class CampRestController {
 
     // 관심 캠핑장 등록 해제 기능
     @DeleteMapping("/bookmark")
-    public ResponseEntity<?> removeBookmark(@RequestParam Integer campId,
-            @RequestHeader("Authorization") String token) {
-        DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-        Integer userId = decodedJWT.getClaim("id").asInt();
+    public ResponseEntity<?> removeBookmark(@Valid CampReqDTO.CampBookmarkDeleteDTO requestDTO
+           /*, @RequestHeader("Authorization") String token*/) {
+//        DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+//        Integer userId = decodedJWT.getClaim("id").asInt();
 
-        campService.removeBookmark(userId, campId);
-        return ResponseEntity.ok().build();
+        campService.removeBookmark(1, requestDTO);
+//        campService.removeBookmark(userId, requestDTO);
+        return ResponseEntity.ok().body(ApiUtils.success("북마크 해제"));
     }
 
     // 관심 캠핑장 목록 조회 엔드포인트
-    @GetMapping("/bookmarks/{userId}")
-    public ResponseEntity<?> getUserBookmarks(@PathVariable Integer userId) {
-        List<CampBookmark> bookmarks = campService.getUserBookmarks(userId);
-        return ResponseEntity.ok(bookmarks);
+    @GetMapping("/bookmarks")
+    public ResponseEntity<?> bookmarkList (/*@RequestHeader("Authorization") String token*/) {
+//      DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+//      Integer userId = decodedJWT.getClaim("id").asInt();    	
+    	
+    	//테스트 용 하드 코딩
+        List<CampBookmark> responseDTO = campService.bookmarkList(1);
+//        List<CampBookmark> responseDTO = campService.bookmarkList(userId);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 캠핑장 상세 정보 이미지 데이터 제공

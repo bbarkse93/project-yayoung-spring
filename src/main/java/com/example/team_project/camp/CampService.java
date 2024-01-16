@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project.camp._dto.CampReqDTO;
+import com.example.team_project.camp._dto.CampReqDTO.CampBookmarkDeleteDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
@@ -69,10 +70,10 @@ public class CampService {
     }
 
     // 북마크 해제
-    public void removeBookmark(Integer userId, Integer campId) {
+    public void removeBookmark(Integer userId, CampBookmarkDeleteDTO requestDTO) {
         List<CampBookmark> bookmarks = campBookmarkJPARepository.findByUserId(userId);
         bookmarks.stream()
-                .filter(bookmark -> bookmark.getCamp().getId().equals(campId))
+                .filter(bookmark -> bookmark.getCamp().getId().equals(requestDTO.getCampId()))
                 .findFirst()
                 .ifPresent(campBookmarkJPARepository::delete);
     }
@@ -80,7 +81,7 @@ public class CampService {
 
 
     // 사용자의 관심 캠핑장 조회 기능
-    public List<CampBookmark> getUserBookmarks(Integer userId) {
+    public List<CampBookmark> bookmarkList (Integer userId) {
         return campBookmarkJPARepository.findByUserId(userId);
     }
 
