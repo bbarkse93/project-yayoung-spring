@@ -1,9 +1,11 @@
 package com.example.team_project._core.utils;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 
 public class TimestampUtils {
 
@@ -19,6 +21,18 @@ public class TimestampUtils {
     public static Timestamp findCurrnetTime() {
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         return Timestamp.valueOf(localDateTime);
+    }
+    // String 타입의 날짜를 Timestamp 타입으로 변경
+    public static Timestamp convertToTimestamp(String dateString) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate;
+		try {
+			parsedDate = dateFormat.parse(dateString);
+			return new Timestamp(parsedDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
     }
     
 }

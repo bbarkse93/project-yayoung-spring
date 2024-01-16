@@ -67,14 +67,20 @@ public class OrderRespDTO {
 				this.checkInDDay = formatDDay(order.getCheckInDate());
 				this.campField = order.getCampField().getFieldName();
 			}
-			
-			
-			
 		}
-		
-		
 	}
 
+	@Getter
+	@ToString
+	public static class PaymentWriteDTO{
+		private String campFieldImage;
+		public PaymentWriteDTO(String campFieldImage) {
+			this.campFieldImage = campFieldImage;
+		}
+		
+	}
+	
+	
 	// 현재와 비교해 D-day를 반환하는 함수
 	public static String formatDDay(Timestamp date) {
 		ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");

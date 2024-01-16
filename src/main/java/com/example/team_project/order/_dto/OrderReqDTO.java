@@ -1,5 +1,7 @@
 package com.example.team_project.order._dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -8,21 +10,23 @@ public class OrderReqDTO {
 	public static class CampFieldListDTO{
 		private Integer campId; // 캠프장 아이디
 	}
-	
+		
 	@Data
-	public static class PaymentDetailDTO{
-		private Integer campId; // 캠프장 아이디
-		private String  fieldName; // 캠프 구역
-		private String  checkInDate; //체크인 날짜
-		private String  checkOutDate; //체크아웃 날짜
+	public static class OrderWriteDTO{
+		@NotNull
+		private Integer campId;
+		@NotEmpty
+		private String  checkIn;
+		@NotEmpty
+		private String  checkOut;
+		@NotEmpty
+		private String  fieldName;
 	}
 	
 	@Data
-	public static class OrderWriteDTO{
-		private Integer campId;
-		private String  checkIn;
-		private String  checkOut;
-		private String  fieldName;
+	public static class OrderDeleteDTO{
+		@NotNull
+		private Integer orderId;
 	}
 	
 	

@@ -17,6 +17,4 @@ public interface CampJPARepository extends JpaRepository<Camp, Integer> {
     List<Camp> mfindSearchAll(@Param("keyword") String keyword);
 
 
-
-
 }
