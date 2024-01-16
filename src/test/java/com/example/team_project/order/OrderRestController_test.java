@@ -189,6 +189,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
 						.post("/order/payment")
+						.contentType("application/json")
 						.param("campId", String.valueOf(requestDTO.getCampId()))
 						.param("checkIn", requestDTO.getCheckIn())
 						.param("checkOut", requestDTO.getCheckOut())
