@@ -25,6 +25,15 @@ public class AdminController {
 
     // TODO 로그인, 로그아웃, (비밀번호 변경 로직) 만들어야 함....
 
+    // 로그인(GET)
+    @GetMapping("/login")
+    public String login (){
+        return "admin/user_login";
+    }
+
+
+    /******************************************************************************************/
+
     // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
     public String campSettingSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
@@ -161,11 +170,5 @@ public class AdminController {
     }
 
     /******************************************************************************************/
-
-    // 로그인(GET)
-    @GetMapping("/login")
-    public String login (){
-        return "admin/user_login";
-    }
 
 }

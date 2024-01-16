@@ -709,6 +709,13 @@ ul.tabs li.current {
     /*box-sizing: content-box;*/
 }
 
+.address_button {
+    height: 45px;
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    margin-left: 64px;
+}
+
 
 .form-select {
     width: 114px;

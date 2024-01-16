@@ -1,5 +1,6 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
@@ -108,14 +109,14 @@ public class AdminService {
     // 유저 삭제
     @Transactional
     public String deleteUser(Integer userId) {
-        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception404("해당 리뷰를 찾을 수 없습니다." + userId));
+        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + userId));
         user.updateIsWithDraw(true);
         return "삭제에 성공했습니다.";
     }
 
     // 유저 상세 정보
     public AdminRespDTO.UserDetailDTO detailUser(Integer userId) {
-        User user = userJPARepository.findById(userId).orElseThrow(()-> new Exception404("해당 유저를 찾을 수 없습니다." + userId));
+        User user = userJPARepository.findById(userId).orElseThrow(()-> new Exception401("해당 유저를 찾을 수 없습니다." + userId));
         List<Order> orderList = orderJPARepository.findAllByUserId(user.getId());
         List<CampReview> campReviewList = campReviewJPARepository.findAllByUserId(user.getId());
         return new AdminRespDTO.UserDetailDTO(user, orderList, campReviewList);
@@ -152,7 +153,7 @@ public class AdminService {
     // faq 등록
     @Transactional
     public String saveFaq(AdminReqDTO.SaveFaqDTO requestDTO) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         BoardCategory boardCategory = boardCategoryJPARepository.findById(requestDTO.getBoardCategoryId()).orElseThrow(()->new Exception404("해당 카테고리를 찾을 수 없습니다." + requestDTO.getBoardCategoryId()));
         Board board = Board.builder()
                 .title(requestDTO.getTitle())
@@ -167,7 +168,7 @@ public class AdminService {
     // faq 수정
     @Transactional
     public String updateFaq(AdminReqDTO.UpdateFaqDTO requestDTO, Integer faqId) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Board board = boardJPARepository.findById(faqId).orElseThrow(() -> new Exception404("해당 FAQ를 찾을 수 없습니다." + faqId));
         board.updateTitle(requestDTO.getTitle());
         board.updateContent(requestDTO.getContent());
@@ -208,7 +209,7 @@ public class AdminService {
     // notice 등록
     @Transactional
     public String saveNotice(AdminReqDTO.SaveNoticeDTO requestDTO) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Notice notice = Notice.builder()
                 .title(requestDTO.getTitle())
                 .content(requestDTO.getContent())
@@ -221,7 +222,7 @@ public class AdminService {
     // notice 수정
     @Transactional
     public String updateNotice(AdminReqDTO.UpdateNoticeDTO requestDTO, Integer noticeId) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Notice notice = noticeJPARepository.findById(noticeId).orElseThrow(() -> new Exception404("해당 공지사항을 찾을 수 없습니다." + noticeId));
         notice.updateTitle(requestDTO.getTitle());
         notice.updateContent(requestDTO.getContent());
