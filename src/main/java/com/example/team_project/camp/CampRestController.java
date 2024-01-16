@@ -142,7 +142,13 @@ public class CampRestController {
     	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
-    
-    
+
+    // 전체 캠핑장 검색
+    @GetMapping("/search")
+    public ResponseEntity<?> searchCamp(@RequestParam(defaultValue = "") String keyword){
+        System.out.println("ControllerKeyword는? " + keyword);
+        CampRespDTO.SearchCampDTO responseDTO = campService.searchCamp(keyword);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 
 }

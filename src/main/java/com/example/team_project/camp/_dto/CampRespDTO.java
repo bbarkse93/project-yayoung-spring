@@ -64,6 +64,7 @@ public class CampRespDTO {
         	            .collect(Collectors.toList());
         	}
         	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+
         }
 
         @Data
@@ -183,6 +184,7 @@ public class CampRespDTO {
             }
 
         }
+
         @Data
         public static class OptionManagementDTO {
             private Integer optionId;
@@ -216,148 +218,6 @@ public class CampRespDTO {
             }
         }
     }
-//        @Data
-//        public static class OptionManagementDTO {
-//            private List<EnvironmentDTO> environment;
-//            private List<CampingTypeDTO> campingType;
-//            private List<SiteTypeDTO> siteType;
-//            private List<MainFacilityDTO> mainFacility;
-//            private List<HaveFacilityDTO> haveFacility;
-//            private List<ExerciseFacilityDTO> exerciseFacility;
-//            private List<RentalDTO> rental;
-//            private List<SellDTO> sell;
-//
-//            public OptionManagementDTO(OptionManagement optionManagement) {
-//                this.environment = optionManagement.stream().map(o -> new EnvironmentDTO(o)).collect(Collectors.toList());
-//                this.campingType = optionManagement.stream().map(o -> new CampingTypeDTO(o)).collect(Collectors.toList());
-//                this.siteType = optionManagement.stream().map(o -> new SiteTypeDTO(o)).collect(Collectors.toList());
-//                this.mainFacility = optionManagement.stream().map(o -> new MainFacilityDTO(o)).collect(Collectors.toList());
-//                this.haveFacility = optionManagement.stream().map(o -> new HaveFacilityDTO(o)).collect(Collectors.toList());
-//                this.exerciseFacility = optionManagement.stream().map(o -> new ExerciseFacilityDTO(o)).collect(Collectors.toList());
-//                this.rental = optionManagement.stream().map(o -> new RentalDTO(o)).collect(Collectors.toList());
-//                this.sell = optionManagement.stream().map(o -> new SellDTO(o)).collect(Collectors.toList());
-//            }
-//
-//            @Data
-//            public static class EnvironmentDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public EnvironmentDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class CampingTypeDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public CampingTypeDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class SiteTypeDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public SiteTypeDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class MainFacilityDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public MainFacilityDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class HaveFacilityDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public HaveFacilityDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class ExerciseFacilityDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public ExerciseFacilityDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class RentalDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public RentalDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//
-//            @Data
-//            public static class SellDTO {
-//                private Integer optionId;
-//                private String optionName;
-//                private Integer categoryId;
-//                private String categoryName;
-//
-//                public SellDTO(OptionManagement optionManagement) {
-//                    this.optionId = optionManagement.getOption().getId();
-//                    this.optionName = optionManagement.getOption().getOptionName();
-//                    this.categoryId = optionManagement.getOption().getOptionCategory().getId();
-//                    this.categoryName = optionManagement.getOption().getOptionCategory().getCategoryName();
-//                }
-//            }
-//        }
 
 
 
@@ -389,116 +249,115 @@ public class CampRespDTO {
     }
 
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
-	final static String DATEFORMAT2 = "MM월 dd일";
-	// 내 캠핑장 연도별 DTO
-	@Data
-	public static class MyCampListDTO {
-		private List<MyCampDTO> myCampDTOs;
-		public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-			this.myCampDTOs = campReviews.stream()
-					.filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-					.sorted(Comparator.comparing(campReview -> {
-	                    Order order = campReview.getOrder();
-	                    return order.getCheckInDate();
-	                }))
-					.map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
-		}
-		@Data
-		public class MyCampDTO{
-			private String totalRating; 
-			private String checkInDate; 
-			private String checkOutDate;
-			private String campAddress;
-			private String campName;
-			private String reviewImage;
-			public MyCampDTO(CampReview campReview) {
-				Order order = campReview.getOrder();
-				Camp camp = campReview.getCamp();
-				this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
-				this.checkInDate = TimestampUtils.timeStampToDate
-						(order.getCheckInDate(), DATEFORMAT1);
-				Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear() 
-						== order.getCheckOutDate().toLocalDateTime().getYear();
-				String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
-				this.checkOutDate = TimestampUtils.timeStampToDate
-						(order.getCheckOutDate(), dateFormat);
-				this.campAddress = camp.getCampAddress();
-				this.campName = camp.getCampName();
-				this.reviewImage = campReview.getReviewImage();
-			}
+    final static String DATEFORMAT2 = "MM월 dd일";
+    // 내 캠핑장 연도별 DTO
+    @Data
+    public static class MyCampListDTO {
+        private List<MyCampDTO> myCampDTOs;
+        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+            this.myCampDTOs = campReviews.stream()
+                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+                    .sorted(Comparator.comparing(campReview -> {
+                        Order order = campReview.getOrder();
+                        return order.getCheckInDate();
+                    }))
+                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+        }
+        @Data
+        public class MyCampDTO{
+            private String totalRating;
+            private String checkInDate;
+            private String checkOutDate;
+            private String campAddress;
+            private String campName;
+            private String reviewImage;
+            public MyCampDTO(CampReview campReview) {
+                Order order = campReview.getOrder();
+                Camp camp = campReview.getCamp();
+                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+                this.checkInDate = TimestampUtils.timeStampToDate
+                        (order.getCheckInDate(), DATEFORMAT1);
+                Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
+                        == order.getCheckOutDate().toLocalDateTime().getYear();
+                String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+                this.checkOutDate = TimestampUtils.timeStampToDate
+                        (order.getCheckOutDate(), dateFormat);
+                this.campAddress = camp.getCampAddress();
+                this.campName = camp.getCampName();
+                this.reviewImage = campReview.getReviewImage();
+            }
 
-		}
-	}
-	
-	// 캠프 구역 불러오기
-	@Data
-	public static class CampFieldListDTO{
-		private CampInfoDTO campInfoDTO;
-		private Integer campId;
-		private String campFieldImage;
-		private List<CampFieldDTO> campFieldDTOs;
-		private List<ReservedCampFieldDTO> reservedCampFieldDTOs; 
-		public CampFieldListDTO(List<CampField> campFields, Camp camp, List<Order> orders, OrderReqDTO.CampFieldListDTO requestDTO) {
-			this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
-			this.campId = requestDTO.getCampId();
-			this.campFieldImage = camp.getCampFieldImage();
-			this.reservedCampFieldDTOs = orders.stream()
-					.filter(order -> order != null && order.getCampField().getCamp().getId() == requestDTO.getCampId())
-					.map(order -> new ReservedCampFieldDTO(order))
-					.collect(Collectors.toList());
-			this.campFieldDTOs = campFields.stream()
-					.map(campField -> new CampFieldDTO(campField))
-					.collect(Collectors.toList());
-		}
-		@Data
-		public static class CampFieldDTO{
-			private String fieldName; // 캠프 구역
-			private String price;	// 금액
-			public CampFieldDTO(CampField campField) {
-				this.fieldName = campField.getFieldName();
-				this.price = priceFormat(Integer.parseInt(campField.getPrice()));
-			}
-		}
-		@Data
-		public static class ReservedCampFieldDTO{
-			private String fieldName;
-			private String checkInDate;
-			private String checkOutDate;
-			public ReservedCampFieldDTO(Order order) {
-				this.fieldName = order.getCampField().getFieldName();
-				this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
-				this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
-			}
-			
-			
-		}
-		
-	}
-		
-	//캠프 상단 정보
-	@Data
-	public static class CampInfoDTO{
-		private String campName;
-		private String campAddress;
-		private String minPrice;
-		private String maxPrice;
-		private Boolean isOpen; // 운영 상태
-		private String campImage;
-	}
-	
-	// 캠프 정보(상단) 가져오는 메서드
-	public static CampInfoDTO getCampInfo(Camp camp, List<CampField> campFields) {
-		CampInfoDTO campInfo = new CampInfoDTO();
-		campInfo.setCampName(camp.getCampName());
-		campInfo.setCampAddress(camp.getCampAddress());		
-		// 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
-	    // 최소 가격 찾기
-		Integer integerMinPrice = campFields.stream()
-	                .map(CampField::getPrice)
-	                .map(Integer::parseInt)
-	                .min(Comparator.naturalOrder())
-	                .orElseThrow();
-		campInfo.setMinPrice(priceFormat(integerMinPrice));
+        }
+    }
+
+    // 캠프 구역 불러오기
+    @Data
+    public static class CampFieldListDTO{
+        private CampInfoDTO campInfoDTO;
+        private Integer campId;
+        private String campFieldImage;
+        private List<CampFieldDTO> campFieldDTOs;
+        private List<ReservedCampFieldDTO> reservedCampFieldDTOs;
+        public CampFieldListDTO(List<CampField> campFields, Camp camp, List<Order> orders, OrderReqDTO.CampFieldListDTO requestDTO) {
+            this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
+            this.campId = requestDTO.getCampId();
+            this.campFieldImage = camp.getCampFieldImage();
+            this.reservedCampFieldDTOs = orders.stream()
+                    .filter(order -> order != null && order.getCampField().getCamp().getId() == requestDTO.getCampId())
+                    .map(order -> new ReservedCampFieldDTO(order))
+                    .collect(Collectors.toList());
+            this.campFieldDTOs = campFields.stream()
+                    .map(campField -> new CampFieldDTO(campField))
+                    .collect(Collectors.toList());
+        }
+        @Data
+        public static class CampFieldDTO{
+            private String fieldName; // 캠프 구역
+            private String price;	// 금액
+            public CampFieldDTO(CampField campField) {
+                this.fieldName = campField.getFieldName();
+                this.price = priceFormat(Integer.parseInt(campField.getPrice()));
+            }
+        }
+        @Data
+        public static class ReservedCampFieldDTO{
+            private String fieldName;
+            private String checkInDate;
+            private String checkOutDate;
+            public ReservedCampFieldDTO(Order order) {
+                this.fieldName = order.getCampField().getFieldName();
+                this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
+                this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
+            }
+
+        }
+
+    }
+
+    //캠프 상단 정보
+    @Data
+    public static class CampInfoDTO{
+        private String campName;
+        private String campAddress;
+        private String minPrice;
+        private String maxPrice;
+        private Boolean isOpen; // 운영 상태
+        private String campImage;
+    }
+
+    // 캠프 정보(상단) 가져오는 메서드
+    public static CampInfoDTO getCampInfo(Camp camp, List<CampField> campFields) {
+        CampInfoDTO campInfo = new CampInfoDTO();
+        campInfo.setCampName(camp.getCampName());
+        campInfo.setCampAddress(camp.getCampAddress());
+        // 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
+        // 최소 가격 찾기
+        Integer integerMinPrice = campFields.stream()
+                .map(CampField::getPrice)
+                .map(Integer::parseInt)
+                .min(Comparator.naturalOrder())
+                .orElseThrow();
+        campInfo.setMinPrice(priceFormat(integerMinPrice));
 
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
@@ -532,4 +391,25 @@ public class CampRespDTO {
         return decimalFormat.format(price);
     }
 
+    @Data
+    public static class SearchCampDTO {
+        List<CampDTO> campList;
+
+        public SearchCampDTO(List<Camp> campList) {
+            this.campList = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+        }
+        @Data
+        public static class CampDTO {
+            private Integer id;
+            private String campName;
+            private String campAddress;
+
+            public CampDTO(Camp camp) {
+                this.id = camp.getId();
+                this.campName = camp.getCampName();
+                this.campAddress = camp.getCampAddress();
+            }
+        }
+
+    }
 }
