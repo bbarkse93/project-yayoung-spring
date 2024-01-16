@@ -1180,6 +1180,17 @@ insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness,
 values ( 3, 4.0, 3.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 4, 5.0, 4.0, 5.0, 1 );
+values ( 2, 1.0, 5.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 5.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 4.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 4.0, 1.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 2.0, 1.0, 5.0, 1 );
+insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 2, 3.0, 1.0, 5.0, 1 );
 
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )

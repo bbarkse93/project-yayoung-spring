@@ -38,15 +38,8 @@ public class CampService {
 
     // 사용자 캠핑장 목록 출력 기능(필터 적용 가능)
     public CampRespDTO.CampListDTO getAllCamps(CampReqDTO.CampListDTO requestDTO) {
-
     	List<Camp> camps = campJPARepository.findAll();
-    	// 위치 필터
-//        List<CampRespDTO.CampListDTO> responseDTO = camps.stream()
-//                .map(c -> new CampRespDTO.CampListDTO(c))
-//                .collect(Collectors.toList());
-//        List<CampListDTO> campList = camps.stream().map(this::convertToCampRespDto).collect(Collectors.toList());
         return new CampRespDTO.CampListDTO(camps, requestDTO);
-
     }
 
     public CampDetailDTO getCampDetail(Integer campId) {
@@ -106,4 +99,10 @@ public class CampService {
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 
+    public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
+        System.out.println("serviceKeyword는? " + keyword);
+        List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
+        System.out.println("결과는? " + campList.size());
+        return new CampRespDTO.SearchCampDTO(campList);
+    }
 }

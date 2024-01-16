@@ -12,4 +12,8 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	List<Order> findAllByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(Integer userId, Timestamp today);
 	// 유저정보로 예약 목록 조회
     List<Order> findAllByUserId(Integer id);
+	List<Order> findAllByCheckInDateAfterOrderByCheckInDateAsc(Timestamp today);
+	
+	
+
 }
