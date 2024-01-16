@@ -62,7 +62,7 @@ public class AdminReqDTO {
         private boolean campWater;
         private boolean campGarbageBag;
         private String campRefundPolicy;
-        private List<MultipartFile> campImageList;
+        private List<MultipartFile> campPhotoList;
         private List<OptionDTO> campOptionDTOList;
         private MultipartFile campFieldImage;
         private List<CampFieldDTO> campFieldDTOList;
@@ -70,7 +70,6 @@ public class AdminReqDTO {
 
         @Data
         public static class OptionDTO{
-            private Integer campId;
             private Integer optionId;
         }
 

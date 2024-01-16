@@ -91,6 +91,14 @@ public class AdminController {
     }
 
 
+    // 캠핑장 등록 요청(POST)
+    @PostMapping("/camp/save")
+    public String saveCamp(@RequestBody AdminReqDTO.SaveCampDTO requestDTO){
+        String result = adminService.saveCamp(requestDTO);
+        return "redirect:/admin/camp/setting";
+    }
+
+
     /******************************************************************************************/
 
     // 캠핑장 현황 페이지 요청(GET)

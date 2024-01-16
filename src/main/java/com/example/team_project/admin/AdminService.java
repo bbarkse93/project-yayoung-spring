@@ -2,6 +2,7 @@ package com.example.team_project.admin;
 
 import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.errors.exception.Exception404;
+import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.board.Board;
@@ -12,8 +13,10 @@ import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampJPARepository;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
+import com.example.team_project.camp_field.CampField;
 import com.example.team_project.notice.Notice;
 import com.example.team_project.notice.NoticeJPARepository;
+import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.order.OrderJPARepository;
 import com.example.team_project.user.User;
@@ -258,5 +261,37 @@ public class AdminService {
         return "수정에 성공했습니다.";
     }
 
+
+    // 캠핑장 등록
+    @Transactional
+    public String saveCamp(AdminReqDTO.SaveCampDTO requestDTO) {
+        Camp camp = Camp.builder()
+                .campName(requestDTO.getCampName())
+                .campAddress(requestDTO.getCampAddress())
+                .campCallNumber(requestDTO.getCampCallNumber())
+                .campWebsite(requestDTO.getCampWebsite())
+                .campCheckIn(requestDTO.getCampCheckIn())
+                .campCheckOut(requestDTO.getCampCheckOut())
+                .campWater(requestDTO.isCampWater())
+                .campWater(requestDTO.isCampWater())
+                .campFieldImage(ImageUtils.formImage(requestDTO.getCampFieldImage()))
+                .build();
+        campJPARepository.save(camp);
+        return "성공";
+    }
+
+
+//    // 캠핑장 옵션 등록
+//    @Transactional
+//    public String saveOptionManagement(AdminReqDTO.SaveCampDTO requestDTO) {
+//        for(AdminReqDTO.SaveCampDTO.OptionDTO optionDTO : requestDTO.getCampOptionDTOList()){
+//
+//        }
+//        OptionManagement optionManagement = OptionManagement.builder()
+//                .option()
+//                .build();
+//        campJPARepository.save(camp);
+//        return "성공";
+//    }
 
 }
