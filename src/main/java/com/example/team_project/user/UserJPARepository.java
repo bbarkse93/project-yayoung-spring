@@ -17,4 +17,5 @@ public interface UserJPARepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT * FROM user_tb WHERE (username LIKE CONCAT('%', :keyword ,'%') or nickname LIKE CONCAT('%', :keyword ,'%')) and role = true", nativeQuery = true)
     List<User> mfindSearchAll(@Param("keyword") String keyword);
 
+    User findByUsername(String username);
 }

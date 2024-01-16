@@ -1,17 +1,18 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.errors.exception.Exception401;
+import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampService;
+import com.example.team_project.user.User;
+import com.example.team_project.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +25,36 @@ public class AdminController {
     private final HttpSession session;
 
     // TODO 로그인, 로그아웃, (비밀번호 변경 로직) 만들어야 함....
+    // TODO 로그인 후 로그아웃 후 페이지
+    // 로그인
+
+    @PostMapping("/login")
+    public String login(AdminReqDTO.LoginDTO dto) {
+        System.out.println("로그인 값 잘 들어옴?" + dto.getUsername());
+        System.out.println("로그인 값 잘 들어옴?" + dto.getPassword());
+        User user = adminService.login(dto);
+
+        // 로그인 처리
+        session.setAttribute("sessionUser", user);
+
+        return "redirect:/admin/camp/setting";
+    }
+
+    // 로그아웃
+    @GetMapping("/logout")
+    public String logout() {
+        User user = (User) session.getAttribute("sessionUser");
+
+        // 권한 검사
+        if (user != null) {
+            session.invalidate();
+        } else {
+            throw new Exception401("로그인 해주세요");
+        }
+        System.out.println("logout 실행됨");
+        return "admin/login";
+    }
+
 
     // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
