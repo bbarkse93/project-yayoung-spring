@@ -1,5 +1,6 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.errors.exception.CustomRestfullException;
 import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.errors.exception.Exception403;
 import com.example.team_project._core.errors.exception.Exception404;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,21 +54,21 @@ public class AdminService {
 
         // 유저 정보 확인
         if (user == null) {
-            throw new Exception401("유저 정보가 없습니다.");
+            throw new CustomRestfullException("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
         if (user.isRole() != false) {
-            throw new Exception401("관리자 권한이 없습니다.");
+            throw new CustomRestfullException("관리자 권한이 없습니다." , HttpStatus.BAD_REQUEST);
         }
 
         // 유저 네임 확인
         if (!user.getUsername().equals(dto.getUsername()) || user.getUsername().isEmpty()){
-           throw new Exception401("username 정보가 일치하지 않습니다.");
+           throw new CustomRestfullException("username 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 
         // 패스워드 확인
         if (!user.getPassword().equals(dto.getPassword()) || user.getPassword().isEmpty()) {
-            throw new Exception401("password 정보가 일치하지 않습니다.");
+            throw new CustomRestfullException("password 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         return user;
 

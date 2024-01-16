@@ -1,6 +1,7 @@
 package com.example.team_project.admin;
 
 import com.example.team_project._core.errors.exception.Exception401;
+import com.example.team_project._core.errors.exception.UnAuthorizedException;
 import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.camp.Camp;
@@ -10,6 +11,7 @@ import com.example.team_project.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +51,7 @@ public class AdminController {
         if (user != null) {
             session.invalidate();
         } else {
-            throw new Exception401("로그인 해주세요");
+            throw new UnAuthorizedException("로그인 해주세요", HttpStatus.BAD_REQUEST);
         }
         System.out.println("logout 실행됨");
         return "admin/login";
