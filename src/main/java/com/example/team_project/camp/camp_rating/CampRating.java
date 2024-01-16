@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+import java.text.DecimalFormat;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -30,25 +32,26 @@ public class CampRating {
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private CampReview campReview;
-
     @Builder
+<<<<<<< HEAD
     public CampRating(Integer id, double cleanliness, double managementness, double friendliness, 
     User user, Camp camp, CampReview campReview) {
+=======
+    public CampRating(Integer id, Integer cleanliness, Integer managementness, Integer friendliness, User user, Camp camp) {
+>>>>>>> 6344634c5539a5c985b0243000354785ef2821c8
         this.id = id;
         this.cleanliness = cleanliness;
         this.managementness = managementness;
         this.friendliness = friendliness;
         this.user = user;
         this.camp = camp;
-        this.campReview = campReview;
     }
 
     public double total () {
         return ((cleanliness + managementness + friendliness) / 3.0);
     }
 
+<<<<<<< HEAD
     public void setCleanliness(double cleanliness) {
     }
 
@@ -56,5 +59,10 @@ public class CampRating {
     }
 
     public void setFriendliness(double friendliness) {
+=======
+    public String formatTotal(){
+        DecimalFormat decimalFormat = new DecimalFormat("#.#"); // 소수점 첫째 자리까지 표시
+        return decimalFormat.format(total());
+>>>>>>> 6344634c5539a5c985b0243000354785ef2821c8
     }
 }

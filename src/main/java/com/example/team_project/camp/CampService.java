@@ -185,9 +185,6 @@ public class CampService {
     // ME 관심캠핑장 목록 페이지 요청
     public CampRespDTO.CampBookMarkListDTO campBookMarkPage(Integer userId) {
         List<CampBookmark> campBookmarkList = campBookmarkJPARepository.findByUserId(userId);
-        for (CampBookmark campBookmark : campBookmarkList) {
-            System.out.println("campBookmark : " + campBookmark.getCamp().getId());
-        }
         return new CampRespDTO.CampBookMarkListDTO(campBookmarkList);
     }
 
@@ -199,4 +196,10 @@ public class CampService {
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 
+    public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
+        System.out.println("serviceKeyword는? " + keyword);
+        List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
+        System.out.println("결과는? " + campList.size());
+        return new CampRespDTO.SearchCampDTO(campList);
+    }
 }

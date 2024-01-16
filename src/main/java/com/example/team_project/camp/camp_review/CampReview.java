@@ -1,5 +1,6 @@
 package com.example.team_project.camp.camp_review;
 
+import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.order.Order;
@@ -35,7 +36,7 @@ public class CampReview {
     @OneToOne(fetch = FetchType.LAZY)
     private Order order;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CampRating campRating;
 
     private Timestamp createdAt;
@@ -52,4 +53,7 @@ public class CampReview {
         this.campRating = campRating;
     }
 
+    public String formatTime(){
+        return TimestampUtils.timeStampToDate(createdAt);
+    }
 }

@@ -65,26 +65,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="faq_td">
-                            <td>1</td>
-                            <td class="title">예약을 취소하고 싶어요</td>
-                            <td class="content">예약자 본인이 직접 예약확인/취소 가능합니다.
-                                예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다.
-                            </td>
-                            <td>2022.03.03</td>
-                            <td>
-                                <button type="button" class="update_to_modal" data-bs-toggle="modal"
-                                        data-bs-target="#faq_modal">
-                                    수정
-                                </button>
-                            </td>
-                            <td>
-                                <button class="delete_Button" id="userDelete" data-id="1">삭제
-                                </button>
-                            </td>
-                        </tr>
+                        {{#noticeDTOList}}
+                            <tr class="faq_td">
+                                <td>{{noticeId}}</td>
+                                <td class="title" style="text-align: start">{{title}}</td>
+                                <td class="content" style="text-align: start">{{content}}</td>
+                                <td>{{createdAt}}</td>
+                                <td>
+                                    <button type="button" class="update_to_modal" data-bs-toggle="modal"
+                                            data-bs-target="#faq_modal" onclick="fetchFaqDetail({{noticeId}})">
+                                        수정
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="delete_Button" id="userDelete" data-id="1" onclick="fetchDeleteFaq({{noticeId}})">삭제
+                                    </button>
+                                </td>
+                            </tr>
+                        {{/noticeDTOList}}
                         </tbody>
                     </table>
+                    <ul class="pagination">
+                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/notice?page={{prevPage}}&keyword={{keyword}}">Previous</a></li>
+                        <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/customer/notice?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
+                    </ul>
                 </div>
             </div>
 
@@ -99,16 +103,16 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="body">
-                                <div class="column">공지사항 수정</div>
-                                <input type="hidden" value="1" class="column_id">
-                                <input class="input" type="text" placeholder="예약을 취소하고 싶어요">
-                                <div class="update_summernote"></div>
+                                <div class="column">공지사항<span> 수정</span></div>
+                                <input class="input" type="text" placeholder="" id="update_title" required>
+                                <textarea class="textarea" id="update_content" required></textarea>
                             </div>
-                            <div class="button" style="margin-right: 10px;">
-                                <button type="button" class="update_button update_submit" data-bs-dismiss="modal">수정
-                                    <input type="hidden" value="예약자 본인이 직접 예약확인/취소 가능합니다.
-예약/결제 당시 안내된 취소/환불 규정에 따라 처리되며, 취소수수료 발생 시 취소수수료를 차감한 금액으로 환불 처리됩니다." class="content">
-                                </button>
+                            <div class="button_form">
+                                <div class="button" style="margin-right: 10px;">
+                                    <input type="hidden" id="faq_id">
+                                    <button type="button" class="update_button update_submit" data-bs-dismiss="modal" onclick="fetchUpdateFaq()">수정
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -124,14 +128,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="body">
-                                <div class="column">공지사항 등록</div>
-                                <input type="hidden" value="1" class="column_id">
-                                <input class="input" type="text" placeholder="제목을 입력해주세요">
-                                <div class="insert_summernote"></div>
+                                <div class="column">공지사항<span> 등록</span></div>
+                                <input class="input" type="text" placeholder="제목을 입력해주세요" id="insert_title">
+                                <textarea class="textarea" placeholder="내용을 입력해주세요" id="insert_content"></textarea>
                             </div>
-
                             <div class="button" style="margin-right: 10px;">
-                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal">등록
+                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal" onclick="fetchSaveFaq()">등록
                                 </button>
                             </div>
                         </div>
