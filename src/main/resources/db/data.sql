@@ -2,7 +2,7 @@
 insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
 values ('ssar', '1234', 'ssar', true,'/images/user/user-profile.jpg', false, NOW());
 insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
-values ('admin', '1234', 'admin', true, '/images/user/user-profile.jpg', false, NOW());
+values ('admin', '1234', 'admin', false, '/images/user/user-profile.jpg', false, NOW());
 
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
@@ -1165,9 +1165,9 @@ values ('2024-01-11', '2024-01-15', 1, 3, now());
 insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
 values ('2024-01-17', '2024-01-18', 1, 5, now());
 insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-20', '2024-01-25', 1, 3, now());
+values ('2024-01-20', '2024-01-25', 1, 7, now());
 insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-02-03', '2024-02-10', 1, 3, now());
+values ('2024-02-03', '2024-02-10', 1, 9, now());
 
 -- 평점 ------------------------------------------------------------------------------------------------------------
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
@@ -1175,10 +1175,11 @@ values ( 1, 4.0, 5.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 1, 5.0, 5.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
-values ( 1, 3.0, 2.0, 3.0, 1 );
+values ( 2, 3.0, 2.0, 3.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
-values ( 1, 4.0, 3.0, 4.0, 1 );
+values ( 3, 4.0, 3.0, 4.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
+values ( 4, 5.0, 4.0, 5.0, 1 );
 values ( 2, 1.0, 5.0, 5.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 2, 2.0, 5.0, 5.0, 1 );
@@ -1191,18 +1192,17 @@ values ( 2, 2.0, 1.0, 5.0, 1 );
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
 values ( 2, 3.0, 1.0, 5.0, 1 );
 
-
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
 values (1, 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
 values (2, 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (3, 3, 1, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+values (3, 3, 2, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (4, 4, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+values (4, 4, 3, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (5, 5, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+values (5, 5, 4, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)

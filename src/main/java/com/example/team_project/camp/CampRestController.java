@@ -40,12 +40,10 @@ public class CampRestController {
     //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
-    	System.out.println("리스트 컨트롤러 진입 : " + requestDTO.getOptionNames());
         // 인증검사
 
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
-        System.out.println("응답 잘 되나? "+responseDTO.getCampDTO().get(0).getCampName());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
@@ -128,7 +126,13 @@ public class CampRestController {
     	//OrderRespDTO.myCampFieldListDTO responseDTO = orderService.myCampFieldList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
-    
-    
+
+    // 전체 캠핑장 검색
+    @GetMapping("/search")
+    public ResponseEntity<?> searchCamp(@RequestParam(defaultValue = "") String keyword){
+        System.out.println("ControllerKeyword는? " + keyword);
+        CampRespDTO.SearchCampDTO responseDTO = campService.searchCamp(keyword);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 
 }

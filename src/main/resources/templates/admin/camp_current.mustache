@@ -38,7 +38,7 @@
             <div class="admin_container_title">
                 <h3>캠핑장 현황 · 리뷰 관리</h3>
             </div>
-            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+            <form id="search-form" action="/admin/camp/current" method="get">
                 <div class="custom_search">
                     <input type="text" name="keyword" placeholder="검색 하기">
                     <button type="submit" class="custom_search_button">
@@ -46,22 +46,50 @@
                     </button>
                 </div>
             </form>
-            <div class="camp_container" id="fund_container">
-                <div class="box">
-                    <button type="button" style="border: none; background: transparent"
-                            data-bs-toggle="modal" data-bs-target="#j_fund_modal" data-id="${funding.fundingId}"
-                            data-name="${funding.movieName}">
-                        <img class="camp_img" src="../../../../../images/camp_image/camp1-1.jpg" alt="영화사진">
-                    </button>
-                    <p class="p1">진천포레스트 캠핑장</p>
-                    <p class="p2">충북 진천군 백곡면 구수리 82-25</p>
-                    <p class="p3"><img src="/static_images/icons/blue_star.png" width="18px" style="margin-right: 5px">5.0</p>
-                    <button type="button" class="review_button" data-bs-toggle="modal" data-bs-target="#review_modal">
-                        리뷰관리
-                    </button>
-                </div>
+            <div>
+                <table class="table table-hover" style="table-layout: fixed">
+                    <thead>
+                    <tr class="camp_th">
+                        <th style="width: 50px">#</th>
+                        <th style="width: 190px">캠핑장</th>
+                        <th style="width: 300px">주소</th>
+                        <th>평점</th>
+                        <th>예약 건수</th>
+                        <th>리뷰관리</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#ratingCampDTOList}}
+                        <tr class="camp_td">
+                            <td>{{campId}}</td>
+                            <td class="title">{{campName}}</td>
+                            <td class="content">{{campAddress}}</td>
+                            <td>
+                                <div class="custom_flex_center">
+                                    <img src="/static_images/icons/blue_star.png" width="18px"
+                                         style="margin-right: 3px"><span style="margin: 0">{{campTotalRating}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                {{orderCount}}건
+                            </td>
+                            <td>
+                                <button class="review_button" id="reviewSetting" onclick="fetchReview({{campId}})"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#camp_review_modal">리뷰관리
+                                </button>
+                            </td>
+                        </tr>
+                    {{/ratingCampDTOList}}
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/current?page={{prevPage}}&keyword={{keyword}}">Previous</a></li>
+                    <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/current?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
+                </ul>
             </div>
-            <div class="modal" id="review_modal">
+
+            <div class="modal" id="camp_review_modal">
                 <div class="modal-dialog modal-lg">
                     <div class="review_modal_content">
 
@@ -71,8 +99,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="body">
-                                <div style="font-weight: bold; font-size: 17px">진천포레스트 캠핑장</div>
-                                <div class="count">4.7</div>
+                                <div style="font-weight: bold; font-size: 17px" id="campName">진천포레스트 캠핑장</div>
+                                <div class="count" id="campCount">4.7</div>
                                 <br>
                                 <div style="font-size: 15px; font-weight: 500">세부항목</div>
                                 <div style="font-size: 13px" class="custom_flex detail_review">
@@ -82,7 +110,10 @@
                                         <p>친절도</p>
                                     </div>
                                     <div style="text-align: start;">
-                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                    </div>
+                                        <p id="clean"></p>
+                                        <p id="management"></p>
+                                        <p id="friend"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -103,41 +134,22 @@
                                     <th>리뷰 삭제</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="review_td">
-                                        <td>1</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>2</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-                                        이게 무신 말이에용 ㅎ해해ㅐ해해해해</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>3</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="review_tbody">
+                                <tr class="review_td">
+                                    <td>1</td>
+                                    <td>오리</td>
+                                    <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
+                                    <td><img src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px">
+                                    </td>
+                                    <td>2022-08-04</td>
+                                    <td>
+                                        <button class="review_button">삭제</button>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -148,6 +160,6 @@
         <!--컨테이너2 끝-->
     </div>
 </div>
-<script src="../../static/js/camp_current.js"></script>
+<script src="/js/camp_current.js"></script>
 </body>
 </html>

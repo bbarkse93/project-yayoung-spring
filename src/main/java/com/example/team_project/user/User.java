@@ -1,6 +1,7 @@
 package com.example.team_project.user;
 
 
+import com.example.team_project._core.utils.TimestampUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class User {
 
     private String userImage;
 
-    private boolean role;
+    private boolean role; // user = true | admin = false
 
     private boolean isWithdraw;
 
@@ -57,5 +58,9 @@ public class User {
         this.userImage = userImage;
     }
     public void updateIsWithDraw(boolean isWithdraw) {this.isWithdraw = isWithdraw;}
+
+    public String formatCreateAt(){
+        return TimestampUtils.timeStampToDate(userCreatedAt);
+    }
 
 }

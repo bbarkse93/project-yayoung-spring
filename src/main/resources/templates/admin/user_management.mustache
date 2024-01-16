@@ -38,7 +38,7 @@
             <div class="admin_container_title">
                 <h3>회원 관리</h3>
             </div>
-            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+            <form id="search-form" action="/admin/user" method="get">
                 <div class="custom_search">
                     <input type="text" name="keyword" placeholder="검색 하기">
                     <button type="submit" class="custom_search_button">
@@ -59,25 +59,35 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {{#userDTOList}}
                     <tr class="user_td">
-                        <td>1</td>
-                        <td>kakao.오리</td>
-                        <td>오리</td>
+                        <td>{{userId}}</td>
+                        <td>{{username}}</td>
+                        <td>{{nickname}}</td>
                         <td>
-                            <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal">
+                            <button type="button" class="profile_button" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="fetchUser({{userId}})">
                                 프로필 보기
                             </button>
                         </td>
-                        <td>2022.03.03</td>
+                        <td>{{createdAt}}</td>
                         <td>
-                            <button class="delete_Button" id="userDelete" data-id="1">삭제
-                            </button>
-<!--                            <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료-->
-<!--                            </button>-->
+                            {{#WithDraw}}
+                                <button class="already_deleted_button" id="userAlreadyDelete" data-id="1" disabled>삭제완료
+                                </button>
+                            {{/WithDraw}}
+                            {{^WithDraw}}
+                                <button class="delete_Button" id="userDelete" data-id="1" onclick="deleteUser({{userId}})">삭제
+                                </button>
+                            {{/WithDraw}}
                         </td>
                     </tr>
+                    {{/userDTOList}}
                     </tbody>
                 </table>
+                <ul class="pagination">
+                    <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/user?page={{prevPage}}&keyword={{keyword}}">Previous</a></li>
+                    <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/user?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
+                </ul>
             </div>
             <div class="modal" id="profile_modal">
                 <div class="modal-dialog modal-lg">
@@ -90,9 +100,9 @@
                             </div>
                             <div class="body">
                                 <div>
-                                    <img src="../../../../../images/user/user-profile.jpg">
+                                    <img src="../../../../../images/user/user-profile.jpg" id="user_image">
                                 </div>
-                                <div class="nickname">
+                                <div class="nickname" id="user_nickname">
                                     오리
                                 </div>
                             </div>
@@ -101,7 +111,7 @@
                         <div class="user_modal_footer">
                             <div class="order">
                                 <div class="order_count">
-                                    · 예약(<span class="custom_font_point1">3</span>개)
+                                    · 예약(<span class="custom_font_point1" id="order_count">3</span>개)
                                 </div>
                                 <br>
                                 <div class="order_data">
@@ -110,40 +120,15 @@
                                         <tr class="order_th">
                                             <th>#</th>
                                             <th style="width: 170px">캠핑장</th>
-                                            <th style="width: 120px">예약 날짜(시작)</th>
-                                            <th style="width: 120px">예약 날짜(끝)</th>
-                                            <th style="width: 80px">예약 구역</th>
+                                            <th style="width: 110px">예약 날짜(시작)</th>
+                                            <th style="width: 110px">예약 날짜(끝)</th>
+                                            <th style="width: 100px">예약 구역</th>
                                             <th>결제 금액</th>
-                                            <th style="width: 120px">결제 날짜</th>
+                                            <th style="width: 110px">결제 날짜</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="order_tbody">
                                         <tr class="order_td">
-                                            <td>1</td>
-                                            <td><button class="camp_route">진천캠핑장</button></td>
-                                            <td>2023-12-30</td>
-                                            <td>2023-12-31</td>
-                                            <td>A-1</td>
-                                            <td>100,000원</td>
-                                            <td>2023-12-20</td>
-                                        </tr>
-                                        <tr class="order_td">
-                                            <td>1</td>
-                                            <td>진천캠핑장</td>
-                                            <td>2023-12-30</td>
-                                            <td>2023-12-31</td>
-                                            <td>A-1</td>
-                                            <td>100,000원</td>
-                                            <td>2023-12-20</td>
-                                        </tr>
-                                        <tr class="order_td">
-                                            <td>1</td>
-                                            <td>진천캠핑장</td>
-                                            <td>2023-12-30</td>
-                                            <td>2023-12-31</td>
-                                            <td>A-1</td>
-                                            <td>100,000원</td>
-                                            <td>2023-12-20</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -154,7 +139,7 @@
                             <br>
                             <div class="review">
                                 <div class="review_count">
-                                    · 리뷰(<span class="custom_font_point1">1</span>개)
+                                    · 리뷰(<span class="custom_font_point1" id="review_count">1</span>개)
                                 </div>
                                 <br>
                                 <div class="review_data">
@@ -169,41 +154,7 @@
                                             <th>리뷰 삭제</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr class="review_td">
-                                            <td>1</td>
-                                            <td>오리</td>
-                                            <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                            <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                            </td>
-                                            <td>2022-08-04</td>
-                                            <td>
-                                                <button class="review_button">삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="review_td">
-                                            <td>2</td>
-                                            <td>오리</td>
-                                            <td>체크아웃 시간이 13시라서 너무 좋아요~ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-                                                이게 무신 말이에용 ㅎ해해ㅐ해해해해</td>
-                                            <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                            </td>
-                                            <td>2022-08-04</td>
-                                            <td>
-                                                <button class="review_button">삭제</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="review_td">
-                                            <td>3</td>
-                                            <td>오리</td>
-                                            <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                            <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                            </td>
-                                            <td>2022-08-04</td>
-                                            <td>
-                                                <button class="review_button">삭제</button>
-                                            </td>
-                                        </tr>
+                                        <tbody id="review_tbody">
                                         </tbody>
                                     </table>
                                 </div>
@@ -216,6 +167,7 @@
         <!--컨테이너2 끝-->
     </div>
 </div>
-
+<script src="/js/user_management.js">
+</script>
 </body>
 </html>
