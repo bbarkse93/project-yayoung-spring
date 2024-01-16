@@ -127,6 +127,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
 		Map<String, Object> campInfoDTO = om.convertValue(responseMap.get("campInfoDTO"), new TypeReference<Map<String, Object>>() {});
 		List<Map<String, Object>> listDatsMap  = om.convertValue(responseMap.get("campFieldDTOs"), new TypeReference<List<Map<String, Object>>>() {});
+		List<Map<String, Object>> reservedCampFieldMap  = om.convertValue(responseMap.get("reservedCampFieldDTOs"), new TypeReference<List<Map<String, Object>>>() {});
 		
     	resultActions
 		.andExpect(MockMvcResultMatchers.status().isOk())
@@ -158,6 +159,20 @@ public class OrderRestController_test extends MyWithRestDoc {
 					throw new RuntimeException(e);
 				}
 		});
+    	
+    	IntStream.range(0, reservedCampFieldMap .toArray().length).forEach(i -> {
+    		Map<String, Object> listDataDTO = reservedCampFieldMap .get(i);
+    		try {
+    			mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").param("campId", String.valueOf(requestDTO.getCampId())))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].fieldName").value(listDataDTO.get("fieldName")))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].checkInDate").value(listDataDTO.get("checkInDate")))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].checkOutDate").value(listDataDTO.get("checkOutDate")))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+    			.andDo(MockMvcResultHandlers.print());
+    		} catch (Exception e) {
+    			throw new RuntimeException(e);
+    		}
+    	});
 	}
 	
 	@Test
@@ -189,7 +204,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		resultActions
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("캠핑 결제 성공"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.response.campFieldImage").value("/images/camp_map/camp1.png"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
 			.andDo(MockMvcResultHandlers.print())
 			.andDo(document);	
