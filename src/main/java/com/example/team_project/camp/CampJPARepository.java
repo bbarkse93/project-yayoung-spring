@@ -10,15 +10,11 @@ import java.util.List;
 
 public interface CampJPARepository extends JpaRepository<Camp, Integer> {
 
-    @Query(value = "SELECT * FROM camp_tb WHERE camp_name LIKE CONCAT('%', :keyword ,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM camp_tb WHERE camp_name LIKE CONCAT('%', :keyword ,'%') or camp_address LIKE CONCAT('%', :keyword ,'%')", nativeQuery = true)
     Page<Camp> mfindSearchPageAll(String keyword, Pageable pageable);
 
-    @Query(value = "SELECT * FROM camp_tb WHERE camp_name LIKE CONCAT('%', :keyword ,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM camp_tb WHERE camp_name LIKE CONCAT('%', :keyword ,'%') or camp_address LIKE CONCAT('%', :keyword ,'%')", nativeQuery = true)
     List<Camp> mfindSearchAll(@Param("keyword") String keyword);
-//
-//    @Query(value = "SELECT * FROM camp_tb WHERE camp_name :alt", nativeQuery = true)
-//    List<Camp> mfindSearchAll(String alt);
 
-    List<Camp> findByCampNameContaining(String keyword);
 
 }

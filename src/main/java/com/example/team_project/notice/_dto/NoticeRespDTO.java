@@ -30,7 +30,7 @@ public class NoticeRespDTO {
                 this.noticeId = notice.getId();
                 this.title = notice.getTitle();
                 this.content = notice.getContent();
-                this.createdAt = notice.formatCreatdAt();
+                this.createdAt = notice.formatCreatedAt();
             }
         }
     }

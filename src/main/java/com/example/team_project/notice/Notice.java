@@ -42,7 +42,28 @@ public class Notice {
         this.createdAt = createdAt;
     }
 
-    public String formatCreatdAt (){
+    // createdAt 포맷(yyyy-mm-dd)
+    public String formatCreatedAt(){
         return TimestampUtils.timeStampToDate(createdAt);
+    }
+
+    // title 업데이트
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    // content 업데이트
+    public void updateContent(String content){
+        this.content = content;
+    }
+
+    // createdAt 업데이트
+    public void updateCreatedAt(Timestamp timestamp){
+        this.createdAt = timestamp;
+    }
+
+    // user 업데이트
+    public void updateUser(User user){
+        this.user = user;
     }
 }

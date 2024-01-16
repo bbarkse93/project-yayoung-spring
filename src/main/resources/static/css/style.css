@@ -142,6 +142,7 @@
 .custom_flex_center {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .custom_flex_between {
@@ -182,69 +183,6 @@
     text-align: center;
     display: grid;
     place-items: center;
-}
-
-.camp_container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.camp_container .box {
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px var(--line_01);
-}
-
-.camp_container .camp_img {
-    width: 100%;
-    padding: 15px;
-    border-radius: 20px;
-}
-
-.camp_container .p1 {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.camp_container .p2 {
-    font-size: 13px;
-    margin-top: 10px;
-    color: var(--font_02);
-}
-
-.camp_container .p3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--font_02);
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.camp_container .p4 {
-    margin-right: 10px;
-}
-
-.camp_container .reservation_count {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-.box .review_button {
-    font-size: 14px;
-    margin: 6px 0 15px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--primary_02);
-    color: var(--primary_01);
-    border: none;
-    width: 80%;
-}
-
-.box .review_button:hover {
-    text-decoration: none;
 }
 
 /*----------------------------------------*/
@@ -593,7 +531,7 @@ ul.tabs li.current {
     outline: none;
 }
 
-.faq_modal_body .textarea {
+.faq_modal_body .body .textarea {
     height: 250px;
     padding: 10px;
     border-radius: 5px;
@@ -603,7 +541,7 @@ ul.tabs li.current {
     resize: none;
 }
 
-.faq_modal_body .textarea:focus {
+.faq_modal_body .body .textarea:focus {
     outline: none;
 }
 
@@ -622,76 +560,6 @@ ul.tabs li.current {
 }
 
 /****************************************************************/
-/*summernote*/
-
-.note-editor.note-airframe, .note-editor.note-frame {
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: 5px;
-    white-space: pre;
-}
-
-.note-editable, .note-toolbar {
-    text-align: start;
-}
-
-.dropdown-toggle::after{
-    display: none;
-    margin-left: 0.255em;
-    vertical-align: 0.255em;
-    content: "";
-    border-top: 0.3em solid;
-    border-right: 0.3em solid transparent;
-    border-bottom: 0;
-    border-left: 0.3em solid transparent;;
-}
-
-.note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar {
-    display: none;
-}
-
-.note-editable b, .note-editable strong {
-    font-weight: bold;
-}
-.note-editable b {
-    font-weight: 800;
-}
-
-.note-editor{
-    white-space: pre-wrap !important;
-    overflow-x: hidden !important;
-    caret-color: var(--point_01);
-    line-height: 20px !important;
-}
-
-/* 스크롤바의 폭 너비 */
-.note-editor::-webkit-scrollbar {
-    width: 8px;
-}
-
-.note-editor::-webkit-scrollbar-thumb {
-    border-radius: 3px; /* 스크롤바 둥근 테두리 */
-    background-color: var(--back_01);
-}
-
-.note-editor::-webkit-scrollbar-track {
-    background: var(--def_wh); /*스크롤바 뒷 배경 색상*/
-}
-
-.note-editor .note-toolbar .note-style .dropdown-style h4 {
-    font-size: 18px;
-}
-
-.note-editor .note-toolbar .note-style .dropdown-style p {
-    font-size: 16px;
-}
-
-.pointFont {
-    font-size: 18px;
-}
-
-.normalFont {
-    font-size: 16px;
-}
 
 /*****************************************************/
 
@@ -998,13 +866,25 @@ ul.tabs li.current {
     text-align: center;
     font-size: 15px;
     vertical-align: middle;
-    height: 45px;
+    height: 52px;
 }
+
 
 .camp_td .profile_button {
     padding: 10px;
     border: none;
     border-radius: 5px;
     background-color: var(--back_03);
+}
+
+
+ul.tabs li.current .a_tag {
+    color: var(--def_wh);
+    text-decoration: none;
+}
+
+.a_tag:hover {
+    color: var(--def_bl);
+    text-decoration: none;
 }
 

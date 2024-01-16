@@ -37,33 +37,33 @@ public class CampRespDTO {
 
         public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
             // 환경 필터 적용
-        	if (requestDTO.getOptionNames() != null) {
-        	    campList = campList.stream()
-        	            .filter(camp -> requestDTO.getOptionNames()
-        	                    .stream()
-        	                    .allMatch(optionName ->
-        	                            camp.getOptionManagementList()
-        	                                    .stream()
-        	                                    .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
-        	                    )
-        	            )
-        	            .collect(Collectors.toList());
-        	}
-        	
-        	// 지역 필터 적용
-        	if(requestDTO.getRegionNames() != null) {
-        		campList =	campList.stream()
-        			  .filter(camp -> {
-        	                for (String regionName : requestDTO.getRegionNames()) {
-        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
-        	                        return true;
-        	                    }
-        	                }
-        	                return false;
-        	            })
-        	            .collect(Collectors.toList());
-        	}
-        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
+            if (requestDTO.getOptionNames() != null) {
+                campList = campList.stream()
+                        .filter(camp -> requestDTO.getOptionNames()
+                                .stream()
+                                .allMatch(optionName ->
+                                        camp.getOptionManagementList()
+                                                .stream()
+                                                .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
+                                )
+                        )
+                        .collect(Collectors.toList());
+            }
+
+            // 지역 필터 적용
+            if(requestDTO.getRegionNames() != null) {
+                campList =	campList.stream()
+                        .filter(camp -> {
+                            for (String regionName : requestDTO.getRegionNames()) {
+                                if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        })
+                        .collect(Collectors.toList());
+            }
+            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
 
         }
 
@@ -145,12 +145,10 @@ public class CampRespDTO {
             public CampFieldDTO(List<CampField> campField) {
                 this.minPrice = campField.stream()
                         .map(CampField::getPrice)
-                        .map(Integer::parseInt)
                         .min(Comparator.naturalOrder())
                         .orElseThrow();
                 this.maxPrice = campField.stream()
                         .map(CampField::getPrice)
-                        .map(Integer::parseInt)
                         .max(Comparator.naturalOrder())
                         .orElseThrow();
             }
@@ -316,7 +314,7 @@ public class CampRespDTO {
             private String price;	// 금액
             public CampFieldDTO(CampField campField) {
                 this.fieldName = campField.getFieldName();
-                this.price = priceFormat(Integer.parseInt(campField.getPrice()));
+                this.price = priceFormat(campField.getPrice());
             }
         }
         @Data
@@ -354,7 +352,6 @@ public class CampRespDTO {
         // 최소 가격 찾기
         Integer integerMinPrice = campFields.stream()
                 .map(CampField::getPrice)
-                .map(Integer::parseInt)
                 .min(Comparator.naturalOrder())
                 .orElseThrow();
         campInfo.setMinPrice(priceFormat(integerMinPrice));
@@ -362,7 +359,6 @@ public class CampRespDTO {
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
                 .map(CampField::getPrice)
-                .map(Integer::parseInt)
                 .max(Comparator.naturalOrder())
                 .orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
