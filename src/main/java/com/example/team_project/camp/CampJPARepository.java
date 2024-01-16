@@ -21,6 +21,4 @@ public interface CampJPARepository extends JpaRepository<Camp, Integer> {
 
     List<Camp> findByCampNameContaining(String keyword);
 
-
-
 }

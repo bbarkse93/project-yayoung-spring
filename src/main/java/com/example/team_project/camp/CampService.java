@@ -102,4 +102,10 @@ public class CampService {
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 
+    public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
+        System.out.println("serviceKeyword는? " + keyword);
+        List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
+        System.out.println("결과는? " + campList.size());
+        return new CampRespDTO.SearchCampDTO(campList);
+    }
 }
