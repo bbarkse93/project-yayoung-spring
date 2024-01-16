@@ -70,7 +70,8 @@ public class OrderRestController {
     
     // 캠핑 환불 DB 처리
     @DeleteMapping("/refund")
-    public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO /*,@RequestHeader("Authorization") String token*/){
+    public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO 
+    		/*,@RequestHeader("Authorization") String token*/){
     	//DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	//Integer userId = decodedJWT.getClaim("id").asInt();
     	

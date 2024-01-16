@@ -43,6 +43,7 @@ public class CampService {
         return new CampRespDTO.CampListDTO(camps, requestDTO);
     }
 
+    // 캠핑장 상세 보기
     public CampDetailDTO getCampDetail(Integer campId) {
         Camp camp = campJPARepository.findById(campId)
                 .orElseThrow(() -> new Exception404("해당 캠프장이 존재하지 않습니다."));
@@ -98,8 +99,6 @@ public class CampService {
     // 내 캠핑장 연도별 목록 조회
     public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
         List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
-        if (campReviews == null)
-            throw new Exception404("작성하신 리뷰가 없습니다");
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 

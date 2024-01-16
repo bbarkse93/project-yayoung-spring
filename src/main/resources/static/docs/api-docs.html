@@ -470,6 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_2_다가오는_캠프_목록">2. 다가오는 캠프 목록</a></li>
 <li><a href="#_3_캠프_구역_선택">3. 캠프 구역 선택</a></li>
 <li><a href="#_4_결제_등록">4. 결제 등록</a></li>
+<li><a href="#_5_환불">5. 환불</a></li>
 </ul>
 </li>
 <li><a href="#_공지사항">공지사항</a>
@@ -584,7 +585,7 @@ Content-Length: 192
   "response" : {
     "userId" : 1,
     "nickname" : "love",
-    "userImage" : "/images/user/love_98a5141d-e4ce-41ae-88f2-102975baab9b.png"
+    "userImage" : "/images/user/love_a5631d7e-ed8c-49e6-8202-65dba8fc746b.png"
   },
   "error" : null
 }</code></pre>
@@ -1186,7 +1187,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1045
+Content-Length: 808
 
 {
   "success" : true,
@@ -1203,12 +1204,6 @@ Content-Length: 1045
       "checkInDate" : "01월 20일",
       "checkInDDay" : "D-4",
       "campField" : "캠핑사이트-3"
-    }, {
-      "campName" : "(주)아웃오브파크",
-      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
-      "checkInDate" : "01월 25일",
-      "checkInDDay" : "D-9",
-      "campField" : "캠핑사이트-1"
     }, {
       "campName" : "(주)아웃오브파크",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
@@ -1240,7 +1235,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 2060
+Content-Length: 1934
 
 {
   "success" : true,
@@ -1307,10 +1302,6 @@ Content-Length: 2060
       "checkInDate" : "2024-01-20",
       "checkOutDate" : "2024-01-25"
     }, {
-      "fieldName" : "캠핑사이트-1",
-      "checkInDate" : "2024-01-25",
-      "checkOutDate" : "2024-01-28"
-    }, {
       "fieldName" : "캠핑사이트-3",
       "checkInDate" : "2024-02-03",
       "checkOutDate" : "2024-02-10"
@@ -1356,6 +1347,38 @@ Content-Length: 120
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_5_환불">5. 환불</h3>
+<div class="sect4">
+<h5 id="_request_example_16">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /order/refund HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Host: localhost:8080
+Content-Length: 9
+
+orderId=6</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_16">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 83
+
+{
+  "success" : true,
+  "response" : "환불 처리 완료",
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1364,7 +1387,7 @@ Content-Length: 120
 <div class="sect2">
 <h3 id="_1_공지사항목록">1. 공지사항목록</h3>
 <div class="sect4">
-<h5 id="_request_example_16">Request Example</h5>
+<h5 id="_request_example_17">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /notice/list HTTP/1.1
@@ -1373,7 +1396,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_16">Response Example</h5>
+<h5 id="_response_example_17">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1474,7 +1497,7 @@ Content-Length: 11115
 <div class="sect2">
 <h3 id="_1_faq목록">1. FAQ목록</h3>
 <div class="sect4">
-<h5 id="_request_example_17">Request Example</h5>
+<h5 id="_request_example_18">Request Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /board/list HTTP/1.1
@@ -1483,7 +1506,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_response_example_17">Response Example</h5>
+<h5 id="_response_example_18">Response Example</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1564,7 +1587,7 @@ Content-Length: 3844
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-16 11:33:46 +0900
+Last updated 2024-01-16 12:10:34 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

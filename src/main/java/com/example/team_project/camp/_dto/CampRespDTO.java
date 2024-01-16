@@ -472,10 +472,7 @@ public class CampRespDTO {
 				this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
 				this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
 			}
-			
-			
 		}
-		
 	}
 		
 	//캠프 상단 정보
@@ -514,7 +511,6 @@ public class CampRespDTO {
         Timestamp now = TimestampUtils.findCurrnetTime();
         String today = String.valueOf(now).substring(0, 10);
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        // 휴일의 예시를 알 수 없어 현재는 미반영
         Date checkInDate; // 운영 시작 시간
         Date checkOutDate; // 운영 종료 시간
         try {
