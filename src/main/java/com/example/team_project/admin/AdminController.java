@@ -159,4 +159,13 @@ public class AdminController {
                         || ((noticeAllSize % PAGESIZE == 0) && (noticeAllSize / PAGESIZE) - 1 == page));
         return "admin/customer_notice";
     }
+
+    /******************************************************************************************/
+
+    // 로그인(GET)
+    @GetMapping("/login")
+    public String login (){
+        return "admin/user_login";
+    }
+
 }

@@ -189,6 +189,14 @@ public class AdminService {
         return campPG.stream().map(AdminRespDTO.NoticeDTO::new).collect(Collectors.toList());
     }
 
+
+    // faq 상세보기
+    public AdminRespDTO.NoticeDetailDTO detailNotice(Integer noticeId) {
+        Notice notice = noticeJPARepository.findById(noticeId).orElseThrow(()-> new Exception404("해당 FAQ를 찾을 수 없습니다." + noticeId));
+        return new AdminRespDTO.NoticeDetailDTO(notice);
+    }
+
+
     // notice 삭제
     @Transactional
     public String deleteNotice(Integer noticeId) {

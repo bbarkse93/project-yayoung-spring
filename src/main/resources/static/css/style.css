@@ -561,9 +561,6 @@ ul.tabs li.current {
 
 /****************************************************************/
 
-/*****************************************************/
-
-
 .camp_insert_modal_content {
     position: relative;
     display: flex;
@@ -888,3 +885,67 @@ ul.tabs li.current .a_tag {
     text-decoration: none;
 }
 
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.page-item {
+    width: 70px;
+    text-align: center;
+}
+
+.page-link {
+    padding: 10px;
+    color: var(--point_01);
+}
+
+.page-link:hover {
+    color: var(--point_01);
+}
+
+/************************************/
+
+.user_main {
+    width: 1280px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.form_group {
+    margin-top: 25px;
+}
+
+.form_group input {
+    height: 50px;
+}
+
+.form_group .k_input_group {
+    display: flex;
+}
+
+.login_button button {
+    background-color: var(--primary_01);
+    color: var(--def_wh);
+    border: none;
+    border-radius: 8px;
+    height: 55.5px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.login_button button:hover,
+.login_button button:active,
+.login_button button:focus {
+    background-color: var(--primary_02);
+    color: var(--primary_01);
+    border: none;
+    box-shadow: none;
+    outline: none;
+}

@@ -241,4 +241,20 @@ public class AdminRespDTO {
             this.createdAt = notice.formatCreatedAt();
         }
     }
+
+    // notice 상세보기 DTO
+    @Data
+    public static class NoticeDetailDTO {
+        private Integer noticeId;
+        private String title;
+        private String content;
+        private String createdAt;
+
+        public NoticeDetailDTO(Notice notice) {
+            this.noticeId = notice.getId();
+            this.title = notice.getTitle();
+            this.content = notice.getContent();
+            this.createdAt = notice.formatCreatedAt();
+        }
+    }
 }
