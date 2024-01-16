@@ -80,7 +80,7 @@
                                 <td>{{createdAt}}</td>
                                 <td>
                                     <button type="button" class="update_to_modal" data-bs-toggle="modal"
-                                            data-bs-target="#faq_modal" onclick="fetchFaqDetail({{faqId}})">
+                                            data-bs-target="#faq_modal" onclick="fetchDetailFaq({{faqId}})">
                                         수정
                                     </button>
                                 </td>
@@ -93,7 +93,7 @@
                         </tbody>
                     </table>
                     <ul class="pagination">
-                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/faq?page={{prevPage}}&keyword={{keyword}}&categoryId=1">Previous</a></li>
+                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/faq?page={{prevPage}}&keyword={{keyword}}&categoryId=1">Prev</a></li>
                         <li class="page-item {{#payLast}}disabled{{/payLast}}"><a class="page-link" href="/admin/customer/faq?page={{nextPage}}&keyword={{keyword}}&categoryId=1">Next</a></li>
                     </ul>
                 </div>
@@ -131,7 +131,7 @@
                         </tbody>
                     </table>
                     <ul class="pagination">
-                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/faq?page={{prevPage}}&keyword={{keyword}}&categoryId=2">Previous</a></li>
+                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/faq?page={{prevPage}}&keyword={{keyword}}&categoryId=2">Prev</a></li>
                         <li class="page-item {{#payLast}}disabled{{/payLast}} tab-2"><a class="page-link" href="/admin/customer/faq?page={{nextPage}}&keyword={{keyword}}&categoryId=2">Next</a></li>
                     </ul>
                 </div>

@@ -38,7 +38,7 @@
             <div class="admin_container_title">
                 <h3>공지사항</h3>
             </div>
-            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+            <form id="search-form" action="/admin/customer/notice" method="get">
                 <div class="custom_search">
                     <input type="text" name="keyword" placeholder="검색 하기">
                     <button type="submit" class="custom_search_button">
@@ -73,12 +73,12 @@
                                 <td>{{createdAt}}</td>
                                 <td>
                                     <button type="button" class="update_to_modal" data-bs-toggle="modal"
-                                            data-bs-target="#faq_modal" onclick="fetchFaqDetail({{noticeId}})">
+                                            data-bs-target="#faq_modal" onclick="fetchDetailNotice({{noticeId}})">
                                         수정
                                     </button>
                                 </td>
                                 <td>
-                                    <button class="delete_Button" id="userDelete" data-id="1" onclick="fetchDeleteFaq({{noticeId}})">삭제
+                                    <button class="delete_Button" id="userDelete" data-id="1" onclick="fetchDeleteNotice({{noticeId}})">삭제
                                     </button>
                                 </td>
                             </tr>
@@ -86,7 +86,7 @@
                         </tbody>
                     </table>
                     <ul class="pagination">
-                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/notice?page={{prevPage}}&keyword={{keyword}}">Previous</a></li>
+                        <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/customer/notice?page={{prevPage}}&keyword={{keyword}}">Prev</a></li>
                         <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/customer/notice?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
                     </ul>
                 </div>
@@ -109,8 +109,8 @@
                             </div>
                             <div class="button_form">
                                 <div class="button" style="margin-right: 10px;">
-                                    <input type="hidden" id="faq_id">
-                                    <button type="button" class="update_button update_submit" data-bs-dismiss="modal" onclick="fetchUpdateFaq()">수정
+                                    <input type="hidden" id="notice_id">
+                                    <button type="button" class="update_button update_submit" data-bs-dismiss="modal" onclick="fetchUpdateNotice()">수정
                                     </button>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 <textarea class="textarea" placeholder="내용을 입력해주세요" id="insert_content"></textarea>
                             </div>
                             <div class="button" style="margin-right: 10px;">
-                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal" onclick="fetchSaveFaq()">등록
+                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal" onclick="fetchSaveNotice()">등록
                                 </button>
                             </div>
                         </div>
@@ -144,67 +144,7 @@
         <!--컨테이너2 끝-->
     </div>
 </div>
-<script>
-
-    let updateButton = document.querySelector('.update_submit');
-    updateButton.addEventListener("click", function () {
-        alert("수정이 완료되었습니다.");
-    });
-
-    let submitButton = document.querySelector('.insert_submit');
-    submitButton.addEventListener("click", function () {
-        alert("등록이 완료되었습니다.");
-    });
-
-    $(document).ready(function () {
-        let placeholder = "";
-        let className = "";
-        let content = $('.content').text();
-        console.log("placeholder : " + content);
-
-        $('.update_to_modal').click(function() {
-            placeholder = content;
-            className = '.update_summernote';
-            initializeSummernote();
-        });
-
-        $('.insert_to_modal').click(function() {
-            placeholder = "내용을 입력해주세요.";
-            className = '.insert_summernote';
-            initializeSummernote();
-        });
-
-        function initializeSummernote(){
-            $(className).summernote({
-                placeholder: placeholder,
-                tabsize: 2,
-                height: 200,
-                font: '돋움체',
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['forecolor']],
-                    ['para', ['paragraph']],
-                    ['table', ['table']],
-                ],
-                styleTags: [
-                    {
-                        title: '강조',
-                        tag: 'h4',
-                        className: 'pointFont',
-                        value: 'h4'
-                    },
-                    {
-                        title: '일반(숫자)',
-                        tag: 'p',
-                        className: 'normalFont',
-                        value: 'p'
-                    },
-                ],
-            });
-        }
-
-    });
+<script src="/js/customer_notice.js">
 </script>
 
 </body>
