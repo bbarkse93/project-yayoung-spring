@@ -53,6 +53,7 @@ public class OrderRespDTO {
 		@Getter
 		@ToString
 		public class CampScheduleDTO{
+			private Integer orderId;
 			private String campName;
 			private String campAddress;
 			private String checkInDate;
@@ -61,6 +62,7 @@ public class OrderRespDTO {
 			
 			public CampScheduleDTO(Order order) {
 				Camp camp = order.getCampField().getCamp();
+				this.orderId = order.getId();
 				this.campName = camp.getCampName();
 				this.campAddress = camp.getCampAddress();
 				this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT2);

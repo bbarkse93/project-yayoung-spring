@@ -189,6 +189,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
 						.post("/order/payment")
+						.contentType("application/json")
 						.param("campId", String.valueOf(requestDTO.getCampId()))
 						.param("checkIn", requestDTO.getCheckIn())
 						.param("checkOut", requestDTO.getCheckOut())
@@ -209,4 +210,27 @@ public class OrderRestController_test extends MyWithRestDoc {
 			.andDo(MockMvcResultHandlers.print())
 			.andDo(document);	
 	}
+	
+	@Test
+	public void orderDelete_test() throws Exception {
+		
+		//given
+		OrderReqDTO.OrderDeleteDTO requestDTO = new OrderReqDTO.OrderDeleteDTO();
+		requestDTO.setOrderId(6);
+		//when
+		ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.delete("/order/refund")
+				.param("orderId", String.valueOf(requestDTO.getOrderId()))
+				);
+		String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+		System.out.println("ResultAciton : " + responseBody);
+		//then
+		resultActions
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("환불 처리 완료"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+				.andDo(MockMvcResultHandlers.print())
+				.andDo(document);
+	}	
 }
