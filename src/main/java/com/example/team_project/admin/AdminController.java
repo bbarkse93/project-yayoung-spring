@@ -1,17 +1,18 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.errors.exception.Exception401;
+import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampService;
+import com.example.team_project.user.User;
+import com.example.team_project.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class AdminController {
     private final AdminService adminService;
     private final HttpSession session;
 
-    // TODO 로그인, 로그아웃, (비밀번호 변경 로직) 만들어야 함....
+
+
 
     // 로그인(GET)
     @GetMapping("/login")
@@ -32,11 +34,41 @@ public class AdminController {
     }
 
 
+    // 로그인(POST)
+    @PostMapping("/login")
+    public String login(AdminReqDTO.LoginDTO dto) {
+        System.out.println("로그인 값 잘 들어옴?" + dto.getUsername());
+        System.out.println("로그인 값 잘 들어옴?" + dto.getPassword());
+        User user = adminService.login(dto);
+
+        // 로그인 처리
+        session.setAttribute("sessionUser", user);
+
+        return "redirect:/admin/camp/setting";
+    }
+
+    // 로그아웃(GET)
+    @GetMapping("/logout")
+    public String logout() {
+        User user = (User) session.getAttribute("sessionUser");
+
+        // 권한 검사
+        if (user != null) {
+            session.invalidate();
+        } else {
+            throw new Exception401("로그인 해주세요");
+        }
+        System.out.println("logout 실행됨");
+        return "/admin/user_login";
+    }
+
     /******************************************************************************************/
 
     // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
     public String campSettingSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -47,6 +79,7 @@ public class AdminController {
         List<AdminRespDTO.CampDTO> campDTOList = adminService.campSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("campDTOList", campDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -63,6 +96,9 @@ public class AdminController {
     // 캠핑장 현황 페이지 요청(GET)
     @GetMapping("/camp/current")
     public String campCurrentSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -73,6 +109,7 @@ public class AdminController {
         List<AdminRespDTO.RatingCampDTO> ratingCampDTOList = adminService.ratingCampSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("ratingCampDTOList", ratingCampDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -89,6 +126,9 @@ public class AdminController {
     // 회원 관리 페이지 요청(GET)
     @GetMapping("/user")
     public String userSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -99,6 +139,7 @@ public class AdminController {
         List<AdminRespDTO.UserDTO> userDTOList = adminService.userSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("userDTOList", userDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -114,6 +155,9 @@ public class AdminController {
     // FAQ 관리 페이지 요청(GET)
     @GetMapping("/customer/faq")
     public String faqSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") Integer categoryId, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -129,6 +173,7 @@ public class AdminController {
         List<AdminRespDTO.FaqDTOList.UserDTO> userDTOList = adminService.faqSearch(page, keyword, PAGESIZE, categoryId).getUserDTOList();
 
         model.addAttribute("paymentDTOList", paymentDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("userDTOList", userDTOList);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
@@ -148,6 +193,9 @@ public class AdminController {
     // 공지사항 관리 페이지 요청(GET)
     @GetMapping("/customer/notice")
     public String noticeSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -159,6 +207,7 @@ public class AdminController {
         List<AdminRespDTO.NoticeDTO> noticeDTOList = adminService.noticeSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("noticeDTOList", noticeDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);

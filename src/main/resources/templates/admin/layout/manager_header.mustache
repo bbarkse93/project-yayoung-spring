@@ -41,7 +41,12 @@
         <div class="top">
             <div class="page_title" style="display: flex; justify-content: space-between">
                 <a href="/admin/camp/setting" class="logo"><span>YAYoung</span><span style="font-size: 18px"> _admin</span></a>
+                {{#sessionUser}}
                 <a href="/admin/login" class="logo"><span style="font-size: 18px">로그인</span></a>
+                {{/sessionUser}}
+                {{^sessionUser}}
+                    <a href="/admin/logout" class="logo"><span style="font-size: 18px">로그아웃</span></a>
+                {{/sessionUser}}
             </div>
         </div>
         <!--탑 끝-->

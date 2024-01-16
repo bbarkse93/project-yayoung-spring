@@ -44,6 +44,33 @@ public class AdminService {
     private final BoardCategoryJPARepository boardCategoryJPARepository;
     private final NoticeJPARepository noticeJPARepository;
 
+    // 로그인
+    public User login(AdminReqDTO.LoginDTO dto) {
+        User user = userJPARepository.findByUsername(dto.getUsername());
+        System.out.println("조회 완료 : ");
+
+        // 유저 정보 확인
+        if (user == null) {
+            throw new Exception401("유저 정보가 없습니다.");
+        }
+
+        if (user.isRole() != false) {
+            throw new Exception401("관리자 권한이 없습니다.");
+        }
+
+        // 유저 네임 확인
+        if (!user.getUsername().equals(dto.getUsername()) || user.getUsername().isEmpty()){
+           throw new Exception401("username 정보가 일치하지 않습니다.");
+        }
+
+        // 패스워드 확인
+        if (!user.getPassword().equals(dto.getPassword()) || user.getPassword().isEmpty()) {
+            throw new Exception401("password 정보가 일치하지 않습니다.");
+        }
+        return user;
+
+    }
+
     // 캠핑장 목록(캠핑장 수)
     public List<AdminRespDTO.CampDTO> campList(String keyword) {
         List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
@@ -230,4 +257,6 @@ public class AdminService {
         notice.updateUser(user);
         return "수정에 성공했습니다.";
     }
+
+
 }
