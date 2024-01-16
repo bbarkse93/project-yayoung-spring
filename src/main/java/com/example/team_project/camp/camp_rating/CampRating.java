@@ -33,12 +33,7 @@ public class CampRating {
     private Camp camp;
 
     @Builder
-<<<<<<< HEAD
-    public CampRating(Integer id, double cleanliness, double managementness, double friendliness, 
-    User user, Camp camp, CampReview campReview) {
-=======
-    public CampRating(Integer id, Integer cleanliness, Integer managementness, Integer friendliness, User user, Camp camp) {
->>>>>>> 6344634c5539a5c985b0243000354785ef2821c8
+    public CampRating(Integer id, double cleanliness, double managementness, double friendliness, User user, Camp camp) {
         this.id = id;
         this.cleanliness = cleanliness;
         this.managementness = managementness;
@@ -51,7 +46,6 @@ public class CampRating {
         return ((cleanliness + managementness + friendliness) / 3.0);
     }
 
-<<<<<<< HEAD
     public void setCleanliness(double cleanliness) {
     }
 
@@ -59,10 +53,10 @@ public class CampRating {
     }
 
     public void setFriendliness(double friendliness) {
-=======
+    }
+
     public String formatTotal(){
         DecimalFormat decimalFormat = new DecimalFormat("#.#"); // 소수점 첫째 자리까지 표시
         return decimalFormat.format(total());
->>>>>>> 6344634c5539a5c985b0243000354785ef2821c8
     }
 }
