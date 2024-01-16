@@ -63,7 +63,7 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("ssar"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userImage").value("/images/user/user-profile.jpg"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userImage").value("user-profile.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())
                 .andDo(document);
@@ -92,7 +92,7 @@ public class UserRestController_test extends MyWithRestDoc {
         // 사진 파일
         String[] list = responseBody.split(":");
         String[] splitList = list[5].split("\"");
-        String imgFileName = splitList[1].replaceAll("\\\\\\\\", "\\\\");
+        String imgFileName = splitList[1];
         // then
         // 제대로 된 검증
         ra

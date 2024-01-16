@@ -1,5 +1,6 @@
 package com.example.team_project.camp_field;
 
+import com.example.team_project._core.utils.PriceUtils;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.order.Order;
 import lombok.AccessLevel;
@@ -22,19 +23,27 @@ public class CampField {
 
     private String fieldName;
 
-    private String price;
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
 
     @OneToMany(mappedBy = "campField", fetch = FetchType.LAZY)
-    private List<Order> order;
+    private List<Order> orderList;
 
     @Builder
-    public CampField(Integer id, String fieldName, String price, Camp camp) {
+    public CampField(Integer id, String fieldName, Integer price, Camp camp) {
         this.id = id;
         this.fieldName = fieldName;
         this.price = price;
         this.camp = camp;
+    }
+
+    public Integer orderCount (){
+        return orderList.size();
+    }
+
+    public String formatPrice(){
+        return PriceUtils.formatBalance(price);
     }
 }

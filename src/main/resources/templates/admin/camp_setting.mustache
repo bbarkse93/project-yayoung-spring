@@ -36,7 +36,7 @@
             <div class="admin_container_title">
                 <h3>캠핑장 등록</h3>
             </div>
-            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+            <form id="search-form" action="/admin/camp/setting" method="get">
                 <div class="custom_search">
                     <input type="text" name="keyword" placeholder="검색 하기">
                     <button type="submit" class="custom_search_button">
@@ -85,7 +85,7 @@
                     </table>
                         <ul class="pagination">
                             <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/setting?page={{prevPage}}&keyword={{keyword}}">Previous</a></li>
-                            <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/setting?page={{prevPage}}&keyword={{keyword}}">Next</a></li>
+                            <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/setting?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
                         </ul>
                 </div>
             </div>

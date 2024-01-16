@@ -154,12 +154,10 @@ public class CampRespDTO {
             public CampFieldDTO(List<CampField> campField) {
                 this.minPrice = campField.stream()
                         .map(CampField::getPrice)
-                        .map(Integer::parseInt)
                         .min(Comparator.naturalOrder())
                         .orElseThrow();
                 this.maxPrice = campField.stream()
                         .map(CampField::getPrice)
-                        .map(Integer::parseInt)
                         .max(Comparator.naturalOrder())
                         .orElseThrow();
             }
@@ -312,7 +310,7 @@ public class CampRespDTO {
 			private String price;	// 총 금액
 			public CampFieldDTO(CampField campField) {
 				this.fieldName = campField.getFieldName();
-				this.price = priceFormat(Integer.parseInt(campField.getPrice()));
+				this.price = priceFormat(campField.getPrice());
 			}
 		}
 	}
@@ -339,7 +337,7 @@ public class CampRespDTO {
 					.filter(campField -> campField.getFieldName().equals(requestDTO.getFieldName()))
 					.findFirst()
 					.orElse(null);
-			this.totalPrice = priceFormat(Integer.parseInt(campFieldEntity.getPrice())*nights);
+			this.totalPrice = priceFormat(campFieldEntity.getPrice()*nights);
 		}
 		
 	}
@@ -364,14 +362,12 @@ public class CampRespDTO {
 	    // 최소 가격 찾기
 		Integer integerMinPrice = campFields.stream()
 	                .map(CampField::getPrice)
-	                .map(Integer::parseInt)
 	                .min(Comparator.naturalOrder())
 	                .orElseThrow();
 		campInfo.setMinPrice(priceFormat(integerMinPrice));
         // 최대 가격 찾기
         Integer integerMaxPrice = campFields.stream()
                 .map(CampField::getPrice)
-                .map(Integer::parseInt)
                 .max(Comparator.naturalOrder())
                 .orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));

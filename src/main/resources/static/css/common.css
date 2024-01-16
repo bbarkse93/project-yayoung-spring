@@ -100,3 +100,6 @@
     background-color: var(--back_01);
     width: 93px;
 }
+.a_tag {
+    color: var(--def_bl);
+}

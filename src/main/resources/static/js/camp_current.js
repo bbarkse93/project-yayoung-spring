@@ -6,8 +6,55 @@ async function fetchReview(campId) {
             let campReviewDTO = apiUtil.response;
             let campName = document.getElementById('campName');
             let campCount = document.getElementById('campCount');
+            let ratingClean = document.getElementById('clean');
+            let ratingManagement = document.getElementById('management');
+            let ratingFriend = document.getElementById('friend');
             campName.innerHTML = campReviewDTO.campName;
             campCount.innerHTML = campReviewDTO.campTotalRating;
+            ratingClean.innerHTML =
+                ratingStar(0, campReviewDTO.cleanliness)
+                + ratingStar(1, campReviewDTO.cleanliness)
+                + ratingStar(2, campReviewDTO.cleanliness)
+                + ratingStar(3, campReviewDTO.cleanliness)
+                + ratingStar(4, campReviewDTO.cleanliness);
+            ratingManagement.innerHTML =
+                ratingStar(0, campReviewDTO.managementness)
+                + ratingStar(1, campReviewDTO.managementness)
+                + ratingStar(2, campReviewDTO.managementness)
+                + ratingStar(3, campReviewDTO.managementness)
+                + ratingStar(4, campReviewDTO.managementness);
+            ratingFriend.innerHTML =
+                ratingStar(0, campReviewDTO.friendliness)
+                + ratingStar(1, campReviewDTO.friendliness)
+                + ratingStar(2, campReviewDTO.friendliness)
+                + ratingStar(3, campReviewDTO.friendliness)
+                + ratingStar(4, campReviewDTO.friendliness);
+
+            let reviewTbody = document.getElementById('review_tbody');
+            reviewTbody.innerHTML = "";
+            let reviewCount = document.querySelector('.custom_font_point1');
+            reviewCount.innerHTML = campReviewDTO.reviewDTOList.length;
+            campReviewDTO.reviewDTOList.forEach((review) => {
+                let tr = document.createElement('tr');
+                tr.className = "review_td";
+                tr.innerHTML = `
+                    <td>${review.reviewId}</td>
+                    <td>${review.userNickname}</td>
+                    <td style="text-align: start">${review.content}</td>
+                    <td>                
+                    ${ratingStar(0, review.totalRating)
+                    + ratingStar(1, review.totalRating)
+                    + ratingStar(2, review.totalRating)
+                    + ratingStar(3, review.totalRating)
+                    + ratingStar(4, review.totalRating)}
+                    </td>
+                    <td>${review.createAt}</td>
+                    <td>
+                        <button class="review_button" onclick="deleteReview(${review.reviewId}, ${campReviewDTO.campId})">삭제</button>
+                    </td>
+                `;
+                reviewTbody.appendChild(tr);
+            })
 
         } else {
             console.error("실패", response.statusText);
@@ -15,57 +62,47 @@ async function fetchReview(campId) {
     } catch (e) {
         console.error("실패", e.message);
     }
+}
+
+async function deleteReview(reviewId, campId){
+    let userConfirmed = window.confirm("해당 리뷰를 삭제하시겠습니까?");
+
+    if (userConfirmed) {
+        try{
+            let response = await fetch(`/admin/camp/review/delete/${reviewId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+
+            if(response.ok){
+                let apiUtil = await response.json();
+                let success = apiUtil.response;
+                alert(success);
+                fetchReview(campId);
+            }else {
+                console.error("실패", response.statusText);
+            }
+        }catch (e) {
+            console.error("실패", e.message);
+        }
+    } else {
+        return null;
+    }
 
 }
 
 
-
-    // fetch로 새로운 데이터 받아오기
-    async function fetchFundingList(page) {
-    let response = await fetch('/admin/funding/confirm/more-data?page=' + page);
-    let responseBody = await response.json();
-
-    if (responseBody.success) {
-    return responseBody.response;
-} else {
-    throw new Error(responseBody.error);
+function ratingStar(index, rating){
+    if (rating != null) {
+        if (rating >= index + 1) { // full-star
+            return '<img src="/static_images/icons/blue_star.png" width="14px">'
+        } else if (rating >= index + 0.5) { // half-star
+            return '<img src="/static_images/icons/half-star.png" width="14px">'
+        }
+    }
+    return '<img src="/static_images/icons/gray_star.png" width="14px">'
 }
-}
-    // 로딩 딜레이 주기
-    setTimeout(async () => {
-    try {
-    const newData = await fetchFundingList(currentPage);
-    newData.forEach((funding) => {
-    var newElement = '<div class="p_section1 p_box">' +
-    '<button type="button" style="border: none; background: transparent" data-bs-toggle="modal" data-bs-target="#j_fund_modal" data-id="' + funding.fundingId + '" data-name="' + funding.movieName + '">' +
-    '<img src="' + funding.movieThumbnail + '" alt="영화사진">' +
-    '</button>' +
-    '<div class="p_list">' +
-    '<p class="p_p1">' + funding.movieName + '</p>' +
-    '<p class="p_p2">감독:' + funding.director + '</p><br>' +
-    '<div class="p_flex">' +
-    '<p class="p_p3">' + funding.fundingRate + '</p>' +
-    '<p class="p_p4" style="margin-left: 5px">% 달성</p><br>' +
-    '<p class="p_p5">' + funding.endDate + '</p><br>' +
-    '</div>' +
-    '<div class="p_flex">' +
-    '<p class="p_p6" style="margin-top: 25px">' + formatPrice(funding.presentPrice) + '</p>' +
-    '<p class="p_p7" style="margin-top: 15px">원 달성</p><br>' +
-    '<p class="p_p8" style="margin-left: 5px;>참여 ' + funding.peopleCount + '</p>' +
-    '</div>' +
-    '</div>' +
-    '</div>';
-    // Append new content to the container (assumes you have a container with id 'fund_container')
-    $('#fund_container').append(newElement);
-});
-    currentPage++;
-} catch (error) {
-    console.error('Error fetching data:', error);
-} finally {
-    isLoading = false;
-}
-}, 1000);
-
-    var scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
 

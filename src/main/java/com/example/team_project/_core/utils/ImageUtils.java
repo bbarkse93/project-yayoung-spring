@@ -21,7 +21,7 @@ public class ImageUtils {
             String fileName = startFileName + "_" + uuid + ".png";
             Path filePath = Paths.get(MyPath.IMG_PATH, fileName);
             Files.write(filePath, image);
-            return filePath.toString();
+            return fileName;
         }catch (Exception e){
             throw new Exception400("파일 인코딩에 실패했습니다.");
         }

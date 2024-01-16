@@ -1,5 +1,6 @@
 package com.example.team_project.order;
 
+import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
@@ -42,5 +43,17 @@ public class Order {
         this.user = user;
         this.campField = campField;
         this.createdAt = createdAt;
+    }
+
+    public String formatCheckInDate(){
+        return TimestampUtils.timeStampToDate(checkInDate);
+    }
+
+    public String formatCheckOutDate(){
+        return TimestampUtils.timeStampToDate(checkOutDate);
+    }
+
+    public String formatCreatedAt(){
+        return TimestampUtils.timeStampToDate(createdAt);
     }
 }

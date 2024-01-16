@@ -127,6 +127,7 @@ public class Camp {
         return formatRating;
     }
 
+    // 캠핑 삭제 업데이트
     public void updateIsDelete(boolean isDelete) {this.isDelete = isDelete;}
 
 

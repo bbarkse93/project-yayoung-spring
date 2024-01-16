@@ -38,7 +38,7 @@
             <div class="admin_container_title">
                 <h3>캠핑장 현황 · 리뷰 관리</h3>
             </div>
-            <form id="search-form" action="/admin/funding/confirm/search" method="get">
+            <form id="search-form" action="/admin/camp/current" method="get">
                 <div class="custom_search">
                     <input type="text" name="keyword" placeholder="검색 하기">
                     <button type="submit" class="custom_search_button">
@@ -66,14 +66,16 @@
                             <td class="content">{{campAddress}}</td>
                             <td>
                                 <div class="custom_flex_center">
-                                    <img src="/static_images/icons/blue_star.png" width="18px" style="margin-right: 3px"><span style="margin: 0">{{campTotalRating}}</span>
+                                    <img src="/static_images/icons/blue_star.png" width="18px"
+                                         style="margin-right: 3px"><span style="margin: 0">{{campTotalRating}}</span>
                                 </div>
                             </td>
                             <td>
                                 {{orderCount}}건
                             </td>
                             <td>
-                                <button class="review_button" id="reviewSetting" onclick="fetchReview({{campId}})" data-bs-toggle="modal"
+                                <button class="review_button" id="reviewSetting" onclick="fetchReview({{campId}})"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#camp_review_modal">리뷰관리
                                 </button>
                             </td>
@@ -108,7 +110,10 @@
                                         <p>친절도</p>
                                     </div>
                                     <div style="text-align: start;">
-                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                        <p><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="14px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"><img src="/static_images/icons/blue_star.png" width="10px"></p>                                    </div>
+                                        <p id="clean"></p>
+                                        <p id="management"></p>
+                                        <p id="friend"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,41 +134,22 @@
                                     <th>리뷰 삭제</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="review_td">
-                                        <td>1</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>2</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
-                                        이게 무신 말이에용 ㅎ해해ㅐ해해해해</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="review_td">
-                                        <td>3</td>
-                                        <td>오리</td>
-                                        <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
-                                        <td><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px"><img src="/static_images/icons/blue_star.png" width="13px">
-                                        </td>
-                                        <td>2022-08-04</td>
-                                        <td>
-                                            <button class="review_button">삭제</button>
-                                        </td>
-                                    </tr>
+                                <tbody id="review_tbody">
+                                <tr class="review_td">
+                                    <td>1</td>
+                                    <td>오리</td>
+                                    <td>체크아웃 시간이 13시라서 너무 좋아요~</td>
+                                    <td><img src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px"><img
+                                            src="/static_images/icons/blue_star.png" width="13px">
+                                    </td>
+                                    <td>2022-08-04</td>
+                                    <td>
+                                        <button class="review_button">삭제</button>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
