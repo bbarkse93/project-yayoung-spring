@@ -91,4 +91,35 @@ public class AdminRestController {
         String result = adminService.updateFaq(requestDTO, faqId);
         return ResponseEntity.ok().body(ApiUtils.success(result));
     }
+
+    // notice 상세 내용(GET) - 모달
+    @GetMapping("/notice/detail/{noticeId}")
+    public ResponseEntity<?> detailNotice(@PathVariable Integer noticeId) {
+        AdminRespDTO.NoticeDetailDTO noticeDetailDTO = adminService.detailNotice(noticeId);
+        return ResponseEntity.ok().body(ApiUtils.success(noticeDetailDTO));
+    }
+
+    // notice 삭제(DELETE)
+    @DeleteMapping("/notice/delete/{noticeId}")
+    public ResponseEntity<?> deleteNotice(@PathVariable Integer noticeId) {
+        String result = adminService.deleteNotice(noticeId);
+        return ResponseEntity.ok().body(ApiUtils.success(result));
+    }
+
+    //TODO : sessionUser 보내기
+    // notice 등록(POST)
+    @PostMapping("/notice/save")
+    public ResponseEntity<?> saveNotice(@RequestBody AdminReqDTO.SaveNoticeDTO requestDTO) {
+        String result = adminService.saveNotice(requestDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(result));
+    }
+
+    //TODO : sessionUser 보내기
+    // faq 수정(PUT)
+    @PutMapping("/notice/update/{noticeId}")
+    public ResponseEntity<?> updateNotice(@RequestBody AdminReqDTO.UpdateNoticeDTO requestDTO, @PathVariable Integer noticeId) {
+        String result = adminService.updateNotice(requestDTO, noticeId);
+        return ResponseEntity.ok().body(ApiUtils.success(result));
+    }
+
 }

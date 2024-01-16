@@ -1,0 +1,26 @@
+{{>admin/layout/manager_header}}
+
+<!--컨테이너1 시작-->
+<div class="flex_center">
+    <div class="user_main">
+        <form action="/admin/login" method="post" style="margin-top: 20px; width: 450px">
+            <div class="admin_container_title">
+                <h3>로그인</h3>
+            </div>
+            <div class="form_group">
+                <input type="text" class="form-control" id="userEmail" name="username" placeholder="이메일을 입력하세요."
+                       onfocus="this.placeholder = ''" onblur="this.placeholder = '유저네임 입력'" value="admin">
+            </div>
+            <div class="form_group">
+                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력입력하세요."
+                       onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" value="1234">
+            </div>
+            <div class="login_button">
+                <button type="submit">로그인</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/js/camp_current.js"></script>
+</body>
+</html>

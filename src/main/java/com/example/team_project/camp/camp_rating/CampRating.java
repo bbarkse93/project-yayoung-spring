@@ -33,7 +33,7 @@ public class CampRating {
     private Camp camp;
 
     @Builder
-    public CampRating(Integer id, Integer cleanliness, Integer managementness, Integer friendliness, User user, Camp camp) {
+    public CampRating(Integer id, double cleanliness, double managementness, double friendliness, User user, Camp camp) {
         this.id = id;
         this.cleanliness = cleanliness;
         this.managementness = managementness;

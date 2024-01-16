@@ -26,10 +26,17 @@ public class AdminController {
     private final AdminService adminService;
     private final HttpSession session;
 
-    // TODO 로그인, 로그아웃, (비밀번호 변경 로직) 만들어야 함....
-    // TODO 로그인 후 로그아웃 후 페이지
-    // 로그인
 
+
+
+    // 로그인(GET)
+    @GetMapping("/login")
+    public String login (){
+        return "admin/user_login";
+    }
+
+
+    // 로그인(POST)
     @PostMapping("/login")
     public String login(AdminReqDTO.LoginDTO dto) {
         System.out.println("로그인 값 잘 들어옴?" + dto.getUsername());
@@ -42,7 +49,7 @@ public class AdminController {
         return "redirect:/admin/camp/setting";
     }
 
-    // 로그아웃
+    // 로그아웃(GET)
     @GetMapping("/logout")
     public String logout() {
         User user = (User) session.getAttribute("sessionUser");
@@ -54,13 +61,16 @@ public class AdminController {
             throw new UnAuthorizedException("로그인 해주세요", HttpStatus.BAD_REQUEST);
         }
         System.out.println("logout 실행됨");
-        return "admin/login";
+        return "/admin/user_login";
     }
 
+    /******************************************************************************************/
 
     // 캠핑장 페이지 요청(GET) + 검색
     @GetMapping("/camp/setting")
     public String campSettingSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -71,6 +81,7 @@ public class AdminController {
         List<AdminRespDTO.CampDTO> campDTOList = adminService.campSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("campDTOList", campDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -82,11 +93,22 @@ public class AdminController {
     }
 
 
+    // 캠핑장 등록 요청(POST)
+    @PostMapping("/camp/save")
+    public String saveCamp(@RequestBody AdminReqDTO.SaveCampDTO requestDTO){
+        String result = adminService.saveCamp(requestDTO);
+        return "redirect:/admin/camp/setting";
+    }
+
+
     /******************************************************************************************/
 
     // 캠핑장 현황 페이지 요청(GET)
     @GetMapping("/camp/current")
     public String campCurrentSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -97,6 +119,7 @@ public class AdminController {
         List<AdminRespDTO.RatingCampDTO> ratingCampDTOList = adminService.ratingCampSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("ratingCampDTOList", ratingCampDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -113,6 +136,9 @@ public class AdminController {
     // 회원 관리 페이지 요청(GET)
     @GetMapping("/user")
     public String userSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 10;
 
@@ -123,6 +149,7 @@ public class AdminController {
         List<AdminRespDTO.UserDTO> userDTOList = adminService.userSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("userDTOList", userDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -138,6 +165,9 @@ public class AdminController {
     // FAQ 관리 페이지 요청(GET)
     @GetMapping("/customer/faq")
     public String faqSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") Integer categoryId, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -153,6 +183,7 @@ public class AdminController {
         List<AdminRespDTO.FaqDTOList.UserDTO> userDTOList = adminService.faqSearch(page, keyword, PAGESIZE, categoryId).getUserDTOList();
 
         model.addAttribute("paymentDTOList", paymentDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("userDTOList", userDTOList);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
@@ -172,6 +203,9 @@ public class AdminController {
     // 공지사항 관리 페이지 요청(GET)
     @GetMapping("/customer/notice")
     public String noticeSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
+
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -183,6 +217,7 @@ public class AdminController {
         List<AdminRespDTO.NoticeDTO> noticeDTOList = adminService.noticeSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("noticeDTOList", noticeDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -192,4 +227,7 @@ public class AdminController {
                         || ((noticeAllSize % PAGESIZE == 0) && (noticeAllSize / PAGESIZE) - 1 == page));
         return "admin/customer_notice";
     }
+
+    /******************************************************************************************/
+
 }
