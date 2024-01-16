@@ -36,7 +36,7 @@ async function fetchUser(userId) {
             let userDetailDTO = apiUtil.response;
             let userImage = document.getElementById('user_image');
             let userNickname = document.getElementById('user_nickname');
-            userImage.src = `../../../../../images/user/${userDetailDTO.userImage}`;
+            userImage.src = `../../../../..${userDetailDTO.userImage}`;
             userNickname.innerHTML = userDetailDTO.nickname;
             let orderCount = document.getElementById('order_count');
             orderCount.innerHTML = userDetailDTO.orderDTOList.length;
