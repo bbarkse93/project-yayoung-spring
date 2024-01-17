@@ -16,11 +16,13 @@ public class OrderReqDTO {
 		@NotNull
 		private Integer campId;
 		@NotEmpty
-		private String  checkIn;
+		private String  checkInDate;
 		@NotEmpty
-		private String  checkOut;
+		private String  checkOutDate;
 		@NotEmpty
 		private String  fieldName;
+		@NotEmpty
+		private String  totalPrice;
 	}
 	
 	@Data

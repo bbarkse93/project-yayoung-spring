@@ -26,6 +26,14 @@ public class UserRestController {
         return ResponseEntity.ok().body("test");
     }
 
+    //테스트 용 로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> login() {
+    	User user = User.builder().id(1).build();
+    	String token = JwtTokenUtils.create(user);
+		return ResponseEntity.ok().body(ApiUtils.success(token));
+    }
+    
     
     
     // ME 메인 페이지 요청

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project._core.utils.JwtTokenUtils;
 import com.example.team_project.camp._dto.CampRespDTO;
@@ -58,11 +59,14 @@ public class OrderRestController {
     
     // 캠핑 결제
     @PostMapping("/payment")
-    public ResponseEntity<?> paymentWrite(@Valid OrderReqDTO.OrderWriteDTO requestDTO ,@RequestHeader("Authorization") String token){
+    public ResponseEntity<?> paymentWrite(@Valid OrderReqDTO.OrderWriteDTO requestDTO 
+    					,@RequestHeader("Authorization") String token){
+    	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	//테스트 용 하드 코딩
-    	//OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(1, requestDTO);
+    	// 결제 정보의 유효성 검증
+    	orderService.paymentWriteValidate(userId, requestDTO);
+    	// DB 등록 및 캠핑장 지도 반환
     	OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
@@ -70,12 +74,11 @@ public class OrderRestController {
     // 캠핑 환불 DB 처리
     @DeleteMapping("/refund")
     public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO 
-    		,@RequestHeader("Authorization") String token){
+    		,@RequestHeader("Authorization") String token){    	
+    	
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
     	
-    	//테스트 용 하드 코딩
-//    	orderService.orderDelete(1, requestDTO);
     	orderService.orderDelete(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success("환불 처리 완료"));
     }
