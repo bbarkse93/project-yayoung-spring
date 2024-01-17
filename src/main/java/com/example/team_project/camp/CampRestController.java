@@ -131,4 +131,15 @@ public class CampRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
+    @PostMapping("/review")
+    public ResponseEntity<?> addReview(@RequestBody CampReqDTO.CampReviewDTO requestDTO){
+        System.out.println(requestDTO.getContent());
+        System.out.println(requestDTO.getCleanliness());
+        System.out.println(requestDTO.getManagementness());
+        System.out.println(requestDTO.getFriendliness());
+        campService.addReview(requestDTO);
+
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+    }
+
 }

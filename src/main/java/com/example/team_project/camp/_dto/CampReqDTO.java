@@ -33,6 +33,15 @@ public class CampReqDTO {
 		private List<String> optionNames; // 필터 옵션
 		private List<String> regionNames; // 지역 옵션
 	}
+
+	@Data
+	public static class CampReviewDTO{
+		@NotNull
+		private String content;
+		private double cleanliness;
+		private double managementness;
+		private double friendliness;
+	}
 	
 	
 }

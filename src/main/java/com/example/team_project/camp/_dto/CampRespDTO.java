@@ -402,4 +402,10 @@ public class CampRespDTO {
         }
 
     }
+
+    @Data
+    public static class addCampReviewDTO {
+        private Integer id;
+        private String content;
+    }
 }

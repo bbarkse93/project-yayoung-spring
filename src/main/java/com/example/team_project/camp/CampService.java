@@ -2,6 +2,7 @@ package com.example.team_project.camp;
 
 import java.util.List;
 
+import com.example.team_project.camp.camp_rating.CampRating;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,7 @@ public class CampService {
 
     // 사용자 캠핑장 목록 출력 기능(필터 적용 가능)
     public CampRespDTO.CampListDTO getAllCamps(CampReqDTO.CampListDTO requestDTO) {
-    	List<Camp> camps = campJPARepository.findAll();
+        List<Camp> camps = campJPARepository.findAll();
         return new CampRespDTO.CampListDTO(camps, requestDTO);
     }
 
@@ -80,9 +81,8 @@ public class CampService {
     }
 
 
-
     // 사용자의 관심 캠핑장 조회 기능
-    public List<CampBookmark> bookmarkList (Integer userId) {
+    public List<CampBookmark> bookmarkList(Integer userId) {
         return campBookmarkJPARepository.findByUserId(userId);
     }
 
@@ -104,5 +104,16 @@ public class CampService {
         List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
         System.out.println("결과는? " + campList.size());
         return new CampRespDTO.SearchCampDTO(campList);
+    }
+
+    public CampRespDTO.addCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
+        CampReview campReview = CampReview.builder()
+                .content(requestDTO.getContent())
+                .user(User.builder().id(1).build())
+                .camp(Camp.builder().id(1).build())
+//                .campRating(CampRating.builder().id(1).build())
+                .build();
+        campReviewJPARepository.save(campReview);
+        return null;
     }
 }
