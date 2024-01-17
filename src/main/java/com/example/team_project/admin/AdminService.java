@@ -1,6 +1,8 @@
 package com.example.team_project.admin;
 
+import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.errors.exception.Exception404;
+import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
 import com.example.team_project.board.Board;
@@ -11,8 +13,10 @@ import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampJPARepository;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
+import com.example.team_project.camp_field.CampField;
 import com.example.team_project.notice.Notice;
 import com.example.team_project.notice.NoticeJPARepository;
+import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.order.OrderJPARepository;
 import com.example.team_project.user.User;
@@ -42,6 +46,33 @@ public class AdminService {
     private final BoardJPARepository boardJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
     private final NoticeJPARepository noticeJPARepository;
+
+    // 로그인
+    public User login(AdminReqDTO.LoginDTO dto) {
+        User user = userJPARepository.findByUsername(dto.getUsername());
+        System.out.println("조회 완료 : ");
+
+        // 유저 정보 확인
+        if (user == null) {
+            throw new Exception401("유저 정보가 없습니다.");
+        }
+
+        if (user.isRole() != false) {
+            throw new Exception401("관리자 권한이 없습니다.");
+        }
+
+        // 유저 네임 확인
+        if (!user.getUsername().equals(dto.getUsername()) || user.getUsername().isEmpty()){
+           throw new Exception401("username 정보가 일치하지 않습니다.");
+        }
+
+        // 패스워드 확인
+        if (!user.getPassword().equals(dto.getPassword()) || user.getPassword().isEmpty()) {
+            throw new Exception401("password 정보가 일치하지 않습니다.");
+        }
+        return user;
+
+    }
 
     // 캠핑장 목록(캠핑장 수)
     public List<AdminRespDTO.CampDTO> campList(String keyword) {
@@ -108,14 +139,14 @@ public class AdminService {
     // 유저 삭제
     @Transactional
     public String deleteUser(Integer userId) {
-        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception404("해당 리뷰를 찾을 수 없습니다." + userId));
+        User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + userId));
         user.updateIsWithDraw(true);
         return "삭제에 성공했습니다.";
     }
 
     // 유저 상세 정보
     public AdminRespDTO.UserDetailDTO detailUser(Integer userId) {
-        User user = userJPARepository.findById(userId).orElseThrow(()-> new Exception404("해당 유저를 찾을 수 없습니다." + userId));
+        User user = userJPARepository.findById(userId).orElseThrow(()-> new Exception401("해당 유저를 찾을 수 없습니다." + userId));
         List<Order> orderList = orderJPARepository.findAllByUserId(user.getId());
         List<CampReview> campReviewList = campReviewJPARepository.findAllByUserId(user.getId());
         return new AdminRespDTO.UserDetailDTO(user, orderList, campReviewList);
@@ -152,7 +183,7 @@ public class AdminService {
     // faq 등록
     @Transactional
     public String saveFaq(AdminReqDTO.SaveFaqDTO requestDTO) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         BoardCategory boardCategory = boardCategoryJPARepository.findById(requestDTO.getBoardCategoryId()).orElseThrow(()->new Exception404("해당 카테고리를 찾을 수 없습니다." + requestDTO.getBoardCategoryId()));
         Board board = Board.builder()
                 .title(requestDTO.getTitle())
@@ -167,7 +198,7 @@ public class AdminService {
     // faq 수정
     @Transactional
     public String updateFaq(AdminReqDTO.UpdateFaqDTO requestDTO, Integer faqId) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Board board = boardJPARepository.findById(faqId).orElseThrow(() -> new Exception404("해당 FAQ를 찾을 수 없습니다." + faqId));
         board.updateTitle(requestDTO.getTitle());
         board.updateContent(requestDTO.getContent());
@@ -189,6 +220,14 @@ public class AdminService {
         return campPG.stream().map(AdminRespDTO.NoticeDTO::new).collect(Collectors.toList());
     }
 
+
+    // faq 상세보기
+    public AdminRespDTO.NoticeDetailDTO detailNotice(Integer noticeId) {
+        Notice notice = noticeJPARepository.findById(noticeId).orElseThrow(()-> new Exception404("해당 FAQ를 찾을 수 없습니다." + noticeId));
+        return new AdminRespDTO.NoticeDetailDTO(notice);
+    }
+
+
     // notice 삭제
     @Transactional
     public String deleteNotice(Integer noticeId) {
@@ -200,7 +239,7 @@ public class AdminService {
     // notice 등록
     @Transactional
     public String saveNotice(AdminReqDTO.SaveNoticeDTO requestDTO) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Notice notice = Notice.builder()
                 .title(requestDTO.getTitle())
                 .content(requestDTO.getContent())
@@ -213,7 +252,7 @@ public class AdminService {
     // notice 수정
     @Transactional
     public String updateNotice(AdminReqDTO.UpdateNoticeDTO requestDTO, Integer noticeId) {
-        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception404("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
+        User user = userJPARepository.findById(requestDTO.getUserId()).orElseThrow(() -> new Exception401("해당 유저를 찾을 수 없습니다." + requestDTO.getUserId()));
         Notice notice = noticeJPARepository.findById(noticeId).orElseThrow(() -> new Exception404("해당 공지사항을 찾을 수 없습니다." + noticeId));
         notice.updateTitle(requestDTO.getTitle());
         notice.updateContent(requestDTO.getContent());
@@ -221,4 +260,38 @@ public class AdminService {
         notice.updateUser(user);
         return "수정에 성공했습니다.";
     }
+
+
+    // 캠핑장 등록
+    @Transactional
+    public String saveCamp(AdminReqDTO.SaveCampDTO requestDTO) {
+        Camp camp = Camp.builder()
+                .campName(requestDTO.getCampName())
+                .campAddress(requestDTO.getCampAddress())
+                .campCallNumber(requestDTO.getCampCallNumber())
+                .campWebsite(requestDTO.getCampWebsite())
+                .campCheckIn(requestDTO.getCampCheckIn())
+                .campCheckOut(requestDTO.getCampCheckOut())
+                .campWater(requestDTO.isCampWater())
+                .campWater(requestDTO.isCampWater())
+                .campFieldImage(ImageUtils.formImage(requestDTO.getCampFieldImage()))
+                .build();
+        campJPARepository.save(camp);
+        return "성공";
+    }
+
+
+//    // 캠핑장 옵션 등록
+//    @Transactional
+//    public String saveOptionManagement(AdminReqDTO.SaveCampDTO requestDTO) {
+//        for(AdminReqDTO.SaveCampDTO.OptionDTO optionDTO : requestDTO.getCampOptionDTOList()){
+//
+//        }
+//        OptionManagement optionManagement = OptionManagement.builder()
+//                .option()
+//                .build();
+//        campJPARepository.save(camp);
+//        return "성공";
+//    }
+
 }

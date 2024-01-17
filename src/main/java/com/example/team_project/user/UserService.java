@@ -50,8 +50,8 @@ public class UserService {
     }
 
     // 리뷰 작성 시 필요한 유저 정보 ㅈㅇㅈ
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> optionalFindByUsername(String username) {
         // username을 사용하여 데이터베이스에서 User 객체를 조회
-        return userJPARepository.findByUsername(username);
+        return userJPARepository.optionalFindByUsername(username);
     }
 }

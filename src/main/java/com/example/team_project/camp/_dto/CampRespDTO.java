@@ -30,13 +30,10 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.AbstractExecutorService;
 import java.util.stream.Collectors;
 
 @Data
@@ -50,34 +47,33 @@ public class CampRespDTO {
 
         public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
             // 환경 필터 적용
-            if (requestDTO.getOptionNames() != null) {
-                campList = campList.stream()
-                        .filter(camp -> requestDTO.getOptionNames()
-                                .stream()
-                                .allMatch(optionName ->
-                                        camp.getOptionManagementList()
-                                                .stream()
-                                                .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
-                                )
-                        )
-                        .collect(Collectors.toList());
-            }
-
-            // 지역 필터 적용
-            if(requestDTO.getRegionNames() != null) {
-                campList =	campList.stream()
-                        .filter(camp -> {
-                            for (String regionName : requestDTO.getRegionNames()) {
-                                if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        })
-                        .collect(Collectors.toList());
-            }
-            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
-
+        	if (requestDTO.getOptionNames() != null) {
+        	    campList = campList.stream()
+        	            .filter(camp -> requestDTO.getOptionNames()
+        	                    .stream()
+        	                    .allMatch(optionName ->
+        	                            camp.getOptionManagementList()
+        	                                    .stream()
+        	                                    .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
+        	                    )
+        	            )
+        	            .collect(Collectors.toList());
+        	}
+        	
+//        	// 지역 필터 적용
+//        	if(requestDTO.getRegionNames() != null) {
+//        		campList =	campList.stream()
+//        			  .filter(camp -> {
+//        	                for (String regionName : requestDTO.getRegionNames()) {
+//        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+//        	                        return true;
+//        	                    }
+//        	                }
+//        	                return false;
+//        	            })
+//        	            .collect(Collectors.toList());
+//        	}
+        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
         }
 
         @Data
@@ -544,7 +540,6 @@ public class CampRespDTO {
                 this.campName = camp.getCampName();
                 this.reviewImage = campReview.getReviewImage();
             }
-
         }
     }
 
@@ -625,7 +620,6 @@ public class CampRespDTO {
         Timestamp now = TimestampUtils.findCurrnetTime();
         String today = String.valueOf(now).substring(0, 10);
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        // 휴일의 예시를 알 수 없어 현재는 미반영
         Date checkInDate; // 운영 시작 시간
         Date checkOutDate; // 운영 종료 시간
         try {

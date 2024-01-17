@@ -32,6 +32,7 @@ public class CampRating {
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
 
+
     @Builder
     public CampRating(Integer id, double cleanliness, double managementness, double friendliness, User user, Camp camp) {
         this.id = id;

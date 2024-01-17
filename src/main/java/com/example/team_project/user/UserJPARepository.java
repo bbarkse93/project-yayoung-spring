@@ -13,8 +13,12 @@ import java.util.List;
 
 public interface UserJPARepository extends JpaRepository<User, Integer> {
 
+
+    User findByUsername(String username);
+
     //ㅈㅇㅈ
-    Optional<User> findByUsername(String username);
+    Optional<User> optionalFindByUsername(String username);
+    
     @Query(value = "SELECT * FROM user_tb WHERE (username LIKE CONCAT('%', :keyword ,'%') or nickname LIKE CONCAT('%', :keyword ,'%')) and role = true", nativeQuery = true)
     Page<User> mfindSearchPageAll(String keyword, Pageable pageable);
 

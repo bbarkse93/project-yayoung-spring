@@ -1,5 +1,5 @@
 /*FAQ 내용 조회*****************************************************/
-async function fetchFaqDetail(faqId) {
+async function fetchDetailFaq(faqId) {
     try {
         let response = await fetch('/admin/faq/detail/' + faqId);
         if (response.ok) {
