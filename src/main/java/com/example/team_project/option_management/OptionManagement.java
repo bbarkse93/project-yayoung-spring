@@ -31,4 +31,9 @@ public class OptionManagement {
         this.camp = camp;
         this.option = option;
     }
+
+    // 업데이트
+    public void updateOption(Option newOption) {
+        this.option = newOption;
+    }
 }

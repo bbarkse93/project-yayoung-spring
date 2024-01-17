@@ -96,6 +96,7 @@ public class CampService {
         List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
         if (campReviews == null)
             throw new Exception404("작성하신 리뷰가 없습니다");
+
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 

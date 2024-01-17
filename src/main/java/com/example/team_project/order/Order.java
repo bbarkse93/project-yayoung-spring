@@ -1,5 +1,6 @@
 package com.example.team_project.order;
 
+import com.example.team_project._core.utils.PriceUtils;
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.user.User;
@@ -30,18 +31,21 @@ public class Order {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private CampField campField;    
+    private CampField campField;
+
+    private boolean isRefund; // true -> 환불
 
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp createdAt; // -> 환불 시 환불 시간으로 변경하기
 
     @Builder
-    public Order(Integer id, Timestamp checkOutDate, Timestamp checkInDate, User user, CampField campField, Timestamp createdAt) {
+    public Order(Integer id, Timestamp checkOutDate, Timestamp checkInDate, User user, CampField campField, boolean isRefund, Timestamp createdAt) {
         this.id = id;
         this.checkOutDate = checkOutDate;
         this.checkInDate = checkInDate;
         this.user = user;
         this.campField = campField;
+        this.isRefund = isRefund;
         this.createdAt = createdAt;
     }
 
@@ -55,5 +59,14 @@ public class Order {
 
     public String formatCreatedAt(){
         return TimestampUtils.timeStampToDate(createdAt);
+    }
+
+    // 업데이트
+    public void updateRefund(boolean isRefund){
+        this.isRefund = isRefund;
+    }
+
+    public void updateRefundAt(Timestamp createdAt){
+        this.createdAt = createdAt;
     }
 }

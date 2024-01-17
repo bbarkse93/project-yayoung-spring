@@ -7,6 +7,7 @@ import com.example.team_project.board.Board;
 import com.example.team_project.board.BoardService;
 import com.example.team_project.camp.CampService;
 import com.example.team_project.notice.NoticeService;
+import com.example.team_project.user.User;
 import com.example.team_project.user.UserService;
 import com.example.team_project.user._dto.UserReqDTO;
 import com.example.team_project.user._dto.UserRespDTO;
@@ -106,20 +107,28 @@ public class AdminRestController {
         return ResponseEntity.ok().body(ApiUtils.success(result));
     }
 
-    //TODO : sessionUser 보내기
     // notice 등록(POST)
     @PostMapping("/notice/save")
     public ResponseEntity<?> saveNotice(@RequestBody AdminReqDTO.SaveNoticeDTO requestDTO) {
-        String result = adminService.saveNotice(requestDTO);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+
+        String result = adminService.saveNotice(requestDTO, sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(result));
     }
 
-    //TODO : sessionUser 보내기
     // faq 수정(PUT)
     @PutMapping("/notice/update/{noticeId}")
     public ResponseEntity<?> updateNotice(@RequestBody AdminReqDTO.UpdateNoticeDTO requestDTO, @PathVariable Integer noticeId) {
-        String result = adminService.updateNotice(requestDTO, noticeId);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        String result = adminService.updateNotice(requestDTO, noticeId, sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(result));
+    }
+
+    // 캠핑장 상세 내용(GET) - 모달
+    @GetMapping("/camp/detail/{campId}")
+    public ResponseEntity<?> updateNotice(@PathVariable Integer campId) {
+        AdminRespDTO.CampDetailDTO campDetailDTO = adminService.campDetail(campId);
+        return ResponseEntity.ok().body(ApiUtils.success(campDetailDTO));
     }
 
 }

@@ -1,0 +1,157 @@
+{{>admin/layout/manager_header}}
+
+<!--컨테이너1 시작-->
+<div class="flex_center">
+    <div class="main">
+        <div class="container">
+            <div class="section1">
+                <div class="section_title">캠핑장</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-tent-arrows-down"></i></i><a href="/admin/camp/save">캠핑장 등록</a></li>
+                    <li><i class="fa-solid fa-tent"></i><a href="/admin/camp/setting">캠핑장 관리</a></li>
+                    <li><i class="fa-solid fa-compass"></i><a href="/admin/camp/current">캠핑장 현황 · 리뷰</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">회원</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-user"></i><a href="/admin/user">회원 관리</a></li>
+                    <li><i class="fa-solid fa-money-bill-transfer"></i><a href="/admin/user/refund">환불</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">고객센터</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-question"></i><a href="/admin/customer/faq">FAQ</a></li>
+                    <li><i class="fa-regular fa-clipboard"></i><a
+                            href="/admin/customer/notice">공지사항</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+        </div>
+        <!--컨테이너1 끝-->
+
+        <!--컨테이너2 시작-->
+        <div class="check_container">
+            <div class="admin_container_title">
+                <h3>환불 목록</h3>
+            </div>
+            <form id="search-form" action="/admin/user/refund" method="get">
+                <div class="custom_search">
+                    <input type="text" name="keyword" placeholder="검색 하기">
+                    <button type="submit" class="custom_search_button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+            <div>
+                <table class="table table-hover" style="table-layout: fixed">
+                    <thead>
+                    <tr class="order_th">
+                        <th style="width: 50px">#</th>
+                        <th>회원 닉네임</th>
+                        <th>캠핑장</th>
+                        <th>예약 구역</th>
+                        <th>환불 날짜</th>
+                        <th>환불 금액</th>
+                        <th>상세</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#refundDTOList}}
+                        <tr class="camp_td">
+                            <td>{{orderId}}</td>
+                            <td class="title">{{nickName}}</td>
+                            <td class="content">{{campName}}</td>
+                            <td>{{campField}}</td>
+                            <td>{{refundAt}}</td>
+                            <td>{{price}}</td>
+                            <td>
+                                <button class="review_button" id="reviewSetting"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#camp_refund_modal">상세보기
+                                </button>
+                            </td>
+                        </tr>
+                    {{/refundDTOList}}
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/current?page={{prevPage}}&keyword={{keyword}}">Prev</a></li>
+                    <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/current?page={{nextPage}}&keyword={{keyword}}">Next</a></li>
+                </ul>
+            </div>
+
+            <div class="modal" id="camp_refund_modal">
+                <div class="modal-dialog">
+                    <div class="refund_modal_content">
+
+                        <!-- Modal body -->
+                        <div class="refund_modal_body">
+                            <div class="button">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="body">
+                                <div class="camp_name">
+                                    오토 캠핑장
+                                </div>
+                                <div>
+                                    <img src="../../images/camp_image/camp1-1.jpg" style="max-width: 50%; border-radius: 5px">
+                                </div>
+                                <div style="margin: 20px 0">
+                                    <button id="btn_toggle">캠핑장 배치도</button>
+                                    <p class="btn_info">버튼 클릭 시 배치도 확인</p>
+                                    <div id="toggle" style="display: none">
+                                        <img src="../../images/camp_map/camp1.png" style="max-width: 60%; border-radius: 5px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="refund_modal_footer">
+                            <div class="title">
+                                환불 내용
+                            </div>
+                            <div class="border">
+                                <div class="custom_flex_between custom_mini_margin_bottom">
+                                    <div class="sub_title">유저</div>
+                                    <div class="content">ssar</div>
+                                </div>
+                                <div class="sub_title">환불 정보</div>
+                                <div class="custom_flex_between content custom_mini_margin_bottom">
+                                    <div>
+                                        예약한 날짜
+                                    </div>
+                                    <div>
+                                        2024-01-01 ~ 2024-01-03
+                                    </div>
+                                </div>
+                                <div class="custom_flex_between content">
+                                    <div>
+                                        선택한 구역
+                                    </div>
+                                    <div>
+                                        A-1
+                                    </div>
+                                </div>
+                                <div class="custom_flex_between">
+                                    <div class="sub_title">총 환불 금액</div>
+                                    <div class="content">- 70000원</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--컨테이너2 끝-->
+    </div>
+</div>
+<script src="/js/user_refund.js"></script>
+</body>
+</html>

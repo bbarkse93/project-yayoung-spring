@@ -1158,16 +1158,16 @@ insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(2, 1);
 insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(3, 1);
 
 -- 결제 -------------------------------------------------------------------------------------------------------
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2022-01-10', '2022-01-15', 1, 1, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-11', '2024-01-15', 1, 3, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-17', '2024-01-18', 1, 5, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-20', '2024-01-25', 1, 7, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-02-03', '2024-02-10', 1, 9, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at)
+values ('2022-01-10', '2022-01-15', 1, 1, false, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at)
+values ('2024-01-11', '2024-01-15', 1, 3, false, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at)
+values ('2024-01-17', '2024-01-18', 1, 5, false, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at)
+values ('2024-01-20', '2024-01-25', 1, 7, false, now());
+insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at)
+values ('2024-02-03', '2024-02-10', 1, 9, false, now());
 
 -- 평점 ------------------------------------------------------------------------------------------------------------
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
