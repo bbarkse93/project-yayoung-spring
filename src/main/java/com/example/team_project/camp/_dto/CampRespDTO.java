@@ -2,6 +2,8 @@ package com.example.team_project.camp._dto;
 
 import com.example.team_project._core.errors.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
+import com.example.team_project.admin._dto.AdminRespDTO;
+import com.example.team_project.admin._dto.AdminRespDTO.CampReviewDTO.ReviewDTO;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_image.CampImage;
@@ -402,4 +404,45 @@ public class CampRespDTO {
         }
 
     }
+    
+    @Data
+    public static class CampReviewListDTO {
+        private Integer campId;
+        private String campName;
+        private String campTotalRating;
+        private double cleanliness;
+        private double managementness;
+        private double friendliness;
+        private List<ReviewDTO> reviewDTOList;
+
+        public CampReviewListDTO(List<CampReview> campReviewList) {
+        	Camp camp = campReviewList.get(0).getCamp();
+            this.campId = camp.getId();
+            this.campName = camp.getCampName();
+            this.campTotalRating = camp.formatTotalRating();
+            this.cleanliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getCleanliness).collect(Collectors.toList())));
+            this.managementness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getManagementness).collect(Collectors.toList())));
+            this.friendliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getFriendliness).collect(Collectors.toList())));
+            this.reviewDTOList = campReviewList.stream().map(ReviewDTO::new).collect(Collectors.toList());
+        }
+
+        @Data
+        public static class ReviewDTO {
+            private Integer reviewId;
+            private String nickname;
+            private String content;
+            private String totalRating;
+            private String createAt;
+
+            public ReviewDTO(CampReview campReview) {
+                this.reviewId = campReview.getId();
+                this.nickname = campReview.getUser().getNickname();
+                this.content = campReview.getContent();
+                this.totalRating = campReview.getCampRating().formatTotal();
+                this.createAt = campReview.formatTime();
+            }
+        }
+    }
+    
+ 
 }

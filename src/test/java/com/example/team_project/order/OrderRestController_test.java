@@ -181,8 +181,8 @@ public class OrderRestController_test extends MyWithRestDoc {
 		//given
 		OrderReqDTO.OrderWriteDTO requestDTO = new OrderReqDTO.OrderWriteDTO();
 		requestDTO.setCampId(1);
-		requestDTO.setCheckIn("2024-01-25");
-		requestDTO.setCheckOut("2024-01-28");
+		requestDTO.setCheckInDate("2024-01-25");
+		requestDTO.setCheckOutDate("2024-01-28");
 		requestDTO.setFieldName("캠핑사이트-1");
 		
 		//when
@@ -191,8 +191,8 @@ public class OrderRestController_test extends MyWithRestDoc {
 						.post("/order/payment")
 						.contentType("application/json")
 						.param("campId", String.valueOf(requestDTO.getCampId()))
-						.param("checkIn", requestDTO.getCheckIn())
-						.param("checkOut", requestDTO.getCheckOut())
+						.param("checkIn", requestDTO.getCheckInDate())
+						.param("checkOut", requestDTO.getCheckOutDate())
 						.param("fieldName", requestDTO.getFieldName())
 				);
 		String responseBody = resultActions

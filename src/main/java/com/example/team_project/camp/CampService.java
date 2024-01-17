@@ -10,6 +10,7 @@ import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampReqDTO.CampBookmarkDeleteDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
 import com.example.team_project.camp._dto.CampRespDTO.CampDetailDTO;
+import com.example.team_project.camp._dto.CampRespDTO.CampReviewListDTO;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_bookmark.CampBookmarkJPARepository;
 import com.example.team_project.camp.camp_image.CampImageJPARepository;
@@ -99,10 +100,12 @@ public class CampService {
         return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
     }
 
+    // 캠핑장 검색
     public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
         System.out.println("serviceKeyword는? " + keyword);
         List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
         System.out.println("결과는? " + campList.size());
         return new CampRespDTO.SearchCampDTO(campList);
     }
+
 }

@@ -29,6 +29,14 @@ public class OrderReqDTO {
 	public static class OrderDeleteDTO{
 		@NotNull
 		private Integer orderId;
+		@NotEmpty
+		private String campName;
+		@NotEmpty
+		private String campAddress;
+		@NotEmpty
+		private String checkInDate;
+		@NotEmpty
+		private String fieldName;
 	}
 	
 	

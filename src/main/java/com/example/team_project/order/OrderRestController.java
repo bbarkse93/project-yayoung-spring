@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.team_project._core.errors.exception.Exception401;
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project._core.utils.JwtTokenUtils;
 import com.example.team_project.camp._dto.CampRespDTO;
@@ -75,10 +74,12 @@ public class OrderRestController {
     @DeleteMapping("/refund")
     public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO 
     		,@RequestHeader("Authorization") String token){    	
-    	
+    	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	
+    	// 환불 정보 유효성 검사
+    	orderService.orderDeleteValidate(userId, requestDTO);
+    	// 환불 DB 등록
     	orderService.orderDelete(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success("환불 처리 완료"));
     }
