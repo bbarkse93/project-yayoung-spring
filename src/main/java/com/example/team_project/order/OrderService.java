@@ -71,8 +71,8 @@ public class OrderService {
 		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
 				(requestDTO.getFieldName(),requestDTO.getCampId());
-		Period period = Period.between(LocalDate.parse(requestDTO.getCheckInDate()) , //예약 일수 계산
-				LocalDate.parse(requestDTO.getCheckOutDate()));
+		Period period = Period.between(LocalDate.parse(requestDTO.getCheckIn()) , //예약 일수 계산
+				LocalDate.parse(requestDTO.getCheckOut()));
 		Integer totalPrice = campField.getPrice() * period.getDays();
 		if(requestDTO.getTotalPrice() == null || Integer.parseInt(requestDTO.getTotalPrice()) != totalPrice) {
 			throw new Exception400("결제 금액이 올바르지 않습니다.");
@@ -82,8 +82,8 @@ public class OrderService {
 	// 결제 DB 등록
 	public OrderRespDTO.PaymentWriteDTO paymentWrite(Integer userId,@Valid OrderReqDTO.OrderWriteDTO requestDTO) {
 		// requestDTO 가공
-		Timestamp checkInDate  = TimestampUtils.convertToTimestamp(requestDTO.getCheckInDate());
-		Timestamp checkOutDate = TimestampUtils.convertToTimestamp(requestDTO.getCheckOutDate());
+		Timestamp checkInDate  = TimestampUtils.convertToTimestamp(requestDTO.getCheckIn());
+		Timestamp checkOutDate = TimestampUtils.convertToTimestamp(requestDTO.getCheckOut());
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
 						(requestDTO.getFieldName(),requestDTO.getCampId());
 				

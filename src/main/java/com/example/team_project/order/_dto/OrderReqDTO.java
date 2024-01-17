@@ -16,9 +16,9 @@ public class OrderReqDTO {
 		@NotNull
 		private Integer campId;
 		@NotEmpty
-		private String  checkInDate;
+		private String  checkIn;
 		@NotEmpty
-		private String  checkOutDate;
+		private String  checkOut;
 		@NotEmpty
 		private String  fieldName;
 		@NotEmpty
