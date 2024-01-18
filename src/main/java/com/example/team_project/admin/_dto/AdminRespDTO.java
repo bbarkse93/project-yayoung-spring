@@ -3,14 +3,18 @@ package com.example.team_project.admin._dto;
 import com.example.team_project.board.Board;
 import com.example.team_project.board._dto.BoardRespDTO;
 import com.example.team_project.camp.Camp;
+import com.example.team_project.camp.camp_image.CampImage;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp_field.CampField;
 import com.example.team_project.notice.Notice;
+import com.example.team_project.option.Option;
+import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.user.User;
 import lombok.Data;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -257,4 +261,140 @@ public class AdminRespDTO {
             this.createdAt = notice.formatCreatedAt();
         }
     }
+
+    // 캠핑장 옵션 목록 DTO
+    @Data
+    public static class OptionDTO {
+        private Integer optionId;
+        private String optionName;
+        private Integer optionCategoryId;
+
+        public OptionDTO(Option option) {
+            this.optionId = option.getId();
+            this.optionName = option.getOptionName();
+            this.optionCategoryId = option.getOptionCategory().getId();
+        }
+    }
+
+    // camp 상세 DTO
+    @Data
+    public static class CampDetailDTO {
+        private Integer campId;
+        private String campName;
+        private String campAddress;
+        private String campCallNumber;
+        private String campWebsite;
+        private String holiday;
+        private String campCheckIn;
+        private String campCheckOut;
+        private boolean campWater;
+        private boolean campGarbageBag;
+        private String campRefundPolicy;
+        private List<CampImageDTO> campPhotoList;
+        private List<CampOptionDTO> campOptionDTOList;
+        private String campFieldImage;
+        private List<campFieldDTO> campFieldDTOList;
+
+        public CampDetailDTO(Camp camp) {
+            this.campId = camp.getId();
+            this.campName = camp.getCampName();
+            this.campAddress = camp.getCampAddress();
+            this.campCallNumber = camp.getCampCallNumber();
+            this.campWebsite = camp.getCampWebsite();
+            this.holiday = camp.getHoliday();
+            this.campCheckIn = camp.getCampCheckIn();
+            this.campCheckOut = camp.getCampCheckOut();
+            this.campWater = camp.isCampWater();
+            this.campGarbageBag = camp.isCampGarbageBag();
+            this.campRefundPolicy = camp.getCampRefundPolicy();
+            this.campPhotoList = camp.getCampImageList().stream().map(CampImageDTO::new).collect(Collectors.toList());
+            this.campOptionDTOList = camp.getOptionManagementList().stream().map(CampOptionDTO::new).collect(Collectors.toList());
+            this.campFieldImage = camp.getCampFieldImage();
+            this.campFieldDTOList = camp.getCampFieldList().stream().map(AdminRespDTO.CampDetailDTO.campFieldDTO::new).collect(Collectors.toList());
+        }
+
+        @Data
+        public static class CampImageDTO {
+            private Integer campImageId;
+            private String campImage;
+
+            public CampImageDTO(CampImage campImage) {
+                this.campImageId = campImage.getId();
+                this.campImage = campImage.getCampImage();
+            }
+        }
+
+        @Data
+        public static class CampOptionDTO{
+            private Integer selectOptionId;
+
+            public CampOptionDTO(OptionManagement optionManagement) {
+                this.selectOptionId = optionManagement.getOption().getId();
+            }
+        }
+
+        @Data
+        public static class campFieldDTO{
+            private Integer fieldId;
+            private String fieldName;
+            private Integer price;
+
+            public campFieldDTO(CampField campField) {
+                this.fieldId = campField.getId();
+                this.fieldName = campField.getFieldName();
+                this.price = campField.getPrice();
+            }
+        }
+    }
+
+    // refund 목록 DTO
+    @Data
+    public static class RefundDTO{
+        private Integer orderId;
+        private String nickName;
+        private String campName;
+        private String campField;
+        private String price;
+        private String refundAt;
+
+        public RefundDTO(Order order) {
+            this.orderId = order.getId();
+            this.nickName = order.getUser().getNickname();
+            this.campName = order.getCampField().getCamp().getCampName();
+            this.campField = order.getCampField().getFieldName();
+            this.price = order.getCampField().formatPrice();
+            this.refundAt = order.formatRefundAt();
+        }
+    }
+
+    // refund 상세 DTO
+    @Data
+    public static class RefundDetailDTO {
+        private Integer orderId;
+        private String campName;
+        private String campImage;
+        private String campFieldImage;
+        private String orderUserNickname;
+        private String checkIn;
+        private String checkOut;
+        private String selectedField;
+        private String orderAt;
+        private String refundAt;
+        private String refund;
+
+        public RefundDetailDTO(Order order) {
+            this.orderId = order.getId();
+            this.campName = order.getCampField().getCamp().getCampName();
+            this.campImage = order.getCampField().getCamp().firstCampImage();
+            this.campFieldImage = order.getCampField().getCamp().getCampFieldImage();
+            this.orderUserNickname = order.getUser().getNickname();
+            this.checkIn = order.formatCheckInDate();
+            this.checkOut = order.formatCheckOutDate();
+            this.selectedField = order.getCampField().getFieldName();
+            this.orderAt = order.formatCreatedAt();
+            this.refundAt = order.formatRefundAt();
+            this.refund = order.getCampField().formatPrice();
+        }
+    }
+
 }

@@ -127,9 +127,53 @@ public class Camp {
         return formatRating;
     }
 
-    // 캠핑 삭제 업데이트
-    public void updateIsDelete(boolean isDelete) {this.isDelete = isDelete;}
+    // 업데이트
+    public void updateCampName(String campName) {
+        this.campName = campName;
+    }
 
+    public void updateCampAddress(String campAddress) {
+        this.campAddress = campAddress;
+    }
 
+    public void updateCampCallNumber(String campCallNumber) {
+        this.campCallNumber = campCallNumber;
+    }
+
+    public void updateCampWebsite(String campWebsite) {
+        this.campWebsite = campWebsite;
+    }
+
+    public void updateCampRefundPolicy(String campRefundPolicy) {
+        this.campRefundPolicy = campRefundPolicy;
+    }
+
+    public void updateCampWater(boolean campWater) {
+        this.campWater = campWater;
+    }
+
+    public void updateCampGarbageBag(boolean campGarbageBag) {
+        this.campGarbageBag = campGarbageBag;
+    }
+
+    public void updateHoliday(String holiday) {
+        this.holiday = holiday;
+    }
+
+    public void updateCampCheckIn(String campCheckIn) {
+        this.campCheckIn = campCheckIn;
+    }
+
+    public void updateCampCheckOut(String campCheckOut) {
+        this.campCheckOut = campCheckOut;
+    }
+
+    public void updateCampFieldImage(String campFieldImage) {
+        this.campFieldImage = campFieldImage;
+    }
+
+    public void updateIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
 
 }
