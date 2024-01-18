@@ -37,14 +37,12 @@ public class OrderService {
     // 아이디로 다가오는 캠핑 일정 조회
 	public OrderRespDTO.ImminentOrderDetailDTO imminentOrderDetail(Integer userId) {
 		Order order = orderJPARepository.findFirstByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
-		if(order == null) throw new Exception404("예정된 캠핑이 없습니다");
 		return new OrderRespDTO.ImminentOrderDetailDTO(order);
 	}
 
 	// 아이디로 캠핑 일정 목록 조회
 	public OrderRespDTO.CampScheduleListDTO campScheduleList(Integer userId) {
 		List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
-		if(orders == null) throw new Exception404("예정된 캠핑이 없습니다");
 		return new OrderRespDTO.CampScheduleListDTO(orders);
 	}
 
@@ -52,11 +50,11 @@ public class OrderService {
 	public CampRespDTO.CampFieldListDTO  campFieldList(OrderReqDTO.CampFieldListDTO requestDTO) {
 		// 캠프장 정보 조회
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
-				new Exception404("해당 캠프장이 존재하지 않습니다."));
+				new Exception400("해당 캠프장이 존재하지 않습니다."));
 		// 캠프 구역 목록 조회
 		List<CampField> campFields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
 		if(campFields == null)
-			throw new Exception404("잘못된 캠프장 명입니다.");
+			throw new Exception400("잘못된 캠프장 명입니다.");
 		// 제외할 예약 구역 조회
 		List<Order> orders = orderJPARepository.findAllByCheckInDateAfterOrderByCheckInDateAsc(TimestampUtils.findCurrnetTime());
 		return new CampRespDTO.CampFieldListDTO(campFields, camp, orders, requestDTO);
@@ -66,7 +64,7 @@ public class OrderService {
 	public void paymentWriteValidate(Integer userId,@Valid OrderReqDTO.PaymentWriteDTO requestDTO ) {
 		//사용자가 없으면 예외 처리
 		userJPARepository.findById(userId)
-					.orElseThrow(()->new Exception404("해당 사용자가 없습니다."));
+					.orElseThrow(()->new Exception400("해당 사용자가 없습니다."));
 		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
 				(requestDTO.getFieldName(),requestDTO.getCampId());
