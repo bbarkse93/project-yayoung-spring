@@ -1,0 +1,346 @@
+{{>admin/layout/manager_header}}
+
+<div class="flex_center">
+    <div class="main">
+        <!--  컨테이너 1 시작  -->
+        <div class="container">
+            <div class="section1">
+                <div class="section_title">캠핑장</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-tent-arrows-down"></i></i><a href="/admin/camp/save">캠핑장 등록</a></li>
+                    <li><i class="fa-solid fa-tent"></i><a href="/admin/camp/setting">캠핑장 관리</a></li>
+                    <li><i class="fa-solid fa-compass"></i><a href="/admin/camp/current">캠핑장 현황 · 리뷰</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">회원</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-user"></i><a href="/admin/user">회원 관리</a></li>
+                    <li><i class="fa-solid fa-money-bill-transfer"></i><a href="/admin/user/refund">환불</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">고객센터</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-question"></i><a href="/admin/customer/faq">FAQ</a></li>
+                    <li><i class="fa-regular fa-clipboard"></i><a
+                            href="/admin/customer/notice">공지사항</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+        </div>
+        <!--  컨테이너 2 시작  -->
+        <div class="check_container">
+            <div class="admin_container_title">
+                <h3>캠핑장 등록</h3>
+            </div>
+            <div class="camp_modal_body">
+                <div class="body">
+                    <form action="/admin/camp/save" method="post" enctype="multipart/form-data">
+                        <div class="camp_form">
+                            <div class="camp_name custom_flex_between custom_margin_bottom">
+                                <div class="title">캠핑장 이름
+                                    <span class="custom_font_point3">*</span>
+                                </div>
+                                <input type="text" value="" class="camp_long_input input" name="campName"
+                                       placeholder="캠핑장 이름 입력">
+                            </div>
+                            <div class="camp_address custom_flex_between custom_margin_bottom">
+                                <div class="title">캠핑장 주소
+                                    <span class="custom_font_point3">*</span>
+                                </div>
+                                <div class="custom_flex_between" style="width: 100%">
+                                    <input type="text" value="" class="camp_m_middle_input input" id="sample4_jibunAddress" name="campAddress"
+                                           placeholder="캠핑장 주소 검색">
+                                    <span id="guide" style="color:#999;display:none"></span>
+                                    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="address_button"><br>
+                                </div>
+                            </div>
+                            <div class="camp_num_homepage custom_flex_between custom_margin_bottom">
+                                <div class="custom_flex_between" style="width: 40%">
+                                    <div class="title">전화번호
+                                        <span class="custom_font_point3">*</span>
+                                    </div>
+                                    <input type="tel" value="" class="camp_middle_input input" name="campCallNumber"
+                                           placeholder="-를 사용해서 입력">
+                                </div>
+                                <div class="custom_flex_between" style="width: 55%">
+                                    <div class="title">홈페이지
+                                        <span class="custom_font_point3">*</span>
+                                    </div>
+                                    <input type="text" value="" class="camp_m_middle_input input" name="campWebsite"
+                                           placeholder="홈페이지 주소 입력">
+                                </div>
+                            </div>
+                            <div class="camp_day_time custom_flex_between custom_margin_bottom">
+                                <div class="custom_flex_between" style="width: 29.3%;">
+                                    <div class="set_title">정기휴무
+                                        <span class="custom_font_point3">*</span>
+                                    </div>
+                                    <select class="form-select" id="holiday" name="holiday">
+                                        <option selected disabled>선택</option>
+                                        <option value="없음">없음</option>
+                                        <option value="월">월</option>
+                                        <option value="화">화</option>
+                                        <option value="수">수</option>
+                                        <option value="목">목</option>
+                                        <option value="금">금</option>
+                                        <option value="토">토</option>
+                                        <option value="일">일</option>
+                                    </select>
+                                </div>
+                                <div class="custom_flex_between" style="width: 67%">
+                                    <div class="custom_flex_between" style="width: 47%">
+                                        <div class="set_title">체크인
+                                            <span class="custom_font_point3">*</span>
+                                        </div>
+                                        <input type="text" value="" class="camp_short_input input" id="check_in"
+                                               placeholder="체크인 시간 입력" name="campCheckIn">
+                                    </div>
+                                    <div class="custom_flex_between" style="width: 47%">
+                                        <div class="set_title">체크아웃
+                                            <span class="custom_font_point3">*</span>
+                                        </div>
+                                        <input type="text" value="" class="camp_short_input input" id="check_out"
+                                               placeholder="체크아웃 시간 입력" name="campCheckOut">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="custom_hr">
+                            <div class="camp_facility custom_flex_around ">
+                                <div class="custom_grid_center" style="width: 30%">
+                                    <label for="campWater" class="form-label option_title">양수도 가능 여부
+                                        <span class="custom_font_point3">*</span>
+                                    </label>
+                                    <select class="form-select form_select_middle" id="campWater"
+                                            name="campWater">
+                                        <option selected disabled>선택</option>
+                                        <option value="true">가능</option>
+                                        <option value="false">불가능</option>
+                                    </select>
+                                </div>
+                                <div class="custom_grid_center" style="width: 30%">
+                                    <label for="campGarbageBag" class="form-label option_title">쓰레기봉투 지급 여부
+                                        <span class="custom_font_point3">*</span>
+                                    </label>
+                                    <select class="form-select form_select_middle" id="campGarbageBag"
+                                            name="campGarbageBag">
+                                        <option selected disabled>선택</option>
+                                        <option value="true">지급</option>
+                                        <option value="false">미지급</option>
+                                    </select>
+                                </div>
+                                <div class="custom_grid_center" style="width: 40%">
+                                    <label for="campRefundPolicy" class="form-label option_title">취소/환불 기준
+                                        <span class="custom_font_point3">*</span>
+                                    </label>
+                                    <select class="form-select form_select_long" id="campRefundPolicy"
+                                            name="campRefundPolicy">
+                                        <option selected disabled>선택</option>
+                                        <option value="당일 취소 불가, 2일 전 100% 환불">당일 취소 불가, 2일 전 100% 환불</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="custom_hr">
+                            <div class="camp_img custom_margin_bottom">
+                                <div class="custom_flex_between">
+                                    <div class="column_title">캠핑장 사진
+                                        <span class="custom_font_point3">*</span>
+                                    </div>
+                                    <div class="custom_flex">
+                                        <button type="button" class="plus_button" onclick="addPhotoField()">
+                                            <img src="/static_images/icons/plus.png">
+                                        </button>
+                                        <button type="button" class="minus_button"
+                                                onclick="deletePhotoField()">
+                                            <img src="/static_images/icons/minus.png">
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="pic_plus" class="custom_flex_align_center">
+                                    <label id="camp_pic" for="camp_photo" class="camp_select_form">
+                                        <img src="/static_images/icons/add_camera.png" class="camera_icon">
+                                        사진 선택 <span class="custom_font_point3">*</span></label>
+                                    <input type="file" id="camp_photo" name="campPhotoList" accept="image/*"
+                                           onchange="changeImage(this.id, 'camp_pic', 'camp_pic_style')"
+                                           class="camp_pic_upload_label">
+                                    <br>
+                                </div>
+                            </div>
+                            <hr class="custom_hr">
+                            <div class="camp_option custom_margin_bottom">
+                                <div class="column_title">옵션
+                                    <span class="custom_font_point3">*</span>
+                                </div>
+                                <div class="environment custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        환경
+                                    </div>
+                                    {{#environmentList}}
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                               name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                        <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                    </div>
+                                    {{/environmentList}}
+                                </div>
+                                <div class="type custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        캠핑유형
+                                    </div>
+                                    {{#typeList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/typeList}}
+                                </div>
+                                <div class="site custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        사이트 형태
+                                    </div>
+                                    {{#siteList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/siteList}}
+                                </div>
+                                <div class="main_facility custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        주요 시설
+                                    </div>
+                                    {{#mainFacilityList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/mainFacilityList}}
+                                </div>
+                                <div class="have_facility custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        보유 시설
+                                    </div>
+                                    {{#haveFacilityList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/haveFacilityList}}
+                                </div>
+                                <div class="exercise_facility custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        체육 시설
+                                    </div>
+                                    {{#exerciseFacilityList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/exerciseFacilityList}}
+                                </div>
+                                <div class="program custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        프로그램 및 활동
+                                    </div>
+                                    {{#programList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/programList}}
+                                </div>
+                                <div class="rental custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        대여 물품
+                                    </div>
+                                    {{#rentalList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/rentalList}}
+                                </div>
+                                <div class="sell custom_flex_align_center custom_mini_margin_bottom">
+                                    <div class="sub_title">
+                                        판매 물품
+                                    </div>
+                                    {{#sellList}}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="option{{optionId}}"
+                                                   name="campOptionDTOList[{{optionId}}].optionId" value="{{optionId}}">
+                                            <label class="form-check-label" for="option{{optionId}}">{{optionName}}</label>
+                                        </div>
+                                    {{/sellList}}
+                                </div>
+                            </div>
+                            <hr class="custom_hr">
+                            <div class="camp_site_img custom_margin_bottom">
+                                <div class="column_title">캠핑장 배치도
+                                    <span class="custom_font_point3">*</span>
+                                </div>
+                                <p class="content">캠핑장 배치도를 보고 구역 이름을 등록해주세요</p>
+                                <div class="custom_flex_align_center">
+                                    <label id="director_pic" for="director_photo"
+                                           class="camp_site_pic_form">
+                                        <img src="/static_images/icons/add_camera.png" class="camera_icon">
+                                        사진 선택 <span class="k_star_class">*</span>
+                                    </label>
+                                    <input type="file" id="director_photo" name="campFieldImage"
+                                           accept="image/*"
+                                           onchange="changeImage(this.id, 'director_pic', 'camp_site_pic')"
+                                           class="camp_pic_upload_label">
+                                </div>
+                            </div>
+                            <hr class="custom_hr">
+                            <div class="camp_site custom_margin_bottom">
+                                <div class="custom_flex_between">
+                                    <div class="column_title">캠핑 구역
+                                        <span class="custom_font_point3">*</span>
+                                    </div>
+                                    <div class="custom_flex">
+                                        <button type="button" class="plus_button" onclick="plusCampSite()">
+                                            <img src="/static_images/icons/plus.png">
+                                        </button>
+                                        <button type="button" class="minus_button"
+                                                onclick="minusCampSite()">
+                                            <img src="/static_images/icons/minus.png">
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="camp_site_insert_form">
+                                    <div class="add_camp_site">
+                                        <input type=text class="camp_site_name_input input"
+                                               id="camp_site_name0" placeholder="구역 이름" name="campFieldDTOList[0].fieldName">
+                                        <input type="text" class="camp_site_price_input input"
+                                               id="camp_site_price0" placeholder="금액(숫자만 입력)"
+                                               name="campFieldDTOList[0].price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 70px">
+                                <button type="submit" class="insert_button insert_submit"
+                                        style="width: 140px" data-bs-dismiss="modal">캠핑장 등록하기
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/camp_save.js"></script>
+

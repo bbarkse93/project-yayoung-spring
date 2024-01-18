@@ -3,6 +3,7 @@ package com.example.team_project._core.utils;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -13,6 +14,12 @@ public class TimestampUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(time);
     }
+
+    public static String timeStampToDateAndTime(Timestamp time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return simpleDateFormat.format(time);
+    }
+
     public static String timeStampToDate(Timestamp time, String dateFormat) {
     	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
     	return simpleDateFormat.format(time);
@@ -34,5 +41,13 @@ public class TimestampUtils {
 			return null;
 		}
     }
+	// 현재와 비교해 D-day를 반환하는 함수
+	public static String formatDDay(Timestamp date) {
+		ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
+		LocalDate currentDate = LocalDate.now(koreaZoneId);
+		String remainningDays = String.valueOf(currentDate.until(date.toLocalDateTime().toLocalDate()).getDays()) ;
+		return "D-"+remainningDays;
+	}
+    
     
 }

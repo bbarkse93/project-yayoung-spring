@@ -10,4 +10,6 @@ public interface CampFieldJPARepository extends JpaRepository<CampField, Integer
 	List<CampField> findAllByCampId(Integer campId);
 
 	CampField findByFieldNameAndCampId(String fieldName, Integer campId);
+
+    void deleteAllByCampId(Integer campId);
 }

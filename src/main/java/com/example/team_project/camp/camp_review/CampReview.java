@@ -34,9 +34,6 @@ public class CampReview {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
-    
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Order order;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CampRating campRating;

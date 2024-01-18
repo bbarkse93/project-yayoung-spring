@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CampJPARepository extends JpaRepository<Camp, Integer> {
 
+    // admin 검색
     @Query(value = "SELECT * FROM camp_tb WHERE camp_name LIKE CONCAT('%', :keyword ,'%') or camp_address LIKE CONCAT('%', :keyword ,'%')", nativeQuery = true)
     Page<Camp> mfindSearchPageAll(String keyword, Pageable pageable);
 

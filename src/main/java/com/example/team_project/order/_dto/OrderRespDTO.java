@@ -2,17 +2,15 @@ package com.example.team_project.order._dto;
 
 
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Period;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
-import com.example.team_project.camp_field.CampField;
+import com.example.team_project.camp._dto.CampRespDTO;
+import com.example.team_project.camp._dto.CampRespDTO.CampInfoDTO;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -36,7 +34,7 @@ public class OrderRespDTO {
 		public ImminentOrderDetailDTO(Order order) {
 			this.campName = order.getCampField().getCamp().getCampName();
 			this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT3);
-			this.checkInDDay = formatDDay(order.getCheckInDate());
+			this.checkInDDay = TimestampUtils.formatDDay(order.getCheckInDate());
 		}
 	}
 	
@@ -54,6 +52,7 @@ public class OrderRespDTO {
 		@ToString
 		public class CampScheduleDTO{
 			private Integer orderId;
+			private Integer campId;
 			private String campName;
 			private String campAddress;
 			private String checkInDate;
@@ -63,10 +62,11 @@ public class OrderRespDTO {
 			public CampScheduleDTO(Order order) {
 				Camp camp = order.getCampField().getCamp();
 				this.orderId = order.getId();
+				this.campId = camp.getId();
 				this.campName = camp.getCampName();
 				this.campAddress = camp.getCampAddress();
 				this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT2);
-				this.checkInDDay = formatDDay(order.getCheckInDate());
+				this.checkInDDay = TimestampUtils.formatDDay(order.getCheckInDate());
 				this.campField = order.getCampField().getFieldName();
 			}
 		}
@@ -78,17 +78,33 @@ public class OrderRespDTO {
 		private String campFieldImage;
 		public PaymentWriteDTO(String campFieldImage) {
 			this.campFieldImage = campFieldImage;
+			
+		}	
+	}
+	
+	@Getter
+	@ToString
+	public static class RefundInfoDTO{
+		private CampInfoDTO campInfoDTO;
+		private String campFieldImage;
+		private String checkInDate;
+		private String checkOutDate;
+		private String fieldName;
+		private String totalPrice;
+		public RefundInfoDTO(CampInfoDTO campInfoDTO, Order order ) {
+			this.campInfoDTO = campInfoDTO;
+			this.campFieldImage = order.getCampField().getCamp().getCampFieldImage();
+			this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
+			this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
+			this.fieldName = order.getCampField().getFieldName();
+			Period period = Period.between(LocalDate.parse(checkInDate) , //예약 일수 계산
+					LocalDate.parse(checkOutDate));
+			this.totalPrice = CampRespDTO.priceFormat(order.getCampField().getPrice()* period.getDays());
 		}
 		
 	}
 	
+
 	
-	// 현재와 비교해 D-day를 반환하는 함수
-	public static String formatDDay(Timestamp date) {
-		ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
-		LocalDate currentDate = LocalDate.now(koreaZoneId);
-		String remainningDays = String.valueOf(currentDate.until(date.toLocalDateTime().toLocalDate()).getDays()) ;
-		return "D-"+remainningDays;
-	}
 	
 }

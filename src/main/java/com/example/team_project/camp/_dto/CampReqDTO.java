@@ -43,5 +43,9 @@ public class CampReqDTO {
 		private double friendliness;
 	}
 	
+	@Data
+	public static class CampReviewListDTO {
+		private Integer campId;
+	}
 	
 }

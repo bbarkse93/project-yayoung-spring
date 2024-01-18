@@ -46,4 +46,14 @@ public class CampField {
     public String formatPrice(){
         return PriceUtils.formatBalance(price);
     }
+
+    // 업데이트
+    public void updateFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public void updatePrice(Integer price) {
+        this.price = price;
+    }
 }
+
