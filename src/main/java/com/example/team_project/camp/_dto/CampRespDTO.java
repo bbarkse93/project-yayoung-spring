@@ -411,45 +411,100 @@ public class CampRespDTO {
         }
 
     }
-    
+
     @Data
-    public static class CampReviewListDTO {
-        private Integer campId;
-        private String campName;
-        private String campTotalRating;
+    public static class AddCampReviewDTO {
+        private Integer id;
+        private String content;
         private double cleanliness;
         private double managementness;
         private double friendliness;
-        private List<ReviewDTO> reviewDTOList;
+        private Timestamp createdAt;
+        public AddCampReviewDTO(CampReview campReview, CampRating campRating) {
+            this.id = campReview.getId();
+            this.content = campReview.getContent();
+            this.cleanliness = campRating.getCleanliness();
+            this.managementness = campRating.getManagementness();
+            this.friendliness = campRating.getFriendliness();
+            this.createdAt = campReview.getCreatedAt();
+        }
+    }
+    @Data
+    public static class CampReviewListDTO {
+        List<CampReviewDTO> campReviewDTO;
+        String campName;
+        long campReviewCount;
 
-        public CampReviewListDTO(List<CampReview> campReviewList) {
-        	Camp camp = campReviewList.get(0).getCamp();
-            this.campId = camp.getId();
-            this.campName = camp.getCampName();
-            this.campTotalRating = camp.formatTotalRating();
-            this.cleanliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getCleanliness).collect(Collectors.toList())));
-            this.managementness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getManagementness).collect(Collectors.toList())));
-            this.friendliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getFriendliness).collect(Collectors.toList())));
-            this.reviewDTOList = campReviewList.stream().map(ReviewDTO::new).collect(Collectors.toList());
+        public CampReviewListDTO(List<CampReview> campReviewDTO, long campReviewCount) {
+            this.campReviewDTO = campReviewDTO.stream().map(c -> new CampReviewDTO(c)).collect(Collectors.toList());
+            this.campName = campReviewDTO.get(0).getCamp().getCampName();
+            this.campReviewCount = campReviewCount;
         }
 
         @Data
-        public static class ReviewDTO {
-            private Integer reviewId;
-            private String nickname;
+        public static class CampReviewDTO{
+            private Integer id;
             private String content;
-            private String totalRating;
-            private String createAt;
+            private double cleanliness;
+            private double managementness;
+            private double friendliness;
+            private String nickname;
+            private String userImage;
+            private Timestamp createdAt;
 
-            public ReviewDTO(CampReview campReview) {
-                this.reviewId = campReview.getId();
-                this.nickname = campReview.getUser().getNickname();
+
+            public CampReviewDTO(CampReview campReview) {
+                this.id = campReview.getId();
                 this.content = campReview.getContent();
-                this.totalRating = campReview.getCampRating().formatTotal();
-                this.createAt = campReview.formatTime();
+                this.cleanliness = campReview.getCampRating().getCleanliness();
+                this.managementness = campReview.getCampRating().getManagementness();
+                this.friendliness = campReview.getCampRating().getFriendliness();
+                this.nickname = campReview.getUser().getNickname();
+                this.userImage = campReview.getUser().getUserImage();
+                this.createdAt = campReview.getCreatedAt();
             }
         }
+
     }
     
- 
+//    @Data
+//    public static class CampReviewListDTO {
+//        private Integer campId;
+//        private String campName;
+//        private String campTotalRating;
+//        private double cleanliness;
+//        private double managementness;
+//        private double friendliness;
+//        private List<ReviewDTO> reviewDTOList;
+//
+//        public CampReviewListDTO(List<CampReview> campReviewList) {
+//        	Camp camp = campReviewList.get(0).getCamp();
+//            this.campId = camp.getId();
+//            this.campName = camp.getCampName();
+//            this.campTotalRating = camp.formatTotalRating();
+//            this.cleanliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getCleanliness).collect(Collectors.toList())));
+//            this.managementness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getManagementness).collect(Collectors.toList())));
+//            this.friendliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getFriendliness).collect(Collectors.toList())));
+//            this.reviewDTOList = campReviewList.stream().map(ReviewDTO::new).collect(Collectors.toList());
+//        }
+//
+//        @Data
+//        public static class ReviewDTO {
+//            private Integer reviewId;
+//            private String nickname;
+//            private String content;
+//            private String totalRating;
+//            private String createAt;
+//
+//            public ReviewDTO(CampReview campReview) {
+//                this.reviewId = campReview.getId();
+//                this.nickname = campReview.getUser().getNickname();
+//                this.content = campReview.getContent();
+//                this.totalRating = campReview.getCampRating().formatTotal();
+//                this.createAt = campReview.formatTime();
+//            }
+//        }
+//    }
+    
+
 }

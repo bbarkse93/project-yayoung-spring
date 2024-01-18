@@ -2,6 +2,8 @@ package com.example.team_project.camp;
 
 import java.util.List;
 
+import com.example.team_project.camp.camp_rating.CampRating;
+import com.example.team_project.camp.camp_review.CampReview;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +44,7 @@ public class CampService {
 
     // 사용자 캠핑장 목록 출력 기능(필터 적용 가능)
     public CampRespDTO.CampListDTO getAllCamps(CampReqDTO.CampListDTO requestDTO) {
-    	List<Camp> camps = campJPARepository.findAll();
+        List<Camp> camps = campJPARepository.findAll();
         return new CampRespDTO.CampListDTO(camps, requestDTO);
     }
 
@@ -83,9 +85,8 @@ public class CampService {
     }
 
 
-
     // 사용자의 관심 캠핑장 조회 기능
-    public List<CampBookmark> bookmarkList (Integer userId) {
+    public List<CampBookmark> bookmarkList(Integer userId) {
         return campBookmarkJPARepository.findByUserId(userId);
     }
 
@@ -111,4 +112,32 @@ public class CampService {
         return new CampRespDTO.SearchCampDTO(campList);
     }
 
+    public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
+
+        CampRating campRating = CampRating.builder()
+                .cleanliness(requestDTO.getCleanliness())
+                .managementness(requestDTO.getManagementness())
+                .friendliness(requestDTO.getFriendliness())
+                .user(User.builder().id(1).build())
+                .camp(Camp.builder().id(requestDTO.getCampId()).build())
+                .build();
+        // 별점 인서트
+        CampRating rating = campRatingJPARepository.save(campRating);
+        CampReview campReview = CampReview.builder()
+                .content(requestDTO.getContent())
+                .user(User.builder().id(1).build())
+                .camp(Camp.builder().id(requestDTO.getCampId()).build())
+                .campRating(rating)
+                .build();
+        // 리뷰 인서트
+        CampReview review = campReviewJPARepository.save(campReview);
+
+        return new CampRespDTO.AddCampReviewDTO(review, rating);
+    }
+
+    public CampRespDTO.CampReviewListDTO campReviewList(Integer campId) {
+        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId);
+        long campReviewCount = campReviewJPARepository.countByCampId(campId);
+        return new CampRespDTO.CampReviewListDTO(campReviewList, campReviewCount);
+    }
 }

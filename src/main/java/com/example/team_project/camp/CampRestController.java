@@ -128,4 +128,20 @@ public class CampRestController {
 
     
 
+    // 리뷰 등록
+    @PostMapping("/review/{campId}")
+    public ResponseEntity<?> addReview(@PathVariable Integer campId, @RequestBody CampReqDTO.CampReviewDTO requestDTO ){
+
+        requestDTO.setCampId(campId);
+        CampRespDTO.AddCampReviewDTO responseDTO = campService.addReview(requestDTO);
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    // 캠핑장 별 리뷰 목록 조회
+    @GetMapping("/review/{campId}")
+    public ResponseEntity<?> getReview(@PathVariable Integer campId) {
+        CampRespDTO.CampReviewListDTO campReviewListDTO = campService.campReviewList(campId);
+    return ResponseEntity.ok().body(ApiUtils.success(campReviewListDTO));
+    }
 }
