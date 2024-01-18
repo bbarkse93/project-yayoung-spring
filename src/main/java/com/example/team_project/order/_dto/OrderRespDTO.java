@@ -74,6 +74,7 @@ public class OrderRespDTO {
 		private String campFieldImage;
 		public PaymentWriteDTO(String campFieldImage) {
 			this.campFieldImage = campFieldImage;
+			
 		}	
 	}
 	

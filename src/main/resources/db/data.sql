@@ -1193,16 +1193,16 @@ insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness,
 values ( 2, 3.0, 1.0, 5.0, 1 );
 
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (1, 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (2, 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (3, 3, 2, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (4, 4, 3, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (5, 5, 4, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 3, 2, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 4, 3, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 5, 4, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)

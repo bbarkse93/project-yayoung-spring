@@ -14,6 +14,7 @@ import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.order._dto.OrderReqDTO;
 import lombok.Data;
+import net.bytebuddy.asm.Advice.This;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -250,27 +251,28 @@ public class CampRespDTO {
     @Data
     public static class MyCampListDTO {
         private List<MyCampDTO> myCampDTOs;
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
+        public MyCampListDTO(List<Order> orders, Integer year) {
+            this.myCampDTOs = orders.stream()
+                    .filter(order -> ( year == null ) || order.getCheckInDate().toLocalDateTime().getYear() == year)
+                    .sorted(Comparator.comparing(order -> {
                         return order.getCheckInDate();
                     }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+                    .map(order -> new MyCampDTO(order)).collect(Collectors.toList());
         }
         @Data
         public class MyCampDTO{
-            private String totalRating;
+            private Integer totalRating;
             private String checkInDate;
             private String checkOutDate;
             private String campAddress;
             private String campName;
             private String reviewImage;
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+            public MyCampDTO(Order order) {
+                Camp camp = order.getCampField().getCamp();
+                CampRespDTO.CampDetailDTO.RatingAverages doubleRatings = ratingAverages(camp.getCampRatingList());
+                this.totalRating = (int) (Math.round(doubleRatings.getCleanlinessAverage()
+                							+ doubleRatings.getFriendlinessAverage()
+                							+ doubleRatings.getManagementnessAverage())/3.0);
                 this.checkInDate = TimestampUtils.timeStampToDate
                         (order.getCheckInDate(), DATEFORMAT1);
                 Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
@@ -280,8 +282,15 @@ public class CampRespDTO {
                         (order.getCheckOutDate(), dateFormat);
                 this.campAddress = camp.getCampAddress();
                 this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
+                this.reviewImage = camp.getCampFieldImage();
             }
+            
+        }
+        private CampRespDTO.CampDetailDTO.RatingAverages ratingAverages(List<CampRating> ratings) {
+            double cleanlinessAverage = ratings.stream().mapToDouble(CampRating::getCleanliness).average().orElse(0);
+            double managementnessAverage = ratings.stream().mapToDouble(CampRating::getManagementness).average().orElse(0);
+            double friendlinessAverage = ratings.stream().mapToDouble(CampRating::getFriendliness).average().orElse(0);
+            return new CampRespDTO.CampDetailDTO.RatingAverages(cleanlinessAverage, managementnessAverage, friendlinessAverage);
         }
     }
 
