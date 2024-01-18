@@ -29,8 +29,6 @@ public class AdminController {
     private final HttpSession session;
 
 
-
-
     // 로그인(GET)
     @GetMapping("/login")
     public String login (){

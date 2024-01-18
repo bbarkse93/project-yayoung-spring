@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -37,14 +39,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.body(), e.status());
     }
 
+
+    // TODO 언약 : 이거 핸들러 어떻게 할지 물어보고 정하기
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> unknownServerError(Exception e){
         ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(CustomRestfulException.class)
-    public String basicException(CustomRestfulException e) {
+
+    @ExceptionHandler(CustomRestfullException.class)
+    public String basicException(CustomRestfullException e) {
         StringBuffer sb = new StringBuffer();
         sb.append("<script>");
         sb.append("alert('"+ e.getMessage() +"');");
