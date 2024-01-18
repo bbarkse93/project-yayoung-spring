@@ -578,14 +578,14 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 190
+Content-Length: 192
 
 {
   "success" : true,
   "response" : {
     "userId" : 1,
     "nickname" : "love",
-    "userImage" : "/images/user/love_b92e6c4a-5923-479e-a0fd-4349d9274b51.png"
+    "userImage" : "/images/user/love_17adc4a1-4405-4fc1-a749-adc54cfeb1f3.png"
   },
   "error" : null
 }</code></pre>
@@ -665,7 +665,7 @@ Content-Length: 135
 <h5 id="_request_example_6">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/list HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/list?optionNames=&amp;regionNames= HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -676,7 +676,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 3597
+Content-Length: 3590
 
 {
   "success" : true,
@@ -686,13 +686,13 @@ Content-Length: 3597
       "campName" : "(주)아웃오브파크",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campImage" : "/images/camp_image/camp1-1.jpg",
-      "campRating" : "4"
+      "campRating" : "3.8"
     }, {
       "id" : 2,
       "campName" : "파크킹",
       "campAddress" : "경북 김천시 어모면 은림로 62-11",
       "campImage" : "/images/camp_image/camp2-1.jpg",
-      "campRating" : "평가없음"
+      "campRating" : "3.4"
     }, {
       "id" : 3,
       "campName" : "디캠고흥",
@@ -796,7 +796,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 2890
+Content-Length: 4460
 
 {
   "success" : true,
@@ -818,12 +818,12 @@ Content-Length: 2890
         "minPrice" : 50000,
         "maxPrice" : 60000
       },
-      "totalRating" : "4"
+      "totalRating" : "3.8"
     },
     "campRating" : {
-      "cleanlinessAverage" : 4.2,
-      "managementnessAverage" : 4.0,
-      "friendlinessAverage" : 3.8
+      "cleanlinessAverage" : 4.0,
+      "managementnessAverage" : 3.75,
+      "friendlinessAverage" : 3.75
     },
     "reviewCount" : 5,
     "images" : [ {
@@ -851,64 +851,111 @@ Content-Length: 2890
       "campImageId" : 8,
       "campImage" : "/images/camp_image/camp1-8.jpg"
     } ],
-    "options" : [ {
-      "optionId" : 1,
-      "optionName" : "산"
-    }, {
-      "optionId" : 8,
-      "optionName" : "카라반"
-    }, {
-      "optionId" : 9,
-      "optionName" : "오토캠핑"
-    }, {
-      "optionId" : 11,
-      "optionName" : "데크"
-    }, {
-      "optionId" : 11,
-      "optionName" : "데크"
-    }, {
-      "optionId" : 14,
-      "optionName" : "전기"
-    }, {
-      "optionId" : 15,
-      "optionName" : "Wi-Fi"
-    }, {
-      "optionId" : 16,
-      "optionName" : "화로대"
-    }, {
-      "optionId" : 19,
-      "optionName" : "샤워장"
-    }, {
-      "optionId" : 20,
-      "optionName" : "온수"
-    }, {
-      "optionId" : 21,
-      "optionName" : "매점"
-    }, {
-      "optionId" : 22,
-      "optionName" : "물놀이장"
-    }, {
-      "optionId" : 27,
-      "optionName" : "족구장"
-    }, {
-      "optionId" : 33,
-      "optionName" : "릴선"
-    }, {
-      "optionId" : 36,
-      "optionName" : "숯"
-    }, {
-      "optionId" : 37,
-      "optionName" : "장작"
-    }, {
-      "optionId" : 38,
-      "optionName" : "얼음"
-    }, {
-      "optionId" : 39,
-      "optionName" : "술"
-    }, {
-      "optionId" : 40,
-      "optionName" : "등유"
-    } ]
+    "options" : {
+      "exercise_facility" : [ {
+        "optionId" : 27,
+        "optionName" : "족구장",
+        "categoryId" : 6,
+        "categoryName" : "exercise_facility"
+      } ],
+      "main_facility" : [ {
+        "optionId" : 14,
+        "optionName" : "전기",
+        "categoryId" : 4,
+        "categoryName" : "main_facility"
+      }, {
+        "optionId" : 15,
+        "optionName" : "Wi-Fi",
+        "categoryId" : 4,
+        "categoryName" : "main_facility"
+      }, {
+        "optionId" : 16,
+        "optionName" : "화로대",
+        "categoryId" : 4,
+        "categoryName" : "main_facility"
+      } ],
+      "site" : [ {
+        "optionId" : 11,
+        "optionName" : "데크",
+        "categoryId" : 3,
+        "categoryName" : "site"
+      }, {
+        "optionId" : 12,
+        "optionName" : "파쇄석",
+        "categoryId" : 3,
+        "categoryName" : "site"
+      } ],
+      "environment" : [ {
+        "optionId" : 1,
+        "optionName" : "산",
+        "categoryId" : 1,
+        "categoryName" : "environment"
+      } ],
+      "sell" : [ {
+        "optionId" : 36,
+        "optionName" : "숯",
+        "categoryId" : 9,
+        "categoryName" : "sell"
+      }, {
+        "optionId" : 37,
+        "optionName" : "장작",
+        "categoryId" : 9,
+        "categoryName" : "sell"
+      }, {
+        "optionId" : 38,
+        "optionName" : "얼음",
+        "categoryId" : 9,
+        "categoryName" : "sell"
+      }, {
+        "optionId" : 39,
+        "optionName" : "술",
+        "categoryId" : 9,
+        "categoryName" : "sell"
+      }, {
+        "optionId" : 40,
+        "optionName" : "등유",
+        "categoryId" : 9,
+        "categoryName" : "sell"
+      } ],
+      "have_facility" : [ {
+        "optionId" : 19,
+        "optionName" : "샤워장",
+        "categoryId" : 5,
+        "categoryName" : "have_facility"
+      }, {
+        "optionId" : 20,
+        "optionName" : "온수",
+        "categoryId" : 5,
+        "categoryName" : "have_facility"
+      }, {
+        "optionId" : 21,
+        "optionName" : "매점",
+        "categoryId" : 5,
+        "categoryName" : "have_facility"
+      }, {
+        "optionId" : 22,
+        "optionName" : "물놀이장",
+        "categoryId" : 5,
+        "categoryName" : "have_facility"
+      } ],
+      "type" : [ {
+        "optionId" : 8,
+        "optionName" : "카라반",
+        "categoryId" : 2,
+        "categoryName" : "type"
+      }, {
+        "optionId" : 9,
+        "optionName" : "오토캠핑",
+        "categoryId" : 2,
+        "categoryName" : "type"
+      } ],
+      "rental" : [ {
+        "optionId" : 33,
+        "optionName" : "릴선",
+        "categoryId" : 8,
+        "categoryName" : "rental"
+      } ]
+    }
   },
   "error" : null
 }</code></pre>
@@ -1045,7 +1092,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1246
+Content-Length: 1278
 
 {
   "success" : true,
@@ -1056,28 +1103,28 @@ Content-Length: 1246
       "checkOutDate" : "01월 15일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
+      "reviewImage" : "/images/camp_image/camp1-1.jpg"
     }, {
       "totalRating" : "3",
       "checkInDate" : "2024년 01월 17일",
       "checkOutDate" : "01월 18일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
+      "reviewImage" : "/images/camp_image/camp1-1.jpg"
     }, {
       "totalRating" : "4",
       "checkInDate" : "2024년 01월 20일",
       "checkOutDate" : "01월 25일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
+      "reviewImage" : "/images/camp_image/camp1-1.jpg"
     }, {
-      "totalRating" : "5",
+      "totalRating" : "4",
       "checkInDate" : "2024년 02월 03일",
       "checkOutDate" : "02월 10일",
       "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
       "campName" : "(주)아웃오브파크",
-      "reviewImage" : "camp_image/camp1-1.jpg"
+      "reviewImage" : "/images/camp_image/camp1-1.jpg"
     } ]
   },
   "error" : null
@@ -1177,7 +1224,7 @@ Content-Length: 808
 <h5 id="_request_example_14">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/field-list?campId=1&amp;checkInDate=2024-01-10&amp;checkOutDate=2024-01-15 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/field-list?campId=1 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1188,7 +1235,8 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1695
+Content-Length: 1934
+
 {
   "success" : true,
   "response" : {
@@ -1201,49 +1249,46 @@ Content-Length: 1695
       "campImage" : "/images/camp_image/camp1-1.jpg"
     },
     "campId" : 1,
-    "checkInDate" : "2024-01-10",
-    "checkOutDate" : "2024-01-15",
-    "nights" : 5,
     "campFieldImage" : "/images/camp_map/camp1.png",
     "campFieldDTOs" : [ {
       "fieldName" : "캠핑사이트-1",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑사이트-2",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑사이트-3",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑사이트-4",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑사이트-5",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑사이트-6",
-      "totalPrice" : "250,000"
+      "price" : "50,000"
     }, {
       "fieldName" : "캠핑카 13-1",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 17-1",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 20-1",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 20-2",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 20-3",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 20-4",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 26-1",
-      "totalPrice" : "300,000"
+      "price" : "60,000"
     }, {
       "fieldName" : "캠핑카 26-2",
       "price" : "60,000"
@@ -1269,17 +1314,13 @@ Content-Length: 1695
 </div>
 </div>
 <div class="sect2">
-<h3 id="_3_결제_화면_정보">3. 결제 화면 정보</h3>
+<h3 id="_4_결제_등록">4. 결제 등록</h3>
 <div class="sect4">
 <h5 id="_request_example_15">Request Example</h5>
 <div class="listingblock">
 <div class="content">
-<<<<<<< HEAD
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /order/payment HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-=======
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /order/payment?campId=1&amp;checkInDate=2024-01-24&amp;checkOutDate=2024-01-26&amp;fieldName=%EC%BA%A0%ED%95%91%EC%82%AC%EC%9D%B4%ED%8A%B8-1 HTTP/1.1
->>>>>>> dev
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1324,30 +1365,11 @@ orderId=6</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 533
+Content-Length: 83
 
 {
   "success" : true,
-<<<<<<< HEAD
   "response" : "환불 처리 완료",
-=======
-  "response" : {
-    "campInfoDTO" : {
-      "campName" : "(주)아웃오브파크",
-      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9",
-      "minPrice" : "50,000",
-      "maxPrice" : "60,000",
-      "isOpen" : true,
-      "campImage" : "/images/camp_image/camp1-1.jpg"
-    },
-    "campId" : 1,
-    "checkInDate" : "2024-01-24",
-    "checkOutDate" : "2024-01-26",
-    "fieldName" : "캠핑사이트-1",
-    "nights" : 2,
-    "totalPrice" : "100,000"
-  },
->>>>>>> dev
   "error" : null
 }</code></pre>
 </div>
@@ -1385,137 +1407,77 @@ Content-Length: 11115
       "noticeId" : 1,
       "title" : "YAYoung 임시 점검 안내",
       "content" : "YAYoung 사이트 서비스 개선을 위한 작업으로 인하여\n아래와 같이 일시적으로 YAYoung 홈페이지 접속이 불가능할 예정입니다.\n\n- 작업일시 : 2023년 10월 13일 (금) 00:00 ~ 06:00\n- 작업내용 : DB 작업\n\nYAYoung 서비스 이용에 불편을 드리게 되어 죄송합니다.\n더 나은 서비스를 제공할 수 있도록 노력하는 YAYoung이 되겠습니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 2,
       "title" : "YAYoung 리뉴얼 오픈",
       "content" : "Don`t Worry 캠핑!\nBe Happy YAYoung!!\nYAYoung 리뉴얼 오픈\n\nYAYoung 앱이 리뉴얼 오픈합니다.\n사용은 편리해졌고, 혜택은 다양해졌습니다.\n\n강력해진 Q-Point(적립금) 제도\n\n- YAYoung 예약, 쇼핑 이용 시 현금처럼 사용이 가능한 포인트 입니다.\n- 다양한 활동을 통해서 Q-Point를 적립하실 수 있습니다.\n- 예약, 쇼핑, 방문(출석), 게시글 작성, 홍보 참여 등 포인트 적립 기회가 다양해졌습니다.\n\n회원등급제도\n\n- YAYoung을 많이 이용할수록 혜택도 더욱 커집니다.\n- 1년 동안의 누적 활동 지수를 기준으로 내년 등급이 결정되며, 등급별로 다양한 혜택을 받으실 수 있습니다.\n- 등급은 Basic, Bronze, Silver, Gold, Platinum, VIP 총 6등급으로 나눠집니다.\n\n사용성 개선\n좀 더 쉽게 이동하세요.\n메뉴 버튼을 적용하여 원하는 페이지로 쉽게 이동이 가능해졌습니다.\n\n고객만족을 위해 더욱 노력하는 YAYoung이 되겠습니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 3,
       "title" : "서버 점검으로 인한 서비스 일시 중지 안내",
       "content" : "※ 서버 일시 중지 안내\n\n서비스 향상을 위한 서버 점검 작업으로 인해 작업 시간 동안  서비스가 중지됨을 알려드립니다.\n\n▶ 일시 : 28일(화) 01시 - 07시\n▶ 내용 : 서버 점검으로 인한 작업\n\n위 시간 동안 예약에 대한 모든 서비스가 중지 되오니 참고하시기 바랍니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 4,
       "title" : "카카오 소셜로그인 장애 안내",
       "content" : "현재 어플 및 PC로그인 중 카카오 소셜로그인이 정상적으로 작동되지 않음을 확인하였습니다.\n\n최근 카카오API 정책변경으로 인해 기능 보완이 필요해보입니다.\n조치 될때까지 카카오 로그인 서비스는 잠시 중단하겠습니다.\n\n기존에 카카오로그인으로 활동하신분은 죄송하지만 다른 로그인 방법을 이용해주시기 바랍니다.\n\n불편 드려 죄송합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 5,
       "title" : "캠핑장 내 공용 와이파이 사용 안내",
       "content" : "연곡해변 솔향기 캠핑장을 찾는 고객분들에게 알려드립니다 .\n\n캠핑장 내 강릉시에서 운영하는 공용 와이파이가 설치되어 있지만 지형적인 여건으로 인하여 와이파이 신호가 매우 약하여 노트북을 이용한 사무업무 혹은 동영상 강의 등을 재생할 경우 인터넷 연결이 원활하지 않은 경우가 많습니다.\n\n카라반 내부를 포함하여 캠핑장 내 전 구역에 캠핑장에서 개별적으로 운영하는 와이파이가 없으므로 이용에 참고하시기 바랍니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 6,
       "title" : "YAYoung 개인정보처리방침 개정 안내",
       "content" : "보다 나은 서비스 제공을 위해 YAYoung의 개인정보처리방침이 다음과 같이 변경됨을 알려 드립니다.\n\n▶ 개인정보처리방침 변경 및 시행일 : 2023년 12월 26일\n▶ 개인정보처리방침 주요 변경 내용\n\nYAYoung는 더 나은 서비스 제공을 위해 항상 최선을 다하겠습니다.\n\n앞으로도 지속적인 서비스 이용과 관심 부탁드립니다.\n감사합니다",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 7,
       "title" : "자주 묻는 질문 FAQ 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 8,
       "title" : "전자금융거래 이용약관 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 9,
       "title" : "개인정보 처리방침 개정 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 10,
       "title" : "카카오톡 로그인 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 11,
       "title" : "전자금융거래 이용약관 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 12,
       "title" : "YAYoung 서비스 점검 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 13,
       "title" : "개인정보 방침 처리 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 14,
       "title" : "전자금융거래 이용약관 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     }, {
       "noticeId" : 15,
       "title" : "1월 프로모션 종료 안내",
       "content" : "2022년 9월 27일자로 YAYoung 전자금융 선불 서비스가 신규 런칭함에 따라, 전자금융거래 이용약관이 추가되어 안내드립니다.\n상세 내용은 아래 약관 전문을 통하여 확인 가능하오니 이용에 참고 부탁드립니다.\n\n- 적용일자: 2022년 9월 27일\n- 전문: 전자금융거래 이용약관\n\n이용약관 동의 후 기존과 동일하게 야놀자 포인트 서비스 이용이 가능하오니, 고객님께서는 새롭게 추가된 이용약관을 확인하시어 이후 서비스 이용에 불편 없으시길 바랍니다.\n감사합니다.",
-<<<<<<< HEAD
       "createdAt" : "2024-01-16"
-=======
-      "createdAt" : "2024-01-12"
->>>>>>> dev
     } ]
   },
   "error" : null
@@ -1622,11 +1584,7 @@ Content-Length: 3844
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-<<<<<<< HEAD
 Last updated 2024-01-16 12:10:34 +0900
-=======
-Last updated 2024-01-12 11:32:11 +0900
->>>>>>> dev
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
