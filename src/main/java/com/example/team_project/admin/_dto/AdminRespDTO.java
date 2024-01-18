@@ -1,5 +1,6 @@
 package com.example.team_project.admin._dto;
 
+import com.example.team_project.admin.banner.Banner;
 import com.example.team_project.board.Board;
 import com.example.team_project.board._dto.BoardRespDTO;
 import com.example.team_project.camp.Camp;
@@ -394,6 +395,21 @@ public class AdminRespDTO {
             this.orderAt = order.formatCreatedAt();
             this.refundAt = order.formatRefundAt();
             this.refund = order.getCampField().formatPrice();
+        }
+    }
+
+
+    // 배너 목록 DTO
+    @Data
+    public static class BannerDTO{
+        private Integer bannerId;
+        private String bannerImage;
+        private String bannerImagePath;
+
+        public BannerDTO(Banner banner) {
+            this.bannerId = banner.getId();
+            this.bannerImagePath = banner.getBannerImage();
+            this.bannerImage = banner.formatFileName();
         }
     }
 

@@ -117,7 +117,6 @@ flatpickr(checkOut, {
 
 function changeImage(inputId, containerId, styleClass) {
     let inputElement = document.getElementById(inputId);
-    let num = inputElement.id.replace("camp_photo", "");
 
     // 파일이 선택되었는지 확인
     if (inputElement.files.length === 0) {

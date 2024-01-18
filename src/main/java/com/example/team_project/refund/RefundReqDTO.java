@@ -1,4 +1,4 @@
-package com.example.team_project.admin.refund;
+package com.example.team_project.refund;
 
 import lombok.Data;
 

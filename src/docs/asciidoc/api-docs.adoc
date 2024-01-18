@@ -8,6 +8,7 @@ endif::[]
 :order: order-rest-controller_test
 :notice: notice-rest-controller_test
 :board: board-rest-controller_test
+:refund: refund-rest-controller_test
 
 = REST API
 :toc: left
@@ -126,10 +127,10 @@ include::{snippets}/{order}/payment-write_test/http-response.adoc[]
 
 === 5. 환불
 ===== Request Example
-include::{snippets}/{order}/order-delete_test/http-request.adoc[]
+include::{snippets}/{refund}/want-refund_test/http-request.adoc[]
 
 ===== Response Example
-include::{snippets}/{order}/order-delete_test/http-response.adoc[]
+include::{snippets}/{refund}/want-refund_test/http-response.adoc[]
 
 == 공지사항
 === 1. 공지사항목록
