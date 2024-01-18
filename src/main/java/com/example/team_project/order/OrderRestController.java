@@ -45,6 +45,7 @@ public class OrderRestController {
     	// 테스트 용 하드 코딩
     	//OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(1);
     	OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(userId);
+        System.out.println("목록 조회 리스펀스에 값은 : ?" + responseDTO.getCampScheduleDTOs());
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     

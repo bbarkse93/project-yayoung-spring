@@ -56,11 +56,11 @@ public class AdminService {
 
         // 유저 정보 확인
         if (user == null) {
-            throw new CustomRestfullException("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+                throw new CustomRestfullException("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
         }
 
         if (user.isRole() != false) {
-            throw new CustomRestfullException("관리자 권한이 없습니다." , HttpStatus.BAD_REQUEST);
+             throw new CustomRestfullException("관리자 권한이 없습니다." , HttpStatus.BAD_REQUEST);
         }
 
         // 유저 네임 확인
