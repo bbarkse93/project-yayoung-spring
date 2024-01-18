@@ -134,7 +134,7 @@ public class OrderService {
 			throw new Exception400("잘못된 예약날짜가 전달되었습니다.");
 		}
 		// 마지막으로 예약 정보를 반환하여 환불 확인 화면으로 전달
-		
+		// 미구현
 	}
 	
 	// 캠핑 환불 DB 처리
