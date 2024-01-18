@@ -343,6 +343,7 @@ public class CampRestController_test extends MyWithRestDoc {
     	//when
     	ResultActions resultActions = mockMvc.perform(
     			MockMvcRequestBuilders.get("/camp/bookmark-list")
+    			.header("Authorization","Bearer " + TESTJWTTOKEN)
     			);
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
@@ -363,7 +364,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
 			Map<String, Object> listDataDTO = listDatsMap .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/bookmark-list"))
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/bookmark-list").header("Authorization","Bearer " + TESTJWTTOKEN))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campId").value(listDataDTO.get("campId")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campName").value(listDataDTO.get("campName")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campAddress").value(listDataDTO.get("campAddress")))

@@ -36,7 +36,7 @@ public class CampRestController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
         // 인증검사
-
+    	
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
