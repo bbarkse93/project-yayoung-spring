@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +32,7 @@ public class OrderRestController {
     public ResponseEntity<?> imminentOrderDetail(@RequestHeader("Authorization") String token){
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	// 테스트 용 하드 코딩
-//    	OrderRespDTO.ImminentOrderDetailDTO responseDTO = orderService.imminentOrderDetail(1);
+    	
     	OrderRespDTO.ImminentOrderDetailDTO responseDTO = orderService.imminentOrderDetail(userId);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -42,8 +42,7 @@ public class OrderRestController {
     public ResponseEntity<?> campScheduleList(@RequestHeader("Authorization") String token){
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	// 테스트 용 하드 코딩
-    	//OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(1);
+
     	OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(userId);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -58,24 +57,28 @@ public class OrderRestController {
     
     // 캠핑 결제
     @PostMapping("/payment")
-    public ResponseEntity<?> paymentWrite(@Valid OrderReqDTO.OrderWriteDTO requestDTO ,@RequestHeader("Authorization") String token){
+    public ResponseEntity<?> paymentWrite(@RequestBody @Valid OrderReqDTO.PaymentWriteDTO requestDTO 
+    					,@RequestHeader("Authorization") String token){
+    	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	//테스트 용 하드 코딩
-    	//OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(1, requestDTO);
+    	// 결제 정보의 유효성 검증
+    	orderService.paymentWriteValidate(userId, requestDTO);
+    	// DB 등록 및 캠핑장 지도 반환
     	OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
     
     // 캠핑 환불 DB 처리
     @DeleteMapping("/refund")
-    public ResponseEntity<?> orderDelete(@Valid OrderReqDTO.OrderDeleteDTO requestDTO 
-    		,@RequestHeader("Authorization") String token){
+    public ResponseEntity<?> orderDelete(@RequestBody @Valid OrderReqDTO.OrderDeleteDTO requestDTO 
+    		,@RequestHeader("Authorization") String token){    	
+    	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	
-    	//테스트 용 하드 코딩
-//    	orderService.orderDelete(1, requestDTO);
+    	// 환불 정보 유효성 검사
+    	orderService.orderDeleteValidate(userId, requestDTO);
+    	// 환불 DB 등록
     	orderService.orderDelete(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success("환불 처리 완료"));
     }

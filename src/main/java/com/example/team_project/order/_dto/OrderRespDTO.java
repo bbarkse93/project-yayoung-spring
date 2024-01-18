@@ -2,17 +2,11 @@ package com.example.team_project.order._dto;
 
 
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
-import com.example.team_project.camp_field.CampField;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -36,7 +30,7 @@ public class OrderRespDTO {
 		public ImminentOrderDetailDTO(Order order) {
 			this.campName = order.getCampField().getCamp().getCampName();
 			this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT3);
-			this.checkInDDay = formatDDay(order.getCheckInDate());
+			this.checkInDDay = TimestampUtils.formatDDay(order.getCheckInDate());
 		}
 	}
 	
@@ -54,6 +48,7 @@ public class OrderRespDTO {
 		@ToString
 		public class CampScheduleDTO{
 			private Integer orderId;
+			private Integer campId;
 			private String campName;
 			private String campAddress;
 			private String checkInDate;
@@ -63,10 +58,11 @@ public class OrderRespDTO {
 			public CampScheduleDTO(Order order) {
 				Camp camp = order.getCampField().getCamp();
 				this.orderId = order.getId();
+				this.campId = camp.getId();
 				this.campName = camp.getCampName();
 				this.campAddress = camp.getCampAddress();
 				this.checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(), DATEFORMAT2);
-				this.checkInDDay = formatDDay(order.getCheckInDate());
+				this.checkInDDay = TimestampUtils.formatDDay(order.getCheckInDate());
 				this.campField = order.getCampField().getFieldName();
 			}
 		}
@@ -78,17 +74,8 @@ public class OrderRespDTO {
 		private String campFieldImage;
 		public PaymentWriteDTO(String campFieldImage) {
 			this.campFieldImage = campFieldImage;
-		}
-		
-	}
-	
-	
-	// 현재와 비교해 D-day를 반환하는 함수
-	public static String formatDDay(Timestamp date) {
-		ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
-		LocalDate currentDate = LocalDate.now(koreaZoneId);
-		String remainningDays = String.valueOf(currentDate.until(date.toLocalDateTime().toLocalDate()).getDays()) ;
-		return "D-"+remainningDays;
+			
+		}	
 	}
 	
 }

@@ -14,9 +14,10 @@ import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_bookmark.CampBookmarkJPARepository;
 import com.example.team_project.camp.camp_image.CampImageJPARepository;
 import com.example.team_project.camp.camp_rating.CampRatingJPARepository;
-import com.example.team_project.camp.camp_review.CampReview;
 import com.example.team_project.camp.camp_review.CampReviewJPARepository;
 import com.example.team_project.camp_field.CampFieldJPARepository;
+import com.example.team_project.order.Order;
+import com.example.team_project.order.OrderJPARepository;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
 
@@ -35,6 +36,8 @@ public class CampService {
     private final CampRatingJPARepository campRatingJPARepository;
     private final CampReviewJPARepository campReviewJPARepository;
     private final CampFieldJPARepository campFieldJPARepository;
+    private final OrderJPARepository orderJPARepository;
+    
 
 
     // 사용자 캠핑장 목록 출력 기능(필터 적용 가능)
@@ -95,14 +98,16 @@ public class CampService {
 
     // 내 캠핑장 연도별 목록 조회
     public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-        List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
-        return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
+        List<Order> orders = orderJPARepository.findAllByUserId(userId);
+        return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 
+    // 캠핑장 검색
     public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
         System.out.println("serviceKeyword는? " + keyword);
         List<Camp> campList = campJPARepository.mfindSearchAll(keyword);
         System.out.println("결과는? " + campList.size());
         return new CampRespDTO.SearchCampDTO(campList);
     }
+
 }

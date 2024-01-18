@@ -34,5 +34,9 @@ public class CampReqDTO {
 		private List<String> regionNames; // 지역 옵션
 	}
 	
+	@Data
+	public static class CampReviewListDTO {
+		private Integer campId;
+	}
 	
 }

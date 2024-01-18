@@ -2,6 +2,8 @@ package com.example.team_project.camp._dto;
 
 import com.example.team_project._core.errors.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
+import com.example.team_project.admin._dto.AdminRespDTO;
+import com.example.team_project.admin._dto.AdminRespDTO.CampReviewDTO.ReviewDTO;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_image.CampImage;
@@ -12,6 +14,7 @@ import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.order._dto.OrderReqDTO;
 import lombok.Data;
+import net.bytebuddy.asm.Advice.This;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -248,27 +251,28 @@ public class CampRespDTO {
     @Data
     public static class MyCampListDTO {
         private List<MyCampDTO> myCampDTOs;
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
+        public MyCampListDTO(List<Order> orders, Integer year) {
+            this.myCampDTOs = orders.stream()
+                    .filter(order -> ( year == null ) || order.getCheckInDate().toLocalDateTime().getYear() == year)
+                    .sorted(Comparator.comparing(order -> {
                         return order.getCheckInDate();
                     }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+                    .map(order -> new MyCampDTO(order)).collect(Collectors.toList());
         }
         @Data
         public class MyCampDTO{
-            private String totalRating;
+            private Integer totalRating;
             private String checkInDate;
             private String checkOutDate;
             private String campAddress;
             private String campName;
             private String reviewImage;
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+            public MyCampDTO(Order order) {
+                Camp camp = order.getCampField().getCamp();
+                CampRespDTO.CampDetailDTO.RatingAverages doubleRatings = ratingAverages(camp.getCampRatingList());
+                this.totalRating = (int) (Math.round(doubleRatings.getCleanlinessAverage()
+                							+ doubleRatings.getFriendlinessAverage()
+                							+ doubleRatings.getManagementnessAverage())/3.0);
                 this.checkInDate = TimestampUtils.timeStampToDate
                         (order.getCheckInDate(), DATEFORMAT1);
                 Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
@@ -278,8 +282,15 @@ public class CampRespDTO {
                         (order.getCheckOutDate(), dateFormat);
                 this.campAddress = camp.getCampAddress();
                 this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
+                this.reviewImage = camp.getCampFieldImage();
             }
+            
+        }
+        private CampRespDTO.CampDetailDTO.RatingAverages ratingAverages(List<CampRating> ratings) {
+            double cleanlinessAverage = ratings.stream().mapToDouble(CampRating::getCleanliness).average().orElse(0);
+            double managementnessAverage = ratings.stream().mapToDouble(CampRating::getManagementness).average().orElse(0);
+            double friendlinessAverage = ratings.stream().mapToDouble(CampRating::getFriendliness).average().orElse(0);
+            return new CampRespDTO.CampDetailDTO.RatingAverages(cleanlinessAverage, managementnessAverage, friendlinessAverage);
         }
     }
 
@@ -402,4 +413,45 @@ public class CampRespDTO {
         }
 
     }
+    
+    @Data
+    public static class CampReviewListDTO {
+        private Integer campId;
+        private String campName;
+        private String campTotalRating;
+        private double cleanliness;
+        private double managementness;
+        private double friendliness;
+        private List<ReviewDTO> reviewDTOList;
+
+        public CampReviewListDTO(List<CampReview> campReviewList) {
+        	Camp camp = campReviewList.get(0).getCamp();
+            this.campId = camp.getId();
+            this.campName = camp.getCampName();
+            this.campTotalRating = camp.formatTotalRating();
+            this.cleanliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getCleanliness).collect(Collectors.toList())));
+            this.managementness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getManagementness).collect(Collectors.toList())));
+            this.friendliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getFriendliness).collect(Collectors.toList())));
+            this.reviewDTOList = campReviewList.stream().map(ReviewDTO::new).collect(Collectors.toList());
+        }
+
+        @Data
+        public static class ReviewDTO {
+            private Integer reviewId;
+            private String nickname;
+            private String content;
+            private String totalRating;
+            private String createAt;
+
+            public ReviewDTO(CampReview campReview) {
+                this.reviewId = campReview.getId();
+                this.nickname = campReview.getUser().getNickname();
+                this.content = campReview.getContent();
+                this.totalRating = campReview.getCampRating().formatTotal();
+                this.createAt = campReview.formatTime();
+            }
+        }
+    }
+    
+ 
 }

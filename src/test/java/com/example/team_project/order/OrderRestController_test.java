@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 public class OrderRestController_test extends MyWithRestDoc {
 
+	private final static String TESTJWTTOKEN = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q";
+	
 	@Test
 	public void imminentOrderDetail_test() throws Exception {
 		//given
@@ -26,7 +28,9 @@ public class OrderRestController_test extends MyWithRestDoc {
 		//when
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
-						.get("/order/imminentOrder"));
+						.get("/order/imminentOrder")
+						.header("Authorization","Bearer " + TESTJWTTOKEN)
+						);
 		String responseBody = resultActions
 				.andReturn()
 				.getResponse()
@@ -46,7 +50,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		.andDo(document);
 		
 		try {
-			mockMvc.perform(MockMvcRequestBuilders.get("/order/imminentOrder"))
+			mockMvc.perform(MockMvcRequestBuilders.get("/order/imminentOrder").header("Authorization","Bearer " + TESTJWTTOKEN))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.campName").value(responseMap.get("campName")))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDate").value(responseMap.get("checkInDate")))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.checkInDDay").value(responseMap.get("checkInDDay")))
@@ -64,7 +68,8 @@ public class OrderRestController_test extends MyWithRestDoc {
 		// when
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
-				.get("/order/campSchedule"));
+				.get("/order/campSchedule")
+				.header("Authorization","Bearer " + TESTJWTTOKEN));
 		String responseBody = resultActions
 				.andReturn()
 				.getResponse()
@@ -87,7 +92,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
 			Map<String, Object> listDataDTO = listDatsMap .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/order/campSchedule"))
+					mockMvc.perform(MockMvcRequestBuilders.get("/order/campSchedule").header("Authorization","Bearer " + TESTJWTTOKEN))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs["+ i +"].campName").value(listDataDTO.get("campName")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs["+ i +"].campAddress").value(listDataDTO.get("campAddress")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campScheduleDTOs["+ i +"].checkInDate").value(listDataDTO.get("checkInDate")))
@@ -112,6 +117,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
 						.get("/order/field-list")
+						.header("Authorization","Bearer "+ TESTJWTTOKEN)
 						.param("campId", String.valueOf(requestDTO.getCampId()))
 				);
 		String responseBody = resultActions
@@ -135,7 +141,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
 		.andDo(document);
 		
-    	mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").param("campId", String.valueOf(requestDTO.getCampId())))
+    	mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").header("Authorization","Bearer " + TESTJWTTOKEN).param("campId", String.valueOf(requestDTO.getCampId())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.campName").value(campInfoDTO.get("campName")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.campAddress").value(campInfoDTO.get("campAddress")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfoDTO.minPrice").value(campInfoDTO.get("minPrice")))
@@ -150,7 +156,7 @@ public class OrderRestController_test extends MyWithRestDoc {
     	IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
 			Map<String, Object> listDataDTO = listDatsMap .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").param("campId", String.valueOf(requestDTO.getCampId())))
+					mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").header("Authorization","Bearer " + TESTJWTTOKEN).param("campId", String.valueOf(requestDTO.getCampId())))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campFieldDTOs["+ i +"].fieldName").value(listDataDTO.get("fieldName")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campFieldDTOs["+ i +"].price").value(listDataDTO.get("price")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
@@ -163,7 +169,7 @@ public class OrderRestController_test extends MyWithRestDoc {
     	IntStream.range(0, reservedCampFieldMap .toArray().length).forEach(i -> {
     		Map<String, Object> listDataDTO = reservedCampFieldMap .get(i);
     		try {
-    			mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").param("campId", String.valueOf(requestDTO.getCampId())))
+    			mockMvc.perform(MockMvcRequestBuilders.get("/order/field-list").header("Authorization","Bearer " + TESTJWTTOKEN).param("campId", String.valueOf(requestDTO.getCampId())))
     			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].fieldName").value(listDataDTO.get("fieldName")))
     			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].checkInDate").value(listDataDTO.get("checkInDate")))
     			.andExpect(MockMvcResultMatchers.jsonPath("$.response.reservedCampFieldDTOs["+ i +"].checkOutDate").value(listDataDTO.get("checkOutDate")))
@@ -179,21 +185,22 @@ public class OrderRestController_test extends MyWithRestDoc {
 	public void paymentWrite_test() throws Exception {
 		
 		//given
-		OrderReqDTO.OrderWriteDTO requestDTO = new OrderReqDTO.OrderWriteDTO();
+		OrderReqDTO.PaymentWriteDTO requestDTO = new OrderReqDTO.PaymentWriteDTO();
 		requestDTO.setCampId(1);
 		requestDTO.setCheckIn("2024-01-25");
 		requestDTO.setCheckOut("2024-01-28");
 		requestDTO.setFieldName("캠핑사이트-1");
+		requestDTO.setTotalPrice(150000);
+		ObjectMapper om = new ObjectMapper();
+		String requestBody = om.writeValueAsString(requestDTO);
 		
 		//when
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders
 						.post("/order/payment")
+						.header("Authorization","Bearer "+ TESTJWTTOKEN)
 						.contentType("application/json")
-						.param("campId", String.valueOf(requestDTO.getCampId()))
-						.param("checkIn", requestDTO.getCheckIn())
-						.param("checkOut", requestDTO.getCheckOut())
-						.param("fieldName", requestDTO.getFieldName())
+						.content(requestBody)
 				);
 		String responseBody = resultActions
 						.andReturn()
@@ -220,6 +227,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		//when
 		ResultActions resultActions = mockMvc.perform(
 				MockMvcRequestBuilders.delete("/order/refund")
+				.header("Authorization","Bearer " + TESTJWTTOKEN)
 				.param("orderId", String.valueOf(requestDTO.getOrderId()))
 				);
 		String responseBody = resultActions.andReturn().getResponse().getContentAsString();

@@ -12,7 +12,7 @@ public class OrderReqDTO {
 	}
 		
 	@Data
-	public static class OrderWriteDTO{
+	public static class PaymentWriteDTO{
 		@NotNull
 		private Integer campId;
 		@NotEmpty
@@ -21,12 +21,22 @@ public class OrderReqDTO {
 		private String  checkOut;
 		@NotEmpty
 		private String  fieldName;
+		@NotNull
+		private Integer  totalPrice;
 	}
 	
 	@Data
 	public static class OrderDeleteDTO{
 		@NotNull
 		private Integer orderId;
+		@NotEmpty
+		private String campName;
+		@NotEmpty
+		private String campAddress;
+		@NotEmpty
+		private String checkInDate;
+		@NotEmpty
+		private String fieldName;
 	}
 	
 	
