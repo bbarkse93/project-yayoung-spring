@@ -73,24 +73,5 @@ public class OrderRestController {
     	OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
-    
-    //캠핑 환불 정보 보내기
-    @GetMapping("/refund-info")
-    public ResponseEntity<?> getRefundInfo(@RequestBody @Valid OrderReqDTO.RefundInfoDTO requestDTO 
-    		,@RequestHeader("Authorization") String token){
-    	// 토큰 인증
-    	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-    	Integer userId = decodedJWT.getClaim("id").asInt();
-    	// 환불 정보를 유효성 검사하여 전송
-    	OrderRespDTO.RefundInfoDTO responseDTO  = orderService.refundInfo(userId, requestDTO);
-    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
-    
-    
 
-    
-
-    
-    
-    
 }

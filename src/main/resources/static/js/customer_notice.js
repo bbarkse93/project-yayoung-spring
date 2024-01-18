@@ -6,7 +6,7 @@ async function fetchDetailNotice(noticeId) {
         let apiUtil = await response.json();
         let noticeDetailDTO = apiUtil.response;
         let title = document.getElementById('update_title');
-        title.placeholder = noticeDetailDTO.title;
+        title.value = noticeDetailDTO.title;
         let content = document.getElementById('update_content');
         content.innerHTML = noticeDetailDTO.content;
         let updateNoticeId = document.getElementById('notice_id');

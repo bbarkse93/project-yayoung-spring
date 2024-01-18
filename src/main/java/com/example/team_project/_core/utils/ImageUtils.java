@@ -83,4 +83,21 @@ public class ImageUtils {
 
         return "/images/camp_map/"+ fileName;
     }
+
+    // 배너 파일 등록
+    public static String formatBanner(MultipartFile pic) {
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + pic.getOriginalFilename();
+        System.out.println("fileName : " + fileName);
+
+        Path filePath = Paths.get(MyPath.CAMP_BANNER_IMG_PATH + fileName);
+        try {
+            Files.write(filePath, pic.getBytes());
+        } catch (Exception e) {
+            // 폴더, 경로, 파일 등의 오류 처리
+            throw new Exception404(e.getMessage());
+        }
+
+        return "/images/banner/"+ fileName;
+    }
 }

@@ -32,6 +32,8 @@ public class CampRestController {
 
     private final CampService campService;
 
+    String token = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MDUzNDgyfQ.Ky2-BLYTjxlouBRsY1HScpc3fC3FOhpK0OrCKy3MFFW6KkCC19B2KsZrd9NIYLoeYY1YEB2BQNLT_KjPETTPMw";
+
     //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {

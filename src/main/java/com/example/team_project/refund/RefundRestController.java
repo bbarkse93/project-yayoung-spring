@@ -1,4 +1,4 @@
-package com.example.team_project.admin.refund;
+package com.example.team_project.refund;
 
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project.admin.AdminService;

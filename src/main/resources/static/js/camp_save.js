@@ -64,16 +64,16 @@ function addPhotoField() {
     }
     // 새로운 레이블 생성
     let newLabel = document.createElement("label");
-    newLabel.setAttribute("id", "camp" + photoCount);
-    newLabel.setAttribute("for", "photo" + photoCount);
-    newLabel.className = "camera_receive_form";
+    newLabel.setAttribute("id", "camp_pic" + photoCount);
+    newLabel.setAttribute("for", "camp_photo" + photoCount);
+    newLabel.className = "camp_select_form";
     newLabel.innerHTML = '<img src="" class="camera_icon">' +
         '<span class="custom_font_point3"></span>';
 
     // 새로운 인풋 필드 생성
     let newInput = document.createElement("input");
     newInput.setAttribute("type", "file");
-    newInput.setAttribute("id", "photo" + photoCount);
+    newInput.setAttribute("id", "camp_photo" + photoCount);
     newInput.setAttribute("name", "campPhotoList");
     newInput.setAttribute("accept", "image/*");
     newInput.setAttribute("onchange", "changeImage(this.id, 'camp_pic" + photoCount + "', 'camp_pic_style')");
@@ -164,19 +164,19 @@ function sample4_execDaumPostcode() {
             document.getElementById("sample4_jibunAddress").value = roadAddr;
             document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
 
-            var guideTextBox = document.getElementById("guide");
+            var guideTextBox = document.getElementById("sample4_jibunAddress");
             // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
             if(data.autoRoadAddress) {
                 var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.value = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                 guideTextBox.style.display = 'block';
 
             } else if(data.autoJibunAddress) {
                 var expJibunAddr = data.autoJibunAddress;
-                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                guideTextBox.value = '(예상 지번 주소 : ' + expJibunAddr + ')';
                 guideTextBox.style.display = 'block';
             } else {
-                guideTextBox.innerHTML = '';
+                guideTextBox.value = '';
                 guideTextBox.style.display = 'none';
             }
         }

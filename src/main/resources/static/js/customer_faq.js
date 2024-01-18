@@ -6,7 +6,7 @@ async function fetchDetailFaq(faqId) {
         let apiUtil = await response.json();
         let faqDetailDTO = apiUtil.response;
         let title = document.getElementById('update_title');
-        title.placeholder = faqDetailDTO.title;
+        title.value = faqDetailDTO.title;
         let content = document.getElementById('update_content');
         content.innerHTML = faqDetailDTO.content;
         let updateFaqId = document.getElementById('faq_id');
