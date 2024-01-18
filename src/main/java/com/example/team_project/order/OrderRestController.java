@@ -44,6 +44,7 @@ public class OrderRestController {
     	Integer userId = decodedJWT.getClaim("id").asInt();
 
     	OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(userId);
+        System.out.println("목록 조회 리스펀스에 값은 : ?" + responseDTO.getCampScheduleDTOs());
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     
