@@ -918,17 +918,19 @@ ul.tabs li.current .a_tag {
 }
 
 .page-item {
-    width: 70px;
+    width: 60px;
     text-align: center;
 }
 
 .page-link {
-    padding: 10px;
+    padding: 8px;
     color: var(--point_01);
+    font-size: 14px;
 }
 
 .page-link:hover {
     color: var(--point_01);
+    font-size: 14px;
 }
 
 /************************************/
@@ -1068,3 +1070,47 @@ ul.tabs li.current .a_tag {
     font-weight: bold;
 }
 
+/****************************/
+
+#banner_form {
+    text-align: center;
+}
+
+.banner_select_form {
+    height: 200px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 5px;
+    border: 0.5px solid var(--line_01);
+}
+
+.banner_pic_style {
+    height: 200px;
+    width: 400px;
+    border-radius: 5px;
+}
+
+.btn_button {
+    border: none;
+    background-color: transparent;
+    margin-bottom: 10px;
+    color: var(--font_04);
+}
+
+.banner_th th {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.banner_td td {
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    height: 52px;
+}

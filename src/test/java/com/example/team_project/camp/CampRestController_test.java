@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -291,10 +292,15 @@ public class CampRestController_test extends MyWithRestDoc {
     	//given
     	CampReqDTO.CampBookmarkDTO requestDTO = new CampReqDTO.CampBookmarkDTO();
     	requestDTO.setCampId(1);
+		ObjectMapper om = new ObjectMapper();
+		String requestBody = om.writeValueAsString(requestDTO);
+
     	//when
     	ResultActions resultActions = mockMvc.perform(
     			MockMvcRequestBuilders.post("/camp/bookmark")
-    			.param("campId", String.valueOf(requestDTO.getCampId()))
+						.header("Authorization","Bearer " + TESTJWTTOKEN)
+    					.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON)
     			);
     	
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -316,11 +322,15 @@ public class CampRestController_test extends MyWithRestDoc {
     	//given
     	CampReqDTO.CampBookmarkDeleteDTO requestDTO = new CampReqDTO.CampBookmarkDeleteDTO();
     	requestDTO.setCampId(1);
+		ObjectMapper om = new ObjectMapper();
+		String requestBody = om.writeValueAsString(requestDTO);
     	
     	//when
     	ResultActions resultActions = mockMvc.perform(
     			MockMvcRequestBuilders.delete("/camp/bookmark")
-    			.param("campId", String.valueOf(requestDTO.getCampId()))
+						.header("Authorization","Bearer " + TESTJWTTOKEN)
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON)
     			);
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	System.out.println("ResultActions : " + responseBody);
@@ -342,9 +352,15 @@ public class CampRestController_test extends MyWithRestDoc {
     	
     	//when
     	ResultActions resultActions = mockMvc.perform(
+<<<<<<< HEAD
+				MockMvcRequestBuilders.get("/camp/bookmark-list")
+				.header("Authorization","Bearer " + TESTJWTTOKEN)
+		);
+=======
     			MockMvcRequestBuilders.get("/camp/bookmark-list")
     			.header("Authorization","Bearer " + TESTJWTTOKEN)
     			);
+>>>>>>> dev
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
     	System.out.println("ResultActions : " + responseBody);
@@ -392,8 +408,10 @@ public class CampRestController_test extends MyWithRestDoc {
                 MockMvcRequestBuilders
                         .get("/camp/myCamp")
                         .param("year", String.valueOf(requestDTO.getYear()))
+						.header("Authorization","Bearer " + TESTJWTTOKEN)
 
-        );
+
+		);
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println(responseBody);
@@ -412,7 +430,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
 			Map<String, Object> listDataDTO = listDatsMap .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/myCamp").param("year", String.valueOf(requestDTO.getYear())))
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/myCamp").header("Authorization","Bearer " + TESTJWTTOKEN).param("year", String.valueOf(requestDTO.getYear())))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs["+ i +"].totalRating").value(listDataDTO.get("totalRating")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.myCampDTOs["+ i +"].checkInDate").value(listDataDTO.get("checkInDate")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())

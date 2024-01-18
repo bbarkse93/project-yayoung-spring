@@ -1,0 +1,98 @@
+{{>admin/layout/manager_header}}
+
+<!--컨테이너1 시작-->
+<div class="flex_center">
+    <div class="main">
+        <div class="container">
+            <div class="section1">
+                <div class="section_title">캠핑장</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-tent"></i><a href="/admin/camp/setting">캠핑장 관리</a></li>
+                    <li><i class="fa-solid fa-tent-arrows-down"></i></i><a href="/admin/camp/save">캠핑장 등록</a></li>
+                    <li><i class="fa-solid fa-compass"></i><a href="/admin/camp/current">캠핑장 현황 · 리뷰</a></li>
+                    <li><i class="fa-solid fa-image"></i><a href="/admin/camp/banner">캠핑장 배너 등록</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">회원</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-user"></i><a href="/admin/user">회원 관리</a></li>
+                    <li><i class="fa-solid fa-money-bill-transfer"></i><a href="/admin/user/refund">환불</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+
+            <div class="section1">
+                <div class="section_title">고객센터</div>
+                <ul class="section_ul">
+                    <li><i class="fa-solid fa-question"></i><a href="/admin/customer/faq">FAQ</a></li>
+                    <li><i class="fa-regular fa-clipboard"></i><a
+                            href="/admin/customer/notice">공지사항</a></li>
+                </ul>
+                <div class="short_line"></div>
+            </div>
+        </div>
+        <!--컨테이너1 끝-->
+
+        <!--컨테이너2 시작-->
+        <div class="check_container">
+            <div class="admin_container_title">
+                <h3>배너 등록</h3>
+            </div>
+            <div class="custom_flex_center" style="margin: 30px">
+                <form action="/admin/camp/banner/save" method="post" enctype="multipart/form-data" id="banner_form">
+                    <div id="pic_plus" class="custom_flex_align_center">
+                        <label id="camp_pic" for="camp_photo" class="banner_select_form">
+                            <img src="/static_images/icons/add_camera.png" class="camera_icon">
+                            사진 선택 <span class="custom_font_point3">*</span></label>
+                        <input type="file" id="camp_photo" name="banner" accept="image/*"
+                               onchange="changeImage(this.id, 'camp_pic', 'banner_pic_style')"
+                               class="camp_pic_upload_label">
+                        <br>
+                    </div>
+                    <button type="submit" class="insert_button" style="margin-top: 15px;">배너 등록</button>
+                </form>
+            </div>
+            <div>
+                <table class="table table-hover" style="table-layout: fixed">
+                    <thead>
+                    <tr class="banner_th">
+                        <th style="width: 50px">#</th>
+                        <th>파일명</th>
+                        <th>이미지</th>
+                        <th style="width: 17%">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#bannerDTOList}}
+                        <tr class="banner_td">
+                            <td>{{bannerId}}</td>
+                            <td>{{bannerImage}}</td>
+                            <td>
+                                <button class="btn_button" id="banner_toggle{{bannerId}}">클릭 시 배너 확인</button>
+                                <div id="toggle{{bannerId}}" style="display: none">
+                                    <img src="../..{{bannerImagePath}}" style="max-width: 100%; border-radius: 5px" class="camp_field_image">
+                                </div>
+                            </td>
+                            <td>
+                                <button class="delete_Button" onclick="fetchDeleteBanner({{bannerId}})">삭제
+                                </button>
+                            </td>
+                        </tr>
+                    {{/bannerDTOList}}
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <li class="page-item {{#first}}disabled{{/first}}"><a class="page-link" href="/admin/camp/banner?page={{prevPage}}">Prev</a></li>
+                    <li class="page-item {{#last}}disabled{{/last}}"><a class="page-link" href="/admin/camp/banner?page={{nextPage}}">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--컨테이너2 끝-->
+    </div>
+</div>
+<script src="/js/camp_banner.js"></script>
+</body>
+</html>

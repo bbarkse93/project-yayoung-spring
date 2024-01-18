@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SpringBootTest
 public class UserRestController_test extends MyWithRestDoc {
 
+    private final static String TESTJWTTOKEN = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q";
+
+
     // get 요청 - 마이 페이지
     @Test
     public void myPage_test() throws Exception {
@@ -26,8 +29,8 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-//                        .get("/user/my-page/"+id)
                         .get("/user/my-page")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
         );
 
         // then
@@ -51,8 +54,9 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-//                        .get("/user/my-page/"+id)
                         .get("/user/my-page/profile")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
+
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -63,7 +67,7 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("ssar"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userImage").value("user-profile.jpg"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userImage").value("/images/user/user-profile.jpg"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
                 .andDo(MockMvcResultHandlers.print())
                 .andDo(document);
@@ -83,6 +87,7 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions ra = mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/my-page/profile")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -141,6 +146,7 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions ra = mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/withDraw")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

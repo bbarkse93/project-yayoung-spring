@@ -114,18 +114,10 @@ public class AdminReqDTO {
         }
     }
 
-    // 변환용
+    // 배너 등록 DTO
     @Data
-    public static class CampFieldDTO{
-        private Integer fieldId;
-        private String fieldName;
-        private Integer price;
-
-        public CampFieldDTO(CampField campField) {
-            this.fieldId = campField.getId();
-            this.fieldName = campField.getFieldName();
-            this.price = campField.getPrice();
-        }
+    public static class SaveBannerDTO{
+        private MultipartFile banner;
     }
 
 }

@@ -1,20 +1,14 @@
 package com.example.team_project.refund;
 
 import com.example.team_project.MyWithRestDoc;
-import com.example.team_project.admin.refund.RefundReqDTO;
-import com.example.team_project.camp._dto.CampReqDTO;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 @SpringBootTest
 public class RefundRestController_test extends MyWithRestDoc{
@@ -29,19 +23,28 @@ public class RefundRestController_test extends MyWithRestDoc{
 		requestDTO.setMerchantUid("11111");
 		requestDTO.setCancelRequestAmount("8000");
 		requestDTO.setReason("이유");
+		ObjectMapper om = new ObjectMapper();
+		String requestBody = om.writeValueAsString(requestDTO);
 
 		//when
 		ResultActions resultActions = mockMvc.perform(
-				MockMvcRequestBuilders.post("/refund")
-						.param("orderId", String.valueOf(requestDTO.getOrderId()))
-						.param("merchantUid", String.valueOf(requestDTO.getMerchantUid()))
-						.param("cancelRequestAmount", String.valueOf(requestDTO.getCancelRequestAmount()))
-						.param("reason", String.valueOf(requestDTO.getReason()))
+				MockMvcRequestBuilders.post("/user/refund")
+						.content(requestBody)
+						.contentType(MediaType.APPLICATION_JSON)
 		);
 
 		String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-
+		System.out.println("응답 : " + responseBody);
 		System.out.println("resultActions : " + responseBody);
+
 		//then
+		resultActions
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("환불이 완료되었습니다."))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+				.andDo(MockMvcResultHandlers.print())
+				.andDo(document);
+
 	}
 }

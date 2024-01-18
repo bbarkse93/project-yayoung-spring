@@ -1,23 +1,16 @@
 package com.example.team_project.admin.banner;
 
-import com.example.team_project._core.utils.TimestampUtils;
-import com.example.team_project.board.board_category.BoardCategory;
-import com.example.team_project.camp.Camp;
-import com.example.team_project.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "banner_tb")
-public class banner {
+public class Banner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +19,14 @@ public class banner {
     private String bannerImage;
 
     @Builder
-    public banner(Integer id, String bannerImage) {
+    public Banner(Integer id, String bannerImage) {
         this.id = id;
         this.bannerImage = bannerImage;
+    }
+
+    // 파일명만 얻기
+    public String formatFileName(){
+        String[] formatList = bannerImage.split("/");
+        return formatList[3];
     }
 }

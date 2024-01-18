@@ -65,11 +65,10 @@ public class UserRestController {
     // ME 메인 페이지 요청
     // localhost:8080/user/my-page
     @GetMapping("/my-page")
-    public ResponseEntity<?> myPage() {
-        // @RequestHeader("Authorization") String token
-        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-        // Integer userId = decodedJWT.getClaim("id")
-        UserRespDTO.UserDTO responseDTO = userService.myPage(1);
+    public ResponseEntity<?> myPage(@RequestHeader("Authorization") String token) {
+         DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+         Integer userId = decodedJWT.getClaim("id").asInt();
+        UserRespDTO.UserDTO responseDTO = userService.myPage(userId);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
@@ -77,10 +76,8 @@ public class UserRestController {
     // localhost:8080/user/my-page/profile
     @GetMapping("/my-page/profile")
     public ResponseEntity<?> profilePage(@RequestHeader("Authorization") String token) {
-        System.out.println("Get이요~");
          DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
          Integer userId = decodedJWT.getClaim("id").asInt();
-        System.out.println("userId 잘 받아옴? : " + userId);
         UserRespDTO.UserDTO responseDTO = userService.proflieDetail(userId);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -89,16 +86,11 @@ public class UserRestController {
     // ME 프로필 수정
     // localhost:8080/user/my-page/profile
     @PutMapping("/my-page/profile")
-    public ResponseEntity<?> profileUpdate(@RequestHeader("Authorization") String token, @RequestBody UserReqDTO.ProfileUpdateDTO requestDTO){
-        System.out.println("Put이요~" + requestDTO.getNickname());
-        System.out.println("Put이요~" + requestDTO.getUserImage());
-
+    public ResponseEntity<?> profileUpdate(@RequestBody UserReqDTO.ProfileUpdateDTO requestDTO, @RequestHeader("Authorization") String token){
          DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
          Integer userId = decodedJWT.getClaim("id").asInt();
-        System.out.println("Put이요~" + userId);
-
         UserRespDTO.UserDTO responseDTO = userService.profileUpdate(requestDTO, userId);
-        System.out.println("응답 전 : " + responseDTO.getNickname());
+
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
@@ -113,11 +105,10 @@ public class UserRestController {
     // ME 회원탈퇴
     // localhost:8080/user/withDraw
     @PutMapping("/withDraw")
-    public ResponseEntity<?> withDraw(){
-        // @RequestHeader("Authorization") String token
-        // DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
-        // Integer userId = decodedJWT.getClaim("id")
-        UserRespDTO.withDrawDTO responseDTO = userService.withDraw(1);
+    public ResponseEntity<?> withDraw(@RequestHeader("Authorization") String token){
+         DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+         Integer userId = decodedJWT.getClaim("id").asInt();
+        UserRespDTO.withDrawDTO responseDTO = userService.withDraw(userId);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }

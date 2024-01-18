@@ -6,6 +6,8 @@ import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.admin._dto.AdminReqDTO;
 import com.example.team_project.admin._dto.AdminRespDTO;
+import com.example.team_project.admin.banner.Banner;
+import com.example.team_project.admin.banner.BannerJPARepository;
 import com.example.team_project.board.Board;
 import com.example.team_project.board.BoardJPARepository;
 import com.example.team_project.board.board_category.BoardCategory;
@@ -61,6 +63,7 @@ public class AdminService {
     private final OptionManagementJPARepository optionManagementJPARepository;
     private final OptionJPARepository optionJPARepository;
     private final BoardJPARepository boardJPARepository;
+    private final BannerJPARepository bannerJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
     private final NoticeJPARepository noticeJPARepository;
 
@@ -224,7 +227,7 @@ public class AdminService {
         return "수정에 성공했습니다.";
     }
 
-    // notice 목록(faq 갯수)
+    // notice 목록(notice 갯수)
     public List<AdminRespDTO.NoticeDTO> noticeList(String keyword) {
         List<Notice> noticeList = noticeJPARepository.mfindSearchAll(keyword);
         return noticeList.stream().map(AdminRespDTO.NoticeDTO::new).collect(Collectors.toList());
@@ -503,7 +506,7 @@ public class AdminService {
         }
     }
 
-    // 환불 목록(캠핑장 수)
+    // 환불 목록(환불 갯수)
     public List<AdminRespDTO.RefundDTO> refundList(String keyword) {
         List<Order> refundList = orderJPARepository.mfindSearchAll(keyword);
         return refundList.stream().map(AdminRespDTO.RefundDTO::new).collect(Collectors.toList());
@@ -531,4 +534,33 @@ public class AdminService {
         return "환불이 완료되었습니다.";
     }
 
+    // 배너 목록(배너 갯수)
+    public List<AdminRespDTO.BannerDTO> bannerList() {
+        List<Banner> bannerList = bannerJPARepository.mfindSearchAll();
+        return bannerList.stream().map(AdminRespDTO.BannerDTO::new).collect(Collectors.toList());
+    }
+
+    // 배너 목록 페이징(페이징 된 화면 수)
+    public List<AdminRespDTO.BannerDTO> bannerPaging(Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
+        Page<Banner> bannerPG = bannerJPARepository.mfindSearchPageAll(pageable);
+        return bannerPG.stream().map(AdminRespDTO.BannerDTO::new).collect(Collectors.toList());
+    }
+
+    // 배너 등록
+    @Transactional
+    public void saveBanner(AdminReqDTO.SaveBannerDTO requestDTO) {
+        Banner banner = Banner.builder()
+                .bannerImage(ImageUtils.formatBanner(requestDTO.getBanner()))
+                .build();
+        bannerJPARepository.save(banner);
+    }
+
+    // 배너 삭제
+    @Transactional
+    public String deleteBanner(Integer bannerId) {
+        Banner banner = bannerJPARepository.findById(bannerId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + bannerId));
+        bannerJPARepository.deleteById(banner.getId());
+        return "삭제에 성공했습니다.";
+    }
 }
