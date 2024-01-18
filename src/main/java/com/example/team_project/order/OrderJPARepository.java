@@ -26,7 +26,7 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 			"INNER JOIN camp_field_tb AS cf ON o.camp_field_id = cf.id " +
 			"INNER JOIN user_tb AS u ON u.id = o.user_id " +
 			"INNER JOIN camp_tb AS c ON c.id = cf.camp_id " +
-			"WHERE o.is_refund = false " +
+			"WHERE o.is_refund = true " +
 			"AND (u.nickname LIKE CONCAT('%', :keyword ,'%') OR c.camp_name LIKE CONCAT('%', :keyword ,'%'))";
 
 	@Query(value = sql, nativeQuery = true)

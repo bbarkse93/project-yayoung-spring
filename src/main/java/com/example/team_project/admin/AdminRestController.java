@@ -131,4 +131,10 @@ public class AdminRestController {
         return ResponseEntity.ok().body(ApiUtils.success(campDetailDTO));
     }
 
+    // 환불 상세 내용(GET) - 모달
+    @GetMapping("/refund/detail/{orderId}")
+    public ResponseEntity<?> detailRefund(@PathVariable Integer orderId){
+        AdminRespDTO.RefundDetailDTO refundDetailDTO = adminService.refundDetail(orderId);
+        return ResponseEntity.ok().body(ApiUtils.success(refundDetailDTO));
+    }
 }

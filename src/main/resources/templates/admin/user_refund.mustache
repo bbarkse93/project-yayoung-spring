@@ -70,11 +70,12 @@
                             <td class="content">{{campName}}</td>
                             <td>{{campField}}</td>
                             <td>{{refundAt}}</td>
-                            <td>{{price}}</td>
+                            <td style="color: #9b3838">- {{price}}원</td>
                             <td>
-                                <button class="review_button" id="reviewSetting"
+                                <button class="detail_button"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#camp_refund_modal">상세보기
+                                        data-bs-target="#camp_refund_modal"
+                                onclick="fetchDetailRefund({{orderId}})">상세보기
                                 </button>
                             </td>
                         </tr>
@@ -90,7 +91,6 @@
             <div class="modal" id="camp_refund_modal">
                 <div class="modal-dialog">
                     <div class="refund_modal_content">
-
                         <!-- Modal body -->
                         <div class="refund_modal_body">
                             <div class="button">
@@ -101,13 +101,13 @@
                                     오토 캠핑장
                                 </div>
                                 <div>
-                                    <img src="../../images/camp_image/camp1-1.jpg" style="max-width: 50%; border-radius: 5px">
+                                    <img src="../../images/camp_image/camp1-1.jpg" style="max-width: 50%; border-radius: 5px" class="camp_image">
                                 </div>
                                 <div style="margin: 20px 0">
                                     <button id="btn_toggle">캠핑장 배치도</button>
                                     <p class="btn_info">버튼 클릭 시 배치도 확인</p>
                                     <div id="toggle" style="display: none">
-                                        <img src="../../images/camp_map/camp1.png" style="max-width: 60%; border-radius: 5px">
+                                        <img src="../../images/camp_map/camp1.png" style="max-width: 80%; border-radius: 5px" class="camp_field_image">
                                     </div>
                                 </div>
                             </div>
@@ -118,30 +118,30 @@
                                 환불 내용
                             </div>
                             <div class="border">
-                                <div class="custom_flex_between custom_mini_margin_bottom">
-                                    <div class="sub_title">유저</div>
-                                    <div class="content">ssar</div>
+                                <div class="custom_flex_between content">
+                                    <p>예약한 유저</p>
+                                    <p class="user_nickname">ssar</p>
                                 </div>
-                                <div class="sub_title">환불 정보</div>
-                                <div class="custom_flex_between content custom_mini_margin_bottom">
-                                    <div>
-                                        예약한 날짜
-                                    </div>
-                                    <div>
-                                        2024-01-01 ~ 2024-01-03
-                                    </div>
+                                <div class="custom_flex_between content ">
+                                    <p>예약한 날짜</p>
+                                    <p class="reservation_date">2024-01-01 ~ 2024-01-03</p>
                                 </div>
                                 <div class="custom_flex_between content">
-                                    <div>
-                                        선택한 구역
-                                    </div>
-                                    <div>
-                                        A-1
-                                    </div>
+                                    <p>선택한 구역</p>
+                                    <p class="selected_field">A-1</p>
+                                </div>
+                                <div class="custom_flex_between content">
+                                    <p>결제 날짜</p>
+                                    <p class="order_date">2011-11-11</p>
+                                </div>
+                                <hr>
+                                <div class="custom_flex_between content">
+                                    <p class="custom_font_bold">환불 날짜</p>
+                                    <p class="refund_date">2011-11-11</p>
                                 </div>
                                 <div class="custom_flex_between">
                                     <div class="sub_title">총 환불 금액</div>
-                                    <div class="content">- 70000원</div>
+                                    <div class="refund custom_font_point3">- 70000원</div>
                                 </div>
                             </div>
                         </div>

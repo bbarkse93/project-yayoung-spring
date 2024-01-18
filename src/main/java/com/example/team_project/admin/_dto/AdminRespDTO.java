@@ -363,7 +363,37 @@ public class AdminRespDTO {
             this.campName = order.getCampField().getCamp().getCampName();
             this.campField = order.getCampField().getFieldName();
             this.price = order.getCampField().formatPrice();
-            this.refundAt = order.formatCreatedAt();
+            this.refundAt = order.formatRefundAt();
+        }
+    }
+
+    // refund 상세 DTO
+    @Data
+    public static class RefundDetailDTO {
+        private Integer orderId;
+        private String campName;
+        private String campImage;
+        private String campFieldImage;
+        private String orderUserNickname;
+        private String checkIn;
+        private String checkOut;
+        private String selectedField;
+        private String orderAt;
+        private String refundAt;
+        private String refund;
+
+        public RefundDetailDTO(Order order) {
+            this.orderId = order.getId();
+            this.campName = order.getCampField().getCamp().getCampName();
+            this.campImage = order.getCampField().getCamp().firstCampImage();
+            this.campFieldImage = order.getCampField().getCamp().getCampFieldImage();
+            this.orderUserNickname = order.getUser().getNickname();
+            this.checkIn = order.formatCheckInDate();
+            this.checkOut = order.formatCheckOutDate();
+            this.selectedField = order.getCampField().getFieldName();
+            this.orderAt = order.formatCreatedAt();
+            this.refundAt = order.formatRefundAt();
+            this.refund = order.getCampField().formatPrice();
         }
     }
 

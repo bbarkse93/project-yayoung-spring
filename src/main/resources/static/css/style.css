@@ -143,6 +143,10 @@
     color: var(--point_03);
 }
 
+.custom_font_bold {
+    font-weight: bold;
+}
+
 .custom_flex_center {
     display: flex;
     justify-content: center;
@@ -962,7 +966,7 @@ ul.tabs li.current .a_tag {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     color: var(--line_01);
     pointer-events: auto;
     background-color: var(--def_wh);
@@ -975,7 +979,7 @@ ul.tabs li.current .a_tag {
     position: relative;
     flex: 1 1 auto;
     padding: 15px;
-    background-color: var(--primary_02);
+    background-color: var(--back_05);
     height: auto;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -1022,6 +1026,12 @@ ul.tabs li.current .a_tag {
     margin-bottom: 5px;
     color: var(--font_01);
     font-size: 14px;
+}
+
+.refund_modal_footer .refund {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 #btn_toggle{

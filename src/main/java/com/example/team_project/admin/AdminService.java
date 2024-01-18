@@ -513,4 +513,21 @@ public class AdminService {
         Page<Order> orderPG = orderJPARepository.mfindSearchPageAll(keyword, pageable);
         return orderPG.stream().map(AdminRespDTO.RefundDTO::new).collect(Collectors.toList());
     }
+
+    // 환불 상세
+    public AdminRespDTO.RefundDetailDTO refundDetail(Integer orderId) {
+        Order order = orderJPARepository.findById(orderId).orElseThrow(() -> new Exception401("해당 주문을 찾을 수 없습니다." + orderId));
+        return new AdminRespDTO.RefundDetailDTO(order);
+    }
+
+    // 환불 등록
+    @Transactional
+    public String saveRefund(Integer orderId) {
+        Order order = orderJPARepository.findById(orderId).orElseThrow(() -> new Exception404("해당 주문을 찾을 수 없습니다." + orderId));
+        order.updateRefund(true);
+        order.updateRefundAt(new Timestamp(System.currentTimeMillis()));
+        return "환불이 완료되었습니다.";
+    }
+
+
 }

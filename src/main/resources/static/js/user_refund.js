@@ -4,68 +4,35 @@ $(function (){
     });
 });
 
-// async function fetchReview(campId) {
-//     try {
-//         let response = await fetch('/admin/camp/review/' + campId);
-//         if (response.ok) {
-//             let apiUtil = await response.json();
-//             let campReviewDTO = apiUtil.response;
-//             let campName = document.getElementById('campName');
-//             let campCount = document.getElementById('campCount');
-//             let ratingClean = document.getElementById('clean');
-//             let ratingManagement = document.getElementById('management');
-//             let ratingFriend = document.getElementById('friend');
-//             campName.innerHTML = campReviewDTO.campName;
-//             campCount.innerHTML = campReviewDTO.campTotalRating;
-//             ratingClean.innerHTML =
-//                 ratingStar(0, campReviewDTO.cleanliness)
-//                 + ratingStar(1, campReviewDTO.cleanliness)
-//                 + ratingStar(2, campReviewDTO.cleanliness)
-//                 + ratingStar(3, campReviewDTO.cleanliness)
-//                 + ratingStar(4, campReviewDTO.cleanliness);
-//             ratingManagement.innerHTML =
-//                 ratingStar(0, campReviewDTO.managementness)
-//                 + ratingStar(1, campReviewDTO.managementness)
-//                 + ratingStar(2, campReviewDTO.managementness)
-//                 + ratingStar(3, campReviewDTO.managementness)
-//                 + ratingStar(4, campReviewDTO.managementness);
-//             ratingFriend.innerHTML =
-//                 ratingStar(0, campReviewDTO.friendliness)
-//                 + ratingStar(1, campReviewDTO.friendliness)
-//                 + ratingStar(2, campReviewDTO.friendliness)
-//                 + ratingStar(3, campReviewDTO.friendliness)
-//                 + ratingStar(4, campReviewDTO.friendliness);
-//
-//             let reviewTbody = document.getElementById('review_tbody');
-//             reviewTbody.innerHTML = "";
-//             let reviewCount = document.querySelector('.custom_font_point1');
-//             reviewCount.innerHTML = campReviewDTO.reviewDTOList.length;
-//             campReviewDTO.reviewDTOList.forEach((review) => {
-//                 let tr = document.createElement('tr');
-//                 tr.className = "review_td";
-//                 tr.innerHTML = `
-//                     <td>${review.reviewId}</td>
-//                     <td>${review.userNickname}</td>
-//                     <td style="text-align: start">${review.content}</td>
-//                     <td>
-//                     ${ratingStar(0, review.totalRating)
-//                     + ratingStar(1, review.totalRating)
-//                     + ratingStar(2, review.totalRating)
-//                     + ratingStar(3, review.totalRating)
-//                     + ratingStar(4, review.totalRating)}
-//                     </td>
-//                     <td>${review.createAt}</td>
-//                     <td>
-//                         <button class="review_button" onclick="deleteReview(${review.reviewId}, ${campReviewDTO.campId})">삭제</button>
-//                     </td>
-//                 `;
-//                 reviewTbody.appendChild(tr);
-//             })
-//
-//         } else {
-//             console.error("실패", response.statusText);
-//         }
-//     } catch (e) {
-//         console.error("실패", e.message);
-//     }
-// }
+async function fetchDetailRefund(orderId){
+    try {
+        let response = await fetch('/admin/refund/detail/' + orderId);
+        if(response.ok){
+            let apiUtil = await response.json();
+            let refundDetailDTO = apiUtil.response;
+            let campName = document.querySelector('.camp_name');
+            campName.value = refundDetailDTO.campName;
+            let campImage = document.querySelector('.camp_image');
+            campImage.src = `../..${refundDetailDTO.campImage}`;
+            let campFieldImage = document.querySelector('.camp_field_image');
+            campFieldImage.src = `../..${refundDetailDTO.campFieldImage}`;
+            let userNickname = document.querySelector('.user_nickname');
+            userNickname.innerText = refundDetailDTO.orderUserNickname;
+            let reservationDate = document.querySelector('.reservation_date');
+            reservationDate.innerText = `${refundDetailDTO.checkIn} ~ ${refundDetailDTO.checkOut}`;
+            let selectedField = document.querySelector('.selected_field');
+            selectedField.innerText = refundDetailDTO.selectedField;
+            let orderDate = document.querySelector('.order_date');
+            orderDate.innerText = refundDetailDTO.orderAt;
+            let refundDate = document.querySelector('.refund_date');
+            refundDate.innerText = refundDetailDTO.refundAt;
+            let refund = document.querySelector('.refund');
+            refund.innerText = `- ${refundDetailDTO.refund}원`;
+        } else {
+            console.error("실패", response.statusText);
+        }
+    } catch (e) {
+        console.error("실패", e.message);
+    }
+}
+
