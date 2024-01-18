@@ -28,9 +28,6 @@ public class AdminController {
     private final AdminService adminService;
     private final HttpSession session;
 
-
-
-
     // 로그인 페이지 요청(GET)
     @GetMapping("/login")
     public String login (){

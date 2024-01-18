@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,12 +45,16 @@ public class OrderRestController {
     	Integer userId = decodedJWT.getClaim("id").asInt();
 
     	OrderRespDTO.CampScheduleListDTO responseDTO  = orderService.campScheduleList(userId);
+        System.out.println("목록 조회 리스펀스에 값은 : ?" + responseDTO.getCampScheduleDTOs());
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
     
     //캠프장 아이디를 받아 캠프 구역 목록 조회 + 캠프장 지도 + 상세정보 조회
     @GetMapping("/field-list")
-    public ResponseEntity<?> campFieldList(@ModelAttribute OrderReqDTO.CampFieldListDTO requestDTO){
+    public ResponseEntity<?> campFieldList(@ModelAttribute OrderReqDTO.CampFieldListDTO requestDTO
+    					,@RequestHeader("Authorization") String token){
+    	// 토큰 인증
+    	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	CampRespDTO.CampFieldListDTO responseDTO = orderService.campFieldList(requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
@@ -69,5 +74,4 @@ public class OrderRestController {
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
-    
 }

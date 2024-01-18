@@ -2,6 +2,7 @@ package com.example.team_project.order;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.team_project.camp.Camp;
 import org.springframework.data.domain.Page;
@@ -34,4 +35,10 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 
 	@Query(value = sql, nativeQuery = true)
 	List<Order> mfindSearchAll(@Param("keyword") String keyword);
+	
+	Order findByIdAndUserId(Integer orderId, Integer userId);
+
+	
+	
+
 }

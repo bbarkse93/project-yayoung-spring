@@ -26,17 +26,9 @@ public class OrderReqDTO {
 	}
 	
 	@Data
-	public static class OrderDeleteDTO{
+	public static class RefundInfoDTO{
 		@NotNull
 		private Integer orderId;
-		@NotEmpty
-		private String campName;
-		@NotEmpty
-		private String campAddress;
-		@NotEmpty
-		private String checkInDate;
-		@NotEmpty
-		private String fieldName;
 	}
 	
 	

@@ -352,9 +352,15 @@ public class CampRestController_test extends MyWithRestDoc {
     	
     	//when
     	ResultActions resultActions = mockMvc.perform(
+<<<<<<< HEAD
 				MockMvcRequestBuilders.get("/camp/bookmark-list")
 				.header("Authorization","Bearer " + TESTJWTTOKEN)
 		);
+=======
+    			MockMvcRequestBuilders.get("/camp/bookmark-list")
+    			.header("Authorization","Bearer " + TESTJWTTOKEN)
+    			);
+>>>>>>> dev
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
     	System.out.println("ResultActions : " + responseBody);

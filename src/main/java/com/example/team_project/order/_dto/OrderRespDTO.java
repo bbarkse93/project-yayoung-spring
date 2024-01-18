@@ -2,11 +2,15 @@ package com.example.team_project.order._dto;
 
 
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
+import com.example.team_project.camp._dto.CampRespDTO;
+import com.example.team_project.camp._dto.CampRespDTO.CampInfoDTO;
 import com.example.team_project.order.Order;
 
 import lombok.Data;
@@ -77,5 +81,30 @@ public class OrderRespDTO {
 			
 		}	
 	}
+	
+	@Getter
+	@ToString
+	public static class RefundInfoDTO{
+		private CampInfoDTO campInfoDTO;
+		private String campFieldImage;
+		private String checkInDate;
+		private String checkOutDate;
+		private String fieldName;
+		private String totalPrice;
+		public RefundInfoDTO(CampInfoDTO campInfoDTO, Order order ) {
+			this.campInfoDTO = campInfoDTO;
+			this.campFieldImage = order.getCampField().getCamp().getCampFieldImage();
+			this.checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
+			this.checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
+			this.fieldName = order.getCampField().getFieldName();
+			Period period = Period.between(LocalDate.parse(checkInDate) , //예약 일수 계산
+					LocalDate.parse(checkOutDate));
+			this.totalPrice = CampRespDTO.priceFormat(order.getCampField().getPrice()* period.getDays());
+		}
+		
+	}
+	
+
+	
 	
 }
