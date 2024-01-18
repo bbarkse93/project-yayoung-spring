@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 public class CampRestController_test extends MyWithRestDoc {
 
+	private final static String TESTJWTTOKEN = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q";
+	
     @Test
     public void getAllCamps_test() throws Exception {
         // given
@@ -34,6 +36,7 @@ public class CampRestController_test extends MyWithRestDoc {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/camp/list")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
                         .param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
                         .param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null));
 
@@ -54,7 +57,7 @@ public class CampRestController_test extends MyWithRestDoc {
         IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
             Map<String, Object> listDataDTO = listDatsMap.get(i);
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list")
+                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list").header("Authorization","Bearer " + TESTJWTTOKEN)
                 			.param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
                 			.param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null))
                         .andExpect(MockMvcResultMatchers

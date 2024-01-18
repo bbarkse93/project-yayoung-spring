@@ -1158,16 +1158,16 @@ insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(2, 1);
 insert into CAMP_BOOKMARK_TB (CAMP_ID, USER_ID) values(3, 1);
 
 -- 결제 -------------------------------------------------------------------------------------------------------
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2022-01-10', '2022-01-15', 1, 1, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-11', '2024-01-15', 1, 3, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-17', '2024-01-18', 1, 5, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-01-20', '2024-01-25', 1, 7, now());
-insert into order_tb (check_in_date, check_out_date, user_id, camp_field_id, created_at)
-values ('2024-02-03', '2024-02-10', 1, 9, now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('11111', '2022-01-10', '2022-01-15', 1, 1, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('22222', '2024-01-11', '2024-01-15', 1, 3, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('33333', '2024-01-17', '2024-01-18', 1, 5, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('44444', '2024-01-20', '2024-01-25', 1, 7, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('55555', '2024-02-03', '2024-02-10', 1, 9, false, now(), now());
 
 -- 평점 ------------------------------------------------------------------------------------------------------------
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)
@@ -1193,16 +1193,16 @@ insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness,
 values ( 2, 3.0, 1.0, 5.0, 1 );
 
 -- 리뷰 -----------------------------------------------------------------------------------------------------------
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (1, 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (2, 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (3, 3, 2, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (4, 4, 3, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
-insert into camp_review_tb (order_id, camp_rating_id, camp_id, user_id, content, review_image, created_at )
-values (5, 5, 4, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 1, 1, 1, '아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 2, 1, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 3, 2, 1, '전보다 조금 관리가 안된 장소였습니다. 다음에는 개선되었으면 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 4, 3, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
+insert into camp_review_tb (camp_rating_id, camp_id, user_id, content, review_image, created_at )
+values ( 5, 4, 1, '전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요.', '/images/camp_image/camp1-1.jpg', now()  );
 
 -- FAQ 카테고리 -------------------------------------------------------------------------------------------------------
 insert into BOARD_CATEGORY_TB (TITLE)

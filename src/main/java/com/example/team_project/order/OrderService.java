@@ -1,14 +1,16 @@
 package com.example.team_project.order;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project._core.errors.exception.Exception404;
+import com.example.team_project._core.errors.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.CampJPARepository;
@@ -19,7 +21,6 @@ import com.example.team_project.order._dto.OrderReqDTO;
 import com.example.team_project.order._dto.OrderRespDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +36,6 @@ public class OrderService {
 
     // 아이디로 다가오는 캠핑 일정 조회
 	public OrderRespDTO.ImminentOrderDetailDTO imminentOrderDetail(Integer userId) {
-		
 		Order order = orderJPARepository.findFirstByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
 		if(order == null) throw new Exception404("예정된 캠핑이 없습니다");
 		return new OrderRespDTO.ImminentOrderDetailDTO(order);
@@ -62,35 +62,86 @@ public class OrderService {
 		return new CampRespDTO.CampFieldListDTO(campFields, camp, orders, requestDTO);
 	}
 
-
-	// 캠핑 결제
-	public OrderRespDTO.PaymentWriteDTO paymentWrite(int userId, OrderReqDTO.OrderWriteDTO requestDTO) {
-		// requestDTO 가공 로직
+	// 결제 정보 검증 및 유효성 검사
+	public void paymentWriteValidate(Integer userId,@Valid OrderReqDTO.PaymentWriteDTO requestDTO ) {
+		//사용자가 없으면 예외 처리
+		userJPARepository.findById(userId)
+					.orElseThrow(()->new Exception404("해당 사용자가 없습니다."));
+		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
+		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
+				(requestDTO.getFieldName(),requestDTO.getCampId());
+		Period period = Period.between(LocalDate.parse(requestDTO.getCheckIn()) , //예약 일수 계산
+				LocalDate.parse(requestDTO.getCheckOut()));
+		Integer totalPrice = campField.getPrice() * period.getDays();
+		if(!requestDTO.getTotalPrice().equals(totalPrice)) {
+			throw new Exception400("결제 금액이 올바르지 않습니다.");
+		}
+	}
+	
+	// 결제 DB 등록
+	public OrderRespDTO.PaymentWriteDTO paymentWrite(Integer userId,@Valid OrderReqDTO.PaymentWriteDTO requestDTO) {
+		// requestDTO 가공
 		Timestamp checkInDate  = TimestampUtils.convertToTimestamp(requestDTO.getCheckIn());
 		Timestamp checkOutDate = TimestampUtils.convertToTimestamp(requestDTO.getCheckOut());
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
-									(requestDTO.getFieldName(),requestDTO.getCampId());
-		User      user         = userJPARepository.findById(userId)
-									.orElseThrow(()->new Exception404("해당 사용자가 없습니다."));
+						(requestDTO.getFieldName(),requestDTO.getCampId());
+				
 		// DB 입력
-		Order response =  orderJPARepository.save(Order.builder()
-							.checkInDate(checkInDate)
-							.checkOutDate(checkOutDate)
-							.user(user)
-							.campField(campField)
-							.build());
-		if(response == null)
-			throw new Exception404("예약에 실패했습니다.");
-		// 결과 반환
-		return new OrderRespDTO.PaymentWriteDTO(campField.getCamp().getCampFieldImage());
+		try {
+			Order order = orderJPARepository.save(Order.builder()
+					.checkInDate(checkInDate)
+					.checkOutDate(checkOutDate)
+					.user(User.builder().id(userId).build())
+					.campField(campField)
+					.build());
+			return new OrderRespDTO.PaymentWriteDTO(campField.getCamp().getCampFieldImage());
+		} catch (Exception e) {
+			throw new Exception500("결제 등록에 실패했습니다");
+		}
+		
 	}
+	
 
+	// 캠핑 환불 유효성 검사
+	public void orderDeleteValidate(Integer userId, @Valid OrderReqDTO.OrderDeleteDTO requestDTO) {
+		//사용자가 없으면 예외 처리
+		userJPARepository.findById(userId)
+					.orElseThrow(() -> new Exception404("해당 사용자가 없습니다."));
+		// orderId에 맞는 예약 정보가 있는지 확인
+		Order order = orderJPARepository.findById(requestDTO.getOrderId())
+					.orElseThrow(() -> new Exception404("잘못된 예약번호입니다."));
+		Camp camp = order.getCampField().getCamp();
+		// orderId를 이용해 조회한 Order 정보와 요청 데이터의 일치 여부 확인
+		// 예약자와 동일한 사용자 여부 확인
+		if(order.getUser().getId() != userId) {
+			throw new Exception400("예약자와 다른 계정입니다.");
+		}
+		// 예약 상의 캠프 구역 명 일치 여부 확인
+		if(!order.getCampField().getFieldName().equals(requestDTO.getFieldName())) {
+			throw new Exception400("잘못된 캠프 구역 명이 전달되었습니다.");
+		}
+		// 캠프 주소
+		if(!camp.getCampAddress().equals(requestDTO.getCampAddress())) {
+			throw new Exception400("잘못된 캠프 주소가 전달되었습니다.");
+		}
+		// 캠프 이름
+		if(!camp.getCampName().equals(requestDTO.getCampName())) {
+			throw new Exception400("잘못된 캠프 이름이 전달되었습니다.");
+		}
+		// 예약일 ex) 8월 25일
+		String checkInDate = TimestampUtils.timeStampToDate(order.getCheckInDate(),"MM월 dd일");
+		if(checkInDate.equals(requestDTO.getCheckInDate())) {
+			throw new Exception400("잘못된 예약날짜가 전달되었습니다.");
+		}
+		// 마지막으로 예약 정보를 반환하여 환불 확인 화면으로 전달
+		// 미구현
+	}
+	
 	// 캠핑 환불 DB 처리
 	public void orderDelete(Integer userId, @Valid OrderReqDTO.OrderDeleteDTO requestDTO) {
 		Order order = orderJPARepository.findById(requestDTO.getOrderId())
-						.orElseThrow(()-> new Exception404("잘못된 예약번호입니다."));
+						.orElseThrow(()-> new Exception400("잘못된 예약번호입니다."));
 		orderJPARepository.delete(order);
-		
 	}
 
 }

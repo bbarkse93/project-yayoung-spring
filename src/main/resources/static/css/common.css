@@ -16,6 +16,7 @@
     --back_02: #FCFBF8;
     --back_03: #e0f3ff;
     --back_04: #fff5ed;
+    --back_05: #d3ded4;
     --def_wh: #fff;
     --def_bl: #000;
 }
@@ -71,6 +72,15 @@
     width: 93px;
     border-radius: 5px;
     background-color: var(--primary_02);
+    color: var(--def_bl);
+}
+
+.detail_button {
+    border: none;
+    padding: 10px;
+    width: 93px;
+    border-radius: 5px;
+    background-color: var(--back_05);
     color: var(--def_bl);
 }
 
