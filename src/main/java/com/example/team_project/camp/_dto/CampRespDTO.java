@@ -245,43 +245,43 @@ public class CampRespDTO {
     final static String DATEFORMAT1 = "yyyy년 MM월 dd일";
     final static String DATEFORMAT2 = "MM월 dd일";
     // 내 캠핑장 연도별 DTO
-    @Data
-    public static class MyCampListDTO {
-        private List<MyCampDTO> myCampDTOs;
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
-                        return order.getCheckInDate();
-                    }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
-        }
-        @Data
-        public class MyCampDTO{
-            private String totalRating;
-            private String checkInDate;
-            private String checkOutDate;
-            private String campAddress;
-            private String campName;
-            private String reviewImage;
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
-                this.checkInDate = TimestampUtils.timeStampToDate
-                        (order.getCheckInDate(), DATEFORMAT1);
-                Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
-                        == order.getCheckOutDate().toLocalDateTime().getYear();
-                String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
-                this.checkOutDate = TimestampUtils.timeStampToDate
-                        (order.getCheckOutDate(), dateFormat);
-                this.campAddress = camp.getCampAddress();
-                this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
-            }
-        }
-    }
+//    @Data
+//    public static class MyCampListDTO {
+//        private List<MyCampDTO> myCampDTOs;
+//        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
+//            this.myCampDTOs = campReviews.stream()
+//                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
+//                    .sorted(Comparator.comparing(campReview -> {
+//                        Order order = campReview.getOrder();
+//                        return order.getCheckInDate();
+//                    }))
+//                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+//        }
+//        @Data
+//        public class MyCampDTO{
+//            private String totalRating;
+//            private String checkInDate;
+//            private String checkOutDate;
+//            private String campAddress;
+//            private String campName;
+//            private String reviewImage;
+//            public MyCampDTO(CampReview campReview) {
+//                Order order = campReview.getOrder();
+//                Camp camp = campReview.getCamp();
+//                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+//                this.checkInDate = TimestampUtils.timeStampToDate
+//                        (order.getCheckInDate(), DATEFORMAT1);
+//                Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
+//                        == order.getCheckOutDate().toLocalDateTime().getYear();
+//                String dateFormat = yearCheck ? DATEFORMAT2 : DATEFORMAT1;
+//                this.checkOutDate = TimestampUtils.timeStampToDate
+//                        (order.getCheckOutDate(), dateFormat);
+//                this.campAddress = camp.getCampAddress();
+//                this.campName = camp.getCampName();
+//                this.reviewImage = campReview.getReviewImage();
+//            }
+//        }
+//    }
 
     // 캠프 구역 불러오기
     @Data
@@ -404,8 +404,58 @@ public class CampRespDTO {
     }
 
     @Data
-    public static class addCampReviewDTO {
+    public static class AddCampReviewDTO {
         private Integer id;
         private String content;
+        private double cleanliness;
+        private double managementness;
+        private double friendliness;
+        private Timestamp createdAt;
+        public AddCampReviewDTO(CampReview campReview, CampRating campRating) {
+            this.id = campReview.getId();
+            this.content = campReview.getContent();
+            this.cleanliness = campRating.getCleanliness();
+            this.managementness = campRating.getManagementness();
+            this.friendliness = campRating.getFriendliness();
+            this.createdAt = campReview.getCreatedAt();
+        }
     }
+    @Data
+    public static class CampReviewListDTO {
+        List<CampReviewDTO> campReviewDTO;
+        String campName;
+        long campReviewCount;
+
+        public CampReviewListDTO(List<CampReview> campReviewDTO, long campReviewCount) {
+            this.campReviewDTO = campReviewDTO.stream().map(c -> new CampReviewDTO(c)).collect(Collectors.toList());
+            this.campName = campReviewDTO.get(0).getCamp().getCampName();
+            this.campReviewCount = campReviewCount;
+        }
+
+        @Data
+        public static class CampReviewDTO{
+            private Integer id;
+            private String content;
+            private double cleanliness;
+            private double managementness;
+            private double friendliness;
+            private String nickname;
+            private String userImage;
+            private Timestamp createdAt;
+
+
+            public CampReviewDTO(CampReview campReview) {
+                this.id = campReview.getId();
+                this.content = campReview.getContent();
+                this.cleanliness = campReview.getCampRating().getCleanliness();
+                this.managementness = campReview.getCampRating().getManagementness();
+                this.friendliness = campReview.getCampRating().getFriendliness();
+                this.nickname = campReview.getUser().getNickname();
+                this.userImage = campReview.getUser().getUserImage();
+                this.createdAt = campReview.getCreatedAt();
+            }
+        }
+
+    }
+
 }

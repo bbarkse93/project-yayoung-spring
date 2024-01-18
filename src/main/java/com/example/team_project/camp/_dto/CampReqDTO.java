@@ -36,7 +36,7 @@ public class CampReqDTO {
 
 	@Data
 	public static class CampReviewDTO{
-		@NotNull
+		private Integer campId;
 		private String content;
 		private double cleanliness;
 		private double managementness;

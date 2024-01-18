@@ -94,10 +94,10 @@ public class CampService {
     }
 
     // 내 캠핑장 연도별 목록 조회
-    public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-        List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
-        return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
-    }
+//    public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
+//        List<CampReview> campReviews = campReviewJPARepository.findAllByUserId(userId);
+//        return new CampRespDTO.MyCampListDTO(campReviews, requestDTO.getYear());
+//    }
 
     public CampRespDTO.SearchCampDTO searchCamp(String keyword) {
         System.out.println("serviceKeyword는? " + keyword);
@@ -106,14 +106,32 @@ public class CampService {
         return new CampRespDTO.SearchCampDTO(campList);
     }
 
-    public CampRespDTO.addCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
+    public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
+
+        CampRating campRating = CampRating.builder()
+                .cleanliness(requestDTO.getCleanliness())
+                .managementness(requestDTO.getManagementness())
+                .friendliness(requestDTO.getFriendliness())
+                .user(User.builder().id(1).build())
+                .camp(Camp.builder().id(requestDTO.getCampId()).build())
+                .build();
+        // 별점 인서트
+        CampRating rating = campRatingJPARepository.save(campRating);
         CampReview campReview = CampReview.builder()
                 .content(requestDTO.getContent())
                 .user(User.builder().id(1).build())
-                .camp(Camp.builder().id(1).build())
-//                .campRating(CampRating.builder().id(1).build())
+                .camp(Camp.builder().id(requestDTO.getCampId()).build())
+                .campRating(rating)
                 .build();
-        campReviewJPARepository.save(campReview);
-        return null;
+        // 리뷰 인서트
+        CampReview review = campReviewJPARepository.save(campReview);
+
+        return new CampRespDTO.AddCampReviewDTO(review, rating);
+    }
+
+    public CampRespDTO.CampReviewListDTO campReviewList(Integer campId) {
+        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId);
+        long campReviewCount = campReviewJPARepository.countByCampId(campId);
+        return new CampRespDTO.CampReviewListDTO(campReviewList, campReviewCount);
     }
 }
