@@ -28,10 +28,7 @@ public class AdminController {
     private final AdminService adminService;
     private final HttpSession session;
 
-
-
-
-    // 로그인(GET)
+    // 로그인 페이지 요청(GET)
     @GetMapping("/login")
     public String login (){
         return "admin/user_login";
@@ -41,8 +38,6 @@ public class AdminController {
     // 로그인(POST)
     @PostMapping("/login")
     public String login(AdminReqDTO.LoginDTO dto) {
-        System.out.println("로그인 값 잘 들어옴?" + dto.getUsername());
-        System.out.println("로그인 값 잘 들어옴?" + dto.getPassword());
         User user = adminService.login(dto);
 
         // 로그인 처리
@@ -54,15 +49,7 @@ public class AdminController {
     // 로그아웃(GET)
     @GetMapping("/logout")
     public String logout() {
-        User user = (User) session.getAttribute("sessionUser");
-
-        // 권한 검사
-        if (user != null) {
-            session.invalidate();
-        } else {
-            throw new UnAuthorizedException("로그인 해주세요", HttpStatus.UNAUTHORIZED);
-        }
-        System.out.println("logout 실행됨");
+        session.invalidate();
         return "/admin/user_login";
     }
 
@@ -118,7 +105,6 @@ public class AdminController {
     public String campSettingSearch(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "") String keyword, Model model) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         model.addAttribute("sessionUser", sessionUser);
-
 
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
@@ -342,4 +328,37 @@ public class AdminController {
         return "admin/user_refund";
     }
 
+    /******************************************************************************************/
+
+    // 배너 등록 페이지 요청(GET)
+    @GetMapping("/camp/banner")
+    public String bannerPage(@RequestParam(defaultValue = "0") Integer page, Model model){
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        model.addAttribute("sessionUser", sessionUser);
+
+        // 페이지당 게시물 수 상수로 고정
+        final int PAGESIZE = 5;
+
+        // 전체목록
+        int bannerAllSize = adminService.bannerList().size();
+
+        // 페이징목록
+        List<AdminRespDTO.BannerDTO> bannerDTOList = adminService.bannerPaging(page, PAGESIZE);
+
+        model.addAttribute("bannerDTOList", bannerDTOList);
+        model.addAttribute("nextPage", page + 1);
+        model.addAttribute("prevPage", page - 1);
+        model.addAttribute("first", page == 0);
+        model.addAttribute("last",
+                (bannerAllSize / PAGESIZE) == page
+                        || ((bannerAllSize % PAGESIZE == 0) && (bannerAllSize / PAGESIZE) - 1 == page));
+        return "admin/camp_banner";
+    }
+
+    // 배너 등록(POST)
+    @PostMapping("/camp/banner/save")
+    public String saveBanner(@ModelAttribute AdminReqDTO.SaveBannerDTO requestDTO){
+        adminService.saveBanner(requestDTO);
+        return "redirect:/admin/camp/banner";
+    }
 }

@@ -32,11 +32,13 @@ public class CampRestController {
 
     private final CampService campService;
 
+    String token = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MDUzNDgyfQ.Ky2-BLYTjxlouBRsY1HScpc3fC3FOhpK0OrCKy3MFFW6KkCC19B2KsZrd9NIYLoeYY1YEB2BQNLT_KjPETTPMw";
+
     //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
     public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
         // 인증검사
-
+    	
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
@@ -126,4 +128,20 @@ public class CampRestController {
 
     
 
+    // 리뷰 등록
+    @PostMapping("/review/{campId}")
+    public ResponseEntity<?> addReview(@PathVariable Integer campId, @RequestBody CampReqDTO.CampReviewDTO requestDTO ){
+
+        requestDTO.setCampId(campId);
+        CampRespDTO.AddCampReviewDTO responseDTO = campService.addReview(requestDTO);
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    // 캠핑장 별 리뷰 목록 조회
+    @GetMapping("/review/{campId}")
+    public ResponseEntity<?> getReview(@PathVariable Integer campId) {
+        CampRespDTO.CampReviewListDTO campReviewListDTO = campService.campReviewList(campId);
+    return ResponseEntity.ok().body(ApiUtils.success(campReviewListDTO));
+    }
 }

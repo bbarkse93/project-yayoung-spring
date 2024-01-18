@@ -35,7 +35,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private CampField campField;
 
-    private boolean isRefund; // true -> 환불
+    private Boolean isRefund; // true -> 환불
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -79,12 +79,5 @@ public class Order {
 
     public void updateRefundAt(Timestamp createdAt){
         this.createdAt = createdAt;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        if (refundAt == null) {
-            refundAt = null;
-        }
     }
 }

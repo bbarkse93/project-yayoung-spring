@@ -7,9 +7,10 @@
             <div class="section1">
                 <div class="section_title">캠핑장</div>
                 <ul class="section_ul">
-                    <li><i class="fa-solid fa-tent-arrows-down"></i></i><a href="/admin/camp/save">캠핑장 등록</a></li>
                     <li><i class="fa-solid fa-tent"></i><a href="/admin/camp/setting">캠핑장 관리</a></li>
+                    <li><i class="fa-solid fa-tent-arrows-down"></i></i><a href="/admin/camp/save">캠핑장 등록</a></li>
                     <li><i class="fa-solid fa-compass"></i><a href="/admin/camp/current">캠핑장 현황 · 리뷰</a></li>
+                    <li><i class="fa-solid fa-image"></i><a href="/admin/camp/banner">캠핑장 배너 등록</a></li>
                 </ul>
                 <div class="short_line"></div>
             </div>
@@ -56,7 +57,7 @@
                                 <div class="custom_flex_between" style="width: 100%">
                                     <input type="text" value="" class="camp_m_middle_input input" id="sample4_jibunAddress" name="campAddress"
                                            placeholder="캠핑장 주소 검색">
-                                    <span id="guide" style="color:#999;display:none"></span>
+                                    <input id="guide" type="hidden" style="color:#999;display:none"></input>
                                     <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="address_button"><br>
                                 </div>
                             </div>

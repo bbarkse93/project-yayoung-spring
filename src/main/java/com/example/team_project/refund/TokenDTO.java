@@ -1,4 +1,4 @@
-package com.example.team_project.admin.refund;
+package com.example.team_project.refund;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

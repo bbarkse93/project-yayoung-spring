@@ -137,4 +137,11 @@ public class AdminRestController {
         AdminRespDTO.RefundDetailDTO refundDetailDTO = adminService.refundDetail(orderId);
         return ResponseEntity.ok().body(ApiUtils.success(refundDetailDTO));
     }
+
+    // 배너 삭제(DELETE)
+    @DeleteMapping("/camp/banner/delete/{bannerId}")
+    public ResponseEntity<?> deleteBanner(@PathVariable Integer bannerId) {
+        String result = adminService.deleteBanner(bannerId);
+        return ResponseEntity.ok().body(ApiUtils.success(result));
+    }
 }

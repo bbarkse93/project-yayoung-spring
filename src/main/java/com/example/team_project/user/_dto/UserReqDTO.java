@@ -12,4 +12,8 @@ public class UserReqDTO {
         private String nickname;
         private String userImage;
     }
+    @Data
+    public static class LoginDTO {
+        private String socialName;
+    }
 }
