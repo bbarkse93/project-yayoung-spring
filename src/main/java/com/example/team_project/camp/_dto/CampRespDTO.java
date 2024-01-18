@@ -432,11 +432,13 @@ public class CampRespDTO {
     @Data
     public static class CampReviewListDTO {
         List<CampReviewDTO> campReviewDTO;
+        Integer campId;
         String campName;
         long campReviewCount;
 
         public CampReviewListDTO(List<CampReview> campReviewDTO, long campReviewCount) {
             this.campReviewDTO = campReviewDTO.stream().map(c -> new CampReviewDTO(c)).collect(Collectors.toList());
+            this.campId = campReviewDTO.get(0).getCamp().getId();
             this.campName = campReviewDTO.get(0).getCamp().getCampName();
             this.campReviewCount = campReviewCount;
         }
