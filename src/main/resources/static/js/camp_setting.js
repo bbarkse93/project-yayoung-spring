@@ -2,9 +2,105 @@ let photoCount;
 let campSiteCount;
 
 window.onload = function (){
-    photoCount = 1;
-    campSiteCount = 1;
+    photoCount = 0;
+    campSiteCount = 0;
 }
+
+
+async function fetchDetailCamp(campId){
+    try {
+        let response = await fetch('/admin/camp/detail/' + campId);
+        if (response.ok) {
+            let apiUtil = await response.json();
+            let campDetailDTO = apiUtil.response;
+            photoCount = 0;
+            campSiteCount = 0;
+            let campField = document.getElementById('camp_field');
+            campField.innerHTML = "";
+            let updateForm = document.getElementById('update_form');
+            updateForm.action = "/admin/camp/update/" + campDetailDTO.campId;
+            let campName = document.getElementById('camp_name');
+            campName.value = campDetailDTO.campName;
+            let campAddress = document.getElementById('sample4_jibunAddress');
+            campAddress.value = campDetailDTO.campAddress;
+            let campCallNumber = document.getElementById('camp_call_number');
+            campCallNumber.value = campDetailDTO.campCallNumber;
+            let campWebsite = document.getElementById('camp_web_site');
+            campWebsite.value = campDetailDTO.campWebsite;
+            let campCheckIn = document.getElementById('check_in');
+            campCheckIn.value = campDetailDTO.campCheckIn;
+            let campCheckOut = document.getElementById('check_out');
+            campCheckOut.value = campDetailDTO.campCheckOut;
+            let holiday = document.getElementById("holiday");
+            for (let option of holiday.options) {
+                if (option.value === campDetailDTO.holiday) {
+                    option.selected = true;
+                    break;
+                }
+            }
+            let campWater = document.getElementById("campWater");
+            for (let option of campWater.options) {
+                if (option.value === campDetailDTO.campWater.toString()) {
+                    option.selected = true;
+                    break;
+                }
+            }
+            let campGarbageBag = document.getElementById("campGarbageBag");
+            for (let option of campGarbageBag.options) {
+                if (option.value === campDetailDTO.campGarbageBag.toString()) {
+                    option.selected = true;
+                    break;
+                }
+            }
+            let campRefundPolicy = document.getElementById("campRefundPolicy");
+            for (let option of campRefundPolicy.options) {
+                if (option.value === campDetailDTO.campRefundPolicy) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            let checkBoxList = document.querySelectorAll('.form-check-input');
+            campDetailDTO.campOptionDTOList.forEach((option) => {
+                checkBoxList.forEach((check) => {
+                    if (check.id === "option" + option.selectOptionId) {
+                        check.checked = true; // checked 속성을 사용하여 체크박스의 선택 상태를 변경
+                    }
+                });
+            });
+
+            campField.innerHTML = `
+              <img src=${campDetailDTO.campFieldImage} class="camp_site_pic">
+            `;
+
+            let picPlus = document.getElementById('pic_plus');
+            picPlus.innerHTML = "";
+            campDetailDTO.campPhotoList.forEach((img, index) => {
+                addPhotoField(img.campImage);
+            })
+
+            let addCampSiteForm = document.querySelector('.camp_site_insert_form');
+            addCampSiteForm.innerHTML = "";
+            campDetailDTO.campFieldDTOList.forEach((field, index) => {
+                plusCampSite(field.fieldId ,field.fieldName, field.price);
+            })
+
+
+
+
+
+        } else {
+            console.error("실패", response.statusText);
+        }
+    } catch (e) {
+        console.error("실패", e.message);
+    }
+}
+
+
+
+
+
 
 let checkIn = document.getElementById('check_in');
 let checkOut = document.getElementById('check_out');
@@ -19,15 +115,29 @@ flatpickr(checkOut, {
     dateFormat: "H:i",
 });
 
-function changeUserPic(inputId, containerId, styleClass, e1) {
-    let f = e1.srcElement.files[0];
-    console.log(f.type);
-    if (!f.type.match("image.*")) {
-        alert("이미지를 등록해주세요");
+function changeImage(inputId, containerId, styleClass) {
+    let inputElement = document.getElementById(inputId);
+    let num = inputElement.id.replace("camp_photo", "");
+
+    // 파일이 선택되었는지 확인
+    if (inputElement.files.length === 0) {
+        // 파일이 선택되지 않았을 경우 처리 (예: 경고 메시지)
+        alert("파일을 선택해주세요.");
         return;
     }
+
+    // 선택된 파일 가져오기
+    let f = inputElement.files[0];
+
     let reader = new FileReader();
     reader.onload = function (e2) {
+
+        let size = 1024 * 1024 * 20;
+        if (f.size > size) {
+            alert("파일 크기는 20MB 이상 클 수 없습니다.");
+            return;
+        }
+
         let previewEl = document.querySelector("#" + inputId);
         let parentContainer = document.querySelector("#" + containerId);
         parentContainer.innerHTML = '';
@@ -40,80 +150,76 @@ function changeUserPic(inputId, containerId, styleClass, e1) {
         newImg.classList.add(styleClass);
         previewEl.setAttribute("src", e2.target.result);
     }
+
     reader.readAsDataURL(f);
 }
 
-
-function addPhotoField() {
-
+function addPhotoField(img) {
     if(photoCount > 4){
         alert("최대 5장까지만 추가할 수 있습니다.")
         return;
     }
+
     // 새로운 레이블 생성
     let newLabel = document.createElement("label");
-    newLabel.setAttribute("id", "camp" + photoCount);
-    newLabel.setAttribute("for", "photo" + photoCount);
+    newLabel.setAttribute("id", "camp_pic" + photoCount);
+    newLabel.setAttribute("for", "camp_photo" + photoCount);
     newLabel.className = "camera_receive_form";
-    newLabel.innerHTML = '<img src="" class="camera_icon">' +
-        '<span class="custom_font_point3"></span>';
+
+    if(img != null){
+        newLabel.innerHTML = `<img src=${img} class="camera_receive_form">
+        <span class="custom_font_point3"></span>`;
+    }else{
+        newLabel.innerHTML = `<img src="" class="camera_icon">
+        <span class="custom_font_point3"></span>`;
+    }
 
     // 새로운 인풋 필드 생성
     let newInput = document.createElement("input");
     newInput.setAttribute("type", "file");
-    newInput.setAttribute("id", "photo" + photoCount);
+    newInput.setAttribute("id", "camp_photo" + photoCount);
     newInput.setAttribute("name", "campPhotoList");
     newInput.setAttribute("accept", "image/*");
-    newInput.setAttribute("onchange", "changeUserPic(this.id, 'camp" + photoCount + "', 'camp_pic_style', event)");
+    newInput.setAttribute("onchange", "changeImage(this.id, 'camp_pic" + photoCount + "', 'camp_pic_style')");
     newInput.className = "camp_pic_upload_label";
 
-    // 컨테이너에 새로운 레이블과 인풋 필드 추가
+
+    // 컨테이너에 새로운 레이블과 인풋 필드, 히든 인풋 필드 추가
     document.getElementById("pic_plus").appendChild(newLabel);
     document.getElementById("pic_plus").appendChild(newInput);
-
     // photoCount 증가
     photoCount++;
 }
 
 function deletePhotoField() {
-    if(photoCount < 2) {
+    if(photoCount < 0) {
         alert("더 이상 삭제할 수 없습니다.");
         return;
     }
     // 삭제할 요소의 ID로 해당 요소를 찾아서 제거
-    document.getElementById('camp' + (photoCount - 1)).remove();
-    document.getElementById("photo" + (photoCount - 1)).remove();
+    document.getElementById('camp_pic' + (photoCount - 1)).remove();
+    document.getElementById("camp_photo" + (photoCount - 1)).remove();
 
     // photoCount 감소
     return photoCount --;
 }
 
-
-//
-function plusCampSite(){
-    let inputName = document.createElement("input");
-    inputName.setAttribute("type", "text");
-    inputName.setAttribute("id", "camp_site_name" + campSiteCount);
-    inputName.setAttribute("placeholder", "구역 이름");
-    inputName.setAttribute("name", "campSiteName");
-    inputName.className = "camp_site_name_input input";
-
-    let inputPrice = document.createElement("input");
-    inputPrice.setAttribute("type", "text");
-    inputPrice.setAttribute("id", "camp_site_price" + campSiteCount);
-    inputPrice.setAttribute("placeholder", "금액(숫자만 입력)");
-    inputPrice.setAttribute("name", "campSitePrice");
-    inputPrice.className = "camp_site_price_input input";
-
-    let inputDiv = document.createElement("div");
-    inputDiv.className = "add_camp_site";
-
-    inputDiv.appendChild(inputName);
-    inputDiv.appendChild(inputPrice);
-
-
-    // 컨테이너에 새로운 레이블과 인풋 필드 추가
-    document.querySelector(".camp_site_insert_form").appendChild(inputDiv);
+function plusCampSite(fieldId ,fieldName, price){
+    let campFieldInsertForm = document.querySelector('.camp_site_insert_form');
+    let div = document.createElement('div');
+    div.className = "add_camp_site";
+    div.innerHTML = `
+        <input type=text class="camp_site_name_input input"
+               id="camp_site_name${campSiteCount}" placeholder="구역 이름" 
+               name="campFieldDTOList[${campSiteCount}].fieldName"
+               value="${fieldName}">
+        <input type="text" class="camp_site_price_input input"
+               id="camp_site_price${campSiteCount}" placeholder="금액(숫자만 입력)"
+               name="campFieldDTOList[${campSiteCount}].price"
+               value="${price}">
+        <input type="hidden" value="${fieldId}" name="campFieldDTOList[${campSiteCount}].fieldId" id="camp_site_id${campSiteCount}">
+    `;
+    campFieldInsertForm.appendChild(div);
 
     campSiteCount++;
 }
@@ -126,17 +232,13 @@ function minusCampSite(){
     // 삭제할 요소의 ID로 해당 요소를 찾아서 제거
     document.getElementById('camp_site_name' + (campSiteCount- 1)).remove();
     document.getElementById("camp_site_price" + (campSiteCount - 1)).remove();
+    document.getElementById("camp_site_id" + (campSiteCount - 1)).remove();
 
 
     // careerCount 감소
     return campSiteCount --;
 }
 
-function handleClick(element) {
-    alert('변경 불가능한 값입니다.');
-}
-
-//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {

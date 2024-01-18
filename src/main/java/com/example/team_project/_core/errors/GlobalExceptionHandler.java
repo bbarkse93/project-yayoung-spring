@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception400.class)
@@ -39,5 +41,25 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> unknownServerError(Exception e){
         ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(CustomRestfulException.class)
+    public String basicException(CustomRestfulException e) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<script>");
+        sb.append("alert('"+ e.getMessage() +"');");
+        sb.append("history.back();");
+        sb.append("</script>");
+        return sb.toString();
+    }
+
+    @ExceptionHandler(UnAuthorizedException.class)
+    public String unAuthorizedException(UnAuthorizedException e) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<script>");
+        sb.append("alert('"+ e.getMessage() +"');");
+        sb.append("location.href='/admin/login';");
+        sb.append("</script>");
+        return sb.toString();
     }
 }

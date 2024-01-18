@@ -50,13 +50,13 @@ public class ImageUtils {
         return decodeImageList;
     }
 
-    // web 사진 파일 등록
-    public static String formImage(MultipartFile pic) {
+    // 캠핑장 사진 파일 등록
+    public static String formatCampImage(MultipartFile pic) {
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + pic.getOriginalFilename();
         System.out.println("fileName : " + fileName);
 
-        Path filePath = Paths.get(MyPath.IMG_PATH + fileName);
+        Path filePath = Paths.get(MyPath.CAMP_IMG_PATH + fileName);
         try {
             Files.write(filePath, pic.getBytes());
         } catch (Exception e) {
@@ -64,6 +64,23 @@ public class ImageUtils {
             throw new Exception404(e.getMessage());
         }
 
-        return fileName;
+        return "/images/camp_image/"+ fileName;
+    }
+
+    // 캠핑장 배치도 파일 등록
+    public static String formatCampFieldImage(MultipartFile pic) {
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + "_" + pic.getOriginalFilename();
+        System.out.println("fileName : " + fileName);
+
+        Path filePath = Paths.get(MyPath.CAMP_FIELD_IMG_PATH + fileName);
+        try {
+            Files.write(filePath, pic.getBytes());
+        } catch (Exception e) {
+            // 폴더, 경로, 파일 등의 오류 처리
+            throw new Exception404(e.getMessage());
+        }
+
+        return "/images/camp_map/"+ fileName;
     }
 }

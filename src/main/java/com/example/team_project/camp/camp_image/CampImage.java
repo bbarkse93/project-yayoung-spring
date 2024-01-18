@@ -30,4 +30,8 @@ public class CampImage {
         this.camp = camp;
     }
 
+    // 업데이트
+    public void updateCampImage(String campImage) {
+        this.campImage = campImage;
+    }
 }
