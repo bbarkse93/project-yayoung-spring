@@ -119,6 +119,7 @@ public class AdminController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         model.addAttribute("sessionUser", sessionUser);
 
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -181,8 +182,6 @@ public class AdminController {
     }
 
 
-
-
     /******************************************************************************************/
 
     // 캠핑장 현황 페이지 요청(GET)
@@ -191,6 +190,7 @@ public class AdminController {
 
         User sessionUser = (User) session.getAttribute("sessionUser");
         model.addAttribute("sessionUser", sessionUser);
+
 
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
@@ -202,6 +202,7 @@ public class AdminController {
         List<AdminRespDTO.RatingCampDTO> ratingCampDTOList = adminService.ratingCampSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("ratingCampDTOList", ratingCampDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -266,6 +267,7 @@ public class AdminController {
         List<AdminRespDTO.FaqDTOList.UserDTO> userDTOList = adminService.faqSearch(page, keyword, PAGESIZE, categoryId).getUserDTOList();
 
         model.addAttribute("paymentDTOList", paymentDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("userDTOList", userDTOList);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
@@ -289,6 +291,7 @@ public class AdminController {
         User sessionUser = (User) session.getAttribute("sessionUser");
         model.addAttribute("sessionUser", sessionUser);
 
+
         // 페이지당 게시물 수 상수로 고정
         final int PAGESIZE = 5;
 
@@ -300,6 +303,7 @@ public class AdminController {
         List<AdminRespDTO.NoticeDTO> noticeDTOList = adminService.noticeSearch(page, keyword, PAGESIZE);
 
         model.addAttribute("noticeDTOList", noticeDTOList);
+        model.addAttribute("sessionUser", sessionUser);
         model.addAttribute("nextPage", page + 1);
         model.addAttribute("prevPage", page - 1);
         model.addAttribute("keyword", keyword);
@@ -337,4 +341,5 @@ public class AdminController {
                         || ((refundAllSize % PAGESIZE == 0) && (refundAllSize / PAGESIZE) - 1 == page));
         return "admin/user_refund";
     }
+
 }

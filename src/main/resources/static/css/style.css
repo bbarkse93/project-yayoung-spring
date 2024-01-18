@@ -569,6 +569,22 @@ ul.tabs li.current {
 
 /****************************************************************/
 
+<<<<<<< HEAD
+=======
+.camp_insert_modal_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--line_01);
+    pointer-events: auto;
+    background-color: var(--def_wh);
+    background-clip: padding-box;
+    border-radius: 5px;
+    outline: 0;
+}
+
+>>>>>>> dev
 .camp_update_modal_content {
     position: relative;
     display: flex;
@@ -959,6 +975,7 @@ ul.tabs li.current .a_tag {
     box-shadow: none;
     outline: none;
 }
+<<<<<<< HEAD
 
 /******************************************/
 
@@ -1053,3 +1070,5 @@ ul.tabs li.current .a_tag {
     font-size: 20px;
     font-weight: bold;
 }
+=======
+>>>>>>> dev

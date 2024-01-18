@@ -1,11 +1,13 @@
 package com.example.team_project.camp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -19,17 +21,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 public class CampRestController_test extends MyWithRestDoc {
 
+	private final static String TESTJWTTOKEN = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q";
+	
     @Test
     public void getAllCamps_test() throws Exception {
         // given
     	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
-    	requestDTO.setOptionNames(null);
-    	requestDTO.setRegionNames(null);
+    	List<String> optionNames = new ArrayList<>();
+    	List<String> regionNames = new ArrayList<>();
+    	requestDTO.setOptionNames(optionNames);
+    	requestDTO.setRegionNames(regionNames);
     	
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/camp/list")
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
                         .param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
                         .param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null));
 
@@ -50,7 +57,7 @@ public class CampRestController_test extends MyWithRestDoc {
         IntStream.range(0, listDatsMap.toArray().length).forEach(i -> {
             Map<String, Object> listDataDTO = listDatsMap.get(i);
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list")
+                mockMvc.perform(MockMvcRequestBuilders.get("/camp/list").header("Authorization","Bearer " + TESTJWTTOKEN)
                 			.param("optionNames", (requestDTO.getOptionNames() != null) ? String.join(",", requestDTO.getOptionNames()) : null)
                 			.param("regionNames", (requestDTO.getRegionNames() != null) ? String.join(",", requestDTO.getRegionNames()) : null))
                         .andExpect(MockMvcResultMatchers
@@ -293,11 +300,85 @@ public class CampRestController_test extends MyWithRestDoc {
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
     	System.out.println("resultActions : " + responseBody);
+    	
     	//then
-    	
-    	
+    	resultActions
+    			.andExpect(MockMvcResultMatchers.status().isOk())
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 성공"))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+    			.andDo(MockMvcResultHandlers.print())
+    			.andDo(document);
     }
 
+    @Test
+    public void removeBookmark_test() throws Exception {
+    	
+    	//given
+    	CampReqDTO.CampBookmarkDeleteDTO requestDTO = new CampReqDTO.CampBookmarkDeleteDTO();
+    	requestDTO.setCampId(1);
+    	
+    	//when
+    	ResultActions resultActions = mockMvc.perform(
+    			MockMvcRequestBuilders.delete("/camp/bookmark")
+    			.param("campId", String.valueOf(requestDTO.getCampId()))
+    			);
+    	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+    	System.out.println("ResultActions : " + responseBody);
+    	//then
+    	resultActions
+    			.andExpect(MockMvcResultMatchers.status().isOk())
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 해제"))    			
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+    			.andDo(MockMvcResultHandlers.print())
+    			.andDo(document);
+    						
+    }
+    
+    @Test
+    public void campBookmarkPage_test() throws Exception {
+    	
+    	//given
+    	
+    	//when
+    	ResultActions resultActions = mockMvc.perform(
+    			MockMvcRequestBuilders.get("/camp/bookmark-list")
+    			);
+    	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+    	
+    	System.out.println("ResultActions : " + responseBody);
+    	
+    	//then
+		ObjectMapper om = new ObjectMapper();
+		Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+		Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
+		List<Map<String, Object>> listDatsMap  = om.convertValue(responseMap.get("campBookmarkList"), new TypeReference<List<Map<String, Object>>>() {});
+		
+    	resultActions
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+		.andDo(document);
+    	
+		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
+			Map<String, Object> listDataDTO = listDatsMap .get(i);
+				try {
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/bookmark-list"))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campId").value(listDataDTO.get("campId")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campName").value(listDataDTO.get("campName")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campAddress").value(listDataDTO.get("campAddress")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campImage").value(listDataDTO.get("campImage")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campBookmarkList["+ i +"].campRating").value(listDataDTO.get("campRating")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+							.andDo(MockMvcResultHandlers.print());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+		});
+    	
+    }
+    
+    
     @Test
     public void myCampList_test() throws Exception {
 

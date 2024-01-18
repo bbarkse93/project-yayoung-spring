@@ -20,11 +20,16 @@ public class UserRestController {
     private final UserService userService;
     private final HttpSession session;
 
+    
     @GetMapping("/test")
     public ResponseEntity<?> test() {
-        return ResponseEntity.ok().body("TEST");
+        return ResponseEntity.ok().body("test");
     }
 
+
+    
+    
+    
     // ME 메인 페이지 요청
     // localhost:8080/user/my-page
     @GetMapping("/my-page")

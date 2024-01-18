@@ -2,6 +2,8 @@ package com.example.team_project.camp._dto;
 
 import com.example.team_project._core.errors.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
+import com.example.team_project.admin._dto.AdminRespDTO;
+import com.example.team_project.admin._dto.AdminRespDTO.CampReviewDTO.ReviewDTO;
 import com.example.team_project.camp.Camp;
 import com.example.team_project.camp.camp_bookmark.CampBookmark;
 import com.example.team_project.camp.camp_image.CampImage;
@@ -12,18 +14,16 @@ import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.order.Order;
 import com.example.team_project.order._dto.OrderReqDTO;
 import lombok.Data;
+import net.bytebuddy.asm.Advice.This;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.AbstractExecutorService;
 import java.util.stream.Collectors;
 
 @Data
@@ -37,34 +37,33 @@ public class CampRespDTO {
 
         public CampListDTO(List<Camp> campList, CampReqDTO.CampListDTO requestDTO) {
             // 환경 필터 적용
-            if (requestDTO.getOptionNames() != null) {
-                campList = campList.stream()
-                        .filter(camp -> requestDTO.getOptionNames()
-                                .stream()
-                                .allMatch(optionName ->
-                                        camp.getOptionManagementList()
-                                                .stream()
-                                                .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
-                                )
-                        )
-                        .collect(Collectors.toList());
-            }
-
-            // 지역 필터 적용
-            if(requestDTO.getRegionNames() != null) {
-                campList =	campList.stream()
-                        .filter(camp -> {
-                            for (String regionName : requestDTO.getRegionNames()) {
-                                if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        })
-                        .collect(Collectors.toList());
-            }
-            this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
-
+        	if (requestDTO.getOptionNames() != null) {
+        	    campList = campList.stream()
+        	            .filter(camp -> requestDTO.getOptionNames()
+        	                    .stream()
+        	                    .allMatch(optionName ->
+        	                            camp.getOptionManagementList()
+        	                                    .stream()
+        	                                    .anyMatch(om -> optionName.equals(om.getOption().getOptionName()))
+        	                    )
+        	            )
+        	            .collect(Collectors.toList());
+        	}
+        	
+//        	// 지역 필터 적용
+//        	if(requestDTO.getRegionNames() != null) {
+//        		campList =	campList.stream()
+//        			  .filter(camp -> {
+//        	                for (String regionName : requestDTO.getRegionNames()) {
+//        	                    if (regionName.equals(camp.getCampAddress().split(" ")[0])) {
+//        	                        return true;
+//        	                    }
+//        	                }
+//        	                return false;
+//        	            })
+//        	            .collect(Collectors.toList());
+//        	}
+        	this.campDTO = campList.stream().map(c -> new CampDTO(c)).collect(Collectors.toList());
         }
 
         @Data
@@ -252,27 +251,28 @@ public class CampRespDTO {
     @Data
     public static class MyCampListDTO {
         private List<MyCampDTO> myCampDTOs;
-        public MyCampListDTO(List<CampReview> campReviews, Integer year) {
-            this.myCampDTOs = campReviews.stream()
-                    .filter(campReview -> ( year == null ) || campReview.getOrder().getCheckInDate().toLocalDateTime().getYear() == year)
-                    .sorted(Comparator.comparing(campReview -> {
-                        Order order = campReview.getOrder();
+        public MyCampListDTO(List<Order> orders, Integer year) {
+            this.myCampDTOs = orders.stream()
+                    .filter(order -> ( year == null ) || order.getCheckInDate().toLocalDateTime().getYear() == year)
+                    .sorted(Comparator.comparing(order -> {
                         return order.getCheckInDate();
                     }))
-                    .map(campReview -> new MyCampDTO(campReview)).collect(Collectors.toList());
+                    .map(order -> new MyCampDTO(order)).collect(Collectors.toList());
         }
         @Data
         public class MyCampDTO{
-            private String totalRating;
+            private Integer totalRating;
             private String checkInDate;
             private String checkOutDate;
             private String campAddress;
             private String campName;
             private String reviewImage;
-            public MyCampDTO(CampReview campReview) {
-                Order order = campReview.getOrder();
-                Camp camp = campReview.getCamp();
-                this.totalRating = String.valueOf(Math.round(campReview.getCampRating().total()));
+            public MyCampDTO(Order order) {
+                Camp camp = order.getCampField().getCamp();
+                CampRespDTO.CampDetailDTO.RatingAverages doubleRatings = ratingAverages(camp.getCampRatingList());
+                this.totalRating = (int) (Math.round(doubleRatings.getCleanlinessAverage()
+                							+ doubleRatings.getFriendlinessAverage()
+                							+ doubleRatings.getManagementnessAverage())/3.0);
                 this.checkInDate = TimestampUtils.timeStampToDate
                         (order.getCheckInDate(), DATEFORMAT1);
                 Boolean yearCheck = order.getCheckInDate().toLocalDateTime().getYear()
@@ -282,9 +282,15 @@ public class CampRespDTO {
                         (order.getCheckOutDate(), dateFormat);
                 this.campAddress = camp.getCampAddress();
                 this.campName = camp.getCampName();
-                this.reviewImage = campReview.getReviewImage();
+                this.reviewImage = camp.getCampFieldImage();
             }
-
+            
+        }
+        private CampRespDTO.CampDetailDTO.RatingAverages ratingAverages(List<CampRating> ratings) {
+            double cleanlinessAverage = ratings.stream().mapToDouble(CampRating::getCleanliness).average().orElse(0);
+            double managementnessAverage = ratings.stream().mapToDouble(CampRating::getManagementness).average().orElse(0);
+            double friendlinessAverage = ratings.stream().mapToDouble(CampRating::getFriendliness).average().orElse(0);
+            return new CampRespDTO.CampDetailDTO.RatingAverages(cleanlinessAverage, managementnessAverage, friendlinessAverage);
         }
     }
 
@@ -366,7 +372,6 @@ public class CampRespDTO {
         Timestamp now = TimestampUtils.findCurrnetTime();
         String today = String.valueOf(now).substring(0, 10);
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        // 휴일의 예시를 알 수 없어 현재는 미반영
         Date checkInDate; // 운영 시작 시간
         Date checkOutDate; // 운영 종료 시간
         try {
@@ -408,4 +413,45 @@ public class CampRespDTO {
         }
 
     }
+    
+    @Data
+    public static class CampReviewListDTO {
+        private Integer campId;
+        private String campName;
+        private String campTotalRating;
+        private double cleanliness;
+        private double managementness;
+        private double friendliness;
+        private List<ReviewDTO> reviewDTOList;
+
+        public CampReviewListDTO(List<CampReview> campReviewList) {
+        	Camp camp = campReviewList.get(0).getCamp();
+            this.campId = camp.getId();
+            this.campName = camp.getCampName();
+            this.campTotalRating = camp.formatTotalRating();
+            this.cleanliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getCleanliness).collect(Collectors.toList())));
+            this.managementness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getManagementness).collect(Collectors.toList())));
+            this.friendliness = Double.parseDouble(camp.formatRating(camp.getCampRatingList().stream().map(CampRating::getFriendliness).collect(Collectors.toList())));
+            this.reviewDTOList = campReviewList.stream().map(ReviewDTO::new).collect(Collectors.toList());
+        }
+
+        @Data
+        public static class ReviewDTO {
+            private Integer reviewId;
+            private String nickname;
+            private String content;
+            private String totalRating;
+            private String createAt;
+
+            public ReviewDTO(CampReview campReview) {
+                this.reviewId = campReview.getId();
+                this.nickname = campReview.getUser().getNickname();
+                this.content = campReview.getContent();
+                this.totalRating = campReview.getCampRating().formatTotal();
+                this.createAt = campReview.formatTime();
+            }
+        }
+    }
+    
+ 
 }
