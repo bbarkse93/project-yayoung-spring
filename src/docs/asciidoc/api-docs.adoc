@@ -95,6 +95,13 @@ include::{snippets}/{camp}/my-camp-list_test/http-request.adoc[]
 ===== Response Example
 include::{snippets}/{camp}/my-camp-list_test/http-response.adoc[]
 
+=== 7. 검색
+===== Request Example
+include::{snippets}/{camp}/search-camp_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp}/search-camp_test/http-response.adoc[]
+
 == 주문
 
 === 1. 다가오는 캠프 일정

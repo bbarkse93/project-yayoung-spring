@@ -32,14 +32,16 @@ public class CampRestController {
 
     private final CampService campService;
 
+
     String sampleToken = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MDUzNDgyfQ.Ky2-BLYTjxlouBRsY1HScpc3fC3FOhpK0OrCKy3MFFW6KkCC19B2KsZrd9NIYLoeYY1YEB2BQNLT_KjPETTPMw";
     String token = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MDUzNDgyfQ.Ky2-BLYTjxlouBRsY1HScpc3fC3FOhpK0OrCKy3MFFW6KkCC19B2KsZrd9NIYLoeYY1YEB2BQNLT_KjPETTPMw";
 
     //캠핑장 목록 조회(필터 적용 가능)
     @GetMapping("/list")
-    public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO) {
+    public ResponseEntity<?> getAllCamps(@ModelAttribute CampReqDTO.CampListDTO requestDTO
+    		,@RequestHeader("Authorization") String token) {
         // 인증검사
-    	
+    	JwtTokenUtils.verify(token);
         // 핵심로직
         CampRespDTO.CampListDTO responseDTO = campService.getAllCamps(requestDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
@@ -114,13 +116,16 @@ public class CampRestController {
     						){
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
-    	CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(userId, requestDTO);
+    	CampRespDTO.MyCampListDTO responseDTO = campService.myCampList(userId, requestDTO);
     	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 전체 캠핑장 검색
     @GetMapping("/search")
-    public ResponseEntity<?> searchCamp(@RequestParam(defaultValue = "") String keyword){
+    public ResponseEntity<?> searchCamp(@RequestParam(defaultValue = "") String keyword
+    		,@RequestHeader("Authorization") String token){
+    	// JWT 인증
+    	JwtTokenUtils.verify(token);
         System.out.println("ControllerKeyword는? " + keyword);
         CampRespDTO.SearchCampDTO responseDTO = campService.searchCamp(keyword);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
@@ -134,10 +139,8 @@ public class CampRestController {
     // 리뷰 등록
     @PostMapping("/review/{campId}")
     public ResponseEntity<?> addReview(@PathVariable Integer campId, @RequestBody CampReqDTO.CampReviewDTO requestDTO ){
-
         requestDTO.setCampId(campId);
         CampRespDTO.AddCampReviewDTO responseDTO = campService.addReview(requestDTO);
-
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

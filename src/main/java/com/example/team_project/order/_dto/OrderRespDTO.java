@@ -90,7 +90,9 @@ public class OrderRespDTO {
 		private String checkInDate;
 		private String checkOutDate;
 		private String fieldName;
+		private Integer nights;
 		private String totalPrice;
+		private String orderNumber;
 		public RefundInfoDTO(CampInfoDTO campInfoDTO, Order order ) {
 			this.campInfoDTO = campInfoDTO;
 			this.campFieldImage = order.getCampField().getCamp().getCampFieldImage();
@@ -99,7 +101,9 @@ public class OrderRespDTO {
 			this.fieldName = order.getCampField().getFieldName();
 			Period period = Period.between(LocalDate.parse(checkInDate) , //예약 일수 계산
 					LocalDate.parse(checkOutDate));
+			this.nights = period.getDays();
 			this.totalPrice = CampRespDTO.priceFormat(order.getCampField().getPrice()* period.getDays());
+			this.orderNumber = order.getOrderNumber();
 		}
 		
 	}

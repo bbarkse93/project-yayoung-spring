@@ -22,13 +22,17 @@ public class OrderReqDTO {
 		@NotEmpty
 		private String  fieldName;
 		@NotNull
-		private Integer  totalPrice;
+		private Integer totalPrice;
+		@NotEmpty
+		private String orderNumber;
 	}
 	
 	@Data
 	public static class RefundInfoDTO{
 		@NotNull
 		private Integer orderId;
+		@NotNull
+		private Integer campId;
 	}
 	
 	
