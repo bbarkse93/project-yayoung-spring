@@ -589,7 +589,7 @@ Content-Length: 192
   "response" : {
     "userId" : 1,
     "nickname" : "love",
-    "userImage" : "/images/user/love_9cdfdda8-83aa-4058-ae0f-70c768063ef5.png"
+    "userImage" : "/images/user/love_beb26d02-7b14-46d8-80d7-4f78f2b4c4a8.png"
   },
   "error" : null
 }</code></pre>
@@ -1145,14 +1145,34 @@ Content-Length: 963
 <h3 id="_7_검색">7. 검색</h3>
 <div class="sect4">
 <h5 id="_request_example_12">Request Example</h5>
-<div class="paragraph">
-<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/camp-rest-controller_test/search-camp-list_test/http-request.adoc[]</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /camp/search?keyword=%EC%95%84%EC%9B%83 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q
+Host: localhost:8080</code></pre>
+</div>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_response_example_12">Response Example</h5>
-<div class="paragraph">
-<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/camp-rest-controller_test/search-camp-list_test/http-response.adoc[]</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 232
+
+{
+  "success" : true,
+  "response" : {
+    "campList" : [ {
+      "id" : 1,
+      "campName" : "(주)아웃오브파크",
+      "campAddress" : "강원도 춘천시 남면 가옹개길 52-9"
+    } ]
+  },
+  "error" : null
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1643,7 +1663,7 @@ Content-Length: 3844
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-19 14:38:09 +0900
+Last updated 2024-01-19 14:43:59 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
