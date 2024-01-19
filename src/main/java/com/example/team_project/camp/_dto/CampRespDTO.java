@@ -282,7 +282,7 @@ public class CampRespDTO {
                         (order.getCheckOutDate(), dateFormat);
                 this.campAddress = camp.getCampAddress();
                 this.campName = camp.getCampName();
-                this.reviewImage = camp.getCampFieldImage();
+                this.reviewImage = camp.firstCampImage();
             }
             
         }

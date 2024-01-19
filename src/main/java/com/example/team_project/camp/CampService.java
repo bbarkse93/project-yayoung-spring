@@ -119,8 +119,10 @@ public class CampService {
 
     // 내 캠핑장 연도별 목록 조회
     public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-
+        System.out.println("내캠핑장 서비스 진입");
         List<Order> orders = orderJPARepository.findAllByUserId(userId);
+        System.out.println("내캠핑장 서비스 나가기 전");
+
         return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 

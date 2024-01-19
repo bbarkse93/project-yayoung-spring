@@ -53,6 +53,8 @@ public class OrderRestController {
     @GetMapping("/field-list")
     public ResponseEntity<?> campFieldList(@ModelAttribute OrderReqDTO.CampFieldListDTO requestDTO
     					,@RequestHeader("Authorization") String token){
+
+        System.out.println("예약하는 페이지");
     	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	CampRespDTO.CampFieldListDTO responseDTO = orderService.campFieldList(requestDTO);

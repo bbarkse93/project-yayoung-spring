@@ -109,13 +109,13 @@ public class CampRestController {
 
     // 내 캠핑장 연도별 목록 조회
     @GetMapping("/myCamp")
-    public ResponseEntity<?> myCampList(@ModelAttribute CampReqDTO.MyCampListDTO requestDTO 
-    						,@RequestHeader("Authorization") String token
-    						){
+    public ResponseEntity<?> myCampList(@ModelAttribute CampReqDTO.MyCampListDTO requestDTO,@RequestHeader("Authorization") String token){
+        System.out.println("내 캠핑장 조회하러 옴 토큰 값은 ? "+ token);
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();
     	CampRespDTO.MyCampListDTO responseDTO = campService.myCampFieldList(userId, requestDTO);
-    	return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        System.out.println("내 캠핑장 응답 전 "+ responseDTO.getMyCampDTOs());
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 전체 캠핑장 검색
