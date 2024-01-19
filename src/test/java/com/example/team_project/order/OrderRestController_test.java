@@ -187,6 +187,7 @@ public class OrderRestController_test extends MyWithRestDoc {
 		//given
 		OrderReqDTO.PaymentWriteDTO requestDTO = new OrderReqDTO.PaymentWriteDTO();
 		requestDTO.setCampId(1);
+		requestDTO.setOrderNumber("111111");
 		requestDTO.setCheckIn("2024-01-25");
 		requestDTO.setCheckOut("2024-01-28");
 		requestDTO.setFieldName("캠핑사이트-1");
@@ -217,9 +218,5 @@ public class OrderRestController_test extends MyWithRestDoc {
 			.andDo(MockMvcResultHandlers.print())
 			.andDo(document);	
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> dev
 
 }

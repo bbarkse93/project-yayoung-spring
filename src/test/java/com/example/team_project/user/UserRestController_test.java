@@ -74,7 +74,6 @@ public class UserRestController_test extends MyWithRestDoc {
 
     }
 
-    // build 시 계속 실패해서 주석처리 해뒀습니다. - 승신(2024.01.11)
     // put 요청 - 프로필 수정
     @Test
     public void profileUpdate_test() throws Exception {

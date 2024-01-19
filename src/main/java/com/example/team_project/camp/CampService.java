@@ -2,6 +2,7 @@ package com.example.team_project.camp;
 
 import java.util.List;
 
+import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
 import org.springframework.data.domain.Sort;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.errors.exception.Exception404;
+import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampReqDTO.CampBookmarkDeleteDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
@@ -50,16 +52,21 @@ public class CampService {
     }
 
     // 캠핑장 상세 보기
-    public CampDetailDTO getCampDetail(Integer campId) {
+    public CampDetailDTO getCampDetail(Integer campId, Integer userId) {
         Camp camp = campJPARepository.findById(campId)
                 .orElseThrow(() -> new Exception404("해당 캠프장이 존재하지 않습니다."));
         long campCount = campReviewJPARepository.countByCampId(camp.getId());
-
-        return new CampDetailDTO(camp, campCount);
+        CampBookmark campBookmark = campBookmarkJPARepository.findByCampIdAndUserId(campId, userId);
+        boolean isBookmark = false;
+        if(campBookmark != null){
+            isBookmark = true;
+        }
+        return new CampDetailDTO(camp, campCount, isBookmark);
     }
 
     // 북마크 추가
-    public CampBookmark addBookmark(Integer userId, CampReqDTO.CampBookmarkDTO dto) {
+    @Transactional
+    public CampRespDTO.BookmarkStateDTO addBookmark(Integer userId, CampReqDTO.CampBookmarkDTO dto) {
         User user = userJPARepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -71,18 +78,32 @@ public class CampService {
                 .camp(Camp.builder().id(camp.getId()).build())
                 .build();
 
-        CampBookmark response = campBookmarkJPARepository.save(campBookmark);
+        CampBookmark bookmark = campBookmarkJPARepository.save(campBookmark);
+        boolean isBookmark = false;
+        if(bookmark != null){
+            isBookmark = true;
+        }
 
-        return response;
+        return new CampRespDTO.BookmarkStateDTO(isBookmark);
     }
 
     // 북마크 해제
-    public void removeBookmark(Integer userId, CampBookmarkDeleteDTO requestDTO) {
-        List<CampBookmark> bookmarks = campBookmarkJPARepository.findByUserId(userId);
-        bookmarks.stream()
-                .filter(bookmark -> bookmark.getCamp().getId().equals(requestDTO.getCampId()))
-                .findFirst()
-                .ifPresent(campBookmarkJPARepository::delete);
+    @Transactional
+    public CampRespDTO.BookmarkStateDTO removeBookmark(Integer userId, CampBookmarkDeleteDTO requestDTO) {
+        CampBookmark campBookmark = campBookmarkJPARepository.findByCampIdAndUserId(requestDTO.getCampId(), userId);
+        boolean isBookmark = true;
+        try{
+            campBookmarkJPARepository.deleteById(campBookmark.getId());
+            isBookmark = false;
+        }catch (Exception e){
+            throw new Exception400("북마크 삭제에 실패했습니다.");
+        }
+        return new CampRespDTO.BookmarkStateDTO(isBookmark);
+//        List<CampBookmark> bookmarks = campBookmarkJPARepository.findByUserId(userId);
+//        bookmarks.stream()
+//                .filter(bookmark -> bookmark.getCamp().getId().equals(requestDTO.getCampId()))
+//                .findFirst()
+//                .ifPresent(campBookmarkJPARepository::delete);
     }
 
 
@@ -99,9 +120,8 @@ public class CampService {
     }
 
     // 내 캠핑장 연도별 목록 조회
-    public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-
-        List<Order> orders = orderJPARepository.findAllByUserId(userId);
+    public CampRespDTO.MyCampListDTO myCampList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
+        List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
         return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 
@@ -112,6 +132,7 @@ public class CampService {
         System.out.println("결과는? " + campList.size());
         return new CampRespDTO.SearchCampDTO(campList);
     }
+    
 
     public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
 
