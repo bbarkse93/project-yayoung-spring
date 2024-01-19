@@ -452,6 +452,7 @@ public class CampRespDTO {
             private double friendliness;
             private String nickname;
             private String userImage;
+            private double totalRating;
             private Timestamp createdAt;
 
 
@@ -463,6 +464,7 @@ public class CampRespDTO {
                 this.friendliness = campReview.getCampRating().getFriendliness();
                 this.nickname = campReview.getUser().getNickname();
                 this.userImage = campReview.getUser().getUserImage();
+                this.totalRating = (this.friendliness + this.cleanliness + this.managementness) / 3.0;
                 this.createdAt = campReview.getCreatedAt();
             }
         }

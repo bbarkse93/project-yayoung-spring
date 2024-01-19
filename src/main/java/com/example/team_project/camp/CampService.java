@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -136,7 +137,7 @@ public class CampService {
     }
 
     public CampRespDTO.CampReviewListDTO campReviewList(Integer campId) {
-        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId);
+        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId, Sort.by(Sort.Direction.DESC, "createdAt"));
         long campReviewCount = campReviewJPARepository.countByCampId(campId);
         return new CampRespDTO.CampReviewListDTO(campReviewList, campReviewCount);
     }

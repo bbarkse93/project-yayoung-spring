@@ -118,7 +118,7 @@ public class AdminService {
     // 캠핑장 리뷰 리스트(모달)
     public AdminRespDTO.CampReviewDTO campReviewList(Integer campId) {
         Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
-        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId);
+        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId, Sort.by(Sort.Direction.DESC, "createdAt"));
         return new AdminRespDTO.CampReviewDTO(camp, campReviewList);
     }
 

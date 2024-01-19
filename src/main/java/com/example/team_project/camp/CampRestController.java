@@ -131,6 +131,7 @@ public class CampRestController {
     // 리뷰 등록
     @PostMapping("/review/{campId}")
     public ResponseEntity<?> addReview(@PathVariable Integer campId, @RequestBody CampReqDTO.CampReviewDTO requestDTO ){
+        System.out.println("컨트롤러 진입 :"+ requestDTO.getCampId());
 
         requestDTO.setCampId(campId);
         CampRespDTO.AddCampReviewDTO responseDTO = campService.addReview(requestDTO);
