@@ -25,11 +25,12 @@
 }
 
 .logo {
-    color: white;
+    color: var(--def_wh);
     text-decoration-line: none;
 }
 
-.logo a:hover {
+.logo:hover {
+    color: var(--def_wh);
     text-decoration: none;
 }
 
