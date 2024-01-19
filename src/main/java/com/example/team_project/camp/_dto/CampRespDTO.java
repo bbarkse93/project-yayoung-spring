@@ -435,11 +435,13 @@ public class CampRespDTO {
     @Data
     public static class CampReviewListDTO {
         List<CampReviewDTO> campReviewDTO;
+        Integer campId;
         String campName;
         long campReviewCount;
 
         public CampReviewListDTO(List<CampReview> campReviewDTO, long campReviewCount) {
             this.campReviewDTO = campReviewDTO.stream().map(c -> new CampReviewDTO(c)).collect(Collectors.toList());
+            this.campId = campReviewDTO.get(0).getCamp().getId();
             this.campName = campReviewDTO.get(0).getCamp().getCampName();
             this.campReviewCount = campReviewCount;
         }
@@ -453,6 +455,7 @@ public class CampRespDTO {
             private double friendliness;
             private String nickname;
             private String userImage;
+            private double totalRating;
             private Timestamp createdAt;
 
 
@@ -464,6 +467,7 @@ public class CampRespDTO {
                 this.friendliness = campReview.getCampRating().getFriendliness();
                 this.nickname = campReview.getUser().getNickname();
                 this.userImage = campReview.getUser().getUserImage();
+                this.totalRating = (this.friendliness + this.cleanliness + this.managementness) / 3.0;
                 this.createdAt = campReview.getCreatedAt();
             }
         }
