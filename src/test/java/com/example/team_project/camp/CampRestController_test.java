@@ -124,6 +124,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		List<Map<String, Object>> type  = om.convertValue(optionsMap.get("type"), new TypeReference<List<Map<String, Object>>>() {});
 		List<Map<String, Object>> rental  = om.convertValue(optionsMap.get("rental"), new TypeReference<List<Map<String, Object>>>() {});
 
+		
         
 		
 		resultActions
@@ -141,6 +142,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campRefundPolicy").value(campInfoMap.get("campRefundPolicy")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campWater").value(campInfoMap.get("campWater")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campGarbageBag").value(campInfoMap.get("campGarbageBag")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.bookmark").value(campInfoMap.get("bookmark")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.holiday").value(campInfoMap.get("holiday")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campCheckIn").value(campInfoMap.get("campCheckIn")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campCheckOut").value(campInfoMap.get("campCheckOut")))
@@ -308,11 +310,12 @@ public class CampRestController_test extends MyWithRestDoc {
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
     	System.out.println("resultActions : " + responseBody);
-    	
+
     	//then
     	resultActions
     			.andExpect(MockMvcResultMatchers.status().isOk())
-    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 성공"))
+//    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 성공"))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.bookmark").value(true))
     			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
     			.andDo(MockMvcResultHandlers.print())
     			.andDo(document);
@@ -323,7 +326,7 @@ public class CampRestController_test extends MyWithRestDoc {
     	
     	//given
     	CampReqDTO.CampBookmarkDeleteDTO requestDTO = new CampReqDTO.CampBookmarkDeleteDTO();
-    	requestDTO.setCampId(1);
+    	requestDTO.setCampId(2);
 		ObjectMapper om = new ObjectMapper();
 		String requestBody = om.writeValueAsString(requestDTO);
     	
@@ -331,8 +334,8 @@ public class CampRestController_test extends MyWithRestDoc {
     	ResultActions resultActions = mockMvc.perform(
     			MockMvcRequestBuilders.delete("/camp/bookmark")
 						.header("Authorization","Bearer " + TESTJWTTOKEN)
-						.content(requestBody)
 						.contentType(MediaType.APPLICATION_JSON)
+						.content(requestBody)
     			);
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	System.out.println("ResultActions : " + responseBody);
@@ -340,7 +343,7 @@ public class CampRestController_test extends MyWithRestDoc {
     	resultActions
     			.andExpect(MockMvcResultMatchers.status().isOk())
     			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 해제"))    			
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.bookmark").value(false))    			
     			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
     			.andDo(MockMvcResultHandlers.print())
     			.andDo(document);
