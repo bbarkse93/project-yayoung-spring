@@ -6,6 +6,49 @@ window.onload = function (){
     campSiteCount = 1;
 }
 
+document.getElementById('camp_save_form').addEventListener('submit', function (event) {
+    let inputList = document.querySelectorAll('input');
+    let selectList = document.querySelectorAll('select');
+    let checkCount = 0;
+    let emptyCount = 0;
+    let selectedCount = 0;
+
+
+
+    for (let i = 0; i < inputList.length; i++) {
+        if (inputList[i].type === "checkbox" && inputList[i].checked) {
+            checkCount++;
+        }
+
+        if (inputList[i].type !== "hidden" && inputList[i].value.trim() === '') {
+            emptyCount++;
+        }
+
+        if(i > inputList.length){
+            break;
+        }
+    }
+
+    for(let s = 0; s < selectList.length; s++) {
+        if(selectList[s].value.trim() === ''){
+            selectedCount++;
+        }
+        if(s > selectList.length){
+            break;
+        }
+    }
+
+    console.log("체크 카운트 : " + checkCount);
+    console.log("공백 카운트 : " + emptyCount);
+    console.log("옵션 카운트 : " + selectedCount);
+
+    if(checkCount < 1 || emptyCount > 0 || selectedCount > 0){
+        console.log('브레이크!!!!!!!!!!!!!!');
+        event.preventDefault();
+    }
+});
+
+
 let checkIn = document.getElementById('check_in');
 let checkOut = document.getElementById('check_out');
 flatpickr(checkIn, {
@@ -135,7 +178,6 @@ function handleClick(element) {
     alert('변경 불가능한 값입니다.');
 }
 
-//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -164,22 +206,23 @@ function sample4_execDaumPostcode() {
             document.getElementById("sample4_jibunAddress").value = roadAddr;
             document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
 
-            var guideTextBox = document.getElementById("sample4_jibunAddress");
+            var guideTextBox = document.getElementById("guide");
             // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
             if(data.autoRoadAddress) {
                 var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.value = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                 guideTextBox.style.display = 'block';
 
             } else if(data.autoJibunAddress) {
                 var expJibunAddr = data.autoJibunAddress;
-                guideTextBox.value = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
                 guideTextBox.style.display = 'block';
             } else {
-                guideTextBox.value = '';
+                guideTextBox.innerHTML = '';
                 guideTextBox.style.display = 'none';
             }
         }
     }).open();
 }
+
 

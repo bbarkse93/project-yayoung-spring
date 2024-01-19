@@ -6,6 +6,36 @@ window.onload = function (){
     campSiteCount = 0;
 }
 
+async function fetchDeleteCamp(campId){
+
+    let userConfirmed = window.confirm("해당 캠핑장을 삭제하시겠습니까?");
+
+    if (userConfirmed) {
+        try{
+            let response = await fetch(`/admin/camp/delete/${campId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+
+            if(response.ok){
+                let apiUtil = await response.json();
+                let success = apiUtil.response;
+                alert(success);
+                location.reload();
+            }else {
+                console.error("실패", response.statusText);
+            }
+        }catch (e) {
+            console.error("실패", e.message);
+        }
+    } else {
+        return null;
+    }
+}
+
+
 
 async function fetchDetailCamp(campId){
     try {
@@ -96,11 +126,6 @@ async function fetchDetailCamp(campId){
         console.error("실패", e.message);
     }
 }
-
-
-
-
-
 
 let checkIn = document.getElementById('check_in');
 let checkOut = document.getElementById('check_out');

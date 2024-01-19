@@ -93,7 +93,7 @@
 .check_container {
     height: 100%;
     width: 80%;
-    padding: 0 28px;
+    padding: 0 15px;
 }
 
 .admin_container_title {
@@ -588,7 +588,7 @@ ul.tabs li.current {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 120%;
     color: var(--line_01);
     pointer-events: auto;
     background-color: var(--def_wh);
@@ -600,10 +600,10 @@ ul.tabs li.current {
 .camp_modal_body {
     position: relative;
     flex: 1 1 auto;
-    padding: 15px;
+     padding: 15px;
     background-color: var(--def_wh);
     border-radius: 5px;
-    width: 1000px;
+    width: 100%;
 }
 
 .camp_modal_body .button {
@@ -620,6 +620,35 @@ ul.tabs li.current {
 }
 
 .camp_modal_body .column {
+    display: flex;
+    text-align: start;
+    font-size: 20px;
+    font-weight: bold;
+    height: 21px;
+}
+
+.camp_save_body {
+    position: relative;
+    flex: 1 1 auto;
+    background-color: var(--def_wh);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.camp_save_body .button {
+    display: flex;
+    justify-content: end;
+}
+
+.camp_save_body .body {
+    text-align: center;
+    color: var(--font_01);
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px;
+}
+
+.camp_save_body .column {
     display: flex;
     text-align: start;
     font-size: 20px;
@@ -687,6 +716,16 @@ ul.tabs li.current {
     text-align: start;
     margin-bottom: 14px;
 }
+
+#sample4_jibunAddress:focus {
+    border-radius: 5px;
+    border: 0.5px solid var(--line_01);
+    padding: 10px;
+    font-size: 15px;
+    cursor: default;
+}
+
+
 
 .camp_form .input {
     border-radius: 5px;

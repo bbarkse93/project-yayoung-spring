@@ -29,12 +29,14 @@ public class AdminRespDTO {
         private String campName;
         private String campAddress;
         private String campNumber;
+        private boolean isDelete;
 
         public CampDTO(Camp camp) {
             this.campId = camp.getId();
             this.campName = camp.getCampName();
             this.campAddress = camp.getCampAddress();
             this.campNumber = camp.getCampCallNumber();
+            this.isDelete = camp.isDelete();
         }
     }
 

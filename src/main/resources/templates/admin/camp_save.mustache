@@ -39,9 +39,9 @@
             <div class="admin_container_title">
                 <h3>캠핑장 등록</h3>
             </div>
-            <div class="camp_modal_body">
+            <div class="camp_save_body">
                 <div class="body">
-                    <form action="/admin/camp/save" method="post" enctype="multipart/form-data">
+                    <form action="/admin/camp/save" method="post" enctype="multipart/form-data" id="camp_save_form">
                         <div class="camp_form">
                             <div class="camp_name custom_flex_between custom_margin_bottom">
                                 <div class="title">캠핑장 이름
@@ -56,8 +56,8 @@
                                 </div>
                                 <div class="custom_flex_between" style="width: 100%">
                                     <input type="text" value="" class="camp_m_middle_input input" id="sample4_jibunAddress" name="campAddress"
-                                           placeholder="캠핑장 주소 검색">
-                                    <input id="guide" type="hidden" style="color:#999;display:none"></input>
+                                           placeholder="캠핑장 주소 검색" readonly>
+                                    <input id="guide" type="hidden" style="color:#999;display:none">
                                     <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="address_button"><br>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                         <span class="custom_font_point3">*</span>
                                     </div>
                                     <select class="form-select" id="holiday" name="holiday">
-                                        <option selected disabled>선택</option>
+                                        <option value="" selected disabled>선택</option>
                                         <option value="없음">없음</option>
                                         <option value="월">월</option>
                                         <option value="화">화</option>
@@ -119,7 +119,7 @@
                                     </label>
                                     <select class="form-select form_select_middle" id="campWater"
                                             name="campWater">
-                                        <option selected disabled>선택</option>
+                                        <option value="" selected disabled>선택</option>
                                         <option value="true">가능</option>
                                         <option value="false">불가능</option>
                                     </select>
@@ -130,7 +130,7 @@
                                     </label>
                                     <select class="form-select form_select_middle" id="campGarbageBag"
                                             name="campGarbageBag">
-                                        <option selected disabled>선택</option>
+                                        <option value="" selected disabled>선택</option>
                                         <option value="true">지급</option>
                                         <option value="false">미지급</option>
                                     </select>
@@ -141,7 +141,7 @@
                                     </label>
                                     <select class="form-select form_select_long" id="campRefundPolicy"
                                             name="campRefundPolicy">
-                                        <option selected disabled>선택</option>
+                                        <option value="" selected disabled>선택</option>
                                         <option value="당일 취소 불가, 2일 전 100% 환불">당일 취소 불가, 2일 전 100% 환불</option>
                                     </select>
                                 </div>
@@ -332,7 +332,7 @@
                             </div>
                             <div style="margin-top: 70px">
                                 <button type="submit" class="insert_button insert_submit"
-                                        style="width: 140px" data-bs-dismiss="modal">캠핑장 등록하기
+                                        style="width: 140px" >캠핑장 등록하기
                                 </button>
                             </div>
                         </div>
