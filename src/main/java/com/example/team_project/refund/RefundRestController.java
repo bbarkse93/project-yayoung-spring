@@ -55,9 +55,9 @@ public class RefundRestController {
 
         try {
             // 클라이언트로부터 받은 주문번호, 환불사유, 환불금액
-            String merchantUid = requestDTO.getMerchantUid();
-            String reason = requestDTO.getReason();
-            String cancelRequestAmountString = requestDTO.getCancelRequestAmount();
+            String merchantUid = requestDTO.getOrderNumber();
+            String reason = "환불요청";
+            String cancelRequestAmountString = requestDTO.getRefund();
 
             // * 액세스 토큰 요청 ---> Server to Server
             RestTemplate rt2 = new RestTemplate();
