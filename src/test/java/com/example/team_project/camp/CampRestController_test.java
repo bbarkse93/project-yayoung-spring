@@ -1,5 +1,7 @@
 package com.example.team_project.camp;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -91,13 +93,12 @@ public class CampRestController_test extends MyWithRestDoc {
     public void getCampDetail_test() throws Exception {
         // given
         int id = 1;
-
+        
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/camp/"+id)
 						.header("Authorization","Bearer " + TESTJWTTOKEN)
-
 		);
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -122,6 +123,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		List<Map<String, Object>> type  = om.convertValue(optionsMap.get("type"), new TypeReference<List<Map<String, Object>>>() {});
 		List<Map<String, Object>> rental  = om.convertValue(optionsMap.get("rental"), new TypeReference<List<Map<String, Object>>>() {});
 
+		
         
 		
 		resultActions
@@ -307,11 +309,12 @@ public class CampRestController_test extends MyWithRestDoc {
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
     	System.out.println("resultActions : " + responseBody);
-    	
+
     	//then
     	resultActions
     			.andExpect(MockMvcResultMatchers.status().isOk())
-    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 성공"))
+//    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 성공"))
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.bookmark").value(true))
     			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
     			.andDo(MockMvcResultHandlers.print())
     			.andDo(document);
@@ -322,7 +325,7 @@ public class CampRestController_test extends MyWithRestDoc {
     	
     	//given
     	CampReqDTO.CampBookmarkDeleteDTO requestDTO = new CampReqDTO.CampBookmarkDeleteDTO();
-    	requestDTO.setCampId(1);
+    	requestDTO.setCampId(2);
 		ObjectMapper om = new ObjectMapper();
 		String requestBody = om.writeValueAsString(requestDTO);
     	
@@ -330,8 +333,8 @@ public class CampRestController_test extends MyWithRestDoc {
     	ResultActions resultActions = mockMvc.perform(
     			MockMvcRequestBuilders.delete("/camp/bookmark")
 						.header("Authorization","Bearer " + TESTJWTTOKEN)
-						.content(requestBody)
 						.contentType(MediaType.APPLICATION_JSON)
+						.content(requestBody)
     			);
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	System.out.println("ResultActions : " + responseBody);
@@ -339,7 +342,7 @@ public class CampRestController_test extends MyWithRestDoc {
     	resultActions
     			.andExpect(MockMvcResultMatchers.status().isOk())
     			.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-    			.andExpect(MockMvcResultMatchers.jsonPath("$.response").value("북마크 해제"))    			
+    			.andExpect(MockMvcResultMatchers.jsonPath("$.response.bookmark").value(false))    			
     			.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
     			.andDo(MockMvcResultHandlers.print())
     			.andDo(document);
@@ -356,6 +359,7 @@ public class CampRestController_test extends MyWithRestDoc {
 				MockMvcRequestBuilders.get("/camp/bookmark-list")
 				.header("Authorization","Bearer " + TESTJWTTOKEN)
 		);
+
 
     	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
     	
@@ -436,5 +440,49 @@ public class CampRestController_test extends MyWithRestDoc {
 				}
 		});
     }
+    
+    
+    @Test
+    public void searchCamp_test() throws Exception {
+    	
+    	//given
+    	final String keyword = "아웃";
+    	//when
+    	ResultActions resultActions = mockMvc.perform(
+    				MockMvcRequestBuilders.get("/camp/search")
+    				.param("keyword", keyword )
+    				.header("Authorization","Bearer " + TESTJWTTOKEN)
+    			);
+    	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+    	System.out.println("ResultActions : " + responseBody);		
+    	//then
+    	
+     	ObjectMapper om = new ObjectMapper();
+     	Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+     	Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
+     	List<Map<String, Object>> listDatsMap  = om.convertValue(responseMap.get("campList"), new TypeReference<List<Map<String, Object>>>() {});
+    	
+     	resultActions
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+		.andDo(document);
+     	
+		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
+			Map<String, Object> listDataDTO = listDatsMap .get(i);
+				try {
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/search").header("Authorization","Bearer " + TESTJWTTOKEN).param("keyword", "아웃" ))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].id").value(listDataDTO.get("id")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].campName").value(listDataDTO.get("campName")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].campAddress").value(listDataDTO.get("campAddress")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+							.andDo(MockMvcResultHandlers.print());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+		});
+    }
+    
+    
 
 }

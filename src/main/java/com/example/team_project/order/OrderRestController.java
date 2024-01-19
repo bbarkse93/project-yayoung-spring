@@ -54,13 +54,13 @@ public class OrderRestController {
     public ResponseEntity<?> campFieldList(@ModelAttribute OrderReqDTO.CampFieldListDTO requestDTO
             ,@RequestHeader("Authorization") String token){
     	// 토큰 인증
-    	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	JwtTokenUtils.verify(token);
     	CampRespDTO.CampFieldListDTO responseDTO = orderService.campFieldList(requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
     
     
-    // 캠핑 결제
+    // 캠핑 결제 DB 등록
     @PostMapping("/payment")
     public ResponseEntity<?> paymentWrite(@RequestBody @Valid OrderReqDTO.PaymentWriteDTO requestDTO 
     					,@RequestHeader("Authorization") String token){
@@ -71,6 +71,18 @@ public class OrderRestController {
     	orderService.paymentWriteValidate(userId, requestDTO);
     	// DB 등록 및 캠핑장 지도 반환
     	OrderRespDTO.PaymentWriteDTO responseDTO = orderService.paymentWrite(userId, requestDTO);
+    	return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    
+    // 환불할 예약 정보 가져오기
+    @GetMapping("/refund-info")
+    public ResponseEntity<?> getRefundInfo(@ModelAttribute @Valid OrderReqDTO.RefundInfoDTO requestDTO 
+			,@RequestHeader("Authorization") String token){
+    	// 토큰 인증
+    	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+    	Integer userId = decodedJWT.getClaim("id").asInt();
+    	
+    	OrderRespDTO.RefundInfoDTO responseDTO = orderService.refundInfo(userId, requestDTO);
     	return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 

@@ -5,10 +5,12 @@ import java.util.List;
 import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project.camp.camp_rating.CampRating;
 import com.example.team_project.camp.camp_review.CampReview;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.errors.exception.Exception404;
+import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp._dto.CampReqDTO;
 import com.example.team_project.camp._dto.CampReqDTO.CampBookmarkDeleteDTO;
 import com.example.team_project.camp._dto.CampRespDTO;
@@ -118,9 +120,8 @@ public class CampService {
     }
 
     // 내 캠핑장 연도별 목록 조회
-    public CampRespDTO.MyCampListDTO myCampFieldList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-
-        List<Order> orders = orderJPARepository.findAllByUserId(userId);
+    public CampRespDTO.MyCampListDTO myCampList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
+        List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
         return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 
@@ -131,6 +132,7 @@ public class CampService {
         System.out.println("결과는? " + campList.size());
         return new CampRespDTO.SearchCampDTO(campList);
     }
+    
 
     public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
 
@@ -156,7 +158,7 @@ public class CampService {
     }
 
     public CampRespDTO.CampReviewListDTO campReviewList(Integer campId) {
-        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId);
+        List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId, Sort.by(Sort.Direction.DESC, "createdAt"));
         long campReviewCount = campReviewJPARepository.countByCampId(campId);
         return new CampRespDTO.CampReviewListDTO(campReviewList, campReviewCount);
     }
