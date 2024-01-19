@@ -1,5 +1,7 @@
 package com.example.team_project.camp;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -91,12 +93,12 @@ public class CampRestController_test extends MyWithRestDoc {
     public void getCampDetail_test() throws Exception {
         // given
         int id = 1;
-
+        
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/camp/"+id)
-                        
+                        .header("Authorization","Bearer " + TESTJWTTOKEN)
 
         );
 
@@ -130,7 +132,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
 		.andDo(document);        
 		
-    	mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+    	mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.id").value(campInfoMap.get("id")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campName").value(campInfoMap.get("campName")))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.response.campInfo.campAddress").value(campInfoMap.get("campAddress")))
@@ -156,7 +158,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, imagesMap .toArray().length).forEach(i -> {
 			Map<String, Object> imagesMapDTO = imagesMap .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.images["+ i +"].campImageId").value(imagesMapDTO.get("campImageId")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.images["+ i +"].campImage").value(imagesMapDTO.get("campImage")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
@@ -169,7 +171,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, exercise_facility .toArray().length).forEach(i -> {
 			Map<String, Object> exercise_facilityDTO = exercise_facility .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.exercise_facility["+ i +"].optionId").value(exercise_facilityDTO.get("optionId")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.exercise_facility["+ i +"].optionName").value(exercise_facilityDTO.get("optionName")))
 							.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.exercise_facility["+ i +"].categoryId").value(exercise_facilityDTO.get("categoryId")))
@@ -184,7 +186,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, main_facility .toArray().length).forEach(i -> {
 			Map<String, Object> main_facilityDTO = main_facility .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.main_facility["+ i +"].optionId").value(main_facilityDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.main_facility["+ i +"].optionName").value(main_facilityDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.main_facility["+ i +"].categoryId").value(main_facilityDTO.get("categoryId")))
@@ -199,7 +201,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, site .toArray().length).forEach(i -> {
 			Map<String, Object> siteDTO = site .get(i);
 				try {
-					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.site["+ i +"].optionId").value(siteDTO.get("optionId")))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.site["+ i +"].optionName").value(siteDTO.get("optionName")))
 					.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.site["+ i +"].categoryId").value(siteDTO.get("categoryId")))
@@ -214,7 +216,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, environment .toArray().length).forEach(i -> {
 			Map<String, Object> environmentDTO = environment .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.environment["+ i +"].optionId").value(environmentDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.environment["+ i +"].optionName").value(environmentDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.environment["+ i +"].categoryId").value(environmentDTO.get("categoryId")))
@@ -229,7 +231,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, sell .toArray().length).forEach(i -> {
 			Map<String, Object> sellDTO = sell .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.sell["+ i +"].optionId").value(sellDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.sell["+ i +"].optionName").value(sellDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.sell["+ i +"].categoryId").value(sellDTO.get("categoryId")))
@@ -244,7 +246,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, have_facility .toArray().length).forEach(i -> {
 			Map<String, Object> have_facilityDTO = have_facility .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.have_facility["+ i +"].optionId").value(have_facilityDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.have_facility["+ i +"].optionName").value(have_facilityDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.have_facility["+ i +"].categoryId").value(have_facilityDTO.get("categoryId")))
@@ -259,7 +261,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, type .toArray().length).forEach(i -> {
 			Map<String, Object> typeDTO = type .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.type["+ i +"].optionId").value(typeDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.type["+ i +"].optionName").value(typeDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.type["+ i +"].categoryId").value(typeDTO.get("categoryId")))
@@ -274,7 +276,7 @@ public class CampRestController_test extends MyWithRestDoc {
 		IntStream.range(0, rental .toArray().length).forEach(i -> {
 			Map<String, Object> rentalDTO = rental .get(i);
 			try {
-				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id))
+				mockMvc.perform(MockMvcRequestBuilders.get("/camp/" + id).header("Authorization","Bearer " + TESTJWTTOKEN))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.rental["+ i +"].optionId").value(rentalDTO.get("optionId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.rental["+ i +"].optionName").value(rentalDTO.get("optionName")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.response.options.rental["+ i +"].categoryId").value(rentalDTO.get("categoryId")))
@@ -435,5 +437,49 @@ public class CampRestController_test extends MyWithRestDoc {
 				}
 		});
     }
+    
+    
+    @Test
+    public void searchCamp_test() throws Exception {
+    	
+    	//given
+    	final String keyword = "아웃";
+    	//when
+    	ResultActions resultActions = mockMvc.perform(
+    				MockMvcRequestBuilders.get("/camp/search")
+    				.param("keyword", keyword )
+    				.header("Authorization","Bearer " + TESTJWTTOKEN)
+    			);
+    	String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+    	System.out.println("ResultActions : " + responseBody);		
+    	//then
+    	
+     	ObjectMapper om = new ObjectMapper();
+     	Map<String, Object> bodyMap = om.readValue(responseBody, new TypeReference<Map<String, Object>>() {});
+     	Map<String, Object> responseMap = om.convertValue(bodyMap.get("response"), new TypeReference<Map<String, Object>>() {});
+     	List<Map<String, Object>> listDatsMap  = om.convertValue(responseMap.get("campList"), new TypeReference<List<Map<String, Object>>>() {});
+    	
+     	resultActions
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.response").isMap())
+		.andDo(document);
+     	
+		IntStream.range(0, listDatsMap .toArray().length).forEach(i -> {
+			Map<String, Object> listDataDTO = listDatsMap .get(i);
+				try {
+					mockMvc.perform(MockMvcRequestBuilders.get("/camp/search").header("Authorization","Bearer " + TESTJWTTOKEN).param("keyword", "아웃" ))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].id").value(listDataDTO.get("id")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].campName").value(listDataDTO.get("campName")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.response.campList["+ i +"].campAddress").value(listDataDTO.get("campAddress")))
+							.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+							.andDo(MockMvcResultHandlers.print());
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+		});
+    }
+    
+    
 
 }

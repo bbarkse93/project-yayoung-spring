@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.errors.exception.Exception400;
+import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.errors.exception.Exception500;
 import com.example.team_project._core.utils.TimestampUtils;
 import com.example.team_project.camp.Camp;
@@ -72,6 +73,7 @@ public class OrderService {
 		if(!requestDTO.getTotalPrice().equals(campField.getPrice() * period.getDays())) {
 			throw new Exception400("결제 금액이 올바르지 않습니다.");
 		}
+
 	}
 	
 	// 결제 DB 등록
@@ -85,6 +87,7 @@ public class OrderService {
 		// DB 입력
 		try {
 			orderJPARepository.save(Order.builder()
+					.orderNumber(requestDTO.getOrderNumber())
 					.checkInDate(checkInDate)
 					.checkOutDate(checkOutDate)
 					.user(User.builder().id(userId).build())
@@ -106,7 +109,7 @@ public class OrderService {
 		// orderId와 userId에 맞는 예약 정보가 있는지 확인
 		Order order = orderJPARepository.findByIdAndUserId(requestDTO.getOrderId(), userId);
 		if(order == null) {
-			throw new Exception400("잘못된 예약번호입니다.");
+			throw new Exception404("잘못된 예약번호입니다.");
 		}
 		// 환불할 예약 정보를 응답 데이터로 가공해 반환
 		return new OrderRespDTO.RefundInfoDTO(CampRespDTO.getCampInfo(order.getCampField().getCamp()), order );

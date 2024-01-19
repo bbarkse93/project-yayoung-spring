@@ -20,9 +20,8 @@ public class RefundRestController_test extends MyWithRestDoc{
 		//given
 		RefundReqDTO.RefundRequestDTO requestDTO = new RefundReqDTO.RefundRequestDTO();
 		requestDTO.setOrderId(1);
-		requestDTO.setMerchantUid("11111");
-		requestDTO.setCancelRequestAmount("8000");
-		requestDTO.setReason("이유");
+		requestDTO.setOrderNumber("11111");
+		requestDTO.setRefund("8000");
 		ObjectMapper om = new ObjectMapper();
 		String requestBody = om.writeValueAsString(requestDTO);
 
