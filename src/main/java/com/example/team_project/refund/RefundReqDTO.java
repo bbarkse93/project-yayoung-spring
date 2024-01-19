@@ -7,8 +7,8 @@ public class RefundReqDTO {
     @Data
     public static class RefundRequestDTO{
         private Integer orderId;
-        private String merchantUid;
-        private String cancelRequestAmount;
-        private String reason;
+        private String orderNumber;
+        private String refund;
+
     }
 }
