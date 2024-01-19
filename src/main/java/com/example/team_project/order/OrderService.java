@@ -50,13 +50,9 @@ public class OrderService {
 		// 캠프장 정보 조회
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
 				new Exception400("해당 캠프장이 존재하지 않습니다."));
-		// 캠프 구역 목록 조회
-		List<CampField> campFields = campFieldJPARepository.findAllByCampId(requestDTO.getCampId());
-		if(campFields == null)
-			throw new Exception400("잘못된 캠프장 명입니다.");
 		// 제외할 예약 구역 조회
 		List<Order> orders = orderJPARepository.findAllByCheckInDateAfterOrderByCheckInDateAsc(TimestampUtils.findCurrnetTime());
-		return new CampRespDTO.CampFieldListDTO(campFields, camp, orders, requestDTO);
+		return new CampRespDTO.CampFieldListDTO(camp, orders, requestDTO);
 	}
 
 	// 결제 정보 검증 및 유효성 검사
@@ -64,13 +60,16 @@ public class OrderService {
 		//사용자가 없으면 예외 처리
 		userJPARepository.findById(userId)
 					.orElseThrow(()->new Exception400("해당 사용자가 없습니다."));
-		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
+		// 캠프 아이디와 캠프 구역 아이디로 캠프 구역을 조회해 존재 여부 확인
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
 				(requestDTO.getFieldName(),requestDTO.getCampId());
-		Period period = Period.between(LocalDate.parse(requestDTO.getCheckIn()) , //예약 일수 계산
+		if(campField == null) {
+			throw new Exception400("잘못된 캠프 구역이 입력되었습니다.");
+		}
+		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
+		Period period = Period.between(LocalDate.parse(requestDTO.getCheckIn()), //예약 일수 계산
 				LocalDate.parse(requestDTO.getCheckOut()));
-		Integer totalPrice = campField.getPrice() * period.getDays();
-		if(!requestDTO.getTotalPrice().equals(totalPrice)) {
+		if(!requestDTO.getTotalPrice().equals(campField.getPrice() * period.getDays())) {
 			throw new Exception400("결제 금액이 올바르지 않습니다.");
 		}
 	}
@@ -85,7 +84,7 @@ public class OrderService {
 				
 		// DB 입력
 		try {
-			Order order = orderJPARepository.save(Order.builder()
+			orderJPARepository.save(Order.builder()
 					.checkInDate(checkInDate)
 					.checkOutDate(checkOutDate)
 					.user(User.builder().id(userId).build())
@@ -109,13 +108,8 @@ public class OrderService {
 		if(order == null) {
 			throw new Exception400("잘못된 예약번호입니다.");
 		}
-		
-		Camp camp = order.getCampField().getCamp();
-
-		// 환불할 캠핑장 정보 조회
-		List<CampField> campFields = campFieldJPARepository.findAllByCampId(camp.getId());
 		// 환불할 예약 정보를 응답 데이터로 가공해 반환
-		return new OrderRespDTO.RefundInfoDTO(CampRespDTO.getCampInfo(camp, campFields), order );
+		return new OrderRespDTO.RefundInfoDTO(CampRespDTO.getCampInfo(order.getCampField().getCamp()), order );
 	}
 	
 

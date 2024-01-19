@@ -29,6 +29,8 @@ public class OrderReqDTO {
 	public static class RefundInfoDTO{
 		@NotNull
 		private Integer orderId;
+		@NotNull
+		private Integer campId;
 	}
 	
 	

@@ -16,8 +16,7 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	Order findFirstByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(Integer userId, Timestamp today);
 	// 아이디로 캠핑 일정 목록 조회
 	List<Order> findAllByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(Integer userId, Timestamp today);
-	// 유저정보로 예약 목록 조회
-    List<Order> findAllByUserId(Integer id);
+	// 캠핑 일정 목록 조회
 	List<Order> findAllByCheckInDateAfterOrderByCheckInDateAsc(Timestamp today);
 
 
@@ -37,6 +36,8 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	List<Order> mfindSearchAll(@Param("keyword") String keyword);
 	
 	Order findByIdAndUserId(Integer orderId, Integer userId);
+	// 과거 캠핑 목록(내 캠핑장) 조회
+	List<Order> findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(Integer userId, Timestamp findCurrnetTime);
 
 	
 	

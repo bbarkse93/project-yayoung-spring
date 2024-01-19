@@ -300,15 +300,15 @@ public class CampRespDTO {
         private String campFieldImage;
         private List<CampFieldDTO> campFieldDTOs;
         private List<ReservedCampFieldDTO> reservedCampFieldDTOs;
-        public CampFieldListDTO(List<CampField> campFields, Camp camp, List<Order> orders, OrderReqDTO.CampFieldListDTO requestDTO) {
-            this.campInfoDTO = getCampInfo(camp, campFields); // 캠핑장 정보 불러오기
+        public CampFieldListDTO(Camp camp, List<Order> orders, OrderReqDTO.CampFieldListDTO requestDTO) {
+            this.campInfoDTO = getCampInfo(camp); // 캠핑장 정보 불러오기
             this.campId = requestDTO.getCampId();
             this.campFieldImage = camp.getCampFieldImage();
             this.reservedCampFieldDTOs = orders.stream()
                     .filter(order -> order != null && order.getCampField().getCamp().getId() == requestDTO.getCampId())
                     .map(order -> new ReservedCampFieldDTO(order))
                     .collect(Collectors.toList());
-            this.campFieldDTOs = campFields.stream()
+            this.campFieldDTOs = camp.getCampFieldList().stream()
                     .map(campField -> new CampFieldDTO(campField))
                     .collect(Collectors.toList());
         }
@@ -348,23 +348,24 @@ public class CampRespDTO {
     }
 
     // 캠프 정보(상단) 가져오는 메서드
-    public static CampInfoDTO getCampInfo(Camp camp, List<CampField> campFields) {
+    public static CampInfoDTO getCampInfo(Camp camp) {
         CampInfoDTO campInfo = new CampInfoDTO();
         campInfo.setCampName(camp.getCampName());
         campInfo.setCampAddress(camp.getCampAddress());
         // 최저 금액과 최고 금액 - campFields의 가격들 중 최저 가격과 최고 가격
         // 최소 가격 찾기
-        Integer integerMinPrice = campFields.stream()
-                .map(CampField::getPrice)
+        Integer integerMinPrice = camp.getCampFieldList()
+        		.stream()
+        		.map(CampField::getPrice)
                 .min(Comparator.naturalOrder())
                 .orElseThrow();
         campInfo.setMinPrice(priceFormat(integerMinPrice));
-
         // 최대 가격 찾기
-        Integer integerMaxPrice = campFields.stream()
-                .map(CampField::getPrice)
-                .max(Comparator.naturalOrder())
-                .orElseThrow();
+        Integer integerMaxPrice = camp.getCampFieldList()
+        		.stream()
+        		.map(CampField::getPrice)
+        		.max(Comparator.naturalOrder())
+        		.orElseThrow();
         campInfo.setMaxPrice(priceFormat(integerMaxPrice));
 
         Timestamp now = TimestampUtils.findCurrnetTime();
