@@ -9,5 +9,6 @@ public class RefundReqDTO {
         private Integer orderId;
         private String orderNumber;
         private String refund;
+
     }
 }

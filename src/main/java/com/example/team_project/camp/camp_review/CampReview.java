@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Timestamp;
 
 @Getter
@@ -32,11 +34,11 @@ public class CampReview {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Camp camp;
-    
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CampRating campRating;
 
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Builder
