@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface CampBookmarkJPARepository extends JpaRepository<CampBookmark, Integer> {
     List<CampBookmark> findByUserId(Integer userId);
+
+    CampBookmark findByCampIdAndUserId(Integer campId, Integer userId);
 }
