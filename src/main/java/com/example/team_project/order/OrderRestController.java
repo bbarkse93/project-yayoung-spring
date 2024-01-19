@@ -52,7 +52,7 @@ public class OrderRestController {
     //캠프장 아이디를 받아 캠프 구역 목록 조회 + 캠프장 지도 + 상세정보 조회
     @GetMapping("/field-list")
     public ResponseEntity<?> campFieldList(@ModelAttribute OrderReqDTO.CampFieldListDTO requestDTO
-    					,@RequestHeader("Authorization") String token){
+            ,@RequestHeader("Authorization") String token){
     	// 토큰 인증
     	JwtTokenUtils.verify(token);
     	CampRespDTO.CampFieldListDTO responseDTO = orderService.campFieldList(requestDTO);

@@ -74,8 +74,14 @@
                                 </button>
                             </td>
                             <td>
-                                <button class="delete_Button" id="userDelete" data-id="1">삭제
-                                </button>
+                                {{#delete}}
+                                    <button class="deleted_Button" id="userDelete" data-id="1" disabled>삭제완료
+                                    </button>
+                                {{/delete}}
+                                {{^delete}}
+                                    <button class="delete_Button" id="userDelete" data-id="1" onclick="fetchDeleteCamp({{campId}})">삭제
+                                    </button>
+                                {{/delete}}
                             </td>
                         </tr>
                         {{/campDTOList}}
@@ -112,7 +118,7 @@
                                             </div>
                                             <div class="custom_flex_between" style="width: 100%">
                                                 <input type="text" value="" class="camp_m_middle_input input" id="sample4_jibunAddress" name="campAddress"
-                                                       placeholder="캠핑장 주소 검색">
+                                                       placeholder="캠핑장 주소 검색" readonly>
                                                 <span id="guide" style="color:#999;display:none"></span>
                                                 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" class="address_button"><br>
                                             </div>
@@ -139,7 +145,7 @@
                                                     <span class="custom_font_point3">*</span>
                                                 </div>
                                                 <select class="form-select" id="holiday" name="holiday">
-                                                    <option selected disabled>선택</option>
+                                                    <option value="" selected disabled>선택</option>
                                                     <option value="없음">없음</option>
                                                     <option value="월">월</option>
                                                     <option value="화">화</option>
@@ -175,7 +181,7 @@
                                                 </label>
                                                 <select class="form-select form_select_middle" id="campWater"
                                                         name="campWater">
-                                                    <option selected disabled>선택</option>
+                                                    <option value="" selected disabled>선택</option>
                                                     <option value="true">가능</option>
                                                     <option value="false">불가능</option>
                                                 </select>
@@ -186,7 +192,7 @@
                                                 </label>
                                                 <select class="form-select form_select_middle" id="campGarbageBag"
                                                         name="campGarbageBag">
-                                                    <option selected disabled>선택</option>
+                                                    <option value="" selected disabled>선택</option>
                                                     <option value="true">지급</option>
                                                     <option value="false">미지급</option>
                                                 </select>
@@ -197,7 +203,7 @@
                                                 </label>
                                                 <select class="form-select form_select_long" id="campRefundPolicy"
                                                         name="campRefundPolicy">
-                                                    <option selected disabled>선택</option>
+                                                    <option value="" selected disabled>선택</option>
                                                     <option value="당일 취소 불가, 2일 전 100% 환불">당일 취소 불가, 2일 전 100% 환불</option>
                                                 </select>
                                             </div>

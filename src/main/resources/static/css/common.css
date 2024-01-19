@@ -48,6 +48,15 @@
     width: 93px;
 }
 
+.deleted_Button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: var(--line_01);
+    background-color: var(--font_02);
+    width: 93px;
+}
+
 .update_button {
     padding: 10px;
     border: none;
