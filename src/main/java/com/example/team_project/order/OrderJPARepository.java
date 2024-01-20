@@ -39,6 +39,7 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	// 과거 캠핑 목록(내 캠핑장) 조회
 	List<Order> findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(Integer userId, Timestamp findCurrnetTime);
 	List<Order> findAllByUserId(Integer id);
+	List<Order> findAllByUserIdAndCheckOutDateBeforeOrderByCheckOutDateAsc(Integer userId, Timestamp findCurrnetTime);
 
 	
 	

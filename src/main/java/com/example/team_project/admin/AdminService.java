@@ -71,7 +71,6 @@ public class AdminService {
     public User login(AdminReqDTO.LoginDTO dto) {
         User user = userJPARepository.findByUsername(dto.getUsername());
         System.out.println("조회 완료 : ");
-
         // 유저 정보 확인
         if (user == null) {
                 throw new CustomRestfullException("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);

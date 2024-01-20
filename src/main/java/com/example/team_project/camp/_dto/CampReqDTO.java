@@ -41,6 +41,7 @@ public class CampReqDTO {
 		private double cleanliness;
 		private double managementness;
 		private double friendliness;
+		private Integer userId;
 	}
 	
 	@Data

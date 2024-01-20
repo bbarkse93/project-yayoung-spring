@@ -13,5 +13,7 @@ public interface CampReviewJPARepository extends JpaRepository<CampReview, Integ
 
     List<CampReview> findAllByCampId(Integer campId, Sort sort);
 
+	List<CampReview> findAllByUserIdAndCampId(Integer userId, Integer campId);
+
 //    long findByCampIdCount(Integer campId);
 }
