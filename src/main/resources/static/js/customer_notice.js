@@ -1,4 +1,17 @@
-/*FAQ 내용 조회*****************************************************/
+
+// 피드백 메시지를 표시하는 함수
+function showFeedbackMessage(title) {
+    var feedbackMessage = document.getElementById(`feedbackMessage-${title}`);
+    feedbackMessage.style.display = 'block';
+
+    // 2초 후에 메시지를 숨김
+    setTimeout(function() {
+        feedbackMessage.style.display = 'none';
+    }, 3000);
+}
+
+
+/*notice 내용 조회*****************************************************/
 async function fetchDetailNotice(noticeId) {
     try {
         let response = await fetch('/admin/notice/detail/' + noticeId);
@@ -20,16 +33,16 @@ async function fetchDetailNotice(noticeId) {
     }
 }
 
-/*FAQ 삭제*****************************************************/
+/*notice 삭제*****************************************************/
 
 
-async function fetchDeleteNotice(faqId){
+async function fetchDeleteNotice(noticeId){
 
     let userConfirmed = window.confirm("해당 공지사항을 삭제하시겠습니까?");
 
     if (userConfirmed) {
         try{
-            let response = await fetch(`/admin/notice/delete/${faqId}`, {
+            let response = await fetch(`/admin/notice/delete/${noticeId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json"
@@ -52,7 +65,7 @@ async function fetchDeleteNotice(faqId){
     }
 }
 
-/*FAQ 등록*****************************************************/
+/*notice 등록*****************************************************/
 
 async function fetchSaveNotice() {
 
@@ -60,10 +73,12 @@ async function fetchSaveNotice() {
     let content = document.getElementById('insert_content').value;
     let dto = {};
 
-    // if ((!title || !title.trim()) || (!content || !content.trim())) {
-    //     alert("공백을 입력해주세요.");
-    //     return false;
-    // } else {
+    if (title.trim() === '' || content.trim() === '') { // title.value.trim()과 content.value.trim() 대신 title.trim()과 content.trim()을 사용
+        console.log("브레이크!!!!");
+        setTimeout(function () {
+            showFeedbackMessage('insert');
+        }, 0);
+    }else{
         dto = {
             title: title.trim(),
             content: content.trim(),
@@ -90,10 +105,10 @@ async function fetchSaveNotice() {
         } catch (e) {
             console.error("실패", e.message);
         }
-    // }
+    }
 }
 
-/*FAQ 수정*****************************************************/
+/*notice 수정*****************************************************/
 
 async function fetchUpdateNotice() {
 
@@ -101,36 +116,44 @@ async function fetchUpdateNotice() {
     let content = document.getElementById('update_content').value;
     let noticeId = document.getElementById('notice_id').value;
 
-    let dto = {
-        title: title,
-        content: content,
-        userId: 2,
-    };
+    if (title.trim() === '' || content.trim() === '') { // title.value.trim()과 content.value.trim() 대신 title.trim()과 content.trim()을 사용
+        console.log("브레이크!!!!");
+        setTimeout(function () {
+            showFeedbackMessage('update');
+        }, 0);
+    }else {
 
-    console.log("제목 : " + title);
-    console.log("내용 : " + content);
-    console.log("noticeId : " + noticeId);
+        let dto = {
+            title: title,
+            content: content,
+            userId: 2,
+        };
+
+        console.log("제목 : " + title);
+        console.log("내용 : " + content);
+        console.log("noticeId : " + noticeId);
 
 
-    try {
-        let response = await fetch(`/admin/notice/update/${noticeId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dto)
-        });
+        try {
+            let response = await fetch(`/admin/notice/update/${noticeId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dto)
+            });
 
-        if (response.ok) {
-            let apiUtil = await response.json();
-            let success = apiUtil.response;
-            alert(success);
-            location.reload();
-        } else {
-            console.error("실패", response.statusText);
+            if (response.ok) {
+                let apiUtil = await response.json();
+                let success = apiUtil.response;
+                alert(success);
+                location.reload();
+            } else {
+                console.error("실패", response.statusText);
+            }
+        } catch (e) {
+            console.error("실패", e.message);
         }
-    } catch (e) {
-        console.error("실패", e.message);
     }
 }
 

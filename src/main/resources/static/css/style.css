@@ -1154,3 +1154,17 @@ ul.tabs li.current .a_tag {
     vertical-align: middle;
     height: 52px;
 }
+
+/********************************/
+.feedback-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    font-size: 20px;
+}
+

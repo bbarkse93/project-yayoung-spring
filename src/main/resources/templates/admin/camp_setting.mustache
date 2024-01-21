@@ -103,7 +103,10 @@
                             </div>
                             <div class="body">
                                 <div class="column">캠핑장 수정</div>
-                                <form id="update_form" method="post" enctype="multipart/form-data">
+                                <div id="feedbackMessage" class="feedback-message">
+                                    모든 정보를 입력해주세요.
+                                </div>
+                                <form action="" id="update_form" method="post" enctype="multipart/form-data">
                                     <div class="camp_form">
                                         <div class="camp_name custom_flex_between custom_margin_bottom">
                                             <div class="title">캠핑장 이름
@@ -386,8 +389,8 @@
                                             </div>
                                         </div>
                                         <div style="margin-top: 70px">
-                                            <button type="submit" class="insert_button insert_submit"
-                                                    style="width: 140px" data-bs-dismiss="modal">캠핑장 등록하기
+                                            <button type="submit" class="insert_button insert_submit" id="submit_button"
+                                                    style="width: 140px">캠핑장 등록하기
                                             </button>
                                         </div>
                                     </div>

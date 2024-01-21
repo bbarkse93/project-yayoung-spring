@@ -153,9 +153,6 @@ public class AdminController {
     // 캠핑장 수정 요청(POST)
     @PostMapping("/camp/update/{campId}")
     public String saveCamp(@ModelAttribute AdminReqDTO.UpdateCampDTO requestDTO, @PathVariable Integer campId){
-//        System.out.println("==============================================================");
-//        System.out.println("업데이트하는 데이터 : " + requestDTO.getCampPhotoList().toString());
-//        System.out.println("==============================================================");
         try{
             adminService.updateCamp(requestDTO ,campId);
             adminService.updateCampImage(requestDTO, campId);
