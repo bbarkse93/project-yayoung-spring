@@ -38,8 +38,8 @@ public class AdminController {
     // 로그인(POST)
     @PostMapping("/login")
     public String login(AdminReqDTO.LoginDTO dto) {
+    	System.out.println(dto.getUsername());
         User user = adminService.login(dto);
-
         // 로그인 처리
         session.setAttribute("sessionUser", user);
 
@@ -111,7 +111,6 @@ public class AdminController {
 
         // 전체목록
         int campAllSize = adminService.campList(keyword).size();
-
         // 페이징목록
         List<AdminRespDTO.CampDTO> campDTOList = adminService.campSearch(page, keyword, PAGESIZE);
         model.addAttribute("campDTOList", campDTOList);

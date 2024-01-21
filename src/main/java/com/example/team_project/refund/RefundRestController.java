@@ -1,11 +1,14 @@
 package com.example.team_project.refund;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project._core.utils.JwtTokenUtils;
 import com.example.team_project.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -28,8 +31,14 @@ public class RefundRestController {
 
     // http://localhost:8080/refund
     @PostMapping("/refund")
-    public ResponseEntity<?> wantRefund(@RequestBody RefundReqDTO.RefundRequestDTO requestDTO) {
-
+    public ResponseEntity<?> wantRefund(@RequestHeader("Authorization") String jwtToken, @RequestBody RefundReqDTO.RefundRequestDTO requestDTO) {
+    	// jwt 인증
+    	DecodedJWT decodedJWT = JwtTokenUtils.verify(jwtToken);
+    	Integer userId = decodedJWT.getClaim("id").asInt();
+    	requestDTO.setUserId(userId);
+    	// 환불 요청 데이터 검사
+    	adminService.refundInfoCheck(requestDTO);
+    	
         /***** 토큰 발급 *****/
 
         // * 액세스 토큰 요청 ---> Server to Server
@@ -59,6 +68,8 @@ public class RefundRestController {
             String merchantUid = requestDTO.getOrderNumber();
             String reason = "환불요청";
             String cancelRequestAmountString = requestDTO.getRefund();
+            
+            
 
             // * 액세스 토큰 요청 ---> Server to Server
             RestTemplate rt2 = new RestTemplate();
