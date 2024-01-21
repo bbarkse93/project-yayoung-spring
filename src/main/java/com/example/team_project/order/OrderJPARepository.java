@@ -2,9 +2,7 @@ package com.example.team_project.order;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
-import com.example.team_project.camp.Camp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,6 +38,15 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 	List<Order> findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(Integer userId, Timestamp findCurrnetTime);
 	List<Order> findAllByUserId(Integer id);
 	List<Order> findAllByUserIdAndCheckOutDateBeforeOrderByCheckOutDateAsc(Integer userId, Timestamp findCurrnetTime);
+	Order findFirstByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(Integer userId, Boolean isRefund,
+			Timestamp findCurrnetTime);
+	List<Order> findAllByUserIdAndIsRefundAndCheckInDateBeforeOrderByCheckInDateAsc(Integer userId, Boolean isRefund,
+			Timestamp findCurrnetTime);
+	List<Order> findAllByUserIdAndIsRefundAndCheckOutDateBeforeOrderByCheckOutDateAsc(Integer userId, Boolean isRefund,
+			Timestamp findCurrnetTime);
+	List<Order> findAllByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(Integer userId, Boolean isRefund,
+			Timestamp findCurrnetTime);
+	List<Order> findAllByIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(Boolean isRefund, Timestamp findCurrnetTime);
 
 	
 	

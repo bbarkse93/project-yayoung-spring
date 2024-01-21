@@ -36,13 +36,13 @@ public class OrderService {
 
     // 아이디로 다가오는 캠핑 일정 조회
 	public OrderRespDTO.ImminentOrderDetailDTO imminentOrderDetail(Integer userId) {
-		Order order = orderJPARepository.findFirstByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+		Order order = orderJPARepository.findFirstByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
 		return new OrderRespDTO.ImminentOrderDetailDTO(order);
 	}
 
 	// 아이디로 캠핑 일정 목록 조회
 	public OrderRespDTO.CampScheduleListDTO campScheduleList(Integer userId) {
-		List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+		List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
 		return new OrderRespDTO.CampScheduleListDTO(orders);
 	}
 
@@ -52,7 +52,7 @@ public class OrderService {
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
 				new Exception404("해당 캠프장이 존재하지 않습니다."));
 		// 제외할 예약 구역 조회
-		List<Order> orders = orderJPARepository.findAllByCheckInDateAfterOrderByCheckInDateAsc(TimestampUtils.findCurrnetTime());
+		List<Order> orders = orderJPARepository.findAllByIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(false ,TimestampUtils.findCurrnetTime());
 		return new CampRespDTO.CampFieldListDTO(camp, orders, requestDTO);
 	}
 

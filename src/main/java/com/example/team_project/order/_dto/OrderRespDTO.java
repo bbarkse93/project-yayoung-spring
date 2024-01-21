@@ -45,6 +45,7 @@ public class OrderRespDTO {
 		
 		public CampScheduleListDTO(List<Order> orders) {
 			this.campScheduleDTOs = orders.stream()
+					.filter(order -> order.getIsRefund() == false)
 					.map(order -> new CampScheduleDTO(order)).collect(Collectors.toList());
 		}
 		

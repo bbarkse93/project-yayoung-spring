@@ -36,8 +36,7 @@ public class RefundRestController {
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(jwtToken);
     	Integer userId = decodedJWT.getClaim("id").asInt();
     	requestDTO.setUserId(userId);
-    	// 환불 요청 데이터 검사
-    	adminService.refundInfoCheck(requestDTO);
+
     	
         /***** 토큰 발급 *****/
 
