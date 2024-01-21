@@ -534,6 +534,7 @@ public class AdminService {
         Order order = orderJPARepository.findById(orderId).orElseThrow(() -> new Exception404("해당 주문을 찾을 수 없습니다." + orderId));
         order.updateRefund(true);
         order.updateRefundAt(new Timestamp(System.currentTimeMillis()));
+        orderJPARepository.save(order);
         return "환불이 완료되었습니다.";
     }
 
@@ -567,34 +568,5 @@ public class AdminService {
         return "삭제에 성공했습니다.";
     }
     
-    // 환불 정보 검사
-	public void refundInfoCheck(RefundRequestDTO requestDTO) {
-		Order order = orderJPARepository.findByIdAndUserId(requestDTO.getOrderId(), requestDTO.getUserId());
-		if(order == null) {
-			throw new Exception404("잘못된 예약번호입니다.");
-		}
 
-        // 현재 시간을 얻음
-        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-
-        // 체크인 시간이 경과한 예약은 환불불가
-//        if (currentTimestamp.after(order.getCheckInDate())) {
-//           throw new Exception403("체크인 시간이 경과한 예약입니다.");
-//        }
-
-        String checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
-        String checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
-		Period period = Period.between(LocalDate.parse(checkInDate) , //예약 일수 계산
-				LocalDate.parse(checkOutDate));
-		Integer totalPrice = order.getCampField().getPrice()* period.getDays();
-		if(requestDTO.getRefund() == null 
-				|| !totalPrice.equals(Integer.parseInt(requestDTO.getRefund()))) {
-			throw new Exception400("잘못된 환불금액입니다.");
-		};
-		if(requestDTO.getOrderNumber() == null 
-				|| !requestDTO.getOrderNumber().equals(order.getOrderNumber())) {
-			throw new Exception400("잘못된 환불번호입니다.");
-		}
-		
-	}
 }

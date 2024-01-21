@@ -122,7 +122,7 @@ public class CampService {
 
     // 내 캠핑장 연도별 목록 조회
     public CampRespDTO.MyCampListDTO myCampList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-        List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+        List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckInDateBeforeOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
         return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 
@@ -138,7 +138,7 @@ public class CampService {
     public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
     	
     	// 리뷰 작성 조건 충족 여부 검사(캠핑을 다녀와야 리뷰 작성 가능)
-    	List<Order> orders = orderJPARepository.findAllByUserIdAndCheckOutDateBeforeOrderByCheckOutDateAsc(requestDTO.getUserId(), TimestampUtils.findCurrnetTime());
+    	List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckOutDateBeforeOrderByCheckOutDateAsc(requestDTO.getUserId(), false ,TimestampUtils.findCurrnetTime());
     	orders = orders.stream().filter(order -> order != null && order.getCampField().getCamp().getId().equals(requestDTO.getCampId())).collect(Collectors.toList());
     	if(orders == null || orders.size() == 0) {
     		throw new Exception400("다녀간 캠핑장이 없습니다.");
