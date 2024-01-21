@@ -1,7 +1,26 @@
 package com.example.team_project.admin;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.team_project._core.errors.exception.CustomRestfullException;
+import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project._core.errors.exception.Exception401;
+import com.example.team_project._core.errors.exception.Exception403;
 import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.admin._dto.AdminReqDTO;
@@ -28,26 +47,11 @@ import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.option_management.OptionManagementJPARepository;
 import com.example.team_project.order.Order;
 import com.example.team_project.order.OrderJPARepository;
+import com.example.team_project.refund.RefundReqDTO.RefundRequestDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Transactional
 @RequiredArgsConstructor
@@ -562,4 +566,35 @@ public class AdminService {
         bannerJPARepository.deleteById(banner.getId());
         return "삭제에 성공했습니다.";
     }
+    
+    // 환불 정보 검사
+	public void refundInfoCheck(RefundRequestDTO requestDTO) {
+		Order order = orderJPARepository.findByIdAndUserId(requestDTO.getOrderId(), requestDTO.getUserId());
+		if(order == null) {
+			throw new Exception404("잘못된 예약번호입니다.");
+		}
+
+        // 현재 시간을 얻음
+        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+
+        // 체크인 시간이 경과한 예약은 환불불가
+//        if (currentTimestamp.after(order.getCheckInDate())) {
+//           throw new Exception403("체크인 시간이 경과한 예약입니다.");
+//        }
+
+        String checkInDate = String.valueOf(order.getCheckInDate()).split(" ")[0];
+        String checkOutDate = String.valueOf(order.getCheckOutDate()).split(" ")[0];
+		Period period = Period.between(LocalDate.parse(checkInDate) , //예약 일수 계산
+				LocalDate.parse(checkOutDate));
+		Integer totalPrice = order.getCampField().getPrice()* period.getDays();
+		if(requestDTO.getRefund() == null 
+				|| !totalPrice.equals(Integer.parseInt(requestDTO.getRefund()))) {
+			throw new Exception400("잘못된 환불금액입니다.");
+		};
+		if(requestDTO.getOrderNumber() == null 
+				|| !requestDTO.getOrderNumber().equals(order.getOrderNumber())) {
+			throw new Exception400("잘못된 환불번호입니다.");
+		}
+		
+	}
 }
