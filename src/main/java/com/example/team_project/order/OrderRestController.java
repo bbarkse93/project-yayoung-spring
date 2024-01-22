@@ -78,6 +78,7 @@ public class OrderRestController {
     @GetMapping("/refund-info")
     public ResponseEntity<?> getRefundInfo(@ModelAttribute @Valid OrderReqDTO.RefundInfoDTO requestDTO 
 			,@RequestHeader("Authorization") String token){
+
     	// 토큰 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
     	Integer userId = decodedJWT.getClaim("id").asInt();

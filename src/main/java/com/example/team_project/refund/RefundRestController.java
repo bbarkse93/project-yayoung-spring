@@ -32,6 +32,11 @@ public class RefundRestController {
     // http://localhost:8080/refund
     @PostMapping("/refund")
     public ResponseEntity<?> wantRefund(@RequestHeader("Authorization") String jwtToken, @RequestBody RefundReqDTO.RefundRequestDTO requestDTO) {
+
+        System.out.println("환불 주문 번호 : " + requestDTO.getOrderNumber());
+        System.out.println("환불 금액 : " + requestDTO.getRefund());
+        System.out.println("환불 orderId : " + requestDTO.getOrderId());
+
     	// jwt 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(jwtToken);
     	Integer userId = decodedJWT.getClaim("id").asInt();
@@ -89,12 +94,41 @@ public class RefundRestController {
 
             // 요청 처리 - ResponseEntity로 응답이 된다.
             ResponseEntity<String> response1 = rt1.exchange("https://api.iamport.kr/payments/cancel", HttpMethod.POST, requestMsg1, String.class);
+            System.out.println("response1의 바디 : " + response1.getBody().toString());
 
-            // 환불 완료 후 order에 refund 저장
-            String result = adminService.saveRefund(requestDTO.getOrderId());
+            String responseBody = response1.getBody();
+            // "code" 부분을 추출
+            int code = -1; // 기본값 설정 (에러 처리 등을 고려하여)
+            if (responseBody != null && responseBody.contains("\"code\":")) {
+                int codeIndex = responseBody.indexOf("\"code\":") + "\"code\":".length();
+                int endIndex = responseBody.indexOf(",", codeIndex);
+                if (endIndex == -1) {
+                    // 마지막 요소인 경우
+                    endIndex = responseBody.indexOf("}", codeIndex);
+                }
 
-            // 응답을 다시 클라이언트에게 전달
-            return ResponseEntity.ok().body(ApiUtils.success(result));
+                String codeValue = responseBody.substring(codeIndex, endIndex).trim();
+                try {
+                    code = Integer.parseInt(codeValue);
+                } catch (NumberFormatException e) {
+                    // 코드가 숫자가 아닌 경우 처리
+                    e.printStackTrace(); // 혹은 로깅 등의 작업 수행
+                }
+            }
+
+// 추출된 code 값 사용
+            System.out.println("Code: " + code);
+            System.out.println("==================================");
+
+            if(code == 0){
+                // 환불 완료 후 order에 refund 저장
+                String result = adminService.saveRefund(requestDTO.getOrderId());
+                // 응답을 다시 클라이언트에게 전달
+                return ResponseEntity.ok().body(ApiUtils.success(result));
+            }else{
+                return ResponseEntity.ok().body(ApiUtils.success("환불에 실패했습니다."));
+
+            }
 
         } catch (Exception e) {
             // 에러가 발생한 경우 클라이언트에게 에러 메시지 전달
