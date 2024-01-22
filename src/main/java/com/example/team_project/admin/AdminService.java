@@ -410,21 +410,24 @@ public class AdminService {
     // 캠핑장 옵션 수정
     @Transactional
     public void updateOptionManagement(AdminReqDTO.UpdateCampDTO requestDTO, Integer campId) {
+        List<AdminReqDTO.UpdateCampDTO.OptionDTO> selectedOptionList = new ArrayList<>();
+        for (AdminReqDTO.UpdateCampDTO.OptionDTO selectedOption: requestDTO.getCampOptionDTOList()) {
+            if(selectedOption.getOptionId() != null){
+                selectedOptionList.add(selectedOption);
+            }
+        }
         try {
             // 기존 옵션 호출
             List<OptionManagement> optionManagementList = optionManagementJPARepository.findAllByCampId(campId);
             List<Option> optionList = optionJPARepository.findAll();
             Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
 
-            System.out.println("기존 : " + optionManagementList.size());
-            System.out.println("새로 : " + requestDTO.getCampOptionDTOList().size());
             // 기존 옵션과 수정 옵션 비교(수정 옵션 갯수가 기존과 같거나 작을 때)
-            if (optionManagementList.size() >= requestDTO.getCampOptionDTOList().size()) {
+            if (optionManagementList.size() >= selectedOptionList.size()) {
                 for (int i = 0; i < optionManagementList.size(); i++) {
-                    System.out.println("새로 : " + requestDTO.getCampOptionDTOList().get(i).getOptionId());
-                    if (i < requestDTO.getCampOptionDTOList().size()) {
+                    if (i < selectedOptionList.size()) {
                         // 옵션 목록 호출
-                        Integer updateOptionId = requestDTO.getCampOptionDTOList().get(i).getOptionId();
+                        Integer updateOptionId = selectedOptionList.get(i).getOptionId();
                         Option option = optionList.stream().filter(o -> o.getId().equals(updateOptionId)).findFirst().orElseThrow(() -> new Exception404("해당 옵션은 존재하지 않습니다."));
                         optionManagementList.get(i).updateOption(option);
                     } else {
@@ -436,11 +439,11 @@ public class AdminService {
             }
 
             // 기존 옵션과 수정 옵션 비교(수정 옵션 갯수가 기존 보다 클 때)
-            if(optionManagementList.size() < requestDTO.getCampFieldDTOList().size()) {
+            if(optionManagementList.size() < selectedOptionList.size()) {
                 System.out.println("크다");
-                for (int a = 0; a < requestDTO.getCampOptionDTOList().size(); a++) {
+                for (int a = 0; a < selectedOptionList.size(); a++) {
                     // 옵션 목록 호출
-                    Integer updateOptionId = requestDTO.getCampOptionDTOList().get(a).getOptionId();
+                    Integer updateOptionId = selectedOptionList.get(a).getOptionId();
                     Option option = optionList.stream().filter(o -> o.getId().equals(updateOptionId)).findFirst().orElseThrow(() -> new Exception404("해당 옵션은 존재하지 않습니다."));
                     if (a < optionManagementList.size()) {
                         optionManagementList.get(a).updateOption(option);
