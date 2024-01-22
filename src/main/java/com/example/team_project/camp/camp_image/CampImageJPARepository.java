@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CampImageJPARepository extends JpaRepository<CampImage, Integer> {
 
     List<CampImage> findByCampId(Integer campId);
-    
+
+    List<CampImage> findAllByCampId(Integer campId);
+
     // CampImage findByCampId(Integer campId);
 }

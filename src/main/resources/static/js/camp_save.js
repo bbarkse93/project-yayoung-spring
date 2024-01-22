@@ -43,10 +43,26 @@ document.getElementById('camp_save_form').addEventListener('submit', function (e
     console.log("옵션 카운트 : " + selectedCount);
 
     if(checkCount < 1 || emptyCount > 0 || selectedCount > 0){
-        console.log('브레이크!!!!!!!!!!!!!!');
+        console.log("브레이크!!!!");
+        setTimeout(function() {
+            showFeedbackMessage();
+        }, 0);
         event.preventDefault();
+    }else{
+        submitButton.setAttribute('data-bs-dismiss', 'modal');
     }
 });
+
+// 피드백 메시지를 표시하는 함수
+function showFeedbackMessage() {
+    var feedbackMessage = document.getElementById('feedbackMessage');
+    feedbackMessage.style.display = 'block';
+
+    // 2초 후에 메시지를 숨김
+    setTimeout(function() {
+        feedbackMessage.style.display = 'none';
+    }, 3000);
+}
 
 
 let checkIn = document.getElementById('check_in');

@@ -6,6 +6,68 @@ window.onload = function (){
     campSiteCount = 0;
 }
 
+document.getElementById('update_form').addEventListener('submit', function (event) {
+    let inputList = document.querySelectorAll('input');
+    let selectList = document.querySelectorAll('select');
+    let checkCount = 0;
+    let emptyCount = 0;
+    let selectedCount = 0;
+
+
+
+    for (let i = 0; i < inputList.length; i++) {
+        if (inputList[i].type === "checkbox" && inputList[i].checked) {
+            checkCount++;
+        }
+
+        if (inputList[i].type !== "hidden" && inputList[i].value.trim() === '') {
+            if(inputList[i].id !== "camp_field_photo" && inputList[i].name !== "campPhotoList" && inputList[i].name !== "keyword"){
+                emptyCount++;
+                console.log("번호 : " + i);
+            }
+        }
+
+        if(i > inputList.length){
+            break;
+        }
+    }
+
+    for(let s = 0; s < selectList.length; s++) {
+        if(selectList[s].value.trim() === ''){
+            selectedCount++;
+        }
+        if(s > selectList.length){
+            break;
+        }
+    }
+
+    console.log("체크 카운트 : " + checkCount);
+    console.log("공백 카운트 : " + emptyCount);
+    console.log("옵션 카운트 : " + selectedCount);
+
+    let submitButton = document.getElementById('submit_button');
+    if(checkCount < 1 || emptyCount > 0 || selectedCount > 0){
+        console.log("브레이크!!!!");
+        setTimeout(function() {
+            showFeedbackMessage();
+        }, 0);
+        event.preventDefault();
+    }else{
+        submitButton.setAttribute('data-bs-dismiss', 'modal');
+    }
+});
+
+// 피드백 메시지를 표시하는 함수
+function showFeedbackMessage() {
+    var feedbackMessage = document.getElementById('feedbackMessage');
+    feedbackMessage.style.display = 'block';
+
+    // 2초 후에 메시지를 숨김
+    setTimeout(function() {
+        feedbackMessage.style.display = 'none';
+    }, 3000);
+}
+
 async function fetchDeleteCamp(campId){
 
     let userConfirmed = window.confirm("해당 캠핑장을 삭제하시겠습니까?");
@@ -45,6 +107,8 @@ async function fetchDetailCamp(campId){
             let campDetailDTO = apiUtil.response;
             photoCount = 0;
             campSiteCount = 0;
+            let submitButton = document.getElementById('submit_button');
+            submitButton.removeAttribute('data-bs-dismiss');
             let campField = document.getElementById('camp_field');
             campField.innerHTML = "";
             let updateForm = document.getElementById('update_form');
@@ -114,10 +178,6 @@ async function fetchDetailCamp(campId){
             campDetailDTO.campFieldDTOList.forEach((field, index) => {
                 plusCampSite(field.fieldId ,field.fieldName, field.price);
             })
-
-
-
-
 
         } else {
             console.error("실패", response.statusText);
@@ -232,6 +292,11 @@ function plusCampSite(fieldId ,fieldName, price){
     let campFieldInsertForm = document.querySelector('.camp_site_insert_form');
     let div = document.createElement('div');
     div.className = "add_camp_site";
+    if(fieldId == null && fieldName == null && price == null){
+        fieldId = "";
+        fieldName = "";
+        price = "";
+    }
     div.innerHTML = `
         <input type=text class="camp_site_name_input input"
                id="camp_site_name${campSiteCount}" placeholder="구역 이름" 
