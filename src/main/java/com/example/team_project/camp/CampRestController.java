@@ -147,9 +147,7 @@ public class CampRestController {
 
     // 캠핑장 별 리뷰 목록 조회
     @GetMapping("/review/{campId}")
-    public ResponseEntity<?> getReview(@PathVariable Integer campId
-    		, @RequestHeader("Authorization") String token) {
-    	JwtTokenUtils.verify(token);
+    public ResponseEntity<?> getReview(@PathVariable Integer campId) {
         CampRespDTO.CampReviewListDTO campReviewListDTO = campService.campReviewList(campId);
         return ResponseEntity.ok().body(ApiUtils.success(campReviewListDTO));
     }

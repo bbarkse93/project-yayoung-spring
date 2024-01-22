@@ -3,7 +3,9 @@ insert into user_tb(username, password, nickname, role, user_image, is_withdraw,
 values ('ssar', '1234', 'ssar', true,'/images/user/user-profile.jpg', false, NOW());
 insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
 values ('admin', '1234', 'admin', false, '/images/user/user-profile.jpg', false, NOW());
-
+insert into user_tb(username, password, nickname, role, user_image, is_withdraw, user_created_at)
+values ('3290214646', '150A0D3EC31A459C6171663BD0990CD382C471DF8F4D19C2C5E6EF3C40D40E37', '대욱', false, 'http://k.kakaocdn.net/dn/bs1evA/btsDKxrsrmw/I7OkXYQeYmKJO4nEsUxjP0/img_640x640.jpg
+', false, NOW());
 -- 캠프 -------------------------------------------------------------------------------------------------------
 insert into CAMP_TB (CAMP_NAME, CAMP_ADDRESS, CAMP_CALL_NUMBER, CAMP_WEBSITE, CAMP_REFUND_POLICY, CAMP_WATER,
                      CAMP_GARBAGE_BAG, HOLIDAY, CAMP_CHECK_IN, CAMP_CHECK_OUT, CAMP_FIELD_IMAGE, IS_DELETE)
@@ -1171,7 +1173,11 @@ values ('55555', '2024-01-21', '2024-01-22', 1, 9, false, now(), now());
 insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
 values ('66666', '2024-01-25', '2024-01-28', 1, 5, false, now(), now());
 insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
-values ('77777', '2024-02-01', '2024-02-05', 1, 3, false, now(), now());
+values ('mid_77777', '2024-01-19', '2024-01-21', 3, 3, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('mid_88888', '2024-01-12', '2024-01-14', 3, 9, false, now(), now());
+insert into order_tb (order_number, check_in_date, check_out_date, user_id, camp_field_id, is_refund, created_at, refund_at)
+values ('mid_99999', '2024-01-05', '2024-01-07', 3, 300, false, now(), now());
 
 -- 평점 ------------------------------------------------------------------------------------------------------------
 insert into camp_rating_tb ( camp_id, cleanliness, friendliness, managementness, user_id)

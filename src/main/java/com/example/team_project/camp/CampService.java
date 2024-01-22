@@ -138,16 +138,16 @@ public class CampService {
     public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
     	
     	// 리뷰 작성 조건 충족 여부 검사(캠핑을 다녀와야 리뷰 작성 가능)
-    	List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckOutDateBeforeOrderByCheckOutDateAsc(requestDTO.getUserId(), false ,TimestampUtils.findCurrnetTime());
-    	orders = orders.stream().filter(order -> order != null && order.getCampField().getCamp().getId().equals(requestDTO.getCampId())).collect(Collectors.toList());
-    	if(orders == null || orders.size() == 0) {
-    		throw new Exception400("다녀간 캠핑장이 없습니다.");
-    	}
-    	List<CampReview> campReviews = campReviewJPARepository.findAllByUserIdAndCampId(requestDTO.getUserId(),requestDTO.getCampId());
-    	// 예약으로 다녀간 회수와 리뷰 수가 일치하면 리뷰 작성 금지
-    	if(orders.size() == campReviews.size()) {
-    		throw new Exception400("이미 리뷰를 작성하셨습니다.");
-    	}
+//    	List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckOutDateBeforeOrderByCheckOutDateAsc(requestDTO.getUserId(), false ,TimestampUtils.findCurrnetTime());
+//    	orders = orders.stream().filter(order -> order != null && order.getCampField().getCamp().getId().equals(requestDTO.getCampId())).collect(Collectors.toList());
+//    	if(orders == null || orders.size() == 0) {
+//    		throw new Exception400("다녀간 캠핑장이 없습니다.");
+//    	}
+//    	List<CampReview> campReviews = campReviewJPARepository.findAllByUserIdAndCampId(requestDTO.getUserId(),requestDTO.getCampId());
+//    	// 예약으로 다녀간 회수와 리뷰 수가 일치하면 리뷰 작성 금지
+//    	if(orders.size() == campReviews.size()) {
+//    		throw new Exception400("이미 리뷰를 작성하셨습니다.");
+//    	}
     	
         CampRating campRating = CampRating.builder()
                 .cleanliness(requestDTO.getCleanliness())
