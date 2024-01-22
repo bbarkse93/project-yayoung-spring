@@ -32,6 +32,11 @@ public class RefundRestController {
     // http://localhost:8080/refund
     @PostMapping("/refund")
     public ResponseEntity<?> wantRefund(@RequestHeader("Authorization") String jwtToken, @RequestBody RefundReqDTO.RefundRequestDTO requestDTO) {
+
+        System.out.println("환불 주문 번호 : " + requestDTO.getOrderNumber());
+        System.out.println("환불 금액 : " + requestDTO.getRefund());
+        System.out.println("환불 orderId : " + requestDTO.getOrderId());
+
     	// jwt 인증
     	DecodedJWT decodedJWT = JwtTokenUtils.verify(jwtToken);
     	Integer userId = decodedJWT.getClaim("id").asInt();
@@ -89,6 +94,7 @@ public class RefundRestController {
 
             // 요청 처리 - ResponseEntity로 응답이 된다.
             ResponseEntity<String> response1 = rt1.exchange("https://api.iamport.kr/payments/cancel", HttpMethod.POST, requestMsg1, String.class);
+            System.out.println("response1의 바디 : " + response1.getBody().toString());
 
             String responseBody = response1.getBody();
             // "code" 부분을 추출

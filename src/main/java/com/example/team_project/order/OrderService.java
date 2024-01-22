@@ -107,6 +107,8 @@ public class OrderService {
 		userJPARepository.findById(userId)
 					.orElseThrow(() -> new Exception400("해당 사용자가 없습니다."));
 		// orderId와 userId에 맞는 예약 정보가 있는지 확인
+		System.out.println("요청 : " + requestDTO.getOrderId());
+		System.out.println("요청 : " + requestDTO.getCampId());
 		Order order = orderJPARepository.findByIdAndUserId(requestDTO.getOrderId(), userId);
 		if(order == null) {
 			throw new Exception404("잘못된 예약번호입니다.");
