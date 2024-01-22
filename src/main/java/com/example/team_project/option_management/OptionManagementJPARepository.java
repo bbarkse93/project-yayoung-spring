@@ -7,4 +7,6 @@ import java.util.List;
 public interface OptionManagementJPARepository extends JpaRepository<OptionManagement, Integer> {
 
     List<OptionManagement> findAllByCampId(Integer campId);
+
+    void deleteByOptionId(Integer optionId);
 }

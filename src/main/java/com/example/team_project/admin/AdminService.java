@@ -1,7 +1,26 @@
 package com.example.team_project.admin;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.team_project._core.errors.exception.CustomRestfullException;
+import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project._core.errors.exception.Exception401;
+import com.example.team_project._core.errors.exception.Exception403;
 import com.example.team_project._core.errors.exception.Exception404;
 import com.example.team_project._core.utils.ImageUtils;
 import com.example.team_project.admin._dto.AdminReqDTO;
@@ -28,26 +47,11 @@ import com.example.team_project.option_management.OptionManagement;
 import com.example.team_project.option_management.OptionManagementJPARepository;
 import com.example.team_project.order.Order;
 import com.example.team_project.order.OrderJPARepository;
+import com.example.team_project.refund.RefundReqDTO.RefundRequestDTO;
 import com.example.team_project.user.User;
 import com.example.team_project.user.UserJPARepository;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Transactional
 @RequiredArgsConstructor
@@ -71,7 +75,6 @@ public class AdminService {
     public User login(AdminReqDTO.LoginDTO dto) {
         User user = userJPARepository.findByUsername(dto.getUsername());
         System.out.println("조회 완료 : ");
-
         // 유저 정보 확인
         if (user == null) {
                 throw new CustomRestfullException("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
@@ -380,6 +383,12 @@ public class AdminService {
     @Transactional
     public void updateCamp(AdminReqDTO.UpdateCampDTO requestDTO, Integer campId) {
         Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
+        String campFieldImage = "";
+        if(requestDTO.getCampFieldImage().getOriginalFilename().equals("")){
+            campFieldImage = camp.getCampFieldImage();
+        }else {
+            campFieldImage = ImageUtils.formatCampFieldImage(requestDTO.getCampFieldImage());
+        }
         try {
             camp.updateCampName(requestDTO.getCampName());
             camp.updateCampAddress(requestDTO.getCampAddress());
@@ -391,7 +400,7 @@ public class AdminService {
             camp.updateCampWater(requestDTO.isCampWater());
             camp.updateCampGarbageBag(requestDTO.isCampGarbageBag());
             camp.updateHoliday(requestDTO.getHoliday());
-            camp.updateCampFieldImage(ImageUtils.formatCampFieldImage(requestDTO.getCampFieldImage()));
+            camp.updateCampFieldImage(campFieldImage);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -401,28 +410,51 @@ public class AdminService {
     // 캠핑장 옵션 수정
     @Transactional
     public void updateOptionManagement(AdminReqDTO.UpdateCampDTO requestDTO, Integer campId) {
-        List<AdminReqDTO.UpdateCampDTO.OptionDTO> selectOptionDTOList = new ArrayList<>();
-        for(AdminReqDTO.UpdateCampDTO.OptionDTO optionDTO : requestDTO.getCampOptionDTOList()) {
-            if(optionDTO.getOptionId() != null){
-                selectOptionDTOList.add(optionDTO);
-            }
-        }
         try {
-            // 기존 옵션들 호출
+            // 기존 옵션 호출
             List<OptionManagement> optionManagementList = optionManagementJPARepository.findAllByCampId(campId);
-            // camp 정보 가져오기
+            List<Option> optionList = optionJPARepository.findAll();
             Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
-            // 새 옵션 저장
 
-//            for(AdminReqDTO.UpdateCampDTO.OptionDTO selectOptionDTO : selectOptionDTOList){
-//                Option option = optionJPARepository.findById(selectOptionDTO.getOptionId()).orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다." + selectOptionDTO.getOptionId()));
-//                Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
-//                OptionManagement optionManagement = OptionManagement.builder()
-//                        .option(option)
-//                        .camp(camp)
-//                        .build();
-//                optionManagementJPARepository.save(optionManagement);
-//            }
+            System.out.println("기존 : " + optionManagementList.size());
+            System.out.println("새로 : " + requestDTO.getCampOptionDTOList().size());
+            // 기존 옵션과 수정 옵션 비교(수정 옵션 갯수가 기존과 같거나 작을 때)
+            if (optionManagementList.size() >= requestDTO.getCampOptionDTOList().size()) {
+                for (int i = 0; i < optionManagementList.size(); i++) {
+                    System.out.println("새로 : " + requestDTO.getCampOptionDTOList().get(i).getOptionId());
+                    if (i < requestDTO.getCampOptionDTOList().size()) {
+                        // 옵션 목록 호출
+                        Integer updateOptionId = requestDTO.getCampOptionDTOList().get(i).getOptionId();
+                        Option option = optionList.stream().filter(o -> o.getId().equals(updateOptionId)).findFirst().orElseThrow(() -> new Exception404("해당 옵션은 존재하지 않습니다."));
+                        optionManagementList.get(i).updateOption(option);
+                    } else {
+                        //기존 보다 수정 옵션 갯수가 작다면 기존 옵션 삭제
+                        optionManagementJPARepository.deleteById(optionManagementList.get(i).getId());
+                    }
+                    System.out.println("번호 : " + i);
+                }
+            }
+
+            // 기존 옵션과 수정 옵션 비교(수정 옵션 갯수가 기존 보다 클 때)
+            if(optionManagementList.size() < requestDTO.getCampFieldDTOList().size()) {
+                System.out.println("크다");
+                for (int a = 0; a < requestDTO.getCampOptionDTOList().size(); a++) {
+                    // 옵션 목록 호출
+                    Integer updateOptionId = requestDTO.getCampOptionDTOList().get(a).getOptionId();
+                    Option option = optionList.stream().filter(o -> o.getId().equals(updateOptionId)).findFirst().orElseThrow(() -> new Exception404("해당 옵션은 존재하지 않습니다."));
+                    if (a < optionManagementList.size()) {
+                        optionManagementList.get(a).updateOption(option);
+                    } else {
+                        // 기존 보다 수정 구역 갯수가 크다면, 수정 구역 추가
+                        OptionManagement optionManagement = OptionManagement.builder()
+                                .camp(camp)
+                                .option(option)
+                                .build();
+                        optionManagementJPARepository.save(optionManagement);
+                    }
+                    System.out.println("번호 : " + a );
+                }
+            }
         }catch (Exception e){
             e.getMessage();
         }
@@ -434,54 +466,40 @@ public class AdminService {
         try {
             // 기존 구역 호출
             List<CampField> campFieldList = campFieldJPARepository.findAllByCampId(campId);
+            Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
 
-            // 기존 구역과 새로운 구역 비교
-            List<CampField> differentObjectList = new ArrayList<>(); /// 다른 값만 받기
-
-            differentObjectList = campFieldList.stream()
-                    .filter(o -> requestDTO.getCampFieldDTOList().stream().noneMatch(n -> {return o.getId().equals(n.getFieldId()) && o.getFieldName().equals(n.getFieldName()) && o.getPrice().equals(n.getPrice());}))
-                    .collect(Collectors.toList());
-
-
-
-
-            System.out.println("==========================================");
-            for(AdminReqDTO.UpdateCampDTO.CampFieldDTO after : requestDTO.getCampFieldDTOList()){
-                System.out.println("after : " + after.getFieldName());
-                System.out.println("after : " + after.getFieldId());
-                System.out.println("after : " + after.getPrice());
-                System.out.println("==========================================");
-            }
-            System.out.println("==========================================");
-            for(CampField before : differentObjectList){
-                System.out.println("before : " + before.getFieldName());
-                System.out.println("before : " + before.getId());
-                System.out.println("before : " + before.getPrice());
-                System.out.println("==========================================");
+            // 기존 구역과 수정 구역 비교(수정 구역 갯수가 기존과 같거나 작을 때)
+            if (campFieldList.size() >= requestDTO.getCampFieldDTOList().size()) {
+                for(int i = 0; i < campFieldList.size(); i++) {
+                    if (i < requestDTO.getCampFieldDTOList().size()) {
+                        String newFieldName = requestDTO.getCampFieldDTOList().get(i).getFieldName();
+                        Integer newPrice = requestDTO.getCampFieldDTOList().get(i).getPrice();
+                        campFieldList.get(i).updateFieldName(newFieldName);
+                        campFieldList.get(i).updatePrice(newPrice);
+                    } else {
+                        // 기존 보다 수정 구역 갯수가 작다면, 기존의 구역 삭제
+                        campFieldJPARepository.deleteById(campFieldList.get(i).getId());
+                    }
+                }
             }
 
+            // 기존 구역과 수정 구역 비교(수정 구역 갯수가 기존 보다 클 때)
+            if(campFieldList.size() < requestDTO.getCampFieldDTOList().size()){
+                for(int a = 0; a < requestDTO.getCampFieldDTOList().size(); a++){
+                    if(a < campFieldList.size()){
+                        campFieldList.get(a).updateFieldName(requestDTO.getCampFieldDTOList().get(a).getFieldName());
+                        campFieldList.get(a).updatePrice(requestDTO.getCampFieldDTOList().get(a).getPrice());
+                    }else{
+                        CampField campField = CampField.builder()
+                                .camp(camp)
+                                .fieldName(requestDTO.getCampFieldDTOList().get(a).getFieldName())
+                                .price(requestDTO.getCampFieldDTOList().get(a).getPrice())
+                                .build();
+                        campFieldJPARepository.save(campField);
+                    }
+                }
+            }
 
-//            if()
-
-
-
-
-
-
-
-//            // camp 정보 가져오기
-//            Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
-//            for(int i = 0; i < requestDTO.getCampFieldDTOList().size(); i++){
-//                campFieldList.get(i).updateFieldName(requestDTO.getCampFieldDTOList().get(i).getFieldName());
-//                if(campFieldList.get(i) != null){
-//                    CampField campField = CampField.builder()
-//                                                    .camp(camp)
-//                                                    .fieldName(requestDTO.getCampFieldDTOList().get(i).getFieldName())
-//                                                    .price(requestDTO.getCampFieldDTOList().get(i).getPrice())
-//                                                    .build();
-//                campFieldJPARepository.save(campField);
-//                }
-//            }
         }catch (Exception e){
             e.getMessage();
         }
@@ -491,15 +509,46 @@ public class AdminService {
     @Transactional
     public void updateCampImage(AdminReqDTO.UpdateCampDTO requestDTO, Integer campId) {
         try {
-            if(requestDTO.getCampPhotoList() != null){
-            for(MultipartFile campPhoto : requestDTO.getCampPhotoList()) {
-                Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
-                CampImage campImage = CampImage.builder()
-                        .camp(camp)
-                        .campImage(ImageUtils.formatCampImage(campPhoto))
-                        .build();
-                campImageJPARepository.save(campImage);
+            // 기존 캠핑장 이미지 호출
+            List<CampImage> campImageList = campImageJPARepository.findAllByCampId(campId);
+            Camp camp = campJPARepository.findById(campId).orElseThrow(() -> new Exception404("해당 캠핑장을 찾을 수 없습니다." + campId));
+
+            // 기존 이미지와 수정 이미지 비교(수정 이미지 갯수가 기존과 같거나 작을 때)
+            if(campImageList.size() >= requestDTO.getCampPhotoList().size()){
+                for (int i = 0; i < campImageList.size(); i++){
+                    if(i < requestDTO.getCampPhotoList().size()){
+                        if(requestDTO.getCampPhotoList().get(i).getOriginalFilename().equals("")){
+                            campImageList.get(i).updateCampImage(campImageList.get(i).getCampImage());
+                        }else{
+                            String newImage = ImageUtils.formatCampImage(requestDTO.getCampPhotoList().get(i));
+                            campImageList.get(i).updateCampImage(newImage);
+                        }
+                    }else {
+                        // 기존 보다 수정 이미지 갯수가 작다면, 기존의 이미지 삭제
+                        campImageJPARepository.deleteById(campImageList.get(i).getId());
+                    }
+                }
             }
+
+            // 기존 이미지와 수정 이미지 비교(수정 이미지 갯수가 기존보다 클 때)
+            if(campImageList.size() < requestDTO.getCampPhotoList().size()){
+                for (int a = 0; a < requestDTO.getCampPhotoList().size(); a++){
+                    if(a < campImageList.size()){
+                        if(requestDTO.getCampPhotoList().get(a).getOriginalFilename().equals("")){
+                            campImageList.get(a).updateCampImage(campImageList.get(a).getCampImage());
+                        }else{
+                            String newImage = ImageUtils.formatCampImage(requestDTO.getCampPhotoList().get(a));
+                            campImageList.get(a).updateCampImage(newImage);
+                        }
+                    }else{
+                        // 기존 보다 수정 이미지 갯수가 크다면 이미지 추가
+                        CampImage campImage = CampImage.builder()
+                                .camp(camp)
+                                .campImage(ImageUtils.formatCampImage(requestDTO.getCampPhotoList().get(a)))
+                                .build();
+                        campImageJPARepository.save(campImage);
+                    }
+                }
             }
         }catch (Exception e){
             e.getMessage();
@@ -531,6 +580,7 @@ public class AdminService {
         Order order = orderJPARepository.findById(orderId).orElseThrow(() -> new Exception404("해당 주문을 찾을 수 없습니다." + orderId));
         order.updateRefund(true);
         order.updateRefundAt(new Timestamp(System.currentTimeMillis()));
+        orderJPARepository.save(order);
         return "환불이 완료되었습니다.";
     }
 
@@ -563,4 +613,6 @@ public class AdminService {
         bannerJPARepository.deleteById(banner.getId());
         return "삭제에 성공했습니다.";
     }
+    
+
 }

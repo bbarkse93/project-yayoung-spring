@@ -105,6 +105,9 @@
                             <div class="button">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
+                            <div id="feedbackMessage-update" class="feedback-message">
+                                모든 정보를 입력해주세요.
+                            </div>
                             <div class="body">
                                 <div class="column">공지사항<span> 수정</span></div>
                                 <input class="input" type="text" placeholder="" id="update_title" required>
@@ -113,7 +116,7 @@
                             <div class="button_form">
                                 <div class="button" style="margin-right: 10px;">
                                     <input type="hidden" id="notice_id">
-                                    <button type="button" class="update_button update_submit" data-bs-dismiss="modal" onclick="fetchUpdateNotice()">수정
+                                    <button type="button" class="update_button update_submit" onclick="fetchUpdateNotice()">수정
                                     </button>
                                 </div>
                             </div>
@@ -130,13 +133,16 @@
                             <div class="button">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
+                            <div id="feedbackMessage-insert" class="feedback-message">
+                                모든 정보를 입력해주세요.
+                            </div>
                             <div class="body">
                                 <div class="column">공지사항<span> 등록</span></div>
                                 <input class="input" type="text" placeholder="제목을 입력해주세요" id="insert_title">
                                 <textarea class="textarea" placeholder="내용을 입력해주세요" id="insert_content"></textarea>
                             </div>
                             <div class="button" style="margin-right: 10px;">
-                                <button type="button" class="insert_button insert_submit" data-bs-dismiss="modal" onclick="fetchSaveNotice()">등록
+                                <button type="button" class="insert_button insert_submit" onclick="fetchSaveNotice()">등록
                                 </button>
                             </div>
                         </div>

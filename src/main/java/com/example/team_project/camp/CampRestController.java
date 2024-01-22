@@ -134,10 +134,13 @@ public class CampRestController {
 
     // 리뷰 등록
     @PostMapping("/review/{campId}")
-    public ResponseEntity<?> addReview(@PathVariable Integer campId, @RequestBody CampReqDTO.CampReviewDTO requestDTO) {
-        System.out.println("컨트롤러 진입 :" + requestDTO.getCampId());
-
+    public ResponseEntity<?> addReview(@PathVariable Integer campId
+    		, @RequestBody CampReqDTO.CampReviewDTO requestDTO
+    		, @RequestHeader("Authorization") String token) {
+        DecodedJWT decodedJWT = JwtTokenUtils.verify(token);
+        Integer userId = decodedJWT.getClaim("id").asInt();
         requestDTO.setCampId(campId);
+        requestDTO.setUserId(userId);
         CampRespDTO.AddCampReviewDTO responseDTO = campService.addReview(requestDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

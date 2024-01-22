@@ -36,13 +36,13 @@ public class OrderService {
 
     // 아이디로 다가오는 캠핑 일정 조회
 	public OrderRespDTO.ImminentOrderDetailDTO imminentOrderDetail(Integer userId) {
-		Order order = orderJPARepository.findFirstByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+		Order order = orderJPARepository.findFirstByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
 		return new OrderRespDTO.ImminentOrderDetailDTO(order);
 	}
 
 	// 아이디로 캠핑 일정 목록 조회
 	public OrderRespDTO.CampScheduleListDTO campScheduleList(Integer userId) {
-		List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateAfterOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+		List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
 		return new OrderRespDTO.CampScheduleListDTO(orders);
 	}
 
@@ -50,9 +50,9 @@ public class OrderService {
 	public CampRespDTO.CampFieldListDTO  campFieldList(OrderReqDTO.CampFieldListDTO requestDTO) {
 		// 캠프장 정보 조회
 		Camp camp = campJPARepository.findById(requestDTO.getCampId()).orElseThrow(() ->
-				new Exception400("해당 캠프장이 존재하지 않습니다."));
+				new Exception404("해당 캠프장이 존재하지 않습니다."));
 		// 제외할 예약 구역 조회
-		List<Order> orders = orderJPARepository.findAllByCheckInDateAfterOrderByCheckInDateAsc(TimestampUtils.findCurrnetTime());
+		List<Order> orders = orderJPARepository.findAllByIsRefundAndCheckInDateAfterOrderByCheckInDateAsc(false ,TimestampUtils.findCurrnetTime());
 		return new CampRespDTO.CampFieldListDTO(camp, orders, requestDTO);
 	}
 
@@ -60,12 +60,12 @@ public class OrderService {
 	public void paymentWriteValidate(Integer userId,@Valid OrderReqDTO.PaymentWriteDTO requestDTO ) {
 		//사용자가 없으면 예외 처리
 		userJPARepository.findById(userId)
-					.orElseThrow(()->new Exception400("해당 사용자가 없습니다."));
+					.orElseThrow(()->new Exception404("해당 사용자가 없습니다."));
 		// 캠프 아이디와 캠프 구역 아이디로 캠프 구역을 조회해 존재 여부 확인
 		CampField campField    = campFieldJPARepository.findByFieldNameAndCampId
 				(requestDTO.getFieldName(),requestDTO.getCampId());
 		if(campField == null) {
-			throw new Exception400("잘못된 캠프 구역이 입력되었습니다.");
+			throw new Exception404("잘못된 캠프 구역이 입력되었습니다.");
 		}
 		// 요청 데이터와 계산한 결제 금액의 동일 여부 검사
 		Period period = Period.between(LocalDate.parse(requestDTO.getCheckIn()), //예약 일수 계산

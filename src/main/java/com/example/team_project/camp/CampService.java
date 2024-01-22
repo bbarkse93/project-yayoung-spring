@@ -1,6 +1,7 @@
 package com.example.team_project.camp;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.team_project._core.errors.exception.Exception400;
 import com.example.team_project.camp.camp_rating.CampRating;
@@ -121,7 +122,7 @@ public class CampService {
 
     // 내 캠핑장 연도별 목록 조회
     public CampRespDTO.MyCampListDTO myCampList(Integer userId, CampReqDTO.MyCampListDTO requestDTO) {
-        List<Order> orders = orderJPARepository.findAllByUserIdAndCheckInDateBeforeOrderByCheckInDateAsc(userId, TimestampUtils.findCurrnetTime());
+        List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckInDateBeforeOrderByCheckInDateAsc(userId, false ,TimestampUtils.findCurrnetTime());
         return new CampRespDTO.MyCampListDTO(orders, requestDTO.getYear());
     }
 
@@ -133,21 +134,33 @@ public class CampService {
         return new CampRespDTO.SearchCampDTO(campList);
     }
     
-
+    // 리뷰 등록
     public CampRespDTO.AddCampReviewDTO addReview(CampReqDTO.CampReviewDTO requestDTO) {
-
+    	
+    	// 리뷰 작성 조건 충족 여부 검사(캠핑을 다녀와야 리뷰 작성 가능)
+//    	List<Order> orders = orderJPARepository.findAllByUserIdAndIsRefundAndCheckOutDateBeforeOrderByCheckOutDateAsc(requestDTO.getUserId(), false ,TimestampUtils.findCurrnetTime());
+//    	orders = orders.stream().filter(order -> order != null && order.getCampField().getCamp().getId().equals(requestDTO.getCampId())).collect(Collectors.toList());
+//    	if(orders == null || orders.size() == 0) {
+//    		throw new Exception400("다녀간 캠핑장이 없습니다.");
+//    	}
+//    	List<CampReview> campReviews = campReviewJPARepository.findAllByUserIdAndCampId(requestDTO.getUserId(),requestDTO.getCampId());
+//    	// 예약으로 다녀간 회수와 리뷰 수가 일치하면 리뷰 작성 금지
+//    	if(orders.size() == campReviews.size()) {
+//    		throw new Exception400("이미 리뷰를 작성하셨습니다.");
+//    	}
+    	
         CampRating campRating = CampRating.builder()
                 .cleanliness(requestDTO.getCleanliness())
                 .managementness(requestDTO.getManagementness())
                 .friendliness(requestDTO.getFriendliness())
-                .user(User.builder().id(1).build())
+                .user(User.builder().id(requestDTO.getUserId()).build())
                 .camp(Camp.builder().id(requestDTO.getCampId()).build())
                 .build();
         // 별점 인서트
         CampRating rating = campRatingJPARepository.save(campRating);
         CampReview campReview = CampReview.builder()
                 .content(requestDTO.getContent())
-                .user(User.builder().id(1).build())
+                .user(User.builder().id(requestDTO.getUserId()).build())
                 .camp(Camp.builder().id(requestDTO.getCampId()).build())
                 .campRating(rating)
                 .build();
@@ -157,6 +170,7 @@ public class CampService {
         return new CampRespDTO.AddCampReviewDTO(review, rating);
     }
 
+    // 리뷰 목록 조회
     public CampRespDTO.CampReviewListDTO campReviewList(Integer campId) {
         List<CampReview> campReviewList = campReviewJPARepository.findAllByCampId(campId, Sort.by(Sort.Direction.DESC, "createdAt"));
         long campReviewCount = campReviewJPARepository.countByCampId(campId);
