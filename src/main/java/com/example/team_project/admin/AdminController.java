@@ -152,6 +152,7 @@ public class AdminController {
     // 캠핑장 수정 요청(POST)
     @PostMapping("/camp/update/{campId}")
     public String saveCamp(@ModelAttribute AdminReqDTO.UpdateCampDTO requestDTO, @PathVariable Integer campId){
+
         try{
             adminService.updateCamp(requestDTO ,campId);
             adminService.updateCampImage(requestDTO, campId);
@@ -162,7 +163,6 @@ public class AdminController {
         }
         return "redirect:/admin/camp/setting";
     }
-
 
     /******************************************************************************************/
 
