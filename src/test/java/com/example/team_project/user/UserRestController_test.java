@@ -24,13 +24,12 @@ public class UserRestController_test extends MyWithRestDoc {
     @Test
     public void myPage_test() throws Exception {
         // given
-//        int id = 1;
 
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/user/my-page")
-                        .header("Authorization","Bearer " + TESTJWTTOKEN)
+                        .header("Authorization", "Bearer " + TESTJWTTOKEN)
         );
 
         // then
@@ -49,13 +48,12 @@ public class UserRestController_test extends MyWithRestDoc {
     @Test
     public void profilePage_test() throws Exception {
         // given
-//        int id = 1;
 
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/user/my-page/profile")
-                        .header("Authorization","Bearer " + TESTJWTTOKEN)
+                        .header("Authorization", "Bearer " + TESTJWTTOKEN)
 
         );
 
@@ -86,7 +84,7 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions ra = mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/my-page/profile")
-                        .header("Authorization","Bearer " + TESTJWTTOKEN)
+                        .header("Authorization", "Bearer " + TESTJWTTOKEN)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -110,16 +108,15 @@ public class UserRestController_test extends MyWithRestDoc {
                 .andDo(document);
 
     }
+
     // get 요청 - 로그아웃
     @Test
     public void logout_test() throws Exception {
         // given
-//        int id = 1;
 
         // when
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-//                        .get("/user/my-page/"+id)
                         .get("/user/logout")
         );
 
@@ -145,7 +142,7 @@ public class UserRestController_test extends MyWithRestDoc {
         // when
         ResultActions ra = mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/withDraw")
-                        .header("Authorization","Bearer " + TESTJWTTOKEN)
+                        .header("Authorization", "Bearer " + TESTJWTTOKEN)
                         .contentType(MediaType.APPLICATION_JSON)
         );
 

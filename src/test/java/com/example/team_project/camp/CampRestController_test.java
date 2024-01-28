@@ -2,6 +2,10 @@ package com.example.team_project.camp;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +29,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CampRestController_test extends MyWithRestDoc {
 
 	private final static String TESTJWTTOKEN = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcm9qZWN0LWtleSIsImlkIjoxLCJ1c2VybmFtZSI6bnVsbCwiZXhwIjo0ODU5MTM4MTc3fQ.596oW5tzgj5JnJu96jMaJGWs6f29kAkf8czoYXP0hpVzZvnV93GNSTQHW23UsgeEKlc_uaZYWtQJarxufGq94Q";
-	
-    @Test
+
+	//캠핑장 목록 조회(필터 적용)
+	@Test
     public void getAllCamps_test() throws Exception {
         // given
     	CampReqDTO.CampListDTO requestDTO = new CampReqDTO.CampListDTO();
@@ -89,6 +94,7 @@ public class CampRestController_test extends MyWithRestDoc {
     }
 
 
+	// 캠핑장 상세 조회
     @Test
     public void getCampDetail_test() throws Exception {
         // given
@@ -289,7 +295,8 @@ public class CampRestController_test extends MyWithRestDoc {
 			}
 		});		
     }
-    
+
+	// 북마크 추가
     @Test
     public void addBookmark_test() throws Exception {
     	//given
@@ -320,6 +327,7 @@ public class CampRestController_test extends MyWithRestDoc {
     			.andDo(document);
     }
 
+	// 북마크 제거
     @Test
     public void removeBookmark_test() throws Exception {
     	
@@ -348,7 +356,24 @@ public class CampRestController_test extends MyWithRestDoc {
     			.andDo(document);
     						
     }
-    
+
+	// 북마크 리스트
+	@Test
+	public void bookmarkList_test() throws Exception{
+
+		// when
+		ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get("/camp/bookmarks")
+						.header("Authorization","Bearer " + TESTJWTTOKEN)
+		);
+
+		String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+
+		System.out.println("ResultActions : " + responseBody);
+
+	}
+
+	//
     @Test
     public void campBookmarkPage_test() throws Exception {
     	
@@ -482,7 +507,47 @@ public class CampRestController_test extends MyWithRestDoc {
 				}
 		});
     }
-    
-    
 
+	// 캠핑장 별 리뷰 목록 조회
+	@Test
+	public void getReview_test() throws Exception {
+		// given
+		int campId = 1;
+		// when
+		ResultActions resultActions = mockMvc.perform(
+				MockMvcRequestBuilders.get("/camp/review/" + campId)
+		);
+
+		String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+
+		System.out.println("ResultActions : " + responseBody);
+		//then
+		resultActions
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].id").value(1))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].content").value("아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요."))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].cleanliness").value(4.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].managementness").value(4.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].friendliness").value(5.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].nickname").value("ssar"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].userImage").value("/images/user/user-profile.jpg"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].totalRating").value(4.333333333333333))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[0].createdAt").value("2024-01-28"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].id").value(2))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].content").value("전보다 더 아름답고 좋은 장소였습니다. 다음에도 또 오고 싶네요."))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].cleanliness").value(5.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].managementness").value(4.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].friendliness").value(5.0))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].nickname").value("ssar"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].userImage").value("/images/user/user-profile.jpg"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].totalRating").value(4.666666666666667))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewDTO[1].createdAt").value("2024-01-28"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campId").value(1))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campName").value("(주)아웃오브파크"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.response.campReviewCount").value(2))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+				.andDo(document);
+
+	}
 }

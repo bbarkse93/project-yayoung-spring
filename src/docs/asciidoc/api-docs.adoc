@@ -16,35 +16,42 @@ endif::[]
 :source-highlighter: highlightjs
 
 == 회원
-=== 1. 회원정보
+=== 1. 회원가입 & 로그인
+===== Request Example
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/login_test/http-response.adoc[]
+
+=== 2. 회원정보
 ===== Request Example
 include::{snippets}/{user}/my-page_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{user}/my-page_test/http-response.adoc[]
 
-=== 2. 프로필 페이지
+=== 3. 프로필 페이지
 ===== Request Example
 include::{snippets}/{user}/profile-page_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{user}/profile-page_test/http-response.adoc[]
 
-=== 3. 프로필 수정
+=== 4. 프로필 수정
 ===== Request Example
 include::{snippets}/{user}/profile-update_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{user}/profile-update_test/http-response.adoc[]
 
-=== 4. 로그아웃
+=== 5. 로그아웃
 ===== Request Example
 include::{snippets}/{user}/logout_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{user}/logout_test/http-response.adoc[]
 
-=== 5. 회원탈퇴
+=== 6. 회원탈퇴
 ===== Request Example
 include::{snippets}/{user}/with-draw_test/http-request.adoc[]
 
@@ -101,6 +108,13 @@ include::{snippets}/{camp}/search-camp_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{camp}/search-camp_test/http-response.adoc[]
+
+=== 8. 캠핑장 별 리뷰 조회
+===== Request Example
+include::{snippets}/{camp}/get-review_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{camp}/get-review_test/http-response.adoc[]
 
 == 주문
 
